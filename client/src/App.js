@@ -25,7 +25,6 @@ class App extends Component {
 	}
 	
 	render() {
-		const sidebarVisible = this.state.sidebarVisible
 
 		return (
 			<div>
@@ -61,13 +60,13 @@ class App extends Component {
 						<div className="App">
 							<Switch>
 								<Route 	exact path='/' 
-										component={() => <Home sidebarVisible={sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+										component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 					    		<Route 	path='/unstructured_data_list' 
-					    				component={() => <UnstructuredDataList sidebarVisible={sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+					    				component={() => <UnstructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 					    		/>
 								<Route 	path='/match_list'
-										component={() => <MatchList sidebarVisible={sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+										component={() => <MatchList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 							</Switch>
 						</div>
