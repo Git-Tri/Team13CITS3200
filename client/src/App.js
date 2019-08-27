@@ -1,46 +1,43 @@
 import React, { Component } from 'react'
-import logo from './logo.svg';
 import './App.css';
 import {
-	Button,
-	Header,
-	List,
 	Menu,
 	Segment,
 	Sidebar,
-	Container
 } from 'semantic-ui-react';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import UnstructuredDataList from './pages/UnstructuredDataList';
-import MatchList from './pages/MatchList';
+import { BrowserRouter as Switch, Route} from 'react-router-dom';
+import Home from './components/Home.js';
+import UnstructuredDataList from './components/UnstructuredDataList.js';
+import MatchList from './components/MatchList.js';
 
 class App extends Component {
-	state = { visible: true }
+	constructor() {
+		super()
+		this.state = {
+			sidebarVisible: true
+		}
 
-	handleSidebarClick = () => this.setState({ visible: !this.state.visible })
-
+		this.handleSidebarClick = () => {
+			this.setState({ sidebarVisible: !this.state.sidebarVisible })
+			console.log(this.state.sidebarVisible);
+		}
+	}
+	
 	render() {
-		const { visible } = this.state
+		const sidebarVisible = this.state.sidebarVisible
 
 		return (
 			<div>
-				<Button.Group>
-					<Button onClick={this.handleSidebarClick}>
-						{(this.state.visible?"Hide":"Show")+" Sidebar"}
-					</Button>
-				</Button.Group>
-
 				<Sidebar.Pushable as={Segment}>
 					<Sidebar
 						as={Menu}
-						animation='overlay'
+						animation='push'
 						icon='labeled'
 						inverted
 						onHide={this.handleSidebarHide}
 						vertical
-						visible={visible}
+						visible={this.state.sidebarVisible}
 						width='thin'
 					>
 						<Menu.Header as='h1'>
@@ -62,20 +59,17 @@ class App extends Component {
 
 					<Sidebar.Pusher>
 						<div className="App">
-							<Header>
-								Welcome!
-							</Header>
 							<Switch>
-								<Route exact path='/' component={Home} />
-					    		<Route path='/unstructured_data_list' component={UnstructuredDataList} />
-								<Route path='/match_list' component={MatchList} />
+								<Route 	exact path='/' 
+										component={() => <Home sidebarVisible={sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
+					    		<Route 	path='/unstructured_data_list' 
+					    				component={() => <UnstructuredDataList sidebarVisible={sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+					    		/>
+								<Route 	path='/match_list'
+										component={() => <MatchList sidebarVisible={sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
 							</Switch>
-							<div className="Space filler">
-								<Container>
-									<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-									<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-								</Container>
-							</div>
 						</div>
 					</Sidebar.Pusher>
 
