@@ -7,6 +7,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Mocha All",
+            "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceFolder}/server/test"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}\\server\\index.js"
         }

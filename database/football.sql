@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `edit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `edit` (
-  `editid` int(11) AUTO_INCREMENT NULL,
+  `editid` int(11) AUTO_INCREMENT NOT NULL,
   `sid` int(11) DEFAULT NULL,
   `usid` int(11) DEFAULT NULL,
   `iscorpus` boolean DEFAULT NULL,
