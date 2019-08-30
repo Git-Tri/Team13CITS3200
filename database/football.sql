@@ -30,10 +30,10 @@ CREATE TABLE `edit` (
   `editid` int(11) AUTO_INCREMENT NOT NULL,
   `sid` int(11) DEFAULT NULL,
   `usid` int(11) DEFAULT NULL,
-  `iscorpus` boolean DEFAULT NULL,
+  `iscorpus` boolean DEFAULT FALSE,
   `settings` json DEFAULT NULL,
-  `replace` longtext,
-  `replace_with` longtext,
+  `replace` longtext DEFAULT NULL,
+  `replace_with` longtext DEFAULT NULL,
   PRIMARY KEY (`editid`),
   KEY `sid` (`sid`),
   KEY `usid` (`usid`),
@@ -61,13 +61,13 @@ DROP TABLE IF EXISTS `match`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `match` (
   `id` int(11) AUTO_INCREMENT NOT NULL,
-  `date` date DEFAULT NULL,
-  `home` varchar(100) DEFAULT NULL,
-  `away` varchar(100) DEFAULT NULL,
-  `competitionID` varchar(5) DEFAULT NULL,
-  `competitionName` varchar(50) DEFAULT NULL,
-  `plan` varchar(50) DEFAULT NULL,
-  `data` json DEFAULT NULL,
+  `date` date,
+  `home` varchar(100),
+  `away` varchar(100),
+  `competitionID` varchar(5),
+  `competitionName` varchar(50),
+  `plan` varchar(50),
+  `data` json,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -95,13 +95,13 @@ DROP TABLE IF EXISTS `unstructured_data`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `unstructured_data` (
   `usid` int(11) AUTO_INCREMENT NOT NULL,
-  `matchid` int(11) DEFAULT NULL,
-  `tittle` char(100) DEFAULT NULL,
-  `author` char(20) DEFAULT NULL,
-  `url` longtext default NULL,
-  `published` date default null,
-  `extracted` date default null,  
-  `data` longtext DEFAULT NULL,
+  `matchid` int(11) NOT NULL,
+  `title` char(100),
+  `author` char(20),
+  `url` longtext,
+  `published` date,
+  `extracted` date,  
+  `data` longtext,
   PRIMARY KEY (`usid`),
   KEY `matchid` (`matchid`),
   CONSTRAINT `unstructured_data_ibfk_1` FOREIGN KEY (`matchid`) REFERENCES `match` (`id`)
