@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
-import { Container, Form, Input, Dropdown } from 'semantic-ui-react'
+import { Container, Form, Input } from 'semantic-ui-react'
 
 
 class MatchList extends Component {
+
+	state = {
+
+	}
 
 	render() {
 		return (
