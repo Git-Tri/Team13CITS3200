@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
+import { Container, Form, Input, Dropdown } from 'semantic-ui-react'
+
 
 class MatchList extends Component {
 
@@ -11,43 +13,27 @@ class MatchList extends Component {
 					sidebarVisible={this.props.sidebarVisible}
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
-				<div id="container" style={{height:"100vh"}}>
-					<div class="ui form" method="POST" action="/search">
-						<div class="field">
-							<div class="ui labeled input">
-								<div class="ui label">
-									Search
-								</div>
-								<input type="text" name="search-name"/>
-							</div>
-						</div>
-						<div class="three fields">
-							<div class="field">
-								<div class="ui labeled input">
-									<div class="ui label">
-										Between
-									</div>
-									<input type="date" name="search-startdate" placeholder="Start date" />
-								</div>
-							</div>
-							<div class="field">
-								<div class="ui input">
-									<input type="date" name="search-enddate" placeholder="End date" />
-								</div>
-							</div>
-							<div class="field">
-								<div class="ui labeled input">
-									<div class="ui label">
-										League
-									</div>
-									<input type="text" name="search-league"/>
-								</div>
-							</div>
-						</div>
-						<button class="ui button" value="submit" style={{width:"100vh"}}>Submit</button>
-					</div>
+				<Container style={{height:"100vh"}}>
+					<Form>
+						<Form.Field>
+							<Input label="Search" type="text" name="search-name"/>
+						</Form.Field>
+						<Form.Group widths="equal">
+							<Form.Field>
+								<Input label="Between" type="date" name="search-startdate" placeholder="Start date"/>
+							</Form.Field>
+							<Form.Field>
+								<Input type="date" name="search-enddate" placeholder="End date"/>
+							</Form.Field>
+							<Form.Field>
+								<Input label="League" type="text" name="search-league"/>
+							</Form.Field>
+						</Form.Group>
+						<Form.Button>Submit</Form.Button>
+					</Form>
+
 					<div class="results"></div>
-				</div>
+				</Container>
 			</div>
 		);
 	}
