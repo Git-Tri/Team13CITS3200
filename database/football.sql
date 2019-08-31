@@ -32,13 +32,13 @@ CREATE TABLE `edit` (
   `usid` int(11) DEFAULT NULL,
   `iscorpus` boolean DEFAULT FALSE,
   `settings` json DEFAULT NULL,
-  `replace` longtext DEFAULT NULL,
+  `replace_text` longtext DEFAULT NULL,
   `replace_with` longtext DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`editid`),
   KEY `sid` (`sid`),
   KEY `usid` (`usid`),
   CONSTRAINT `edit_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `match` (`id`),
-  CONSTRAINT `edit_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `structured data` (`sid`),
   CONSTRAINT `edit_ibfk_3` FOREIGN KEY (`usid`) REFERENCES `unstructured_data` (`usid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

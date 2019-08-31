@@ -1,11 +1,64 @@
 const assert = require('assert');
-const should = require('chai').should()
-const editEngine = require("../editEngine") 
-const domain = require("../domain")
-
+const should = require('chai').should();
+const editEngine = require("../editEngine");
+const domain = require("../domain");
+const testUtils = require("./testUtils");
+const dbAccess = require("../databaseAccess");
 
 describe("Edit Engine Tests",function()
 {
+
+    //universal test inputs
+    let inputGen = () => new domain.UnstructuredData(1,1,undefined,undefined,undefined,undefined,undefined,
+            "hello world")
+
+    let structuredDataGen = () => new domain.StructuredData(1,undefined,undefined,undefined,undefined,undefined,undefined,
+            {field: "some data",otherField: "other data"})
+
+
+    
+    before(function(done)
+    {
+
+        let editQuery1 =  'INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"hello","bixby","replace");'
+
+        let editQuery2 = 'INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"world","goodbye","replace");'
+
+        let queries = 
+        [
+            editQuery1,editQuery2
+        ]
+
+        dbAccess.multiInsertQuery(queries,() => 
+        {
+
+            done();
+
+        },(err) => {throw err})
+
+    });
+
+    
+    after(function(done)
+    {
+
+        let deleteQuery1 = 'delete from football.edit where replace_text = "world";'
+
+        let deleteQuery2 = 'delete from football.edit where replace_text = "hello";'
+
+        let queries = [deleteQuery1,deleteQuery2]
+
+        dbAccess.multiInsertQuery(queries,() => 
+        {
+
+            done();
+
+        },(err) => {throw err})
+
+
+    });
 
     describe("Replace Rule tests",function()
     {
@@ -14,7 +67,7 @@ describe("Edit Engine Tests",function()
 
         let input = "hello hello hello dere hello my dear DARLING";
 
-        let correctInput = input.replace("hello","world");
+        let correctInput = input.split("hello").join("world");
 
         it("should exist",() => should.exist(editEngine.replaceRule))
         it("should return input unchanged for undefined edit", () => editEngine.replaceRule(input,undefined).should.equal(input))
@@ -45,7 +98,7 @@ describe("Edit Engine Tests",function()
 
         let stringInput = {field:"hello hello hello dere hello my dear DARLING"};
 
-        let correctInput = stringInput.field.replace("hello","world");
+        let correctInput = stringInput.field.split("hello").join("world");
 
         let replaceNumRuleEdit = new domain.Edit(1,1,1,false,{field:"field"},"5","10",undefined);
 
@@ -59,11 +112,6 @@ describe("Edit Engine Tests",function()
 
         let recurInput = {field:{someKey:"hello",otherkey:"hello"}};
 
-        let recurCorrectInput = {field:{someKey:"world",otherkey:"world"}};
-
-
-
-        
         it("should exist",() => should.exist(editEngine.replaceRuleWithField));
         //general exceptions
         it("should return input unchanged for undefined edit", () => editEngine.replaceRuleWithField(stringInput,undefined).should.equal(stringInput));
@@ -94,5 +142,169 @@ describe("Edit Engine Tests",function()
 
     })
 
+    describe("ApplyRulesWithEdits tests",function()
+    {
 
-})
+        let replaceRule2 = new domain.Edit(1,1,1,false,undefined,"hello","zig","replace");
+        let replaceRule1 = new domain.Edit(1,1,1,false,undefined,"world","zag","replace");
+        let replaceRuleInvalid = new domain.Edit(1,1,1,false,undefined,"hello","world","bob");
+        let replaceAllRule = new domain.Edit(1,1,1,false,undefined,"zig","zag","replace");
+
+        let replaceRuleTypeNull = new domain.Edit(1,1,1,false,undefined,"world","zag",null);
+        let replaceRuleTypeUndefined = new domain.Edit(1,1,1,false,undefined,"world","zag",undefined);
+
+        let edits = [replaceRule1,replaceRule2]
+        let replaceAllEdits = [replaceRule1,replaceRule2,replaceAllRule];
+        
+        let undefinedEdits = [replaceRule1,replaceRule2,undefined];
+
+        let nullEdits = [replaceRule1,replaceRule2,null];
+        
+       
+
+        let structuredRule1 = new domain.Edit(1,1,1,false,undefined,"other data","superField","replace");
+
+        let structuredRule2 = new domain.Edit(1,1,1,undefined,
+                {field:"field"},"some data","super data","replacewithfield");        
+
+        //general exceptions
+        
+        testUtils.basicTests(editEngine.applyRulesWithEdits,[inputGen(),edits],
+            ["No input given or input is not of type structured or unstructured data","edits must be an array"],
+            ["input","edits"],true)
+        
+        testUtils.typeTests(editEngine.applyRulesWithEdits,[inputGen(),edits],
+            ["No input given or input is not of type structured or unstructured data","edits must be an array"],
+            ["input","edits"],true)
+        //specific errors
+        it("should throw error with one edit undefined",
+            () => assert.throws(() => editEngine.applyRulesWithEdits(inputGen(),undefinedEdits.slice())
+            ,Error,"undefined or null edit or type field"));  
+
+        it("should throw error with one edit null",
+            () => assert.throws(() => editEngine.applyRulesWithEdits(inputGen(),nullEdits.slice())
+            ,Error,"undefined or null edit or type field"));   
+
+        it("should throw error with null type field",
+            () => assert.throws(() => editEngine.applyRulesWithEdits(inputGen(),[replaceRuleTypeNull])
+            ,Error,"undefined or null edit or type field"));               
+
+        it("should throw error with undefined type field",
+            () => assert.throws(() => editEngine.applyRulesWithEdits(inputGen(),[replaceRuleTypeUndefined])
+            ,Error,"undefined or null edit or type field"));
+
+        it("should throw error with unsupported edit type",
+            () => assert.throws(() => editEngine.applyRulesWithEdits(inputGen(),[replaceRuleInvalid])
+            ,Error,"unsupported edit type bob"));
+        //success cases 
+        it("should correctly change text on unstructured data",
+            () => editEngine.applyRulesWithEdits(inputGen(),edits).data.should.equal("zig zag"));
+
+        it("should correctly change text on unstructured data with all corpus edit",
+            () => editEngine.applyRulesWithEdits(inputGen(),replaceAllEdits).data.should.equal("zag zag"));
+
+        it("should correctly change text by field on structured data",
+            () => editEngine.applyRulesWithEdits(structuredDataGen(),[structuredRule1,structuredRule2]).data.field
+                .should.equal("super data"));
+        
+        it("should correctly change text on all fields on structured data",
+            () => editEngine.applyRulesWithEdits(structuredDataGen(),[structuredRule1,structuredRule2]).data.otherField
+                .should.equal("superField"));
+
+    })
+    
+    describe("Apply Rules Tests",function()
+    {
+
+
+        testUtils.basicTests(editEngine.applyRules,[inputGen(),() => {}],
+            ["No input given or input is not of type structured or unstructured data",
+            "Call back must be a function, otherwise what's the point of all this?"],
+            ["input","callback"],true);
+
+        testUtils.typeTests(editEngine.applyRules,[inputGen(),() => {}],
+        ["No input given or input is not of type structured or unstructured data",
+        "Call back must be a function, otherwise what's the point of all this?"],
+        ["input","callback"],true)
+
+        it("should throw an error with non id on input",(done) => 
+        {
+
+            let input = inputGen();
+
+            input.id = "bob";
+
+            assert.throws(() => editEngine.applyRules(input,Error,"id of input should be a number"));
+
+            done()
+
+        })
+
+        let input = inputGen();
+
+        it("should correctly replace text",(done) => editEngine.applyRules(input,() => 
+        {
+            input.data.should.equal("bixby goodbye");
+            
+            done();
+
+        }));
+
+    });
+
+    describe("Apply Rules MutiInput Tests",function()
+    {
+
+        let inputsGen = () => {
+            return [
+            new domain.UnstructuredData(1,1,undefined,undefined,undefined,undefined,undefined,
+            "hello world"),
+            new domain.UnstructuredData(1,1,undefined,undefined,undefined,undefined,undefined,
+                "world world"),
+            new domain.UnstructuredData(1,1,undefined,undefined,undefined,undefined,undefined,
+                "hello hello")
+            ];}
+
+        
+        testUtils.basicTests(editEngine.applyRules,[inputsGen(),() => {}],
+            ["No input given or input is not of type array",
+            "Call back must be a function, otherwise what's the point of all this?"],
+            ["input","callback"],true);
+
+        testUtils.typeTests(editEngine.applyRules,[inputsGen(),() => {}],
+        ["No input given or input is not of type array",
+        "Call back must be a function, otherwise what's the point of all this?"],
+        ["input","callback"],true)
+
+        it("should have correct first input",(done) => editEngine.applyRulesMutiInputs(inputsGen(),(result) => 
+        {
+
+            result[0].data.should.equal("bixby goodbye");
+
+            done();
+
+        }));
+        
+        it("should have correct second input",(done) => editEngine.applyRulesMutiInputs(inputsGen(),(result) => 
+        {
+
+            result[1].data.should.equal("goodbye goodbye");
+
+            done();
+
+        }));
+
+        
+        it("should have correct third input",(done) => editEngine.applyRulesMutiInputs(inputsGen(),(result) => 
+        {
+
+            result[2].data.should.equal("bixby bixby");
+
+            done();
+
+        }));
+
+        
+    });
+
+});

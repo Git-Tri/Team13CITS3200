@@ -95,7 +95,7 @@ describe('Database Access Tests ', function() {
         it('query function should select correct row contents',function(done)
         {
 
-            dbAccess.query("select home from football.match limit 1;",function(result)
+            dbAccess.query("select home from football.match where home = 'not bob' limit 1;",function(result)
             {
                 result[0][0].should.equal('not bob');
                 done();
