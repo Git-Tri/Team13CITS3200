@@ -102,4 +102,17 @@ function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 
 } 
 
-module.exports = { query, multiInsertQuery, getAllStructuredData, getAllUnstrucredData }
+
+function getAllMatches(callback,errorCallback,noConnectionCallback)
+{
+
+        query("select * from football.match;",(result) => 
+        {
+
+                callback(dataBinding.bindUnstructuredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+} 
+
+module.exports = { query, multiInsertQuery, getAllStructuredData, getAllUnstrucredData, getAllMatches}

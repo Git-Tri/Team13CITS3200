@@ -10,7 +10,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const routes = require("./routes.js");
-const dbAccess = require("./databaseAccess")
+const dbAccess = require("./databaseAccess");
+const api = require("./api");
 
 //start app
 const app = express();
@@ -35,6 +36,8 @@ function getPort()
   }
 
 }
+
+api.api();
 
 app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')

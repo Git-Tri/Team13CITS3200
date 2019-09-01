@@ -47,6 +47,25 @@ exports.createRoutes = function(app)
         }),standardServerErrorHandler,standardServerErrorHandler);  
      
     })
+    
+    middleware.get(app,"/matchlist",(req,res) => 
+    {
+
+      res.setHeader("Content-Type","application/json");
+
+      let unstructuredDataList;
+      let structuredDataList; 
+
+      dbAccess.getAllMatches((result => 
+        {
+
+          res.send(JSON.stringify(result));
+          res.sendStatus(200);
+          
+
+        }),standardServerErrorHandler,standardServerErrorHandler);  
+     
+    })
 
       
 }
