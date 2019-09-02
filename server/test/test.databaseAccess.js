@@ -291,7 +291,7 @@ describe('Database Access Tests ', function() {
     });
 
     
-    describe("getAllStructuredData Tests",function()
+    describe("getAllUnstructuredData Tests",function()
     {
 
         let actualUid = 0;
