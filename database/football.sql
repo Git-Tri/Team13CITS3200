@@ -3,6 +3,10 @@
 -- Host: localhost    Database: football
 -- ------------------------------------------------------
 -- Server version	8.0.17
+CREATE DATABASE IF NOT EXISTS  football;
+
+use football;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,19 +27,19 @@ DROP TABLE IF EXISTS `edit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `edit` (
-  `editid` int(11) NOT NULL,
+  `editid` int(11) AUTO_INCREMENT NOT NULL,
   `sid` int(11) DEFAULT NULL,
   `usid` int(11) DEFAULT NULL,
-  `iscorpus` tinyint(1) DEFAULT NULL,
-  `settings` char(1) DEFAULT NULL,
-  `replace` longtext,
-  `replace_with` longtext,
+  `iscorpus` boolean DEFAULT FALSE,
+  `settings` json DEFAULT NULL,
+  `replace` longtext DEFAULT NULL,
+  `replace_with` longtext DEFAULT NULL,
   PRIMARY KEY (`editid`),
   KEY `sid` (`sid`),
   KEY `usid` (`usid`),
   CONSTRAINT `edit_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `match` (`id`),
   CONSTRAINT `edit_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `structured data` (`sid`),
-  CONSTRAINT `edit_ibfk_3` FOREIGN KEY (`usid`) REFERENCES `unstructured data` (`usid`)
+  CONSTRAINT `edit_ibfk_3` FOREIGN KEY (`usid`) REFERENCES `unstructured_data` (`usid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,10 +60,14 @@ DROP TABLE IF EXISTS `match`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `match` (
-  `id` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `home` varchar(100) DEFAULT NULL,
-  `away` varchar(100) DEFAULT NULL,
+  `id` int(11) AUTO_INCREMENT NOT NULL,
+  `date` date,
+  `home` varchar(100),
+  `away` varchar(100),
+  `competitionID` varchar(5),
+  `competitionName` varchar(50),
+  `plan` varchar(50),
+  `data` json,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -75,54 +83,38 @@ UNLOCK TABLES;
 
 --
 -- Table structure for table `structured data`
+
+
+--
+--
+-- Table structure for table `unstructured_data`
 --
 
-DROP TABLE IF EXISTS `structured data`;
+DROP TABLE IF EXISTS `unstructured_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `structured data` (
-  `sid` int(11) NOT NULL,
-  `data` json DEFAULT NULL,
-  PRIMARY KEY (`sid`),
-  CONSTRAINT `structured data_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `match` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `structured data`
---
-
-LOCK TABLES `structured data` WRITE;
-/*!40000 ALTER TABLE `structured data` DISABLE KEYS */;
-/*!40000 ALTER TABLE `structured data` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `unstructured data`
---
-
-DROP TABLE IF EXISTS `unstructured data`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `unstructured data` (
-  `usid` int(11) NOT NULL,
-  `matchid` int(11) DEFAULT NULL,
-  `tittle` char(100) DEFAULT NULL,
-  `author` char(20) DEFAULT NULL,
+CREATE TABLE `unstructured_data` (
+  `usid` int(11) AUTO_INCREMENT NOT NULL,
+  `matchid` int(11) NOT NULL,
+  `title` char(100),
+  `author` char(20),
   `url` longtext,
+  `published` date,
+  `extracted` date,  
+  `data` longtext,
   PRIMARY KEY (`usid`),
   KEY `matchid` (`matchid`),
-  CONSTRAINT `unstructured data_ibfk_1` FOREIGN KEY (`matchid`) REFERENCES `match` (`id`)
+  CONSTRAINT `unstructured_data_ibfk_1` FOREIGN KEY (`matchid`) REFERENCES `match` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `unstructured data`
+-- Dumping data for table `unstructured_data`
 --
 
-LOCK TABLES `unstructured data` WRITE;
-/*!40000 ALTER TABLE `unstructured data` DISABLE KEYS */;
-/*!40000 ALTER TABLE `unstructured data` ENABLE KEYS */;
+LOCK TABLES `unstructured_data` WRITE;
+/*!40000 ALTER TABLE `unstructured_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `unstructured_data` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

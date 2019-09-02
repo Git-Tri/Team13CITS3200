@@ -51,6 +51,7 @@
 /server/.env.development.local
 /server/.env.test.local
 /server/.env.production.local
+/server/.env
 /server/package-lock.json
 
 /server/npm-debug.log*
