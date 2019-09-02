@@ -6,10 +6,21 @@ import { Container, Form, Input } from 'semantic-ui-react'
 class MatchList extends Component {
 
 	state = {
+		name: '',
+		startdate: 0,
+		enddate: 0,
+		league: ''
+	}
 
+	submitHandler = (e) => {
+		e.preventDefault()
+		console.log(this.state)
+		var request = new XMLHttpRequest()
+		request.open('GET', '/')
 	}
 
 	render() {
+		const { name, startdate, enddate, league } = this.state
 		return (
 			<div className="page">
 				<PageHeader 
@@ -33,7 +44,7 @@ class MatchList extends Component {
 								<Input label="League" type="text" name="search-league"/>
 							</Form.Field>
 						</Form.Group>
-						<Form.Button>Submit</Form.Button>
+						<Form.Button onClick="submitHandler">Submit</Form.Button>
 					</Form>
 
 					<div class="results"></div>
