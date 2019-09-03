@@ -26,7 +26,6 @@ class App extends Component {
 
 		this.handleSidebarClick = () => {
 			this.setState({ sidebarVisible: !this.state.sidebarVisible })
-			console.log(this.state.sidebarVisible);
 		}
 	}
 	

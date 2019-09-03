@@ -5,22 +5,30 @@ import { Container, Form, Input } from 'semantic-ui-react'
 
 class MatchList extends Component {
 
-	state = {
-		name: '',
-		startdate: 0,
-		enddate: 0,
-		league: ''
+	constructor(){
+		super()
+		this.state = { //Four entries, four values, sent as an object to database. Endpoint changes needed next.
+			searchtext: '',
+			startdate: '0000-00-00',
+			enddate: '0000-00-00',
+			league: ''
+		}
+
+		this.submitHandler = (e) => { //Currently logs state, 500 error
+			console.log(this.state);
+		    var xhr = new XMLHttpRequest()
+		    xhr.addEventListener('load', () => {
+		    	console.log(xhr.responseText)
+		    })
+		    xhr.open('POST', '/matchlist')
+		    xhr.send(JSON.stringify(this.state))
+		}
+
+		this.handleChange = (e, { value }) => {this.setState({ [e.target.name]:value })}
 	}
 
-	submitHandler = (e) => {
-		e.preventDefault()
-		console.log(this.state)
-		var request = new XMLHttpRequest()
-		request.open('GET', '/')
-	}
 
-	render() {
-		const { name, startdate, enddate, league } = this.state
+	render() { 
 		return (
 			<div className="page">
 				<PageHeader 
@@ -31,23 +39,23 @@ class MatchList extends Component {
 				<Container style={{height:"100vh"}}>
 					<Form>
 						<Form.Field>
-							<Input label="Search" type="text" name="search-name"/>
+							<Input label="Search" type="text" onChange={this.handleChange.bind(this)} name="searchtext"/> 
 						</Form.Field>
 						<Form.Group widths="equal">
 							<Form.Field>
-								<Input label="Between" type="date" name="search-startdate" placeholder="Start date"/>
+								<Input label="Between" type="date" onChange={this.handleChange.bind(this)} name="startdate" placeholder="Start date"/>
 							</Form.Field>
 							<Form.Field>
-								<Input type="date" name="search-enddate" placeholder="End date"/>
+								<Input type="date" onChange={this.handleChange.bind(this)} name="enddate" placeholder="End date"/>
 							</Form.Field>
 							<Form.Field>
-								<Input label="League" type="text" name="search-league"/>
+								<Input label="League" type="text" onChange={this.handleChange.bind(this)} name="league"/>
 							</Form.Field>
 						</Form.Group>
-						<Form.Button onClick="submitHandler">Submit</Form.Button>
+						<Form.Button onClick={this.submitHandler}>Submit</Form.Button>
 					</Form>
 
-					<div class="results"></div>
+					<div className="results"></div>
 				</Container>
 			</div>
 		);
