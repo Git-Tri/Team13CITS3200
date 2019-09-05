@@ -4,7 +4,9 @@ import App from './App';
 import PageHeader from './components/PageHeader'
 import MatchList from './components/MatchList'
 import { BrowserRouter } from 'react-router-dom'
-import { act, Simulate } from 'react-dom/test-utils'
+
+import ReactTestUtils from 'react-dom/test-utils';
+
 
 it('should render the app', () => {
   const router = document.createElement('BrowserRouter');
@@ -13,23 +15,23 @@ it('should render the app', () => {
 });
 
 it('should render the header', () => {
-	const div = document.createElement('div');
-	ReactDOM.render(<PageHeader />,div);
-	ReactDOM.unmountComponentAtNode(div);
+	const page = document.createElement('div');
+	ReactDOM.render(<PageHeader />,page);
+	ReactDOM.unmountComponentAtNode(page);
 })
 
 it('should render MatchList', () => {
-	const div = document.createElement('div');
-	ReactDOM.render(<MatchList />,div);
-	ReactDOM.unmountComponentAtNode(div);
+	const page = document.createElement('div');
+	ReactDOM.render(<MatchList />,page);
+	ReactDOM.unmountComponentAtNode(page);
 })
 
-// it('check MatchList user inputs',() => {
-//     const div = document.createElement('div');
-// 	act(() => {
-// 		ReactDOM.render(<MatchList/>,div);
-// 	});
-// 	Simulate('handleChange', { target: {searchtext: 'Text'} });
-// 	expect(onChange).toHaveBeenCalledWith('Text');
-// 	ReactDOM.unmountComponentAtNode(div);
-// })
+it('check MatchList user inputs',() => {
+	const page = document.createElement('div');
+	ReactTestUtils.act(() => {
+		ReactDOM.render(<MatchList/>,page);
+	});
+	ReactTestUtils.Simulate.change('handleChange', { target: {searchtext: 'Text'} });
+	expect(page.state).toBe('Text');
+	ReactDOM.unmountComponentAtNode(page);
+})
