@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 
 const routes = require("./routes.js");
 const dbAccess = require("./databaseAccess");
-const api = require("./api");
+const api = require("./football-api");
 
 //start app
 const app = express();

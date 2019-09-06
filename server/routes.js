@@ -229,7 +229,7 @@ exports.createRoutes = function(app)
       },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
 
      
-    })
+    });
 
     //used for the edit list page 
     middleware.get(app,"/editList",(req,res) => 
