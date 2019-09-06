@@ -1,148 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Match List Tests Should render MatchList correctly 1`] = `
+exports[`Match List Tests should match snapshot 1`] = `
 <div
   className="page"
 >
-  <div
-    className="ui container three column grid"
-  >
-    <div
-      className="row"
-    >
-      <div
-        className="column"
-      >
-        <button
-          className="ui button"
-          onClick={[Function]}
-        >
-          Show sidebar
-        </button>
-      </div>
-      <div
-        className="column"
-      >
-        <div
-          className="ui header"
-        >
-          Match List
-        </div>
-      </div>
-      <div
-        className="column"
-      >
-        <button
-          className="ui button"
-          onClick={[Function]}
-        >
-          Back
-        </button>
-      </div>
-    </div>
-  </div>
-  <div
-    className="ui container"
+  <PageHeader
+    header="Match List"
+  />
+  <Container
     style={
       Object {
         "height": "100vh",
       }
     }
   >
-    <form
-      className="ui form"
-      onSubmit={[Function]}
+    <Form
+      as="form"
     >
-      <div
-        className="field"
+      <FormField>
+        <Input
+          label="Search"
+          name="searchtext"
+          onChange={[Function]}
+          type="text"
+        />
+      </FormField>
+      <FormGroup
+        widths="equal"
       >
-        <div
-          className="ui labeled input"
-        >
-          <div
-            className="ui label label"
-            onClick={[Function]}
-          >
-            Search
-          </div>
-          <input
-            name="searchtext"
+        <FormField>
+          <Input
+            label="Between"
+            name="startdate"
+            onChange={[Function]}
+            placeholder="Start date"
+            type="date"
+          />
+        </FormField>
+        <FormField>
+          <Input
+            name="enddate"
+            onChange={[Function]}
+            placeholder="End date"
+            type="date"
+          />
+        </FormField>
+        <FormField>
+          <Input
+            label="League"
+            name="league"
             onChange={[Function]}
             type="text"
           />
-        </div>
-      </div>
-      <div
-        className="equal width fields"
+        </FormField>
+      </FormGroup>
+      <FormButton
+        as={[Function]}
+        control={[Function]}
+        onClick={[Function]}
       >
-        <div
-          className="field"
-        >
-          <div
-            className="ui labeled input"
-          >
-            <div
-              className="ui label label"
-              onClick={[Function]}
-            >
-              Between
-            </div>
-            <input
-              name="startdate"
-              onChange={[Function]}
-              placeholder="Start date"
-              type="date"
-            />
-          </div>
-        </div>
-        <div
-          className="field"
-        >
-          <div
-            className="ui input"
-          >
-            <input
-              name="enddate"
-              onChange={[Function]}
-              placeholder="End date"
-              type="date"
-            />
-          </div>
-        </div>
-        <div
-          className="field"
-        >
-          <div
-            className="ui labeled input"
-          >
-            <div
-              className="ui label label"
-              onClick={[Function]}
-            >
-              League
-            </div>
-            <input
-              name="league"
-              onChange={[Function]}
-              type="text"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        className="field"
-      >
-        <button
-          className="ui button"
-          onClick={[Function]}
-        >
-          Submit
-        </button>
-      </div>
-    </form>
+        Submit
+      </FormButton>
+    </Form>
     <div
       className="results"
     />
-  </div>
+  </Container>
 </div>
 `;

@@ -11,7 +11,8 @@ class MatchList extends Component {
 			searchtext: '',
 			startdate: '0000-00-00',
 			enddate: '0000-00-00',
-			league: ''
+			league: '',
+			dateError: false
 		}
 
 		this.submitHandler = (e) => { //Currently logs state, 500 error
@@ -24,7 +25,14 @@ class MatchList extends Component {
 		    xhr.send(JSON.stringify(this.state))
 		}
 
-		this.handleChange = (e, { value }) => {this.setState({ [e.target.name]:value })}
+		this.handleChange = (e, { value }) => {
+			this.setState({ [e.target.name]:value })
+			if(Date(this.state.startdate)>Date(this.state.enddate)){
+				this.setState({dateError: true})
+			} else {
+				this.setState({dateError: false})
+			}
+		}
 	}
 
 
@@ -52,7 +60,12 @@ class MatchList extends Component {
 								<Input label="League" type="text" onChange={this.handleChange.bind(this)} name="league"/>
 							</Form.Field>
 						</Form.Group>
-						<Form.Button onClick={this.submitHandler}>Submit</Form.Button>
+						<Form.Button 
+							onClick={this.submitHandler}
+							disabled={this.state.dateError}
+						>
+						Submit
+						</Form.Button>
 					</Form>
 
 					<div className="results"></div>
