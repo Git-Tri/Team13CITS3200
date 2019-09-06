@@ -127,7 +127,7 @@ describe("DataBinding Tests",function()
     describe("Bind Match Data Tests",function()
     {
 
-        let unStructured = [2,"27/02/2019","home team","away team",2,"competiton name","plan",{some:"data"}];
+        let unStructured = [2,"27/02/2019","home team","away team",2,"competiton name"];
 
         allBindingTests(dataBinding.bindUnstructuredData,unStructured,["rawUnstructuredData must be an array"],["rawUnstructuredData"]);
 
