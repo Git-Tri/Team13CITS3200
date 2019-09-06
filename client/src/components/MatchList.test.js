@@ -6,11 +6,12 @@ import {shallow, mount} from "enzyme";
 import { configure } from 'enzyme';
 
 
+
 describe("Match List Tests",function() {
 	test("Should render MatchList correctly",() => {
 		let page = renderer.create(<MatchList />)
 		expect(page.toJSON()).toMatchSnapshot();
 	})
 
-	
+
 })
