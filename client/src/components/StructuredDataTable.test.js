@@ -33,12 +33,12 @@ describe("Unstructured Data Table Tests",function()
 
     
     const testStructuredData = [
-        new StructuredData(1,new Date(),"some team","some other team",1,"some comp","some plan",{}),
-        new StructuredData(2,new Date(),"some team","some other team",1,"some comp","some plan",{})
+        new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp","some plan",{}),
+        new StructuredData(2,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp","some plan",{})
         ];
     
 
-    test("Should throw error- when given undefined items",(done) => 
+    test("Should throw error when given undefined items",(done) => 
     {
 
     renderer.create(<ErrorTester              
@@ -140,6 +140,15 @@ describe("Unstructured Data Table Tests",function()
 
         expect(wrapper).toMatchSnapshot();
 
+
+    })
+
+    test("Should render correctly for correct with no data",() => 
+    {        
+        
+        let Component = renderer.create(<StructuredDataTable onSelect={() => {}} items={[]}/>)
+
+        expect(Component.toJSON()).toMatchSnapshot();
 
     })
 

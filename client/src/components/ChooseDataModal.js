@@ -6,7 +6,10 @@ import UnstructuredDataTable from "./UnstructuredDataTable";
 import {bindStructuredData,bindUnstructureData} from "../Databinding";
 
 
-
+/**
+ * Shows all unstructured and structured data and allows the user
+ * to select a piece of data 
+ */
 class ChooseDataModal extends Component
 { 	
 
@@ -33,6 +36,22 @@ class ChooseDataModal extends Component
 
     }
 
+    /**
+     * Handles any errors cuased by a sub-component 
+     * @param {*} error the error recieved
+     * @param {*} errorInfo information about the error
+     */
+    componentDidCatch(error, errorInfo)
+    {
+
+        this.setState({isError: true});
+
+    }
+
+    /**
+     * Loads all unstructured and structured data 
+     * and binds those objects to structured or unstructured data types 
+     */
     loadData()
     {
 
@@ -52,20 +71,35 @@ class ChooseDataModal extends Component
 
     }
 
+    /**
+     * handles the click on the choose button
+     * will update state to display an error if no item is selected
+     */
     handleChooseButtonClick()
     {
+
 
         if(this.state.lastSelectedId != -1)
         {
 
             this.props.onSelect(this.state.selectedItem);
 
-            this.setState({isModalOpen: false});
+            this.handleClose();
 
         }
-        
+        else
+        {
+
+            this.setState({isNoChooseError: true});
+            
+
+        }
     }
 
+    /**
+     * handles the selection of data
+     * @param {*} data should be type unstructured or structured data 
+     */
     handleSelection(data)
     {
 
@@ -78,7 +112,8 @@ class ChooseDataModal extends Component
 
             this.props.onSelect(data);      
 
-            this.setState({isModalOpen: false});
+            this.setState({isModalOpen: false,isNoChooseError: false});
+
 
         }
         else
@@ -90,10 +125,14 @@ class ChooseDataModal extends Component
 
     }
 
+    /**
+     * Renders the page if the data has been loaded 
+     */
     renderLoaded()
     {
 
-        return(<div><Tab menu={{pointing:true}} panes={
+        return(<div>
+            <Tab menu={{pointing:true}} panes={
             [
                 { menuItem: 'Structured Data', 
                     render: () => 
@@ -119,6 +158,9 @@ class ChooseDataModal extends Component
 
     }
 
+    /**
+     * Renders the page if an error has occured
+     */
     renderError()
     {
 
@@ -132,6 +174,9 @@ class ChooseDataModal extends Component
 
     }
 
+    /**
+     * renders the page if the data is still loading 
+     */
     renderLoading()
     {
 
@@ -139,6 +184,10 @@ class ChooseDataModal extends Component
 
     }
     
+    /**
+     * Chooses which render that should be rendered based on 
+     * state of the object 
+     */
     executeRender()
     {
 
@@ -163,16 +212,32 @@ class ChooseDataModal extends Component
 
     }
 
-    handleOpen = () => this.setState({isModalOpen: true})
+    /**
+     * handles modal opening 
+     */
+    handleOpen(){this.setState({isModalOpen: true})}
 
-    handleClose = () => this.setState({isModalOpen: false})
+    /**
+     * handles the modal closing
+     */
+    handleClose(){
+        this.setState({
+            isModalOpen: false,
+            lastSelectedId: -1,
+            lastSelectedIsStructued: false,
+            isNoChooseError: false,
+            selectedItem: undefined});}
 
+
+    /**
+     * renders the component 
+     */
     render()
     {
-      
-        
+              
         let loadIfNotAlready = () => 
         {
+
 
             if(this.state.isLoaded === false)
             {
@@ -186,9 +251,9 @@ class ChooseDataModal extends Component
         return (
             <Modal 
                 closeIcon
-                onOpen={loadIfNotAlready}  
-                trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}
-                onClose={this.handleClose}
+                onOpen={loadIfNotAlready.bind(this)}  
+                trigger={<Button onClick={this.handleOpen.bind(this)}>Show Modal</Button>}
+                onClose={this.handleClose.bind(this)}
                 open={this.state.isModalOpen}>
                 <Modal.Header>Choose Data</Modal.Header>
                 <Modal.Content>                                    

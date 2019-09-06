@@ -3,9 +3,17 @@ import { Table } from 'semantic-ui-react';
 import { UnstructuredData} from "../domain";
 import {MAX_TITLE_SIZE} from "../Constants";
 
+/**
+ * shows a table of unstructured data
+ * has the ability to select a row 
+ */
 class UnstructuredDataTable extends Component
 {
-
+    /**
+     * constructs a new unstructured data table
+     * data is mandatory however onselect is optional
+     * @param {*} props the props passed in 
+     */
     constructor(props)
     {
 
@@ -40,6 +48,11 @@ class UnstructuredDataTable extends Component
 
     }
 
+    /**
+     * renders the function
+     * also checks if the data is valid 
+     * only checks the fields which are relevant to this component 
+     */
     render()
     {
 
@@ -105,6 +118,12 @@ class UnstructuredDataTable extends Component
     }
 }
 
+/**
+ * Represents a row of the unstructured data table  
+ * as this component isn't exported no additional validation is done 
+ * by this component 
+ * @param {*} props 
+ */
 function UnstructuredDataRow(props)
 {
 

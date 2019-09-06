@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import { StructuredData} from "../domain";
 
+/**
+ * shows a table of structured data 
+ * has the ability to select a row 
+ */
 class StructuredDataTable extends Component
 {
 
+    /**
+     * constructs a new structured data table
+     * data is mandatory however onSelect is optional 
+     * @param {*} props the props passed in
+     */
     constructor(props)
     {
 
@@ -36,6 +45,11 @@ class StructuredDataTable extends Component
 
     }
 
+    /**
+     * renders the function
+     * also checks if the data is valid 
+     * only checks the fields which are relevant to this component 
+     */
     render()
     {
 
@@ -51,6 +65,7 @@ class StructuredDataTable extends Component
             throw new Error("props.data must be an instance of structured data")
 
         }
+        //borken into each predicate for easier debugging
         if(this.props.items.every((i) => 
         {
             let isIdValid = typeof(i.id) === "number"
@@ -98,6 +113,12 @@ class StructuredDataTable extends Component
     }
 }
 
+/**
+ * Represents a row of the structured data table
+ * as this component isn't exported no additional validation is done 
+ * by this component 
+ * @param {*} props 
+ */
 function StructuredDataRow(props)
 {
 

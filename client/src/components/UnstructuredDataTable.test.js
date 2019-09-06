@@ -31,15 +31,10 @@ describe("Unstructured Data Table Tests",function()
 
         });
 
-    /*
-    const testStructuredData = [
-        new StructuredData(1,new Date(),"some team","some other team",1,"some comp","some plan",{}),
-        new StructuredData(2,new Date(),"some team","some other team",1,"some comp","some plan",{})
-        ];
-    */
+
     const testUnstructuredData = [
-        new UnstructuredData(1,1,"some title","some author","some url",new Date(),new Date(),"some data"),
-        new UnstructuredData(2,1,"some title really really really really really long title","some author","some url",new Date(),new Date(),"some data"),
+        new UnstructuredData(1,1,"some title","some author","some url",new Date("1991-04-20T00:00:00.000Z"),new Date("1991-04-20T00:00:00.000Z"),"some data"),
+        new UnstructuredData(2,1,"some title really really really really really long title","some author","some url",new Date("1991-04-20T00:00:00.000Z"),new Date("1991-04-20T00:00:00.000Z"),"some data"),
         ];
 
     
@@ -205,6 +200,16 @@ describe("Unstructured Data Table Tests",function()
 
 
     })
+
+    test("Should render correctly for correct with no data",() => 
+    {        
+        
+        let Component = renderer.create(<UnstructuredDataTable onSelect={() => {}} items={[]}/>)
+
+        expect(Component.toJSON()).toMatchSnapshot();
+
+    })
+
 
     afterAll(() =>
     {

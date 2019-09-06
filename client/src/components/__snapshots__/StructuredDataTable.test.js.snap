@@ -42,7 +42,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       <td
         className=""
       >
-        4/8/2019
+        6/3/1991
       </td>
       <td
         className=""
@@ -67,7 +67,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       <td
         className=""
       >
-        4/8/2019
+        6/3/1991
       </td>
       <td
         className=""
@@ -131,7 +131,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       <td
         className=""
       >
-        4/8/2019
+        6/3/1991
       </td>
       <td
         className=""
@@ -156,7 +156,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       <td
         className=""
       >
-        4/8/2019
+        6/3/1991
       </td>
       <td
         className=""
@@ -178,4 +178,116 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
 </table>
 `;
 
-exports[`Unstructured Data Table Tests Should render correctly with selected row 1`] = `ShallowWrapper {}`;
+exports[`Unstructured Data Table Tests Should render correctly for correct with no data 1`] = `
+<table
+  className="ui selectable striped table"
+>
+  <thead
+    className=""
+  >
+    <tr
+      className=""
+    >
+      <th
+        className=""
+      >
+        Date
+      </th>
+      <th
+        className=""
+      >
+        Match
+      </th>
+      <th
+        className=""
+      >
+        Competition
+      </th>
+      <th
+        className=""
+      >
+        Plan
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    className=""
+  />
+</table>
+`;
+
+exports[`Unstructured Data Table Tests Should render correctly with selected row 1`] = `
+<Table
+  as="table"
+  selectable={true}
+  striped={true}
+>
+  <TableHeader
+    as="thead"
+  >
+    <TableRow
+      as="tr"
+      cellAs="td"
+    >
+      <TableHeaderCell
+        as="th"
+      >
+        Date
+      </TableHeaderCell>
+      <TableHeaderCell
+        as="th"
+      >
+        Match
+      </TableHeaderCell>
+      <TableHeaderCell
+        as="th"
+      >
+        Competition
+      </TableHeaderCell>
+      <TableHeaderCell
+        as="th"
+      >
+        Plan
+      </TableHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody
+    as="tbody"
+  >
+    <StructuredDataRow
+      data={
+        StructuredData {
+          "away": "some other team",
+          "competitionID": 1,
+          "competitionName": "some comp",
+          "data": Object {},
+          "date": 1991-04-20T00:00:00.000Z,
+          "home": "some team",
+          "id": 1,
+          "plan": "some plan",
+        }
+      }
+      isActive={true}
+      key="1"
+      onSelect={[Function]}
+    />
+    <StructuredDataRow
+      data={
+        StructuredData {
+          "away": "some other team",
+          "competitionID": 1,
+          "competitionName": "some comp",
+          "data": Object {},
+          "date": 1991-04-20T00:00:00.000Z,
+          "home": "some team",
+          "id": 2,
+          "plan": "some plan",
+        }
+      }
+      isActive={false}
+      key="2"
+      onSelect={[Function]}
+    />
+  </TableBody>
+</Table>
+`;
