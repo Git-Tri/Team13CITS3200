@@ -32,6 +32,6 @@ it('check MatchList user inputs',() => {
 		ReactDOM.render(<MatchList/>,page);
 	});
 	ReactTestUtils.Simulate.change('handleChange', { target: {searchtext: 'Text'} });
-	expect(page.state).toBe('Text');
+	expect(page.state.searchtext).toBe('Text');
 	ReactDOM.unmountComponentAtNode(page);
 })
