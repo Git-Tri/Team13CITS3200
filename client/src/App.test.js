@@ -25,13 +25,3 @@ it('should render MatchList', () => {
 	ReactDOM.render(<MatchList />,page);
 	ReactDOM.unmountComponentAtNode(page);
 })
-
-it('check MatchList user inputs',() => {
-	const page = document.createElement('div');
-	ReactTestUtils.act(() => {
-		ReactDOM.render(<MatchList/>,page);
-	});
-	ReactTestUtils.Simulate.change('handleChange', { target: {searchtext: 'Text'} });
-	expect(page.state.searchtext).toBe('Text');
-	ReactDOM.unmountComponentAtNode(page);
-})
