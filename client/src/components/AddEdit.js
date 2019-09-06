@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import ChooseDataModal from "./ChooseDataModal";
 
 class AddEdit extends Component {
 
@@ -12,11 +14,12 @@ class AddEdit extends Component {
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
 				<div id="container" style={{height:"100vh"}}>
-					Content goes here
+					<ChooseDataModal onSelect={(d) => {console.log(JSON.stringify(d))}}></ChooseDataModal>
 				</div>
 			</div>
 		);
 	}
 }
+
 
 export default AddEdit;
