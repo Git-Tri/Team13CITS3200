@@ -48,24 +48,20 @@ exports.createRoutes = function(app)
      
     })
     
-    middleware.get(app,"/matchlist",(req,res) => 
-    {
+    //Route to get all matches (GET)
+    middleware.get(app,"/matchlist",(req,res) =>  {
 
       res.setHeader("Content-Type","application/json");
 
-      let unstructuredDataList;
-      let structuredDataList; 
-
-      dbAccess.getAllMatches((result => 
-        {
+      dbAccess.getAllMatches((result => {
 
           res.send(JSON.stringify(result));
           res.sendStatus(200);
           
 
-        }),standardServerErrorHandler,standardServerErrorHandler);  
+       }),standardServerErrorHandler,standardServerErrorHandler);  
      
-    })
+    });
 
       
 }
