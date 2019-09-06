@@ -85,10 +85,23 @@ class Edit
 
 }
 
+class Competition
+{
+
+    constructor(id,name)
+    {
+
+        this.id = id; 
+        this.name = name; 
+
+    }
+
+}
+
 //export all classes 
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit
+    UnstructuredData,StructuredData,Match,Edit,Competition
 
 }
