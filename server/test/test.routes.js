@@ -11,6 +11,13 @@ describe("Route Tests",function()
 
     let localHost = "http://localhost:" + server.getPort();
 
+    before(done =>
+        {
+    
+            dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],() => done(),console.log,console.log);
+    
+        });
+
     describe("/allchooseableData",function()
     {
 
@@ -25,10 +32,10 @@ describe("Route Tests",function()
             [   
                 "delete from football.unstructured_data",
                 "delete from football.match",
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data)' +
-                    'values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data)' +
-                    'values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");'
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","selectTest","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","selectTest","bob",1,"{}");'
                 
             ];                       
 
@@ -95,7 +102,7 @@ describe("Route Tests",function()
 
                 let resultObjects = JSON.parse(body);
 
-                let expectedObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"selectTest","bob",1,"Some comp","Some plan",{})
+                let expectedObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"selectTest","bob",1,"some comp",{})
 
                 delete expectedObject.id;
 
@@ -144,5 +151,16 @@ describe("Route Tests",function()
         });
 
     });
+
+        
+    after(function(done)
+    {
+
+        let cleanup = ["delete from football.unstructured_data","delete from football.match","delete from football.competition where id = 1"];
+
+        dbAccess.multiInsertQuery(cleanup,() => done(),(err) => {throw err},(err) => {throw err});
+
+    })
+    
 
 });

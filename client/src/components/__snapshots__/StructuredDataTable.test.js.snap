@@ -54,11 +54,6 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       >
         some comp
       </td>
-      <td
-        className=""
-      >
-        some plan
-      </td>
     </tr>
     <tr
       className=""
@@ -78,11 +73,6 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
         className=""
       >
         some comp
-      </td>
-      <td
-        className=""
-      >
-        some plan
       </td>
     </tr>
   </tbody>
@@ -143,11 +133,6 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       >
         some comp
       </td>
-      <td
-        className=""
-      >
-        some plan
-      </td>
     </tr>
     <tr
       className=""
@@ -167,11 +152,6 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
         className=""
       >
         some comp
-      </td>
-      <td
-        className=""
-      >
-        some plan
       </td>
     </tr>
   </tbody>
@@ -264,7 +244,6 @@ exports[`Unstructured Data Table Tests Should render correctly with selected row
           "date": 1991-04-20T00:00:00.000Z,
           "home": "some team",
           "id": 1,
-          "plan": "some plan",
         }
       }
       isActive={true}
@@ -281,7 +260,6 @@ exports[`Unstructured Data Table Tests Should render correctly with selected row
           "date": 1991-04-20T00:00:00.000Z,
           "home": "some team",
           "id": 2,
-          "plan": "some plan",
         }
       }
       isActive={false}

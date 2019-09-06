@@ -65,8 +65,6 @@ function multiInsertQuery(querys,callback,errorCallback,noConnectionCallback,tes
             .catch(err => errorCallback(err))
     }).catch(err => localNoConnectionCallback(err))
 
-
-
 }
 /**
  * Get all structured data from the database
@@ -77,7 +75,7 @@ function multiInsertQuery(querys,callback,errorCallback,noConnectionCallback,tes
 function getAllStructuredData(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from football.match;",(result) => 
+        query("select * from structured_data;",(result) => 
         {
 
                 callback(dataBinding.bindStructredData(result));

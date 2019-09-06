@@ -56,22 +56,36 @@ UNLOCK TABLES;
 -- Table structure for table `match`
 --
 
-DROP TABLE IF EXISTS `match`;
+DROP TABLE IF EXISTS `competition`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `match` (
-  `id` int(11) AUTO_INCREMENT NOT NULL,
-  `date` date,
-  `home` varchar(100),
-  `away` varchar(100),
-  `competitionID` varchar(5),
-  `competitionName` varchar(50),
-  `plan` varchar(50),
-  `data` json,
+CREATE TABLE `competition` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) not null,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+LOCK TABLES `competition` WRITE;
+/*!40000 ALTER TABLE `competition` DISABLE KEYS */;
+/*!40000 ALTER TABLE `competition` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `match`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `match` (
+  `id` int(11) AUTO_INCREMENT NOT NULL,  
+  `competitionID` int(11),
+  `date` date,
+  `home` varchar(100),
+  `away` varchar(100),
+  `data` json,
+  PRIMARY KEY (`id`),
+  KEY `competitionID` (`competitionID`),
+  CONSTRAINT `competitionID_ibfk_1` FOREIGN KEY (`competitionID`) REFERENCES `competition` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 --
 -- Dumping data for table `match`
 --
@@ -127,3 +141,11 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-08-28 22:15:38
+drop view  if exists `structured_data`;
+
+CREATE VIEW `structured_data` AS 
+SELECT football.match.id,football.match.date,football.match.home,football.match.away,football.match.competitionID,football.competition.name ,football.match.data
+FROM football.match 
+Inner join football.competition on football.match.competitionID = football.competition.id;
+
+

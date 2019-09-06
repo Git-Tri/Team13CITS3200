@@ -12,6 +12,13 @@ const domain = require("../domain");
 
 describe('Database Access Tests ', function() {
 
+    before(done =>
+    {
+
+        dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],() => done(),console.log,console.log);
+
+    });
+    
     describe("Check for .env variables",function()
     {
 
@@ -55,8 +62,8 @@ describe('Database Access Tests ', function() {
         it('query function should insert row without error', function(done){
             
             let insertQuery = 'insert into football.match' +
-                            '(date,home,away,competitionID,competitionName,plan,data)' +
-                             'values ("1991/3/23","bob","testTeam",1,"Some comp","Some plan","{}");'
+                            '(date,home,away,competitionID,data)' +
+                             'values ("1991/3/23","bob","testTeam",1,"{}");'
             
 
             dbAccess.query(insertQuery,() => done(),assert.fail)
@@ -143,7 +150,7 @@ describe('Database Access Tests ', function() {
         })
 
     })
-
+    
     describe("DatabaseAccess.multiInsertQuery Tests",function()
     {
 
@@ -151,25 +158,25 @@ describe('Database Access Tests ', function() {
         {
 
             let queries = 
-                ['insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");'
+                ['insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","massInsert","bob",1,"{}");'
            ];
 
            dbAccess.multiInsertQuery(queries,() => done(),assert.fail,assert.fail);
@@ -188,7 +195,7 @@ describe('Database Access Tests ', function() {
         })
 
     })
-
+    
     describe("getAllStructuredData Tests",function()
     {
 
@@ -198,25 +205,25 @@ describe('Database Access Tests ', function() {
             this.timeout(10000)
 
             let queries = 
-            ["delete from football.unstructured_data","delete from football.match",'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");'
+            ["delete from football.unstructured_data","delete from football.match",'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","selectTest","bob",1,"{}");'
        ];
 
        dbAccess.multiInsertQuery(queries,() => {
@@ -263,7 +270,7 @@ describe('Database Access Tests ', function() {
             dbAccess.getAllStructuredData((result) => 
             {
 
-                let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"selectTest","bob",1,"Some comp","Some plan",{})
+                let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"selectTest","bob",1,"some comp",{})
 
                 result.every((r) => 
                 {
@@ -277,6 +284,10 @@ describe('Database Access Tests ', function() {
                     let isDate = JSON.stringify(modelObject.date) == JSON.stringify(r.date); 
                     let isEqual = isHome && isAway && isCompId && isCompName 
                         && isPlan && isData && isDate;
+
+                    console.log(modelObject)
+
+                    console.log(r)
 
                     return isEqual;
 
@@ -305,8 +316,8 @@ describe('Database Access Tests ', function() {
             [   
                 "delete from football.unstructured_data",
                 "delete from football.match",
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data)' +
-                    'values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");'
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","selectTest","bob",1,"{}");'
             ];
             
             
@@ -411,14 +422,14 @@ describe('Database Access Tests ', function() {
     });
 
 
-
+    
     after(function(done)
     {
 
-        let cleanup = ["delete from football.unstructured_data","delete from football.match"];
+        let cleanup = ["delete from football.unstructured_data","delete from football.match","delete from football.competition where id = 1"];
 
         dbAccess.multiInsertQuery(cleanup,() => done(),(err) => {throw err},(err) => {throw err});
 
     })
-
+    
   });

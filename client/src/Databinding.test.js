@@ -31,7 +31,7 @@ describe("Data binding tests",() =>
     describe("bindStructuredData tests",() => 
     {
 
-        let correctObject = new domain.StructuredData(1,new Date(),"some team","some team",1,"some comp","some plan",{field:"some value"});
+        let correctObject = new domain.StructuredData(1,new Date(),"some team","some team",1,"some comp",{field:"some value"});
 
         bindingTests(dataBinding.bindStructuredData,correctObject);
 

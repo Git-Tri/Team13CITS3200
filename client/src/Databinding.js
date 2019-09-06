@@ -15,7 +15,6 @@ export function bindStructuredData(rawStructuredData)
         ,rawStructuredData.away
         ,Number.parseInt(rawStructuredData.competitionID)
         ,rawStructuredData.competitionName
-        ,rawStructuredData.plan
         ,rawStructuredData.data)
 
 }
