@@ -113,5 +113,39 @@ function bindUnstructuredData(rawUnstructuredData)
 
 }
 
+/**
+ * binds a table representation of a match to an object representation
+ * @param {*} rawMatchData the table representation
+ */
+function bindMatchData(rawMatchData) {
 
-module.exports = {bindEdits,bindUnstructuredData,bindStructredData }
+    if(! Array.isArray(rawMatchData)) {
+
+        throw Error("rawMatchData must be an array");
+
+    }
+
+    let results = [];
+
+    rawMatchData.forEach((item) => 
+    {
+
+        if(item.length != 8)
+        {
+
+           throw Error("improper item length");
+
+        }
+
+        let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
+
+        results.push(new domain.Match(processedItem[0],processedItem[1],processedItem[2],
+            processedItem[3],processedItem[4],processedItem[5],processedItem[6]))
+    })
+
+    return results;
+
+}
+
+
+module.exports = {bindEdits,bindUnstructuredData,bindStructredData, bindMatchData}

@@ -1,13 +1,14 @@
 const request = require('request');
 
 
-const url = 'https://api.football-data.org/v2/competitions/';
+const baseUrl = 'https://api.football-data.org/v2/competitions/';
 const apiKey = process.env.APIKEY;
 
 //between start date, end date (optional)
 //League
 
 
+var url = baseUrl + competitionID
 
 module.exports.test = function() {
     console.log('Using API key: ' + apiKey);
