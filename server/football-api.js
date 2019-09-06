@@ -8,22 +8,58 @@ const apiKey = process.env.APIKEY;
 //League
 
 
-var url = baseUrl + competitionID
+
+
 
 module.exports.test = function() {
     console.log('Using API key: ' + apiKey);
 }
 
-var options = {
-    headers: {'X-Auth-Token': apiKey}
-};
+
+function getAllMatches(compID, callbackFunction) {
+
+  
+
+  request({ headers: {'X-Auth-Token': apiKey},
+    url: baseUrl + compID + 'matches',
+    dataType: 'json',
+    type: 'GET'
+    }, (error, response) => {
+    if (error != null) {
+      throw Error(error);
+    }
+    callbackFunction(response.body);
+
+  });
+  
+}
+
+//date in format 'YYYY-MM-DD'
+function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
+  console.log("Trying to get all matches from: " + baseUrl + compID + 'matches' + '/?dateFrom=' + startDate + "/?dateTo=" + endDate);
+  request({ headers: {'X-Auth-Token': apiKey}, 
+    url: baseUrl + compID + '/matches' + '/?dateFrom=' + startDate + "&dateTo=" + endDate, 
+    dataType: 'json',
+    type: 'GET'
+    }, (error, response) => {
+    if (error != null) {
+      throw Error(error);
+    }
+    callbackFunction(response.body);
+
+  });
+  
+}
 
 
-request({ headers: {'X-Auth-Token': apiKey}, url: url + '2019' }, (error, response) => {
-    console.log(error);
-    console.log(response.body);
 
+getAllMatchesBetween('WC', '2018-05-30', '2019-09-06', function (response) {
+  //console.log(response);
+  console.log("recieved matches between 2018-05-30 and 2019-09-06");
 });
+
+
+module.exports = {getAllMatches,getAllMatchesBetween};
 
 
 // Available Subresources:
