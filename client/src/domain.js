@@ -88,11 +88,12 @@ class Edit
 class Competition
 {
 
-    constructor(id,name)
+    constructor(id,name,plan)
     {
 
         this.id = id; 
         this.name = name; 
+        this.plan = plan;
 
     }
 
