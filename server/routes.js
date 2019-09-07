@@ -44,9 +44,26 @@ exports.createRoutes = function(app)
 
             },standardServerErrorHandler,standardServerErrorHandler)
 
-        }),standardServerErrorHandler,standardServerErrorHandler);  
+        }),() => standardServerErrorHandler(req,res),() => standardServerErrorHandler(res,req));  
      
-    })
+    });
+
+    //used for the structured data list pageb 
+    middleware.get(app,"/structuredDataList",(req,res) => 
+    {
+
+      res.setHeader("Content-Type","application/json");
+
+      dbAccess.getAllStructuredData((result => 
+        {
+
+          let responseObject = {structuredData: result};
+
+          res.send(JSON.stringify(responseObject));
+
+        }),() => standardServerErrorHandler(req,res),() => standardServerErrorHandler(res,req));
+
+    });
 
       
 }
