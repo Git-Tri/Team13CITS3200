@@ -12,10 +12,47 @@ const domain = require("../domain");
 
 describe('Database Access Tests ', function() {
 
+    let editId; 
+
+    function cleanUp(callback)
+    {
+
+        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor';"
+        ,"delete from football.match where home = 'testTeam';"
+        ,"delete from football.competition where id = 1;"
+        ,"delete from football.edit where replace_text = 'testEdit'"];
+
+        dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
+
+
+
+    }
+
     before(done =>
     {
 
-        dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");'],() => done(),console.error,console.error);
+        cleanUp(() => 
+        {
+            
+            dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");'
+            ],() => 
+            {
+
+                dbAccess.query("select editid from football.edit where replace_text = 'testEdit';",
+                    (result) => 
+                    {
+                        
+                        editId = result[0][0];
+                    
+                        done();
+                    },(err) => {throw err},(err) => {throw err});
+
+            },(err) => {throw err},(err) => {throw err});
+
+        })
+
 
     });
     
@@ -413,14 +450,90 @@ describe('Database Access Tests ', function() {
        
     });
 
+    describe("get edit tests",() => 
+    {
 
+        it("Should exist",() => should.exist(dbAccess.getEditById));
+
+        it("Should throw error for no callback",() => assert.throws(
+                () => dbAccess.getEditById(1,undefined,assert.fail,assert.fail),
+                Error,
+                "callback must be defined and be a function"));
+        
+        it("Should call error callback with invalid id",(done) => 
+        {
+
+            dbAccess.getEditById("bob",assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with undefined id",(done) => 
+        {
+
+            dbAccess.getEditById(undefined,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with null id",(done) => 
+        {
+
+            dbAccess.getEditById(null,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with object id",(done) => 
+        {
+
+            dbAccess.getEditById({someId: 5},assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should get edit",(done) => 
+        {
+
+            dbAccess.getEditById(editId,() => done(),assert.fail,assert.fail);
+
+        });
+
+        it("Should get edit with fields",(done) => 
+        {
+
+            dbAccess.getEditById(editId,(result) => 
+            {
+
+                result = result[0];
+
+                let isId = result.editID === editId;
+                let isSid = result.structuredDataID === null;
+                let isUid = result.unstructuredDataID === null;
+                let isCorpus = result.isCorpus === true;
+                let isSettings = result.settings === null;
+                let isReplace = result.replace == "testEdit";
+                let isReplaceWith = result.replaceWith == "goodbye";
+                let isType = result.type == "replace";
+
+                let isCorrect = isId && 
+                                isSid && 
+                                isUid && 
+                                isCorpus && 
+                                isSettings && 
+                                isReplace && 
+                                isReplaceWith && 
+                                isType;
+
+                assert.equal(isCorrect,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        })
+
+    })
     
     after(function(done)
     {
 
-        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor';","delete from football.match where home = 'testTeam';","delete from football.competition where id = 1;"];
-
-        dbAccess.multiInsertQuery(cleanup,() => done(),(err) => {throw err},(err) => {throw err});
+       cleanUp(done);
 
     })
     

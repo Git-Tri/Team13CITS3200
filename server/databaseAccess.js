@@ -102,4 +102,40 @@ function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 
 } 
 
-module.exports = { query, multiInsertQuery, getAllStructuredData, getAllUnstrucredData }
+function getEditById(id,callback,errorCallback,noConnectionCallback)
+{
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        let parsedId = Number.parseInt(id);
+
+        if(Number.isNaN(parsedId))
+        {
+
+                errorCallback(new Error("Id must be a number"));
+
+        }
+        else
+        {
+
+                query("select * from football.edit where editid =" + parsedId + ";",(result) => 
+                {
+
+                        callback(dataBinding.bindEdits(result));
+
+                },errorCallback,noConnectionCallback)
+
+        }
+}
+
+module.exports = { query, 
+        multiInsertQuery, 
+        getAllStructuredData, 
+        getAllUnstrucredData, 
+        getEditById }
+
