@@ -9,59 +9,89 @@ const domain = require("../domain");
 describe("Route Tests",function()
 {
 
+    function cleanUp(callback)
+    {
+
+        
+        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor'"
+        ,"delete from football.match where home = 'testTeam'"
+        ,"delete from football.competition where id = 1"
+        ,"delete from football.edit where replace_text = 'testEdit'"];
+
+        dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
+
+
+    }
+
     let actualMatchId;
 
     let localHost = "http://localhost:" + server.getPort();
 
+    let editId; 
+
+    //CALLBACK HELL
     before(done =>
-        {
-    
-            
+        {               
             //just in case 
             this.timeout(10000)
-
-            dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");'],() => 
+            
+            cleanUp(() => 
             {
-                   
-                let queries = 
-                [   
-                    "delete from football.unstructured_data",
-                    "delete from football.match",
-                    'insert into football.match (date,home,away,competitionID,data)' +
-                        'values ("1991/4/20","testTeam","bob",1,"{}");',
-                    'insert into football.match (date,home,away,competitionID,data)' +
-                        'values ("1991/4/20","testTeam","bob",1,"{}");'
-                    
-                ];                       
 
-                dbAccess.multiInsertQuery(queries,() => {
                     
-                    dbAccess.query("select id from football.match where home = 'testTeam';",(matchID) => 
-                        {
+                dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");'],() => 
+                {
+                    
+                    let queries = 
+                    [   
+                        "delete from football.unstructured_data",
+                        "delete from football.match",
+                        'insert into football.match (date,home,away,competitionID,data)' +
+                            'values ("1991/4/20","testTeam","bob",1,"{}");',
+                        'insert into football.match (date,home,away,competitionID,data)' +
+                            'values ("1991/4/20","testTeam","bob",1,"{}");',
+                        ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                            'values (null,null,true,null,"testEdit","goodbye","replace");'
+                        
+                    ];                       
 
-                            actualMatchId = matchID[0][0];
-                            
-                            let insertQueries = 
-                            [
-                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
-                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
-                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
-                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
-                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
+                    dbAccess.multiInsertQuery(queries,() => {
+                        
+                        dbAccess.query("select id from football.match where home = 'testTeam';",(matchID) => 
+                            {
+
+                                actualMatchId = matchID[0][0];
                                 
+                                let insertQueries = 
+                                [
+                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
+                                    
 
-                            ]
+                                ]
 
-                            dbAccess.multiInsertQuery(insertQueries,() => done(),(err) => {throw err},(err) => {throw err});
+                                dbAccess.multiInsertQuery(insertQueries,() => 
+                                {
 
 
-                        },(err) => {throw err},(err) => {throw err})                    
-                
+                                    dbAccess.query("select editid from football.edit where replace_text = 'testEdit';",(result) => 
+                                    {
+
+                                        editId = result[0][0];
+
+                                        done();
+
+                                    },(err) => {throw err},(err) => {throw err});
+                                },(err) => {throw err},(err) => {throw err});
+                            },(err) => {throw err},(err) => {throw err});
+                        },(err) => {throw err},(err) => {throw err});
                     },(err) => {throw err},(err) => {throw err});
 
 
-            },(err) => {throw err},(err) => {throw err});
-
+                });
         });
 
     describe("/allchooseableData",function()
@@ -195,15 +225,72 @@ describe("Route Tests",function()
 
     });
 
+    describe("GET:/edit tests",function()
+    {
+
+        //edit id is only assigned when before is run
+        //thus i have to add ?id at the end of each route 
+        let routeGen = () => localHost + "/edit?id=" + editId;
+
+        it("route should exist and not cuase error",(done) => 
+        {
+
+            request(routeGen(),(error,response,body) =>
+            {
+
+                should.not.exist(error,null);                
+
+                done();
+
+            })
+
+        });
+
+        it("route should give 404 for wrong edit id",(done) => 
+        {
+
+            request(routeGen()+"5",(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(404);            
+
+                done();
+
+            })
+
+        });
+
+        it("route should give correct edit object",(done) => 
+        {
+
+            request(routeGen(),(error,response,body) =>
+            {
+
+                let resultObject = JSON.parse(body);
+
+                let expectedObject = new domain.Edit(editId,null,null,true,null,"testEdit","goodbye","replace");
+
+                JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
+
+                done();
+
+            })
+
+        });
+
+
+    });
+
+
+
         
     after(function(done)
     {
 
-        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor'","delete from football.match where home = 'testTeam'","delete from football.competition where id = 1"];
+        cleanUp(done);
 
-        dbAccess.multiInsertQuery(cleanup,() => done(),(err) => {throw err},(err) => {throw err});
-
-    })
-    
+    });
 
 });
+    
+

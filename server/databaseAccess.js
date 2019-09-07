@@ -88,7 +88,7 @@ function getAllStructuredData(callback,errorCallback,noConnectionCallback)
  * geet all unstructured data from the databasee
  * @param {*} callback the callback for the result
  * @param {*} errorCallback th callback used on error
- * @param {*} noConnectionCallback thee call if there is no connection
+ * @param {*} noConnectionCallback the call if there is no connection
  */
 function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 {
@@ -102,6 +102,13 @@ function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 
 } 
 
+/**
+ * Gets an edit by the id  
+ * @param {*} id the id of the edit to get must be a number
+ * @param {*} callback the callback function on success
+ * @param {*} errorCallback the callback used on error
+ * @param {*} noConnectionCallback the callback used if there is no connection
+ */
 function getEditById(id,callback,errorCallback,noConnectionCallback)
 {
 
@@ -123,7 +130,8 @@ function getEditById(id,callback,errorCallback,noConnectionCallback)
         else
         {
 
-                query("select * from football.edit where editid =" + parsedId + ";",(result) => 
+                query("select * from football.edit where editid =" + parsedId + ";",
+                (result) => 
                 {
 
                         callback(dataBinding.bindEdits(result));

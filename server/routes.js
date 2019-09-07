@@ -48,22 +48,54 @@ exports.createRoutes = function(app)
      
     });
 
-    //used for the structured data list pageb 
-    middleware.get(app,"/structuredDataList",(req,res) => 
-    {
+      //used for the structured data list page 
+      middleware.get(app,"/structuredDataList",(req,res) => 
+      {
 
-      res.setHeader("Content-Type","application/json");
+        res.setHeader("Content-Type","application/json");
 
-      dbAccess.getAllStructuredData((result => 
+        dbAccess.getAllStructuredData((result => 
+          {
+
+            let responseObject = {structuredData: result};
+
+            res.send(JSON.stringify(responseObject));
+
+          }),() => standardServerErrorHandler(req,res),() => standardServerErrorHandler(res,req));
+
+      });
+
+      middleware.get(app,"/edit",(req,res) => 
+      {
+
+        var editId = req.query.id;
+
+        res.setHeader("Content-Type","application/json");
+
+        dbAccess.getEditById(editId,(result) => 
         {
 
-          let responseObject = {structuredData: result};
+          if(result.length > 1)
+          {
 
-          res.send(JSON.stringify(responseObject));
+            standardServerErrorHandler(req,res);
 
-        }),() => standardServerErrorHandler(req,res),() => standardServerErrorHandler(res,req));
+          }
+          if(result.length == 0)
+          {
 
-    });
+            res.sendStatus(404);
 
-      
+          }
+          else
+          {
+
+            res.send(JSON.stringify(result[0]));
+
+          }
+
+
+        },() => standardServerErrorHandler, () => standardServerErrorHandler)
+
+      })
 }
