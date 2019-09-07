@@ -14,7 +14,7 @@ describe("Route Tests",function()
     before(done =>
         {
     
-            dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],() => done(),console.log,console.log);
+            dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");'],() => done(),console.log,console.log);
     
         });
 
@@ -33,28 +33,26 @@ describe("Route Tests",function()
                 "delete from football.unstructured_data",
                 "delete from football.match",
                 'insert into football.match (date,home,away,competitionID,data)' +
-                    'values ("1991/4/20","selectTest","bob",1,"{}");',
+                    'values ("1991/4/20","testTeam","bob",1,"{}");',
                 'insert into football.match (date,home,away,competitionID,data)' +
-                    'values ("1991/4/20","selectTest","bob",1,"{}");'
+                    'values ("1991/4/20","testTeam","bob",1,"{}");'
                 
             ];                       
 
             dbAccess.multiInsertQuery(queries,() => {
                 
-                dbAccess.query("select id from football.match where home = 'selectTest';",(uid) => 
+                dbAccess.query("select id from football.match where home = 'testTeam';",(uid) => 
                     {
 
                         actualUid = uid[0][0];
-
-                        console.log(actualUid);
                         
                         let insertQueries = 
                         [
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")'
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
                             
 
                         ]
@@ -102,7 +100,7 @@ describe("Route Tests",function()
 
                 let resultObjects = JSON.parse(body);
 
-                let expectedObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"selectTest","bob",1,"some comp",{})
+                let expectedObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
 
                 delete expectedObject.id;
 
@@ -131,7 +129,7 @@ describe("Route Tests",function()
 
                 let resultObjects = JSON.parse(body);
 
-                let expectedObject = new domain.UnstructuredData(undefined,actualUid,"some title","some author","some url",new Date("2000-01-21T00:00:00.000Z"),
+                let expectedObject = new domain.UnstructuredData(undefined,actualUid,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
                     new Date("2000-01-21T00:00:00.000Z"),"some text")
 
                 delete expectedObject.id;
@@ -156,7 +154,7 @@ describe("Route Tests",function()
     after(function(done)
     {
 
-        let cleanup = ["delete from football.unstructured_data","delete from football.match","delete from football.competition where id = 1"];
+        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor'","delete from football.match where home = 'testTeam'","delete from football.competition where id = 1"];
 
         dbAccess.multiInsertQuery(cleanup,() => done(),(err) => {throw err},(err) => {throw err});
 
