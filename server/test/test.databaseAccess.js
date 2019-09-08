@@ -9,6 +9,7 @@ const assert = require('assert');
 const should = require('chai').should()
 const dbAccess = require("../databaseAccess") 
 const domain = require("../domain");
+const dataBinding = require("../dataBinding");
 
 describe('Database Access Tests ', function() {
 
@@ -529,7 +530,154 @@ describe('Database Access Tests ', function() {
         })
 
     })
+
+    describe("Update edit tests",function()
+    {
+
+        let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","hello","replaceWith");
+
+        it("Should exist",() => should.exist(dbAccess.updateEdit));
+
+        it("Should throw error for no callback",() => assert.throws(
+            () => dbAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail),
+            Error,
+            "callback must be defined and be a function"));
+
+        it("Should throw error for invalid edit",(done) =>
+        { 
+            
+            let edit = editGen();
+
+            delete edit.type;
+
+            dbAccess.updateEdit(edit,assert.fail,() => done(),assert.fail)
+
+        });
+
+        it("Should throw error for edit with id not found",() => assert.throws(
+            () => 
+            {
+                let edit = editGen();
+                
+                edit.editID += 10;
+
+                dbAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail)
+            },
+            Error,"Could not find an edit with id " + editId));
+
+        it("Should execute update edit",(done) => 
+        {
+           
+            dbAccess.updateEdit(editGen(),(r) => 
+            {
+
+                done();
+
+            },assert.fail,assert.fail);
+
+        });
+
+        it("Should have edit with updated fields",(done) => 
+        {
+
+            dbAccess.getEditById(editId,(result) => 
+            {
+
+                result = result[0];
+
+                let isId = result.editID === editId;
+                let isSid = result.structuredDataID === null;
+                let isUid = result.unstructuredDataID === null;
+                let isCorpus = result.isCorpus === false;
+                let isSettings = JSON.stringify(result.settings) == "{}" ;
+                let isReplace = result.replace == "testEdit";
+                let isReplaceWith = result.replaceWith == "hello";
+                let isType = result.type == "replaceWith";
+
+                let isCorrect = isId && 
+                                isSid && 
+                                isUid && 
+                                isCorpus && 
+                                isSettings && 
+                                isReplace && 
+                                isReplaceWith && 
+                                isType;
+
+                assert.equal(isCorrect,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        })
+
+    });
+
+    describe("Insert edit tests",function()
+    {
+
+        let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","insertTest","replaceWith");
+
+
+        it("Should exist",() => should.exist(dbAccess.insertEdit));
+
+        it("Should throw error for no callback",() => assert.throws(
+            () => dbAccess.insertEdit(editGen(),undefined,assert.fail,assert.fail),
+            Error,
+            "callback must be defined and be a function"));
+
+        it("Should throw error for invalid edit",(done) =>
+        { 
+            
+            let edit = editGen();
+
+            delete edit.type;
+
+            dbAccess.insertEdit(edit,assert.fail,() => done(),assert.fail)
+
+        });
+
+        it("Should successfull insert an edit",(done) => 
+        {
+
+            dbAccess.insertEdit(editGen(),() => done(),assert.fail,assert.fail);
+
+        });
+
+        it("Should have edit with updated fields",(done) => 
+        {
+
+            dbAccess.query("select * from football.edit where replace_with = 'insertTest'",(result) => 
+            {
+                
+                result = dataBinding.bindEdits(result)[0];
+
+                let isSid = result.structuredDataID === null;
+                let isUid = result.unstructuredDataID === null;
+                let isCorpus = result.isCorpus === false;
+                let isSettings = JSON.stringify(result.settings) == "{}" ;
+                let isReplace = result.replace == "testEdit";
+                let isReplaceWith = result.replaceWith == "insertTest";
+                let isType = result.type == "replaceWith";
+
+                let isCorrect = isSid && 
+                                isUid && 
+                                isCorpus && 
+                                isSettings && 
+                                isReplace && 
+                                isReplaceWith && 
+                                isType;
+
+                assert.equal(isCorrect,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        });
+            
+    });
     
+    
+
     after(function(done)
     {
 

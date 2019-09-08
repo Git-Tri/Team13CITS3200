@@ -8,14 +8,25 @@ exports.createRoutes = function(app)
     let standardServerErrorHandler = (err,res) => 
     {
 
-      if(err != undefined && err != null)
+      if(err.message == "bad input")
+      {
+
+        res.sendStatus(400);
+
+      }
+      else if(err != undefined && err != null)
       {
 
         console.log(err)
 
       }
+      else
+      {
 
-      res.sendStatus(500);
+        res.sendStatus(500);
+
+      }
+
 
     }
 
@@ -44,7 +55,7 @@ exports.createRoutes = function(app)
 
             },standardServerErrorHandler,standardServerErrorHandler)
 
-        }),() => standardServerErrorHandler(req,res),() => standardServerErrorHandler(res,req));  
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));  
      
     });
 
@@ -61,7 +72,7 @@ exports.createRoutes = function(app)
 
             res.send(JSON.stringify(responseObject));
 
-          }),() => standardServerErrorHandler(req,res),() => standardServerErrorHandler(res,req));
+          }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
 
       });
 
@@ -78,7 +89,7 @@ exports.createRoutes = function(app)
           if(result.length > 1)
           {
 
-            standardServerErrorHandler(req,res);
+            standardServerErrorHandler(new Error("More then 1 edit with same id"),res);
 
           }
           if(result.length == 0)
@@ -95,7 +106,70 @@ exports.createRoutes = function(app)
           }
 
 
-        },() => standardServerErrorHandler, () => standardServerErrorHandler)
+        },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
 
       })
+
+      middleware.put(app,"/edit",(req,res) => 
+      {
+
+        
+        res.setHeader("Content-Type","application/json");
+
+        let putErrorHandler = (err) => 
+        {
+
+          if(err.message.toLowerCase().includes("cannot add or update a child row"))
+          {
+
+            res.sendStatus(400);
+
+          }
+          else if(err.message.toLowerCase().includes("could not find an edit with"))
+          {
+
+            res.sendStatus(404);
+
+          }
+          else
+          {
+
+            standardServerErrorHandler(err,res);
+
+          }
+
+        }
+
+        let edit = JSON.parse(req.body.edit);      
+
+        dbAccess.updateEdit(edit,() => 
+        {                
+
+          res.sendStatus(200);          
+
+        },
+        (err) => putErrorHandler(err), 
+        (err) => putErrorHandler(err));
+
+      })
+
+    middleware.post(app,"/edit",(req,res) => 
+    {
+
+      res.setHeader("Content-Type","application/json");
+
+
+      let edit = JSON.parse(req.body.edit);
+
+      dbAccess.insertEdit(edit,() => 
+      {
+
+        res.sendStatus(200);
+
+      },
+      (err) => standardServerErrorHandler(err,res),
+      (err) => standardServerErrorHandler(err,res));
+
+      
+    })
 }

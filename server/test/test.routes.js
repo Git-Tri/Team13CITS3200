@@ -281,9 +281,190 @@ describe("Route Tests",function()
 
     });
 
+    describe("PUT:/edit tests",function()
+    {
 
+        function routeGen(edit)
+        {
+            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
+                body:"edit="+JSON.stringify(edit)}
 
-        
+            return options;
+        };
+
+        let editGen = () => new domain.Edit(editId,null,null,true,null,"testEdit","UpdateText","replace");
+
+        it("route should exist and not cuase error",(done) => 
+        {
+            request.put(routeGen(editGen()),(error,response,body) =>
+            {
+
+                should.not.exist(error,null);                
+
+                done();
+
+            })
+
+        });
+
+        it("route should get success code on valid update",(done) => 
+        {
+
+            request.put(routeGen(editGen()),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(200);            
+
+                done();
+
+            })
+
+        })
+
+        it("route should give 404 code if edit does not exist",(done) => 
+        {
+
+            let edit = editGen();
+
+            edit.editID += 10;
+
+            request.put(routeGen(edit),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(404);            
+
+                done();
+
+            })
+
+        });
+
+        it("route should give 400 code if edit does not exist",(done) => 
+        {
+
+            let edit = editGen();
+
+            edit.structuredDataID = -1; 
+
+            request.put(routeGen(edit),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(400);            
+
+                done();
+
+            })
+
+        });
+
+        it("should update edit after update query",(done) => 
+        {
+
+            request(localHost + "/edit?id=" + editId,(error,response,body) =>
+            {
+
+                let resultObject = JSON.parse(body);
+
+                let expectedObject = new domain.Edit(editId,null,null,true,null,"testEdit","UpdateText","replace");
+
+                JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
+
+                done();
+
+            })
+
+        });
+    });
+    
+    describe("POST:/edit tests",function()
+    {
+
+        function routeGen(edit)
+        {
+            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
+                body:"edit="+JSON.stringify(edit)}
+
+            return options;
+        };
+
+        let editGen = () => new domain.Edit(null,null,null,true,null,"testEdit","insertTest","replace");
+
+        it("Should exist and not cuase error",(done) => 
+        {
+            request.post(routeGen(editGen()),(error,response,body) =>
+            {
+
+                should.not.exist(error,null);                
+
+                done();
+
+            })
+
+        });
+
+        it("Should return 400 status on invalid edit",(done) => 
+        {
+
+            let edit = editGen();
+
+            delete edit.type;
+
+            request.post(routeGen(edit),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(400);                
+
+                done();
+
+            })
+
+        });
+
+        it("Should return 200 status for valid edit",(done) => 
+        {
+
+            request.post(routeGen(editGen()),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(200);                
+
+                done();
+
+            })
+
+        });
+
+        it("should insert edit after insert query",(done) => 
+        {
+
+            let newEditID; 
+
+            dbAccess.query("select editId from football.edit where replace_with = 'insertTest';",(r) => 
+            {
+
+                newEditID = r[0][0]; 
+
+                request(localHost + "/edit?id=" + newEditID,(error,response,body) =>
+                {
+    
+                    let resultObject = JSON.parse(body);
+    
+                    let expectedObject = new domain.Edit(newEditID,null,null,true,null,"testEdit","insertTest","replace");
+    
+                    JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
+    
+                    done();
+    
+                })
+
+            },assert.fail,assert.fail)
+
+           
+
+        });
+
+    })
+
     after(function(done)
     {
 

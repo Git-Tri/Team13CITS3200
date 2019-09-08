@@ -6,6 +6,8 @@ const client = mysqlx.getClient(connectionString, { pooling: { maxSize: 50, maxI
 
 const dataBinding = require("./dataBinding");
 
+const dataValidation = require("./dataValidation");
+
 /**
  * Querys the database with the given query and then callback on error or success
  * noConnectionCallback is used when you want to handle a failded connection
@@ -15,21 +17,39 @@ function query(query,callback,errorCallback,noConnectionCallback,testConnectionS
 {   
 
 
-   let results = [];
+        let results = [];
 
-   let localConnectionString = testConnectionString != undefined && testConnectionString != null ? testConnectionString : connectionString;
+        let localConnectionString = testConnectionString != undefined && testConnectionString != null ? testConnectionString : connectionString;
 
-   let localNoConnectionCallback = noConnectionCallback != undefined ? noConnectionCallback : console.log
-   
-   let session = client.getSession(localConnectionString)
+        let localNoConnectionCallback = noConnectionCallback != undefined ? noConnectionCallback : console.log
+
+        let session = client.getSession(localConnectionString)
+
+        let isError = false;
+
+        let onError = (err) => 
+        {
+
+            isError = true;
+            
+            errorCallback(err)
+            
+        }
 
         session.then(session => session.sql(query) //execute query
         .execute(result => results.push(result)) //get results for each row
-        .catch(err => errorCallback(err))) //the error for any given row 
+        .catch(err => onError(err))) //the error for any given row 
         .then(() =>  
                 {
+                if(! isError)
+                {
+                
+                        
                         callback(results);
-                        session.then((session) => session.close());
+
+
+                }
+                session.then((session) => session.close());
                 }) //collect results
         .catch(err => localNoConnectionCallback(err))
 
@@ -126,6 +146,8 @@ function getEditById(id,callback,errorCallback,noConnectionCallback)
 
                 errorCallback(new Error("Id must be a number"));
 
+                return;
+
         }
         else
         {
@@ -141,9 +163,112 @@ function getEditById(id,callback,errorCallback,noConnectionCallback)
         }
 }
 
+/**
+ * Updates a given edit 
+ * Fails slightly if id does not exist
+ * @param {*} edit  the edit update with
+ * @param {*} callback the callback on success 
+ * @param {*} errorCallback  the callback on error
+ * @param {*} noConnectionCallback  the call back if connection fails
+ */
+function updateEdit(edit,callback,errorCallback,noConnectionCallback)
+{
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }       
+
+
+        let isEditValid = dataValidation.validateEdit(edit);
+
+        if(isEditValid)
+        {
+                
+                getEditById(edit.editID,(result) => 
+                {
+                        
+                        if(result.length !== 1)
+                        {
+
+                                errorCallback(new Error("Could not find an edit with id " + edit.editID));
+                                return;
+
+                        }
+
+                        let sqlquery = "update football.edit set " + 
+                        " sid = " + edit.structuredDataID +
+                        ",usid = " + edit.unstructuredDataID +
+                        ",iscorpus = " + edit.isCorpus + 
+                        ",settings = '" + JSON.stringify(edit.settings) + "'" + 
+                        ",replace_text = '" + edit.replace + "'" +
+                        ",replace_with = '" + edit.replaceWith + "'" + 
+                        ",type = '" + edit.type + "'" +
+                        "where editid = " + edit.editID + ";";
+        
+                        query(sqlquery,callback,errorCallback,noConnectionCallback);
+        
+                },errorCallback,noConnectionCallback)
+
+
+        }
+        else
+        {
+
+                errorCallback(new Error("bad input"));
+                return;
+
+        }
+
+}
+
+/**
+ * insert a given edit 
+ * @param {*} edit  the edit to insert with
+ * @param {*} callback the callback on success 
+ * @param {*} errorCallback  the callback on error
+ * @param {*} noConnectionCallback  the call back if connection fails
+ */
+function insertEdit(edit,callback,errorCallback,noConnectionCallback)
+{
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }       
+
+        let isEditValid = dataValidation.validateEdit(edit);
+
+        if(isEditValid)
+        {
+
+                let sqlquery = "insert into football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type) " + 
+                "values(" + edit.structuredDataID + "," + edit.unstructuredDataID + "," + 
+                        edit.isCorpus + ",'" + JSON.stringify(edit.settings) + "','" + 
+                        edit.replace + "','" + edit.replaceWith + "','" + edit.type + "')";
+
+                query(sqlquery,callback,errorCallback,noConnectionCallback);
+
+        }
+        else
+        {
+
+                errorCallback(new Error("bad input"));
+                return;
+
+        }
+
+}
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
         getAllUnstrucredData, 
-        getEditById }
+        getEditById,
+        updateEdit,
+        insertEdit };
 
