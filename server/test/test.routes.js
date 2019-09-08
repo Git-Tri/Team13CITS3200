@@ -458,12 +458,88 @@ describe("Route Tests",function()
                 })
 
             },assert.fail,assert.fail)
-
-           
+          
 
         });
 
-    })
+    });
+
+    describe("DELETE:/edit tests",function()
+    {
+
+        let routeGen = () => localHost + "/edit?id=" + editId;
+
+        it("Should exist and not cuase error",(done) => 
+        {
+            request.delete(routeGen()+5,(error,response,body) =>
+            {
+
+                should.not.exist(error,null);                
+
+                done();
+
+            })
+
+        });
+
+        it("Should return 404 status with invalid id",(done) => 
+        {
+            request.delete(routeGen()+5,(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(404);      
+
+                done();
+
+            });
+
+        });
+
+        it("Should return 200 status with valid id",(done) =>
+        {
+
+            request.delete(routeGen(),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(200);      
+
+                done();
+
+            });
+
+        });
+
+        it("Should return 404 for repeated delete",(done) =>
+        {
+
+            request.delete(routeGen(),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(404);      
+
+                done();
+
+            });
+
+        });
+
+        it("Should return 404 for get request for delete route",(done) => 
+        {
+
+            request(routeGen(),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(404);            
+
+                done();
+
+            })
+
+
+        })
+
+
+    });
 
     after(function(done)
     {

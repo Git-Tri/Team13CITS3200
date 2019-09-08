@@ -617,7 +617,6 @@ describe('Database Access Tests ', function() {
 
         let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","insertTest","replaceWith");
 
-
         it("Should exist",() => should.exist(dbAccess.insertEdit));
 
         it("Should throw error for no callback",() => assert.throws(
@@ -676,7 +675,65 @@ describe('Database Access Tests ', function() {
             
     });
     
-    
+    describe("Delete edit by id tests",function()
+    {
+
+        it("Should exist",() => should.exist(dbAccess.getEditById));
+
+        it("Should throw error for no callback",() => assert.throws(
+                () => dbAccess.deleteEditById(1,undefined,assert.fail,assert.fail),
+                Error,
+                "callback must be defined and be a function"));
+        
+        it("Should call error callback with invalid id",(done) => 
+        {
+
+            dbAccess.deleteEditById("bob",assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with undefined id",(done) => 
+        {
+
+            dbAccess.deleteEditById(undefined,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with null id",(done) => 
+        {
+
+            dbAccess.deleteEditById(null,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with object id",(done) => 
+        {
+
+            dbAccess.deleteEditById({someId: 5},assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should delete edit",(done) => 
+        {
+
+            dbAccess.deleteEditById(editId,() => done(),assert.fail,assert.fail);
+
+        });
+
+        it("Should not have deleted edit in database",(done) => 
+        {
+
+            dbAccess.getEditById(editId,(result) => 
+            {
+
+                assert.equal(result.length == 0,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        })
+
+    })
 
     after(function(done)
     {

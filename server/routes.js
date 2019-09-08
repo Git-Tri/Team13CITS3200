@@ -158,7 +158,6 @@ exports.createRoutes = function(app)
 
       res.setHeader("Content-Type","application/json");
 
-
       let edit = JSON.parse(req.body.edit);
 
       dbAccess.insertEdit(edit,() => 
@@ -169,7 +168,48 @@ exports.createRoutes = function(app)
       },
       (err) => standardServerErrorHandler(err,res),
       (err) => standardServerErrorHandler(err,res));
-
       
+    })
+
+    middleware.delete(app,"/edit",(req,res) => 
+    {
+      
+      
+
+      var editId = req.query.id;
+
+      dbAccess.getEditById(editId,(result) => 
+      {
+
+
+        if(result.length > 1)
+        {
+
+          standardServerErrorHandler(new Error("mutiple entry with single id"),res);
+
+        }
+        else if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+          
+          res.setHeader("Content-Type","application/json");
+
+          dbAccess.deleteEditById(editId,(result) => 
+          {
+    
+          res.sendStatus(200);
+    
+          },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
+   
+        }
+
+      },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
+
+     
     })
 }
