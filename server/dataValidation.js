@@ -28,7 +28,24 @@ function idChecker(id)
     let Numid = Number.parseInt(id);
 
     if(Number.isInteger(Numid) && Numid >= 0)
+    {
+
+        return true;
+
+    }
+    else if(! doesExist(id))
+    {
+
+        return true;
+
+    }
+    else
+    {
+
         return false; 
+
+    }
+}
 
 /**
  * if it's a number check if it is above 0
