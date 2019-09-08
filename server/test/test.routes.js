@@ -51,8 +51,13 @@ describe("Route Tests",function()
                         'insert into football.match (date,home,away,competitionID,data)' +
                             'values ("1991/4/20","testTeam","bob",1,"{}");',
                         ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                            'values (null,null,true,null,"testEdit","goodbye","replace");'
-                        
+                            'values (null,null,true,null,"testEdit","goodbye","toDelete");',
+                        ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                            'values (null,null,true,null,"testEdit","goodbye","replace");',
+                        ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                            'values (null,null,true,null,"testEdit","goodbye","replace");',
+                        ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                            'values (null,null,true,null,"testEdit","goodbye","replace");'                            
                     ];                       
 
                     dbAccess.multiInsertQuery(queries,() => {
@@ -77,7 +82,7 @@ describe("Route Tests",function()
                                 {
 
 
-                                    dbAccess.query("select editid from football.edit where replace_text = 'testEdit';",(result) => 
+                                    dbAccess.query("select editid from football.edit where type = 'toDelete';",(result) => 
                                     {
 
                                         editId = result[0][0];
@@ -268,7 +273,7 @@ describe("Route Tests",function()
 
                 let resultObject = JSON.parse(body);
 
-                let expectedObject = new domain.Edit(editId,null,null,true,null,"testEdit","goodbye","replace");
+                let expectedObject = new domain.Edit(editId,null,null,true,null,"testEdit","goodbye","toDelete");
 
                 JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
 
@@ -452,7 +457,7 @@ describe("Route Tests",function()
 
         });
 
-        it("should insert edit after insert query",(done) => 
+        it("Should insert edit after insert query",(done) => 
         {
 
             let newEditID; 
@@ -555,6 +560,72 @@ describe("Route Tests",function()
 
 
         })
+
+
+    });
+
+    
+    describe("/editList",function()
+    {
+
+        
+        let route = localHost + "/editList";
+
+        it("route should exist and not cuase error",(done) => 
+        {
+
+            request(route,(error,response,body) =>
+            {
+
+                should.not.exist(error,null);                
+
+                done();
+
+            })
+
+        });
+
+        it("route should return correct edits",(done) => 
+        {
+            //due to limitations of the database schema can't test if ids are equal
+            //since ids will change with every test run
+            //due to limitations in json.parse the numbers needs to be converted from string to int. 
+            request(route,(error,response,body) =>
+            {
+
+                let edits = JSON.parse(body);
+
+                edits.editList.every((result) => 
+                {
+
+
+                    let isSid = result.structuredDataID === null;
+                    let isUid = result.unstructuredDataID === null;
+                    let isCorpus = result.isCorpus === true;
+                    let isSettings = result.settings === null;
+                    let isReplace = result.replace == "testEdit";
+                    let isReplaceWith = result.replaceWith == "goodbye" || result.replaceWith == "insertTest";
+                    let isType = result.type == "replace";
+    
+                    let isCorrect = isSid && 
+                                    isUid && 
+                                    isCorpus && 
+                                    isSettings && 
+                                    isReplace && 
+                                    isReplaceWith && 
+                                    isType;
+
+
+
+                    return isCorrect;
+
+                }).should.equal(true);
+
+                done();
+
+            })
+
+        });
 
 
     });

@@ -232,4 +232,23 @@ exports.createRoutes = function(app)
 
      
     })
+
+    //used for the edit list page 
+    middleware.get(app,"/editList",(req,res) => 
+    {
+
+      res.setHeader("Content-Type","application/json");
+
+      dbAccess.getAllEdits((result => 
+        {
+
+          let responseObject = {editList: result};
+
+          res.send(JSON.stringify(responseObject));
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+    });
+
+
 }

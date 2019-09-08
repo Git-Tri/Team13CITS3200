@@ -735,6 +735,143 @@ describe('Database Access Tests ', function() {
 
     })
 
+    describe("Get all Edit Tests",function()
+    {
+
+        before(function(done)
+        {
+            cleanUp(() => 
+            {
+
+                //just in case 
+                this.timeout(10000)
+
+                let queries = 
+                [
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");'
+
+            ];
+        
+
+        dbAccess.multiInsertQuery(queries,() => {
+            
+            done()
+        
+            },assert.fail,assert.fail);
+
+        },(err) => {throw err},(err) => {throw err});
+       
+    
+       });
+
+       it("Should exist",() => should.exist(dbAccess.getAllEdits))
+
+       it("should have correct number of edits in result",(done) => 
+       {
+
+            dbAccess.getAllEdits((result) => 
+            {
+
+
+                result.length.should.equal(19);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+       it("Should have correct types of edit in result",(done) => 
+       {
+
+            dbAccess.getAllEdits((result) => 
+            {
+
+                result.every((r) => r instanceof domain.Edit).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+       it("should have correct fields of edits in result",(done) => 
+       {
+            //delete ids as schema doesn't support id
+            dbAccess.getAllEdits((edits) => 
+            {
+
+                edits.every((result) => 
+                {
+
+
+                    let isSid = result.structuredDataID === null;
+                    let isUid = result.unstructuredDataID === null;
+                    let isCorpus = result.isCorpus === true;
+                    let isSettings = result.settings === null;
+                    let isReplace = result.replace == "testEdit";
+                    let isReplaceWith = result.replaceWith == "goodbye";
+                    let isType = result.type == "replace";
+    
+                    let isCorrect = isSid && 
+                                    isUid && 
+                                    isCorpus && 
+                                    isSettings && 
+                                    isReplace && 
+                                    isReplaceWith && 
+                                    isType;
+
+
+
+                    return isCorrect;
+
+                }).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail);
+
+       });
+
+    });
+
     after(function(done)
     {
 

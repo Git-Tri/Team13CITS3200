@@ -264,6 +264,13 @@ function insertEdit(edit,callback,errorCallback,noConnectionCallback)
 
 }
 
+/**
+ * Deletes a given edit by id if it exists
+ * @param {*} id the id to delete by 
+ * @param {*} callback the callback on success
+ * @param {*} errorCallback the callback on error
+ * @param {*} noConnectionCallback the callback for no connection
+ */
 function deleteEditById(id,callback,errorCallback,noConnectionCallback)
 {
 
@@ -298,6 +305,24 @@ function deleteEditById(id,callback,errorCallback,noConnectionCallback)
         }
 }
 
+/**
+ * Get's all edits in the database
+ * @param {*} callback the callback to pass data
+ * @param {*} errorCallback the callback used on error
+ * @param {*} noConnectionCallback the callback used on no connection
+ */
+function getAllEdits(callback,errorCallback,noConnectionCallback)
+{
+
+        query("select * from football.edit;",(result) => 
+        {
+
+                callback(dataBinding.bindEdits(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
@@ -305,5 +330,6 @@ module.exports = { query,
         getEditById,
         updateEdit,
         insertEdit,
-        deleteEditById };
+        deleteEditById,
+        getAllEdits };
 
