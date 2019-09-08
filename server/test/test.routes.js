@@ -339,7 +339,7 @@ describe("Route Tests",function()
 
         });
 
-        it("route should give 400 code if edit does not exist",(done) => 
+        it("route should give 400 code if sturctured data does not exist",(done) => 
         {
 
             let edit = editGen();
@@ -408,6 +408,24 @@ describe("Route Tests",function()
             let edit = editGen();
 
             delete edit.type;
+
+            request.post(routeGen(edit),(error,response,body) =>
+            {
+
+                response.statusCode.should.equal(400);                
+
+                done();
+
+            })
+
+        });
+
+        it("Should return 400 status for non-existent structured id",(done) => 
+        {
+
+            let edit = editGen();
+
+            edit.unstructuredDataID = 1;
 
             request.post(routeGen(edit),(error,response,body) =>
             {

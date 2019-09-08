@@ -76,6 +76,7 @@ exports.createRoutes = function(app)
 
       });
 
+      //get an edit by id 
       middleware.get(app,"/edit",(req,res) => 
       {
 
@@ -110,6 +111,7 @@ exports.createRoutes = function(app)
 
       })
 
+      //updates an edit 
       middleware.put(app,"/edit",(req,res) => 
       {
 
@@ -153,6 +155,7 @@ exports.createRoutes = function(app)
 
       })
 
+    //inserts an edit 
     middleware.post(app,"/edit",(req,res) => 
     {
 
@@ -160,14 +163,31 @@ exports.createRoutes = function(app)
 
       let edit = JSON.parse(req.body.edit);
 
+      let putErrorHandler = (err) => 
+      {
+
+        if(err.message.toLowerCase().includes("cannot add or update a child row"))
+        {
+
+          res.sendStatus(400);
+
+        }
+        else 
+        {
+
+          standardServerErrorHandler(err,res);
+
+        }
+      }
+
       dbAccess.insertEdit(edit,() => 
       {
 
         res.sendStatus(200);
 
       },
-      (err) => standardServerErrorHandler(err,res),
-      (err) => standardServerErrorHandler(err,res));
+      (err) => putErrorHandler(err,res),
+      (err) => putErrorHandler(err,res));
       
     })
 
