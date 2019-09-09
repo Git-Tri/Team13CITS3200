@@ -1,7 +1,6 @@
-import {StructuredData, UnstructuredData} from "./domain";
-
+import {StructuredData, UnstructuredData, Edit} from "./domain";
 /**
- * converts a pure javascript representation of structured data
+ * converts a parsed json object of structured data
  * to an instance of structured data 
  * No validation is done
  * @param {object} rawStructuredData the object representation
@@ -20,7 +19,7 @@ export function bindStructuredData(rawStructuredData)
 }
 
 /**
- * converts a pure javascript representation of unstructured data
+ * converts a parsed json object of unstructured data
  * to an instance of unstructured data
  * no validation is done.
  * @param {object} rawUnstructuredData 
@@ -37,5 +36,24 @@ export function bindUnstructureData(rawUnstructuredData)
         new Date(rawUnstructuredData.extracted),
         rawUnstructuredData.data);
 
+
+}
+
+/**
+ * converts a parsed json object to an edit 
+ * no validation is done 
+ * @param {*} rawEdit the parsed json object 
+ */
+export function bindEdit(rawEdit)
+{
+
+    return new Edit(Number.parseInt(rawEdit.editID),
+        Number.parseInt(rawEdit.structuredDataID),
+        Number.parseInt(rawEdit.unstructuredDataID),
+        rawEdit.isCorpus,
+        rawEdit.settings,
+        rawEdit.replace,
+        rawEdit.replaceWith,
+        rawEdit.type);    
 
 }

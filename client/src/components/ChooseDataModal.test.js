@@ -151,7 +151,7 @@ describe("Chose Data Modal Tests",function()
 
     });
 
-    test("should call load data when modal opens",function(done)
+    test("should match snapshot on no data choosen error",function(done)
     {
         
         let component = mount(<ChooseDataModal onSelect={() =>{}}/>);
@@ -192,10 +192,6 @@ describe("Chose Data Modal Tests",function()
 
     })
 
-    /*
-        should render error message when sub-component fails 
-
-    */
     afterAll(() =>
     {
 

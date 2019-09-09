@@ -18,7 +18,7 @@ export function filterConsoleError()
     {
 
         
-        if(typeof(e) === "string" && ! e.includes("React will try to recreate this component tree from scratch using the error boundary you provided, ErrorTester."))
+        if(typeof(e) === "string" && ! e.includes("React will try to recreate this component tree from scratch using the error boundary you provided"))
         {
 
             trueErrorLog(e);

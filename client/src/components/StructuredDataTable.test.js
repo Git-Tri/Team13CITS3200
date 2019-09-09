@@ -12,7 +12,7 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 
-describe("Unstructured Data Table Tests",function()
+describe("Structured Data Table Tests",function()
 {
 
 

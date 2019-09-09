@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Unstructured Data Table Tests Should render correctly for correct input 1`] = `
+exports[`Structured Data Table Tests Should render correctly for correct input 1`] = `
 <table
   className="ui striped table"
 >
@@ -79,7 +79,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
 </table>
 `;
 
-exports[`Unstructured Data Table Tests Should render correctly for correct input with onSelect handler 1`] = `
+exports[`Structured Data Table Tests Should render correctly for correct input with onSelect handler 1`] = `
 <table
   className="ui selectable striped table"
 >
@@ -158,7 +158,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
 </table>
 `;
 
-exports[`Unstructured Data Table Tests Should render correctly for correct with no data 1`] = `
+exports[`Structured Data Table Tests Should render correctly for correct with no data 1`] = `
 <table
   className="ui selectable striped table"
 >
@@ -196,7 +196,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct with 
 </table>
 `;
 
-exports[`Unstructured Data Table Tests Should render correctly with selected row 1`] = `
+exports[`Structured Data Table Tests Should render correctly with selected row 1`] = `
 <Table
   as="table"
   selectable={true}
