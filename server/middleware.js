@@ -22,6 +22,6 @@ exports.put = function(app,route,routingFunction)
 exports.delete = function(app,route,routingFunction)
 {
 
-    app.put(route,routingFunction)
+    app.delete(route,routingFunction)
 
 }

@@ -59,7 +59,7 @@ function bindStructredData(rawStructuredData)
     rawStructuredData.forEach((item) => 
     {
 
-        if(item.length != 8)
+        if(item.length != 7)
         {
 
            throw Error("improper item length");
@@ -69,7 +69,7 @@ function bindStructredData(rawStructuredData)
         let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
 
         results.push(new domain.StructuredData(processedItem[0],processedItem[1],processedItem[2],
-            processedItem[3],processedItem[4],processedItem[5],processedItem[6],processedItem[7]))
+            processedItem[3],processedItem[4],processedItem[5],processedItem[6]))
     })
 
     return results;

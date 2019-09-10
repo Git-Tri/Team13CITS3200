@@ -31,11 +31,11 @@ describe("Domain Tests",function()
 
     });
 
-    describe("Unstructured Data Tests",function()
+    describe("Structured Data Tests",function()
     {
 
         let testStructuredData = new domain.StructuredData(1,1,"some home team","some away team",
-            1,"some comp name","some plan","some data");
+            1,"some comp name","some data");
 
         it("should exist",() => should.exist(testStructuredData));
         it("should have correct id",() => testStructuredData.id.should.equal(1));
@@ -43,7 +43,6 @@ describe("Domain Tests",function()
         it("should have correct away team",() => testStructuredData.away.should.equal("some away team"));
         it("should have correct competition id",() => testStructuredData.id.should.equal(1))
         it("should have correct competition name",() => testStructuredData.competitionName.should.equal("some comp name"));
-        it("should have correct plan",() => testStructuredData.plan.should.equal("some plan"));
         it("should have data",() => testStructuredData.data.should.equal("some data"));
 
     });
@@ -53,7 +52,7 @@ describe("Domain Tests",function()
 
         
         let testMatch = new domain.Match(1,1,"some home team","some away team",
-            1,"some comp name","some plan");
+            1,"some comp name");
 
         it("should exist",() => should.exist(testMatch));
         it("should have correct id",() => testMatch.id.should.equal(1));
@@ -61,7 +60,7 @@ describe("Domain Tests",function()
         it("should have correct away team",() => testMatch.away.should.equal("some away team"));
         it("should have correct competition id",() => testMatch.id.should.equal(1))
         it("should have correct competition name",() => testMatch.competitionName.should.equal("some comp name"));
-        it("should have correct plan",() => testMatch.plan.should.equal("some plan"));
+       
 
     })
 

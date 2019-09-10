@@ -28,7 +28,7 @@ class UnstructuredData
 class StructuredData
 {
 
-    constructor(id,date,home,away,competitionID,competitionName,plan,data)
+    constructor(id,date,home,away,competitionID,competitionName,data)
     {
 
         this.id = id;
@@ -37,7 +37,6 @@ class StructuredData
         this.away = away;
         this.competitionID = competitionID;
         this.competitionName = competitionName;
-        this.plan = plan;
         this.data = data; 
 
     }
@@ -50,7 +49,7 @@ class StructuredData
 class Match
 {
 
-    constructor(id,date,home,away,competitionID,competitionName,plan)
+    constructor(id,date,home,away,competitionID,competitionName)
     {
 
         this.id = id;
@@ -59,7 +58,6 @@ class Match
         this.away = away;
         this.competitionID = competitionID;
         this.competitionName = competitionName;
-        this.plan = plan;
 
     }
 
@@ -87,10 +85,24 @@ class Edit
 
 }
 
+class Competition
+{
+
+    constructor(id,name,plan)
+    {
+
+        this.id = id; 
+        this.name = name; 
+        this.plan = plan;
+
+    }
+
+}
+
 //export all classes 
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit
+    UnstructuredData,StructuredData,Match,Edit,Competition
 
 }
