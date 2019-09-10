@@ -16,6 +16,8 @@ const dbAccess = require("./databaseAccess")
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.json());
+
 routes.createRoutes(app)
 
 function getPort()
@@ -26,7 +28,7 @@ function getPort()
 
     return process.env.PORT;
 
-  }
+  } 
   else 
   {
 

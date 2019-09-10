@@ -291,8 +291,8 @@ describe("Route Tests",function()
 
         function routeGen(edit)
         {
-            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
-                body:"edit="+JSON.stringify(edit)}
+            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/json' },
+                body:JSON.stringify(edit)}
 
             return options;
         };
@@ -386,8 +386,8 @@ describe("Route Tests",function()
 
         function routeGen(edit)
         {
-            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
-                body:"edit="+JSON.stringify(edit)}
+            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/json' },
+                body:JSON.stringify(edit)}
 
             return options;
         };

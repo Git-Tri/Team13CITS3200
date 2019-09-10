@@ -142,7 +142,7 @@ exports.createRoutes = function(app)
 
         }
 
-        let edit = JSON.parse(req.body.edit);      
+        let edit = req.body;
 
         dbAccess.updateEdit(edit,() => 
         {                
@@ -161,7 +161,7 @@ exports.createRoutes = function(app)
 
       res.setHeader("Content-Type","application/json");
 
-      let edit = JSON.parse(req.body.edit);
+      let edit = req.body;
 
       let putErrorHandler = (err) => 
       {
