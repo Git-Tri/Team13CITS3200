@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 import { Form, Container, Button, Loader, Message} from 'semantic-ui-react'
 import ChooseDataModal from "./ChooseDataModal";
 import { withRouter } from 'react-router-dom';
