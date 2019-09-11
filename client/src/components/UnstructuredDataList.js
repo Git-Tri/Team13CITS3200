@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
+import UnstructuredDataTable from "./UnstructuredDataTable";
+import { UnstructuredData } from "../domain";
+import { bindUnstructureData } from "../Databinding";
 
 class UnstructuredDataList extends Component {
     constructor(props) {
@@ -10,7 +13,8 @@ class UnstructuredDataList extends Component {
             start: '',
             end: '',
             match: '',
-            league: ''
+            league: '',
+            data: []
         }
     }
 
@@ -18,8 +22,36 @@ class UnstructuredDataList extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    load = () => {
+        var request = new XMLHttpRequest()
+        request.open('GET', '/allchooseableData', true)
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+        request.send()
+        request.onload = () => {
+            if (request.status != 200) {
+                alert(`Error ${request.status}: ${request.statusText}`)
+            }
+            else {
+                let data = JSON.parse(request.responseText)
+                
+                data.unstructuredData = data.unstructuredData.map((d) => bindUnstructureData(d));
+                
+                this.setState({ data: data.unstructuredData });
+                
+            }
+        }
+        request.onerror = function () {
+            alert("Load failed")
+        }
+    }
+
     render() {
-        const { search, start, end, match, league } = this.state
+        this.load()
+        const { search, start, end, match, league, data } = this.state
+        var test = [
+            new UnstructuredData(1, 1, "some title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
+            new UnstructuredData(2, 1, "some title really really really really really long title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
+        ];
 		return (
 			<div className="page">
 				<PageHeader 
@@ -29,14 +61,6 @@ class UnstructuredDataList extends Component {
 				/>
 				<div id="container" style={{height:"100vh"}}>
                     <form class="ui form">
-                        <div class="inline fields">
-                            <div class="thirteen wide field"/>
-                            <div class="two wide field">
-                                <button class="ui primary button">
-                                    Logout
-                                </button>
-                            </div>
-                        </div>
                         <div class="inline fields">
                             <div class="one wide field"/>
                             <div class="fourteen wide field">
@@ -56,7 +80,7 @@ class UnstructuredDataList extends Component {
                                     Between
                                 </label>
                                 <input type="text" name="start" value={start} onchange={this.changeHandler} placeholder="Start Date" />
-                                <input type="text" name="end" value={end} onchange={this.changeHandler} placeholder = "End Date" />
+                                <input type="text" name="end" value={end} onchange={this.changeHandler} placeholder= "End Date" />
                             </div>
                             <div class="six wide field">
                                 <label>
@@ -77,12 +101,8 @@ class UnstructuredDataList extends Component {
                         <div class="inline fields" >
                             <div class="one wide field"/>
                             <div class="fourteen wide field">
-                                <div class="ui message">
-                                    <div class="header">
-                                        Search Results
-                                    </div>
-                                    <p>To add: list of unstructured data that meets above criteria, featuring date, teams, league/tournament, title and publisher. Clicking on an item should take you to the unstructured data page.</p>
-                                </div>
+                                <UnstructuredDataTable items={this.state.data}>
+                                </UnstructuredDataTable>
                             </div>
                         </div>
                     </form>

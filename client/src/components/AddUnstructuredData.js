@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
+import { UnstructuredData } from "../domain";
+
 
 class AddUnstructuredData extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            id: '',
+            matchid: '',
             title: '',
             author: '',
             published: '',
             extracted: '',
             url: '',
             match: '',
-            content: ''
+            data: ''
         }
+        var exists = false;
     }
 
     changeHandler = (e) => {
@@ -22,19 +27,77 @@ class AddUnstructuredData extends Component {
 
     submitHandler = (e) => {
         e.preventDefault()
+        var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, this.state.published, this.state.extracted, this.state.data)
         console.log(this.state)
+        console.log(toSend)
         var request = new XMLHttpRequest()
-        request.open('POST', '/add_unstructured_data', true)
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-        request.send(JSON.stringify(this.state))
+        if (!this.exists) {
+            request.open('POST', '/unstructuredData', true)
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+            request.send(JSON.stringify(this.state))
+        }
+        else {
+            request.open('PUT', '/unstructuredData', true)
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+            request.send(JSON.stringify(this.state))
+        }
+        request.onload = function () {
+            if (request.status != 200) {
+                alert(`Error ${request.status}: ${request.statusText}`)
+            }
+            else {
+                alert(`Saved`)
+            }
+        }
+        request.onerror = function () {
+            alert("Save failed")
+        }
     }
 
-    goBack = () => {
-        //TODO add confirmation for going back
-        window.history.back()
+    deleteHandler = (e) => {
+        e.preventDefault()
+        if (this.exists) {
+            var request = new XMLHttpRequest()
+            request.open('DELETE', '/unstructuredData', true)
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+            request.send(JSON.stringify(this.state.id))
+            request.onload = function () {
+                if (request.status != 200) {
+                    alert(`Error ${request.status}: ${request.statusText}`)
+                }
+                else {
+                    alert(`Deleted`)
+                }
+            }
+            request.onerror = function () {
+                alert("Delete failed")
+            }
+        }
+        else {
+            console.log("You can't delete what doesn't exist.")
+        }
     }
+
+    load = (id) => {
+        var request = new XMLHttpRequest()
+        request.open('GET', `/unstructuredData?id=${id}`, true)
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+        request.send()
+        request.onload = function () {
+            if (request.status != 200) {
+                alert(`Error ${request.status}: ${request.statusText}`)
+            }
+            else {
+                // what to do with the retrieved data
+            }
+        }
+        request.onerror = function () {
+            alert("Load failed")
+        }
+    }
+
     render() {
-        const { source, date, team1, team2, title, author, published, extracted, url, match, content } = this.state
+        const { id, matchid, title, author, published, extracted, url, match, data } = this.state
 		return (
 			<div className="page">
 				<PageHeader 
@@ -44,21 +107,6 @@ class AddUnstructuredData extends Component {
 				/>
                 <div id="container" style={{ height: "100vh" }}>
                     <form class="ui form" onSubmit={this.submitHandler}>
-                        <div class="inline fields">
-                            <div class="one wide field"/>
-                            <div class="two wide field">
-                                <button onClick={this.goBack} class="fluid ui primary button">
-                                    Back
-                                </button>
-                            </div>
-                            <div class="ten wide field">
-                            </div>
-                            <div class="two wide field">
-                                <button class="fluid ui primary button">
-                                    Logout
-                                </button>
-                            </div>
-                        </div>
                         <div class="inline fields">
                             <div class="one wide field"/>
                             <div class="two wide field">
@@ -137,13 +185,13 @@ class AddUnstructuredData extends Component {
                         <div class="inline fields">
                             <div class="one wide field"/>
                             <div class="fourteen wide field">
-                                <textarea name="content" value={content} onChange={this.changeHandler} />
+                                <textarea name="data" value={data} onChange={this.changeHandler} />
                             </div>
                         </div>
                         <div class="inline fields">
                             <div class="eleven wide field" />
                             <div class="two wide field">
-                                <button class="fluid ui red button">
+                                <button class="fluid ui red button" onClick={this.deleteHandler} >
                                     Delete
                                 </button>
                             </div>
