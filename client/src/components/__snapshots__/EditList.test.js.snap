@@ -1,0 +1,722 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit List Tests should render Error correctly 1`] = `
+<EditList>
+  <div
+    className="page"
+  >
+    <PageHeader
+      header="Edit List"
+    >
+      <div>
+        <Button
+          as="button"
+        >
+          <Ref
+            innerRef={
+              Object {
+                "current": <button
+                  class="ui button"
+                >
+                  Show sidebar
+                </button>,
+              }
+            }
+          >
+            <RefFindNode
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui button"
+                  >
+                    Show sidebar
+                  </button>,
+                }
+              }
+            >
+              <button
+                className="ui button"
+                onClick={[Function]}
+              >
+                Show sidebar
+              </button>
+            </RefFindNode>
+          </Ref>
+        </Button>
+        <Header>
+          <div
+            className="ui header"
+          >
+            Edit List
+          </div>
+        </Header>
+      </div>
+    </PageHeader>
+    <br />
+    <div
+      id="container"
+      style={
+        Object {
+          "height": "100vh",
+        }
+      }
+    >
+      <Message
+        negative={true}
+      >
+        <div
+          className="ui negative message"
+        >
+          <MessageHeader>
+            <div
+              className="header"
+            >
+              An error has occured
+            </div>
+          </MessageHeader>
+          <p>
+            Failed to get data from the server.
+          </p>
+          <Button
+            as="button"
+            color="red"
+            onClick={[Function]}
+          >
+            <Ref
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui red button"
+                  >
+                    Try Again?
+                  </button>,
+                }
+              }
+            >
+              <RefFindNode
+                innerRef={
+                  Object {
+                    "current": <button
+                      class="ui red button"
+                    >
+                      Try Again?
+                    </button>,
+                  }
+                }
+              >
+                <button
+                  className="ui red button"
+                  onClick={[Function]}
+                >
+                  Try Again?
+                </button>
+              </RefFindNode>
+            </Ref>
+          </Button>
+        </div>
+      </Message>
+    </div>
+  </div>
+</EditList>
+`;
+
+exports[`Edit List Tests should render correctly on first load 1`] = `
+<div
+  className="page"
+>
+  <div>
+    <button
+      className="ui button"
+      onClick={[Function]}
+    >
+      Show sidebar
+    </button>
+    <div
+      className="ui header"
+    >
+      Edit List
+    </div>
+  </div>
+  <br />
+  <div
+    id="container"
+    style={
+      Object {
+        "height": "100vh",
+      }
+    }
+  >
+    <div
+      className="ui text loader"
+    >
+      Loading Data
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Edit List Tests should render error message when sub-component fails 1`] = `<EditList />`;
+
+exports[`Edit List Tests should render loaded data correctly 1`] = `
+<EditList>
+  <div
+    className="page"
+  >
+    <PageHeader
+      header="Edit List"
+    >
+      <div>
+        <Button
+          as="button"
+        >
+          <Ref
+            innerRef={
+              Object {
+                "current": <button
+                  class="ui button"
+                >
+                  Show sidebar
+                </button>,
+              }
+            }
+          >
+            <RefFindNode
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui button"
+                  >
+                    Show sidebar
+                  </button>,
+                }
+              }
+            >
+              <button
+                className="ui button"
+                onClick={[Function]}
+              >
+                Show sidebar
+              </button>
+            </RefFindNode>
+          </Ref>
+        </Button>
+        <Header>
+          <div
+            className="ui header"
+          >
+            Edit List
+          </div>
+        </Header>
+      </div>
+    </PageHeader>
+    <br />
+    <div
+      id="container"
+      style={
+        Object {
+          "height": "100vh",
+        }
+      }
+    >
+      <div>
+        <p>
+           A list of all edits. Click on an edit to view it in detail 
+        </p>
+        <div
+          id="container"
+          style={
+            Object {
+              "height": "100vh",
+            }
+          }
+        >
+          <EditListTable
+            items={
+              Array [
+                Edit {
+                  "editID": 1,
+                  "isCorpus": false,
+                  "replace": "apple",
+                  "replaceWith": "banna",
+                  "settings": Object {},
+                  "structuredDataID": 1,
+                  "type": "replace",
+                  "unstructuredDataID": null,
+                },
+                Edit {
+                  "editID": 2,
+                  "isCorpus": false,
+                  "replace": "football",
+                  "replaceWith": "soccer",
+                  "settings": Object {},
+                  "structuredDataID": null,
+                  "type": "replace",
+                  "unstructuredDataID": 1,
+                },
+                Edit {
+                  "editID": 3,
+                  "isCorpus": false,
+                  "replace": "gary jones",
+                  "replaceWith": "player 1",
+                  "settings": Object {
+                    "field": "player",
+                  },
+                  "structuredDataID": 1,
+                  "type": "replacewithfield",
+                  "unstructuredDataID": null,
+                },
+                Edit {
+                  "editID": 4,
+                  "isCorpus": true,
+                  "replace": "reece",
+                  "replaceWith": "ryan",
+                  "settings": Object {},
+                  "structuredDataID": null,
+                  "type": "replace",
+                  "unstructuredDataID": null,
+                },
+              ]
+            }
+            onSelect={[Function]}
+          >
+            <Table
+              as="table"
+              selectable={true}
+              striped={true}
+            >
+              <table
+                className="ui selectable striped table"
+              >
+                <TableHeader
+                  as="thead"
+                >
+                  <thead
+                    className=""
+                  >
+                    <TableRow
+                      as="tr"
+                      cellAs="td"
+                    >
+                      <tr
+                        className=""
+                      >
+                        <TableHeaderCell
+                          as="th"
+                        >
+                          <TableCell
+                            as="th"
+                            className=""
+                          >
+                            <th
+                              className=""
+                            >
+                              Target
+                            </th>
+                          </TableCell>
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                          as="th"
+                        >
+                          <TableCell
+                            as="th"
+                            className=""
+                          >
+                            <th
+                              className=""
+                            >
+                              Type
+                            </th>
+                          </TableCell>
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                          as="th"
+                        >
+                          <TableCell
+                            as="th"
+                            className=""
+                          >
+                            <th
+                              className=""
+                            >
+                              Summary
+                            </th>
+                          </TableCell>
+                        </TableHeaderCell>
+                      </tr>
+                    </TableRow>
+                  </thead>
+                </TableHeader>
+                <TableBody
+                  as="tbody"
+                >
+                  <tbody
+                    className=""
+                  >
+                    <EditRow
+                      data={
+                        Edit {
+                          "editID": 1,
+                          "isCorpus": false,
+                          "replace": "apple",
+                          "replaceWith": "banna",
+                          "settings": Object {},
+                          "structuredDataID": 1,
+                          "type": "replace",
+                          "unstructuredDataID": null,
+                        }
+                      }
+                      isActive={false}
+                      key="1"
+                      onSelect={[Function]}
+                    >
+                      <TableRow
+                        active={false}
+                        as="tr"
+                        cellAs="td"
+                        onClick={[Function]}
+                      >
+                        <tr
+                          className=""
+                          onClick={[Function]}
+                        >
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Structured Data: 1
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Replace
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              <div>
+                                <i>
+                                  Replace: 
+                                </i>
+                                 
+                                apple
+                                  
+                                <i>
+                                   - with - 
+                                </i>
+                                  
+                                banna
+                              </div>
+                            </td>
+                          </TableCell>
+                        </tr>
+                      </TableRow>
+                    </EditRow>
+                    <EditRow
+                      data={
+                        Edit {
+                          "editID": 2,
+                          "isCorpus": false,
+                          "replace": "football",
+                          "replaceWith": "soccer",
+                          "settings": Object {},
+                          "structuredDataID": null,
+                          "type": "replace",
+                          "unstructuredDataID": 1,
+                        }
+                      }
+                      isActive={false}
+                      key="2"
+                      onSelect={[Function]}
+                    >
+                      <TableRow
+                        active={false}
+                        as="tr"
+                        cellAs="td"
+                        onClick={[Function]}
+                      >
+                        <tr
+                          className=""
+                          onClick={[Function]}
+                        >
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Unstructured Data: 1
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Replace
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              <div>
+                                <i>
+                                  Replace: 
+                                </i>
+                                 
+                                football
+                                  
+                                <i>
+                                   - with - 
+                                </i>
+                                  
+                                soccer
+                              </div>
+                            </td>
+                          </TableCell>
+                        </tr>
+                      </TableRow>
+                    </EditRow>
+                    <EditRow
+                      data={
+                        Edit {
+                          "editID": 3,
+                          "isCorpus": false,
+                          "replace": "gary jones",
+                          "replaceWith": "player 1",
+                          "settings": Object {
+                            "field": "player",
+                          },
+                          "structuredDataID": 1,
+                          "type": "replacewithfield",
+                          "unstructuredDataID": null,
+                        }
+                      }
+                      isActive={false}
+                      key="3"
+                      onSelect={[Function]}
+                    >
+                      <TableRow
+                        active={false}
+                        as="tr"
+                        cellAs="td"
+                        onClick={[Function]}
+                      >
+                        <tr
+                          className=""
+                          onClick={[Function]}
+                        >
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Structured Data: 1
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Replace with Field
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              <div>
+                                <i>
+                                  Replace: 
+                                </i>
+                                 
+                                gary jones
+                                  
+                                <i>
+                                   - with - 
+                                </i>
+                                  
+                                player 1
+                                <i>
+                                   - on field - 
+                                </i>
+                                  
+                                player
+                                 
+                              </div>
+                            </td>
+                          </TableCell>
+                        </tr>
+                      </TableRow>
+                    </EditRow>
+                    <EditRow
+                      data={
+                        Edit {
+                          "editID": 4,
+                          "isCorpus": true,
+                          "replace": "reece",
+                          "replaceWith": "ryan",
+                          "settings": Object {},
+                          "structuredDataID": null,
+                          "type": "replace",
+                          "unstructuredDataID": null,
+                        }
+                      }
+                      isActive={false}
+                      key="4"
+                      onSelect={[Function]}
+                    >
+                      <TableRow
+                        active={false}
+                        as="tr"
+                        cellAs="td"
+                        onClick={[Function]}
+                      >
+                        <tr
+                          className=""
+                          onClick={[Function]}
+                        >
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              All Corpus
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              Replace
+                            </td>
+                          </TableCell>
+                          <TableCell
+                            as="td"
+                          >
+                            <td
+                              className=""
+                            >
+                              <div>
+                                <i>
+                                  Replace: 
+                                </i>
+                                 
+                                reece
+                                  
+                                <i>
+                                   - with - 
+                                </i>
+                                  
+                                ryan
+                              </div>
+                            </td>
+                          </TableCell>
+                        </tr>
+                      </TableRow>
+                    </EditRow>
+                  </tbody>
+                </TableBody>
+              </table>
+            </Table>
+          </EditListTable>
+        </div>
+      </div>
+    </div>
+  </div>
+</EditList>
+`;
+
+exports[`Edit List Tests should render loading correctly 1`] = `
+<EditList>
+  <div
+    className="page"
+  >
+    <PageHeader
+      header="Edit List"
+    >
+      <div>
+        <Button
+          as="button"
+        >
+          <Ref
+            innerRef={
+              Object {
+                "current": <button
+                  class="ui button"
+                >
+                  Show sidebar
+                </button>,
+              }
+            }
+          >
+            <RefFindNode
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui button"
+                  >
+                    Show sidebar
+                  </button>,
+                }
+              }
+            >
+              <button
+                className="ui button"
+                onClick={[Function]}
+              >
+                Show sidebar
+              </button>
+            </RefFindNode>
+          </Ref>
+        </Button>
+        <Header>
+          <div
+            className="ui header"
+          >
+            Edit List
+          </div>
+        </Header>
+      </div>
+    </PageHeader>
+    <br />
+    <div
+      id="container"
+      style={
+        Object {
+          "height": "100vh",
+        }
+      }
+    >
+      <Loader>
+        <div
+          className="ui text loader"
+        >
+          Loading Data
+        </div>
+      </Loader>
+    </div>
+  </div>
+</EditList>
+`;

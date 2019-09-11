@@ -217,11 +217,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                             >
                               some comp
                             </td>
-                            <td
-                              class=""
-                            >
-                              some plan
-                            </td>
                           </tr>
                           <tr
                             class=""
@@ -240,11 +235,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                               class=""
                             >
                               some comp
-                            </td>
-                            <td
-                              class=""
-                            >
-                              some plan
                             </td>
                           </tr>
                         </tbody>
@@ -589,11 +579,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -612,11 +597,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -908,11 +888,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                                 >
                                   some comp
                                 </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
-                                </td>
                               </tr>
                               <tr
                                 class=""
@@ -932,10 +907,1319 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                                 >
                                   some comp
                                 </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div
+                        class="ui hidden warning attached message"
+                      >
+                        Please select an item before clicking choose. You can select an item by clicking on a table row
+                      </div>
+                      <br />
+                      <button
+                        class="ui primary button"
+                      >
+                        Choose
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ui page modals dimmer transition visible active"
+                style="display: flex;"
+              >
+                <div
+                  class="ui modal transition visible active"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="close icon"
+                  />
+                  <div
+                    class="header"
+                  >
+                    Choose Data
+                  </div>
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="description"
+                    >
+                      <div
+                        class="ui header"
+                      >
+                        Please select a piece of data to apply the edit to
+                      </div>
+                      <br />
+                    </div>
+                    <div
+                      class="ui text loader"
+                    >
+                      Loading Data
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ui page modals dimmer transition visible active"
+                style="display: flex;"
+              >
+                <div
+                  class="ui modal transition visible active"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="close icon"
+                  />
+                  <div
+                    class="header"
+                  >
+                    Choose Data
+                  </div>
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="description"
+                    >
+                      <div
+                        class="ui header"
+                      >
+                        Please select a piece of data to apply the edit to
+                      </div>
+                      <br />
+                    </div>
+                    <div
+                      class="ui text loader"
+                    >
+                      Loading Data
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </body>
+          }
+        >
+          <Ref
+            innerRef={[Function]}
+          >
+            <RefFindNode
+              innerRef={[Function]}
+            >
+              <div
+                className="ui page modals dimmer transition visible active"
+              >
+                <Ref
+                  innerRef={
+                    Object {
+                      "current": <div
+                        class="ui modal transition visible active"
+                      >
+                        <i
+                          aria-hidden="true"
+                          class="close icon"
+                        />
+                        <div
+                          class="header"
+                        >
+                          Choose Data
+                        </div>
+                        <div
+                          class="content"
+                        >
+                          <div
+                            class="description"
+                          >
+                            <div
+                              class="ui header"
+                            >
+                              Please select a piece of data to apply the edit to
+                            </div>
+                            <br />
+                          </div>
+                          <div
+                            class="ui text loader"
+                          >
+                            Loading Data
+                          </div>
+                        </div>
+                      </div>,
+                    }
+                  }
+                >
+                  <RefFindNode
+                    innerRef={
+                      Object {
+                        "current": <div
+                          class="ui modal transition visible active"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="close icon"
+                          />
+                          <div
+                            class="header"
+                          >
+                            Choose Data
+                          </div>
+                          <div
+                            class="content"
+                          >
+                            <div
+                              class="description"
+                            >
+                              <div
+                                class="ui header"
+                              >
+                                Please select a piece of data to apply the edit to
+                              </div>
+                              <br />
+                            </div>
+                            <div
+                              class="ui text loader"
+                            >
+                              Loading Data
+                            </div>
+                          </div>
+                        </div>,
+                      }
+                    }
+                  >
+                    <div
+                      className="ui modal transition visible active"
+                      style={Object {}}
+                    >
+                      <MountNode />
+                      <Icon
+                        as="i"
+                        key="close"
+                        name="close"
+                        onClick={[Function]}
+                      >
+                        <i
+                          aria-hidden="true"
+                          className="close icon"
+                          onClick={[Function]}
+                        />
+                      </Icon>
+                      <ModalHeader>
+                        <div
+                          className="header"
+                        >
+                          Choose Data
+                        </div>
+                      </ModalHeader>
+                      <ModalContent>
+                        <div
+                          className="content"
+                        >
+                          <ModalDescription>
+                            <div
+                              className="description"
+                            >
+                              <Header>
+                                <div
+                                  className="ui header"
+                                >
+                                  Please select a piece of data to apply the edit to
+                                </div>
+                              </Header>
+                              <br />
+                            </div>
+                          </ModalDescription>
+                          <Loader>
+                            <div
+                              className="ui text loader"
+                            >
+                              Loading Data
+                            </div>
+                          </Loader>
+                        </div>
+                      </ModalContent>
+                    </div>
+                  </RefFindNode>
+                </Ref>
+              </div>
+            </RefFindNode>
+          </Ref>
+        </Portal>
+      </PortalInner>
+      <EventStack
+        name="mouseleave"
+        on={[Function]}
+        pool="Modal"
+        target={
+          Object {
+            "current": <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui text loader"
+                  >
+                    Loading Data
+                  </div>
+                </div>
+              </div>
+            </div>,
+          }
+        }
+      />
+      <EventStack
+        name="mouseenter"
+        on={[Function]}
+        pool="Modal"
+        target={
+          Object {
+            "current": <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui text loader"
+                  >
+                    Loading Data
+                  </div>
+                </div>
+              </div>
+            </div>,
+          }
+        }
+      />
+      <EventStack
+        name="mousedown"
+        on={[Function]}
+        pool="Modal"
+        target="document"
+      />
+      <EventStack
+        name="click"
+        on={[Function]}
+        pool="Modal"
+        target="document"
+      />
+      <EventStack
+        name="keydown"
+        on={[Function]}
+        pool="Modal"
+        target="document"
+      />
+      <Ref
+        innerRef={[Function]}
+      >
+        <RefFindNode
+          innerRef={[Function]}
+        >
+          <Button
+            as="button"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <Ref
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui button"
+                  >
+                    Show Modal
+                  </button>,
+                }
+              }
+            >
+              <RefFindNode
+                innerRef={
+                  Object {
+                    "current": <button
+                      class="ui button"
+                    >
+                      Show Modal
+                    </button>,
+                  }
+                }
+              >
+                <button
+                  className="ui button"
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                >
+                  Show Modal
+                </button>
+              </RefFindNode>
+            </Ref>
+          </Button>
+        </RefFindNode>
+      </Ref>
+    </Portal>
+  </Modal>
+</ChooseDataModal>
+`;
+
+exports[`Chose Data Modal Tests should match snapshot on no data choosen error 1`] = `
+<ChooseDataModal
+  onSelect={[Function]}
+>
+  <Modal
+    centered={true}
+    closeIcon={true}
+    closeOnDimmerClick={true}
+    closeOnDocumentClick={false}
+    dimmer={true}
+    eventPool="Modal"
+    onClose={[Function]}
+    onOpen={[Function]}
+    open={true}
+    trigger={
+      <Button
+        as="button"
+        onClick={[Function]}
+      >
+        Show Modal
+      </Button>
+    }
+  >
+    <Portal
+      closeOnDocumentClick={false}
+      closeOnEscape={true}
+      eventPool="Modal"
+      mountNode={
+        <body
+          class="dimmable dimmed"
+        >
+          <div
+            class="ui page modals dimmer transition visible active"
+            style="display: flex;"
+          >
+            <div
+              class="ui modal transition visible active"
+            >
+              <i
+                aria-hidden="true"
+                class="close icon"
+              />
+              <div
+                class="header"
+              >
+                Choose Data
+              </div>
+              <div
+                class="content"
+              >
+                <div
+                  class="description"
+                >
+                  <div
+                    class="ui header"
+                  >
+                    Please select a piece of data to apply the edit to
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="ui text loader"
+                >
+                  Loading Data
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ui page modals dimmer transition visible active"
+            style="display: flex;"
+          >
+            <div
+              class="ui modal transition visible active"
+            >
+              <i
+                aria-hidden="true"
+                class="close icon"
+              />
+              <div
+                class="header"
+              >
+                Choose Data
+              </div>
+              <div
+                class="content"
+              >
+                <div
+                  class="description"
+                >
+                  <div
+                    class="ui header"
+                  >
+                    Please select a piece of data to apply the edit to
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="ui negative message"
+                >
+                  <div
+                    class="header"
+                  >
+                    An error has occured
+                  </div>
+                  <p>
+                    Failed to get data from the server.
+                  </p>
+                  <button
+                    class="ui red button"
+                  >
+                    Try Again?
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ui page modals dimmer transition visible active"
+            style="display: flex;"
+          >
+            <div
+              class="ui modal transition visible active"
+            >
+              <i
+                aria-hidden="true"
+                class="close icon"
+              />
+              <div
+                class="header"
+              >
+                Choose Data
+              </div>
+              <div
+                class="content"
+              >
+                <div
+                  class="description"
+                >
+                  <div
+                    class="ui header"
+                  >
+                    Please select a piece of data to apply the edit to
+                  </div>
+                  <br />
+                </div>
+                <div>
+                  <div>
+                    <div
+                      class="ui pointing menu"
+                    >
+                      <a
+                        class="active item"
+                      >
+                        Structured Data
+                      </a>
+                      <a
+                        class="item"
+                      >
+                        Unstructured Data
+                      </a>
+                    </div>
+                    <div
+                      class="ui bottom attached segment active tab"
+                    >
+                      <table
+                        class="ui selectable striped table"
+                      >
+                        <thead
+                          class=""
+                        >
+                          <tr
+                            class=""
+                          >
+                            <th
+                              class=""
+                            >
+                              Date
+                            </th>
+                            <th
+                              class=""
+                            >
+                              Match
+                            </th>
+                            <th
+                              class=""
+                            >
+                              Competition
+                            </th>
+                            <th
+                              class=""
+                            >
+                              Plan
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class=""
+                        >
+                          <tr
+                            class=""
+                          >
+                            <td
+                              class=""
+                            >
+                              6/3/1991
+                            </td>
+                            <td
+                              class=""
+                            >
+                              some team vs some other team
+                            </td>
+                            <td
+                              class=""
+                            >
+                              some comp
+                            </td>
+                          </tr>
+                          <tr
+                            class=""
+                          >
+                            <td
+                              class=""
+                            >
+                              6/3/1991
+                            </td>
+                            <td
+                              class=""
+                            >
+                              some team vs some other team
+                            </td>
+                            <td
+                              class=""
+                            >
+                              some comp
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div
+                    class="ui hidden warning attached message"
+                  >
+                    Please select an item before clicking choose. You can select an item by clicking on a table row
+                  </div>
+                  <br />
+                  <button
+                    class="ui primary button"
+                  >
+                    Choose
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ui page modals dimmer transition visible active"
+            style="display: flex;"
+          >
+            <div
+              class="ui modal transition visible active"
+            >
+              <i
+                aria-hidden="true"
+                class="close icon"
+              />
+              <div
+                class="header"
+              >
+                Choose Data
+              </div>
+              <div
+                class="content"
+              >
+                <div
+                  class="description"
+                >
+                  <div
+                    class="ui header"
+                  >
+                    Please select a piece of data to apply the edit to
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="ui text loader"
+                >
+                  Loading Data
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ui page modals dimmer transition visible active"
+            style="display: flex;"
+          >
+            <div
+              class="ui modal transition visible active"
+            >
+              <i
+                aria-hidden="true"
+                class="close icon"
+              />
+              <div
+                class="header"
+              >
+                Choose Data
+              </div>
+              <div
+                class="content"
+              >
+                <div
+                  class="description"
+                >
+                  <div
+                    class="ui header"
+                  >
+                    Please select a piece of data to apply the edit to
+                  </div>
+                  <br />
+                </div>
+                <div
+                  class="ui text loader"
+                >
+                  Loading Data
+                </div>
+              </div>
+            </div>
+          </div>
+        </body>
+      }
+      onClose={[Function]}
+      onMount={[Function]}
+      onOpen={[Function]}
+      onUnmount={[Function]}
+      open={true}
+      openOnTriggerClick={true}
+      trigger={
+        <Button
+          as="button"
+          onClick={[Function]}
+        >
+          Show Modal
+        </Button>
+      }
+    >
+      <PortalInner
+        innerRef={
+          Object {
+            "current": <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui text loader"
+                  >
+                    Loading Data
+                  </div>
+                </div>
+              </div>
+            </div>,
+          }
+        }
+        mountNode={
+          <body
+            class="dimmable dimmed"
+          >
+            <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui text loader"
+                  >
+                    Loading Data
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui negative message"
+                  >
+                    <div
+                      class="header"
+                    >
+                      An error has occured
+                    </div>
+                    <p>
+                      Failed to get data from the server.
+                    </p>
+                    <button
+                      class="ui red button"
+                    >
+                      Try Again?
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div>
+                    <div>
+                      <div
+                        class="ui pointing menu"
+                      >
+                        <a
+                          class="active item"
+                        >
+                          Structured Data
+                        </a>
+                        <a
+                          class="item"
+                        >
+                          Unstructured Data
+                        </a>
+                      </div>
+                      <div
+                        class="ui bottom attached segment active tab"
+                      >
+                        <table
+                          class="ui selectable striped table"
+                        >
+                          <thead
+                            class=""
+                          >
+                            <tr
+                              class=""
+                            >
+                              <th
+                                class=""
+                              >
+                                Date
+                              </th>
+                              <th
+                                class=""
+                              >
+                                Match
+                              </th>
+                              <th
+                                class=""
+                              >
+                                Competition
+                              </th>
+                              <th
+                                class=""
+                              >
+                                Plan
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class=""
+                          >
+                            <tr
+                              class=""
+                            >
+                              <td
+                                class=""
+                              >
+                                6/3/1991
+                              </td>
+                              <td
+                                class=""
+                              >
+                                some team vs some other team
+                              </td>
+                              <td
+                                class=""
+                              >
+                                some comp
+                              </td>
+                            </tr>
+                            <tr
+                              class=""
+                            >
+                              <td
+                                class=""
+                              >
+                                6/3/1991
+                              </td>
+                              <td
+                                class=""
+                              >
+                                some team vs some other team
+                              </td>
+                              <td
+                                class=""
+                              >
+                                some comp
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div
+                      class="ui hidden warning attached message"
+                    >
+                      Please select an item before clicking choose. You can select an item by clicking on a table row
+                    </div>
+                    <br />
+                    <button
+                      class="ui primary button"
+                    >
+                      Choose
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui text loader"
+                  >
+                    Loading Data
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ui page modals dimmer transition visible active"
+              style="display: flex;"
+            >
+              <div
+                class="ui modal transition visible active"
+              >
+                <i
+                  aria-hidden="true"
+                  class="close icon"
+                />
+                <div
+                  class="header"
+                >
+                  Choose Data
+                </div>
+                <div
+                  class="content"
+                >
+                  <div
+                    class="description"
+                  >
+                    <div
+                      class="ui header"
+                    >
+                      Please select a piece of data to apply the edit to
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="ui text loader"
+                  >
+                    Loading Data
+                  </div>
+                </div>
+              </div>
+            </div>
+          </body>
+        }
+        onMount={[Function]}
+        onUnmount={[Function]}
+      >
+        <Portal
+          containerInfo={
+            <body
+              class="dimmable dimmed"
+            >
+              <div
+                class="ui page modals dimmer transition visible active"
+                style="display: flex;"
+              >
+                <div
+                  class="ui modal transition visible active"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="close icon"
+                  />
+                  <div
+                    class="header"
+                  >
+                    Choose Data
+                  </div>
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="description"
+                    >
+                      <div
+                        class="ui header"
+                      >
+                        Please select a piece of data to apply the edit to
+                      </div>
+                      <br />
+                    </div>
+                    <div
+                      class="ui text loader"
+                    >
+                      Loading Data
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ui page modals dimmer transition visible active"
+                style="display: flex;"
+              >
+                <div
+                  class="ui modal transition visible active"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="close icon"
+                  />
+                  <div
+                    class="header"
+                  >
+                    Choose Data
+                  </div>
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="description"
+                    >
+                      <div
+                        class="ui header"
+                      >
+                        Please select a piece of data to apply the edit to
+                      </div>
+                      <br />
+                    </div>
+                    <div
+                      class="ui negative message"
+                    >
+                      <div
+                        class="header"
+                      >
+                        An error has occured
+                      </div>
+                      <p>
+                        Failed to get data from the server.
+                      </p>
+                      <button
+                        class="ui red button"
+                      >
+                        Try Again?
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ui page modals dimmer transition visible active"
+                style="display: flex;"
+              >
+                <div
+                  class="ui modal transition visible active"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="close icon"
+                  />
+                  <div
+                    class="header"
+                  >
+                    Choose Data
+                  </div>
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="description"
+                    >
+                      <div
+                        class="ui header"
+                      >
+                        Please select a piece of data to apply the edit to
+                      </div>
+                      <br />
+                    </div>
+                    <div>
+                      <div>
+                        <div
+                          class="ui pointing menu"
+                        >
+                          <a
+                            class="active item"
+                          >
+                            Structured Data
+                          </a>
+                          <a
+                            class="item"
+                          >
+                            Unstructured Data
+                          </a>
+                        </div>
+                        <div
+                          class="ui bottom attached segment active tab"
+                        >
+                          <table
+                            class="ui selectable striped table"
+                          >
+                            <thead
+                              class=""
+                            >
+                              <tr
+                                class=""
+                              >
+                                <th
+                                  class=""
+                                >
+                                  Date
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  Match
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  Competition
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  Plan
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody
+                              class=""
+                            >
+                              <tr
+                                class=""
+                              >
                                 <td
                                   class=""
                                 >
-                                  some plan
+                                  6/3/1991
+                                </td>
+                                <td
+                                  class=""
+                                >
+                                  some team vs some other team
+                                </td>
+                                <td
+                                  class=""
+                                >
+                                  some comp
+                                </td>
+                              </tr>
+                              <tr
+                                class=""
+                              >
+                                <td
+                                  class=""
+                                >
+                                  6/3/1991
+                                </td>
+                                <td
+                                  class=""
+                                >
+                                  some team vs some other team
+                                </td>
+                                <td
+                                  class=""
+                                >
+                                  some comp
                                 </td>
                               </tr>
                             </tbody>
@@ -2497,11 +3781,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                             >
                               some comp
                             </td>
-                            <td
-                              class=""
-                            >
-                              some plan
-                            </td>
                           </tr>
                           <tr
                             class=""
@@ -2520,11 +3799,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               class=""
                             >
                               some comp
-                            </td>
-                            <td
-                              class=""
-                            >
-                              some plan
                             </td>
                           </tr>
                         </tbody>
@@ -2720,11 +3994,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                             >
                               some comp
                             </td>
-                            <td
-                              class=""
-                            >
-                              some plan
-                            </td>
                           </tr>
                           <tr
                             class=""
@@ -2743,11 +4012,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               class=""
                             >
                               some comp
-                            </td>
-                            <td
-                              class=""
-                            >
-                              some plan
                             </td>
                           </tr>
                         </tbody>
@@ -2889,11 +4153,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -2912,11 +4171,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -3130,11 +4384,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -3153,11 +4402,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -3353,11 +4597,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -3376,11 +4615,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -3598,11 +4832,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 >
                                   some comp
                                 </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
-                                </td>
                               </tr>
                               <tr
                                 class=""
@@ -3621,11 +4850,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                   class=""
                                 >
                                   some comp
-                                </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
                                 </td>
                               </tr>
                             </tbody>
@@ -3821,11 +5045,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 >
                                   some comp
                                 </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
-                                </td>
                               </tr>
                               <tr
                                 class=""
@@ -3844,11 +5063,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                   class=""
                                 >
                                   some comp
-                                </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
                                 </td>
                               </tr>
                             </tbody>
@@ -3981,11 +5195,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                       >
                                         some comp
                                       </td>
-                                      <td
-                                        class=""
-                                      >
-                                        some plan
-                                      </td>
                                     </tr>
                                     <tr
                                       class=""
@@ -4004,11 +5213,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                         class=""
                                       >
                                         some comp
-                                      </td>
-                                      <td
-                                        class=""
-                                      >
-                                        some plan
                                       </td>
                                     </tr>
                                   </tbody>
@@ -4131,11 +5335,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                         >
                                           some comp
                                         </td>
-                                        <td
-                                          class=""
-                                        >
-                                          some plan
-                                        </td>
                                       </tr>
                                       <tr
                                         class=""
@@ -4154,11 +5353,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                           class=""
                                         >
                                           some comp
-                                        </td>
-                                        <td
-                                          class=""
-                                        >
-                                          some plan
                                         </td>
                                       </tr>
                                     </tbody>
@@ -4320,7 +5514,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                               "date": 1991-04-20T00:00:00.000Z,
                                               "home": "some team",
                                               "id": 1,
-                                              "plan": "some plan",
                                             },
                                             StructuredData {
                                               "away": "some other team",
@@ -4330,7 +5523,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                               "date": 1991-04-20T00:00:00.000Z,
                                               "home": "some team",
                                               "id": 2,
-                                              "plan": "some plan",
                                             },
                                           ]
                                         }
@@ -4433,7 +5625,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                                       "date": 1991-04-20T00:00:00.000Z,
                                                       "home": "some team",
                                                       "id": 1,
-                                                      "plan": "some plan",
                                                     }
                                                   }
                                                   isActive={false}
@@ -4477,15 +5668,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                                           some comp
                                                         </td>
                                                       </TableCell>
-                                                      <TableCell
-                                                        as="td"
-                                                      >
-                                                        <td
-                                                          className=""
-                                                        >
-                                                          some plan
-                                                        </td>
-                                                      </TableCell>
                                                     </tr>
                                                   </TableRow>
                                                 </StructuredDataRow>
@@ -4499,7 +5681,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                                       "date": 1991-04-20T00:00:00.000Z,
                                                       "home": "some team",
                                                       "id": 2,
-                                                      "plan": "some plan",
                                                     }
                                                   }
                                                   isActive={false}
@@ -4541,15 +5722,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                                           className=""
                                                         >
                                                           some comp
-                                                        </td>
-                                                      </TableCell>
-                                                      <TableCell
-                                                        as="td"
-                                                      >
-                                                        <td
-                                                          className=""
-                                                        >
-                                                          some plan
                                                         </td>
                                                       </TableCell>
                                                     </tr>
@@ -4730,11 +5902,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -4753,11 +5920,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -4888,11 +6050,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -4911,11 +6068,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -5231,11 +6383,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                             >
                               some comp
                             </td>
-                            <td
-                              class=""
-                            >
-                              some plan
-                            </td>
                           </tr>
                           <tr
                             class=""
@@ -5254,11 +6401,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               class=""
                             >
                               some comp
-                            </td>
-                            <td
-                              class=""
-                            >
-                              some plan
                             </td>
                           </tr>
                         </tbody>
@@ -5400,11 +6542,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -5423,11 +6560,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -5641,11 +6773,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -5664,11 +6791,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -5886,11 +7008,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 >
                                   some comp
                                 </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
-                                </td>
                               </tr>
                               <tr
                                 class=""
@@ -5909,11 +7026,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                   class=""
                                 >
                                   some comp
-                                </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
                                 </td>
                               </tr>
                             </tbody>
@@ -6046,11 +7158,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                       >
                                         some comp
                                       </td>
-                                      <td
-                                        class=""
-                                      >
-                                        some plan
-                                      </td>
                                     </tr>
                                     <tr
                                       class=""
@@ -6069,11 +7176,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                         class=""
                                       >
                                         some comp
-                                      </td>
-                                      <td
-                                        class=""
-                                      >
-                                        some plan
                                       </td>
                                     </tr>
                                   </tbody>
@@ -6196,11 +7298,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                         >
                                           some comp
                                         </td>
-                                        <td
-                                          class=""
-                                        >
-                                          some plan
-                                        </td>
                                       </tr>
                                       <tr
                                         class=""
@@ -6219,11 +7316,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                           class=""
                                         >
                                           some comp
-                                        </td>
-                                        <td
-                                          class=""
-                                        >
-                                          some plan
                                         </td>
                                       </tr>
                                     </tbody>
@@ -6385,7 +7477,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                               "date": 1991-04-20T00:00:00.000Z,
                                               "home": "some team",
                                               "id": 1,
-                                              "plan": "some plan",
                                             },
                                             StructuredData {
                                               "away": "some other team",
@@ -6395,7 +7486,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                               "date": 1991-04-20T00:00:00.000Z,
                                               "home": "some team",
                                               "id": 2,
-                                              "plan": "some plan",
                                             },
                                           ]
                                         }
@@ -6498,7 +7588,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                                       "date": 1991-04-20T00:00:00.000Z,
                                                       "home": "some team",
                                                       "id": 1,
-                                                      "plan": "some plan",
                                                     }
                                                   }
                                                   isActive={false}
@@ -6542,15 +7631,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                                           some comp
                                                         </td>
                                                       </TableCell>
-                                                      <TableCell
-                                                        as="td"
-                                                      >
-                                                        <td
-                                                          className=""
-                                                        >
-                                                          some plan
-                                                        </td>
-                                                      </TableCell>
                                                     </tr>
                                                   </TableRow>
                                                 </StructuredDataRow>
@@ -6564,7 +7644,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                                       "date": 1991-04-20T00:00:00.000Z,
                                                       "home": "some team",
                                                       "id": 2,
-                                                      "plan": "some plan",
                                                     }
                                                   }
                                                   isActive={false}
@@ -6606,15 +7685,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                                           className=""
                                                         >
                                                           some comp
-                                                        </td>
-                                                      </TableCell>
-                                                      <TableCell
-                                                        as="td"
-                                                      >
-                                                        <td
-                                                          className=""
-                                                        >
-                                                          some plan
                                                         </td>
                                                       </TableCell>
                                                     </tr>
@@ -6795,11 +7865,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -6818,11 +7883,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -6953,11 +8013,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -6976,11 +8031,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -7296,11 +8346,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                             >
                               some comp
                             </td>
-                            <td
-                              class=""
-                            >
-                              some plan
-                            </td>
                           </tr>
                           <tr
                             class=""
@@ -7319,11 +8364,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                               class=""
                             >
                               some comp
-                            </td>
-                            <td
-                              class=""
-                            >
-                              some plan
                             </td>
                           </tr>
                         </tbody>
@@ -7631,11 +8671,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                               >
                                 some comp
                               </td>
-                              <td
-                                class=""
-                              >
-                                some plan
-                              </td>
                             </tr>
                             <tr
                               class=""
@@ -7654,11 +8689,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                                 class=""
                               >
                                 some comp
-                              </td>
-                              <td
-                                class=""
-                              >
-                                some plan
                               </td>
                             </tr>
                           </tbody>
@@ -7913,11 +8943,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                                 >
                                   some comp
                                 </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
-                                </td>
                               </tr>
                               <tr
                                 class=""
@@ -7936,11 +8961,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                                   class=""
                                 >
                                   some comp
-                                </td>
-                                <td
-                                  class=""
-                                >
-                                  some plan
                                 </td>
                               </tr>
                             </tbody>

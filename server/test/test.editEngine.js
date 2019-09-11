@@ -12,7 +12,7 @@ describe("Edit Engine Tests",function()
     let inputGen = () => new domain.UnstructuredData(1,1,undefined,undefined,undefined,undefined,undefined,
             "hello world")
 
-    let structuredDataGen = () => new domain.StructuredData(1,undefined,undefined,undefined,undefined,undefined,undefined,
+    let structuredDataGen = () => new domain.StructuredData(1,undefined,undefined,undefined,undefined,undefined,
             {field: "some data",otherField: "other data"})
 
 

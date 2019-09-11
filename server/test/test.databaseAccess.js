@@ -9,9 +9,54 @@ const assert = require('assert');
 const should = require('chai').should()
 const dbAccess = require("../databaseAccess") 
 const domain = require("../domain");
+const dataBinding = require("../dataBinding");
 
 describe('Database Access Tests ', function() {
 
+    let editId; 
+
+    function cleanUp(callback)
+    {
+
+        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor';"
+        ,"delete from football.match where home = 'testTeam';"
+        ,"delete from football.competition where id = 1;"
+        ,"delete from football.edit where replace_text = 'testEdit'"];
+
+        dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
+
+
+
+    }
+
+    before(done =>
+    {
+
+        cleanUp(() => 
+        {
+            
+            dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");'
+            ],() => 
+            {
+
+                dbAccess.query("select editid from football.edit where replace_text = 'testEdit';",
+                    (result) => 
+                    {
+                        
+                        editId = result[0][0];
+                    
+                        done();
+                    },(err) => {throw err},(err) => {throw err});
+
+            },(err) => {throw err},(err) => {throw err});
+
+        })
+
+
+    });
+    
     describe("Check for .env variables",function()
     {
 
@@ -55,8 +100,8 @@ describe('Database Access Tests ', function() {
         it('query function should insert row without error', function(done){
             
             let insertQuery = 'insert into football.match' +
-                            '(date,home,away,competitionID,competitionName,plan,data)' +
-                             'values ("1991/3/23","bob","testTeam",1,"Some comp","Some plan","{}");'
+                            '(date,home,away,competitionID,data)' +
+                             'values ("1991/3/23","bob","testTeam",1,"{}");'
             
 
             dbAccess.query(insertQuery,() => done(),assert.fail)
@@ -143,7 +188,7 @@ describe('Database Access Tests ', function() {
         })
 
     })
-
+    
     describe("DatabaseAccess.multiInsertQuery Tests",function()
     {
 
@@ -151,25 +196,25 @@ describe('Database Access Tests ', function() {
         {
 
             let queries = 
-                ['insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");',
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","massInsert","bob",1,"Some comp","Some plan","{}");'
+                ['insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");'
            ];
 
            dbAccess.multiInsertQuery(queries,() => done(),assert.fail,assert.fail);
@@ -179,7 +224,7 @@ describe('Database Access Tests ', function() {
         it("should have correct number of rows after mutiple insert queries",function(done)
         {
 
-            dbAccess.query("select * from football.match where home = 'massInsert';",function(result)
+            dbAccess.query("select * from football.match where home = 'testTeam';",function(result)
             {
                 result.length.should.equal(19);
                 done();
@@ -188,7 +233,7 @@ describe('Database Access Tests ', function() {
         })
 
     })
-
+    
     describe("getAllStructuredData Tests",function()
     {
 
@@ -198,25 +243,25 @@ describe('Database Access Tests ', function() {
             this.timeout(10000)
 
             let queries = 
-            ["delete from football.unstructured_data","delete from football.match",'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");',
-            'insert into football.match (date,home,away,competitionID,competitionName,plan,data) values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");'
+            ["delete from football.unstructured_data","delete from football.match",'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");'
        ];
 
        dbAccess.multiInsertQuery(queries,() => {
@@ -263,7 +308,7 @@ describe('Database Access Tests ', function() {
             dbAccess.getAllStructuredData((result) => 
             {
 
-                let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"selectTest","bob",1,"Some comp","Some plan",{})
+                let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
 
                 result.every((r) => 
                 {
@@ -305,28 +350,26 @@ describe('Database Access Tests ', function() {
             [   
                 "delete from football.unstructured_data",
                 "delete from football.match",
-                'insert into football.match (date,home,away,competitionID,competitionName,plan,data)' +
-                    'values ("1991/4/20","selectTest","bob",1,"Some comp","Some plan","{}");'
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","testTeam","bob",1,"{}");'
             ];
             
             
 
             dbAccess.multiInsertQuery(queries,() => {
                 
-                dbAccess.query("select id from football.match where home = 'selectTest';",(uid) => 
+                dbAccess.query("select id from football.match where home = 'testTeam';",(uid) => 
                     {
 
                         actualUid = uid[0][0];
-
-                        console.log(actualUid);
                         
                         let insertQueries = 
                         [
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")',
-                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","some author","some url","2000/1/21","2000/1/21","some text")'
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualUid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
                             
 
                         ]
@@ -378,9 +421,8 @@ describe('Database Access Tests ', function() {
             dbAccess.getAllUnstrucredData((result) => 
             {
 
-                console.log(result)
 
-                let modelObject = new domain.UnstructuredData(undefined,actualUid,"some title","some author","some url",new Date("2000-01-21T00:00:00.000Z"),
+                let modelObject = new domain.UnstructuredData(undefined,actualUid,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
                     new Date("2000-01-21T00:00:00.000Z"),"some text")
 
                 result.every((r) => 
@@ -394,7 +436,6 @@ describe('Database Access Tests ', function() {
                     let isExtracted = JSON.stringify(modelObject.extracted) == JSON.stringify(r.extracted);
                     let isData = modelObject.data == r.data;
 
-                    console.log(r);
 
                     return isMatchid && isTitle && isAuthor && isUrl 
                         && isPublished && isExtracted && isData;
@@ -410,15 +451,432 @@ describe('Database Access Tests ', function() {
        
     });
 
+    describe("get edit tests",() => 
+    {
 
+        it("Should exist",() => should.exist(dbAccess.getEditById));
+
+        it("Should throw error for no callback",() => assert.throws(
+                () => dbAccess.getEditById(1,undefined,assert.fail,assert.fail),
+                Error,
+                "callback must be defined and be a function"));
+        
+        it("Should call error callback with invalid id",(done) => 
+        {
+
+            dbAccess.getEditById("bob",assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with undefined id",(done) => 
+        {
+
+            dbAccess.getEditById(undefined,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with null id",(done) => 
+        {
+
+            dbAccess.getEditById(null,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with object id",(done) => 
+        {
+
+            dbAccess.getEditById({someId: 5},assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should get edit",(done) => 
+        {
+
+            dbAccess.getEditById(editId,() => done(),assert.fail,assert.fail);
+
+        });
+
+        it("Should get edit with fields",(done) => 
+        {
+
+            dbAccess.getEditById(editId,(result) => 
+            {
+
+                result = result[0];
+
+                let isId = result.editID === editId;
+                let isSid = result.structuredDataID === null;
+                let isUid = result.unstructuredDataID === null;
+                let isCorpus = result.isCorpus === true;
+                let isSettings = result.settings === null;
+                let isReplace = result.replace == "testEdit";
+                let isReplaceWith = result.replaceWith == "goodbye";
+                let isType = result.type == "replace";
+
+                let isCorrect = isId && 
+                                isSid && 
+                                isUid && 
+                                isCorpus && 
+                                isSettings && 
+                                isReplace && 
+                                isReplaceWith && 
+                                isType;
+
+                assert.equal(isCorrect,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        })
+
+    })
+
+    describe("Update edit tests",function()
+    {
+
+        let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","hello","replaceWith");
+
+        it("Should exist",() => should.exist(dbAccess.updateEdit));
+
+        it("Should throw error for no callback",() => assert.throws(
+            () => dbAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail),
+            Error,
+            "callback must be defined and be a function"));
+
+        it("Should throw error for invalid edit",(done) =>
+        { 
+            
+            let edit = editGen();
+
+            delete edit.type;
+
+            dbAccess.updateEdit(edit,assert.fail,() => done(),assert.fail)
+
+        });
+
+        it("Should throw error for edit with id not found",() => assert.throws(
+            () => 
+            {
+                let edit = editGen();
+                
+                edit.editID += 10;
+
+                dbAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail)
+            },
+            Error,"Could not find an edit with id " + editId));
+
+        it("Should execute update edit",(done) => 
+        {
+           
+            dbAccess.updateEdit(editGen(),(r) => 
+            {
+
+                done();
+
+            },assert.fail,assert.fail);
+
+        });
+
+        it("Should have edit with updated fields",(done) => 
+        {
+
+            dbAccess.getEditById(editId,(result) => 
+            {
+
+                result = result[0];
+
+                let isId = result.editID === editId;
+                let isSid = result.structuredDataID === null;
+                let isUid = result.unstructuredDataID === null;
+                let isCorpus = result.isCorpus === false;
+                let isSettings = JSON.stringify(result.settings) == "{}" ;
+                let isReplace = result.replace == "testEdit";
+                let isReplaceWith = result.replaceWith == "hello";
+                let isType = result.type == "replaceWith";
+
+                let isCorrect = isId && 
+                                isSid && 
+                                isUid && 
+                                isCorpus && 
+                                isSettings && 
+                                isReplace && 
+                                isReplaceWith && 
+                                isType;
+
+                assert.equal(isCorrect,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        })
+
+    });
+
+    describe("Insert edit tests",function()
+    {
+
+        let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","insertTest","replaceWith");
+
+        it("Should exist",() => should.exist(dbAccess.insertEdit));
+
+        it("Should throw error for no callback",() => assert.throws(
+            () => dbAccess.insertEdit(editGen(),undefined,assert.fail,assert.fail),
+            Error,
+            "callback must be defined and be a function"));
+
+        it("Should throw error for invalid edit",(done) =>
+        { 
+            
+            let edit = editGen();
+
+            delete edit.type;
+
+            dbAccess.insertEdit(edit,assert.fail,() => done(),assert.fail)
+
+        });
+
+        it("Should successfull insert an edit",(done) => 
+        {
+
+            dbAccess.insertEdit(editGen(),() => done(),assert.fail,assert.fail);
+
+        });
+
+        it("Should have edit with updated fields",(done) => 
+        {
+
+            dbAccess.query("select * from football.edit where replace_with = 'insertTest'",(result) => 
+            {
+                
+                result = dataBinding.bindEdits(result)[0];
+
+                let isSid = result.structuredDataID === null;
+                let isUid = result.unstructuredDataID === null;
+                let isCorpus = result.isCorpus === false;
+                let isSettings = JSON.stringify(result.settings) == "{}" ;
+                let isReplace = result.replace == "testEdit";
+                let isReplaceWith = result.replaceWith == "insertTest";
+                let isType = result.type == "replaceWith";
+
+                let isCorrect = isSid && 
+                                isUid && 
+                                isCorpus && 
+                                isSettings && 
+                                isReplace && 
+                                isReplaceWith && 
+                                isType;
+
+                assert.equal(isCorrect,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        });
+            
+    });
+    
+    describe("Delete edit by id tests",function()
+    {
+
+        it("Should exist",() => should.exist(dbAccess.getEditById));
+
+        it("Should throw error for no callback",() => assert.throws(
+                () => dbAccess.deleteEditById(1,undefined,assert.fail,assert.fail),
+                Error,
+                "callback must be defined and be a function"));
+        
+        it("Should call error callback with invalid id",(done) => 
+        {
+
+            dbAccess.deleteEditById("bob",assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with undefined id",(done) => 
+        {
+
+            dbAccess.deleteEditById(undefined,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with null id",(done) => 
+        {
+
+            dbAccess.deleteEditById(null,assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with object id",(done) => 
+        {
+
+            dbAccess.deleteEditById({someId: 5},assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should delete edit",(done) => 
+        {
+
+            dbAccess.deleteEditById(editId,() => done(),assert.fail,assert.fail);
+
+        });
+
+        it("Should not have deleted edit in database",(done) => 
+        {
+
+            dbAccess.getEditById(editId,(result) => 
+            {
+
+                assert.equal(result.length == 0,true);             
+                
+                done()
+            },assert.fail,assert.fail);
+
+        })
+
+    })
+
+    describe("Get all Edit Tests",function()
+    {
+
+        before(function(done)
+        {
+            cleanUp(() => 
+            {
+
+                //just in case 
+                this.timeout(10000)
+
+                let queries = 
+                [
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");',
+                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                'values (null,null,true,null,"testEdit","goodbye","replace");'
+
+            ];
+        
+
+        dbAccess.multiInsertQuery(queries,() => {
+            
+            done()
+        
+            },assert.fail,assert.fail);
+
+        },(err) => {throw err},(err) => {throw err});
+       
+    
+       });
+
+       it("Should exist",() => should.exist(dbAccess.getAllEdits))
+
+       it("should have correct number of edits in result",(done) => 
+       {
+
+            dbAccess.getAllEdits((result) => 
+            {
+
+
+                result.length.should.equal(19);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+       it("Should have correct types of edit in result",(done) => 
+       {
+
+            dbAccess.getAllEdits((result) => 
+            {
+
+                result.every((r) => r instanceof domain.Edit).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+       it("should have correct fields of edits in result",(done) => 
+       {
+            //delete ids as schema doesn't support id
+            dbAccess.getAllEdits((edits) => 
+            {
+
+                edits.every((result) => 
+                {
+
+
+                    let isSid = result.structuredDataID === null;
+                    let isUid = result.unstructuredDataID === null;
+                    let isCorpus = result.isCorpus === true;
+                    let isSettings = result.settings === null;
+                    let isReplace = result.replace == "testEdit";
+                    let isReplaceWith = result.replaceWith == "goodbye";
+                    let isType = result.type == "replace";
+    
+                    let isCorrect = isSid && 
+                                    isUid && 
+                                    isCorpus && 
+                                    isSettings && 
+                                    isReplace && 
+                                    isReplaceWith && 
+                                    isType;
+
+
+
+                    return isCorrect;
+
+                }).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail);
+
+       });
+
+    });
 
     after(function(done)
     {
 
-        let cleanup = ["delete from football.unstructured_data","delete from football.match"];
-
-        dbAccess.multiInsertQuery(cleanup,() => done(),(err) => {throw err},(err) => {throw err});
+       cleanUp(done);
 
     })
-
+    
   });

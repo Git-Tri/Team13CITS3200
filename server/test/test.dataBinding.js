@@ -109,7 +109,7 @@ describe("DataBinding Tests",function()
     describe("Bind Structured Data Tests",function()
     {
 
-        let structured = [3,3,"mr world","some text","a url","published","extract",{some:"data"}];
+        let structured = [3,new Date(),"home","away",1,"some comp",{some:"data"}];
 
         allBindingTests(dataBinding.bindStructredData,structured,["rawStructuredData must be an array"],["rawUnstructuredData"]);
 

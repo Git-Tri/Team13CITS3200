@@ -12,7 +12,7 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 
-describe("Unstructured Data Table Tests",function()
+describe("Structured Data Table Tests",function()
 {
 
 
@@ -33,8 +33,8 @@ describe("Unstructured Data Table Tests",function()
 
     
     const testStructuredData = [
-        new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp","some plan",{}),
-        new StructuredData(2,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp","some plan",{})
+        new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{}),
+        new StructuredData(2,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{})
         ];
     
 
@@ -89,7 +89,7 @@ describe("Unstructured Data Table Tests",function()
 
         let wrongIDItemData = testStructuredData.slice();
 
-        wrongIDItemData.push(new StructuredData("not an id",new Date(),"some team","some other team",1,"some comp","some plan",{}));
+        wrongIDItemData.push(new StructuredData("not an id",new Date(),"some team","some other team",1,"some comp",{}));
 
         renderer.create(<ErrorTester              
             onError={(e,em) => {

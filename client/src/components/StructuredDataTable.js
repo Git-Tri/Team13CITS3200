@@ -73,8 +73,7 @@ class StructuredDataTable extends Component
             let isHomeValid = typeof(i.home) === "string";
             let isAwayValid = typeof(i.away) === "string";
             let isCompNameValid = typeof(i.competitionName) === "string";
-            let isPlanValid = typeof(i.plan) === "string"
-            return isIdValid && isDateValid && isHomeValid && isAwayValid && isCompNameValid && isPlanValid;
+            return isIdValid && isDateValid && isHomeValid && isAwayValid && isCompNameValid;
         }) === false)
         {
 
@@ -142,7 +141,6 @@ function StructuredDataRow(props)
             <Table.Cell>{dateString}</Table.Cell>
             <Table.Cell>{versus}</Table.Cell>
             <Table.Cell>{props.data.competitionName}</Table.Cell>
-            <Table.Cell>{props.data.plan}</Table.Cell>
         </Table.Row>
     );
     
