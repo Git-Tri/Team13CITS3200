@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
-import { Container, Form, Input } from 'semantic-ui-react'
+import { Container, Form, Input, Table } from 'semantic-ui-react';
+import MatchListTable from './MatchListTable.js'
 
 
 class MatchList extends Component {
@@ -12,7 +13,6 @@ class MatchList extends Component {
 			startdate: '0000-00-00',
 			enddate: '0000-00-00',
 			league: '',
-			dateError: false
 		}
 
 		this.submitHandler = (e) => { //Currently logs state, 500 error
@@ -27,16 +27,12 @@ class MatchList extends Component {
 
 		this.handleChange = (e, { value }) => {
 			this.setState({ [e.target.name]:value })
-			if(Date(this.state.startdate)>Date(this.state.enddate)){
-				this.setState({dateError: true})
-			} else {
-				this.setState({dateError: false})
-			}
 		}
 	}
 
 
-	render() { 
+	render() {
+
 		return (
 			<div className="page">
 				<PageHeader 
@@ -62,13 +58,14 @@ class MatchList extends Component {
 						</Form.Group>
 						<Form.Button 
 							onClick={this.submitHandler}
-							disabled={this.state.dateError}
 						>
 						Submit
 						</Form.Button>
 					</Form>
 
-					<div className="results"></div>
+					<div id="container" style={{height:"100vh"}}>
+						{this.executeRender()}
+					</div>
 				</Container>
 			</div>
 		);
