@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
 import { Container, Form, Input, Table } from 'semantic-ui-react';
-import MatchListTable from './MatchListTable.js'
+import MatchListTable from './MatchListTable.js';
+
+import { Match } from "../domain";
 
 
 class MatchList extends Component {
@@ -12,7 +14,7 @@ class MatchList extends Component {
 			searchtext: '',
 			startdate: '0000-00-00',
 			enddate: '0000-00-00',
-			league: '',
+			competition: '',
 		}
 
 		this.submitHandler = (e) => { //Currently logs state, 500 error
@@ -30,8 +32,12 @@ class MatchList extends Component {
 		}
 	}
 
-
 	render() {
+
+		const testMatchData = [
+        new Match(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp"),
+        new Match(2,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp")
+        ];
 
 		return (
 			<div className="page">
@@ -53,7 +59,7 @@ class MatchList extends Component {
 								<Input type="date" onChange={this.handleChange.bind(this)} name="enddate" placeholder="End date"/>
 							</Form.Field>
 							<Form.Field>
-								<Input label="League" type="text" onChange={this.handleChange.bind(this)} name="league"/>
+								<Input label="Competition" type="text" onChange={this.handleChange.bind(this)} name="competition"/>
 							</Form.Field>
 						</Form.Group>
 						<Form.Button 
@@ -64,7 +70,7 @@ class MatchList extends Component {
 					</Form>
 
 					<div id="container" style={{height:"100vh"}}>
-						{this.executeRender()}
+						<MatchListTable items={testMatchData} />
 					</div>
 				</Container>
 			</div>

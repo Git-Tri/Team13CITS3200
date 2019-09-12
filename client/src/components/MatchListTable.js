@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
-import { MatchData } from "../domain";
-
+import { Match } from "../domain";
 /**
  * shows a table of structured data 
  * has the ability to select a row 
  */
 class MatchListTable extends Component
 {
-
     /**
      * constructs a new structured data table
      * data is mandatory however onSelect is optional 
@@ -16,35 +14,24 @@ class MatchListTable extends Component
      */
     constructor(props)
     {
-
         super(props);
-
         let selectFunc;
-
         if(this.props.onSelect != undefined)
         {
             selectFunc = (data) => 
                 {
                     
                     this.setState({activeRow: data.id})
-
                     this.props.onSelect(data);
-
                 }
             
-
         }
         else
         {
-
             selectFunc = () => {};
-
         }
-
         this.state = {activeRow: -1,selectFunc: selectFunc};
-
     }
-
     /**
      * renders the function
      * also checks if the data is valid 
@@ -52,18 +39,13 @@ class MatchListTable extends Component
      */
     render()
     {
-
         if(! Array.isArray( this.props.items))
         {
-
             throw Error("Props.items should contain a list of structured data")
-
         }
         if(this.props.items.every((i) => i != undefined && i != null) == false)
         {
-
-            throw new Error("props.data must be an instance of structured data")
-
+            throw new Error("props.data must be an instance of match data")
         }
         //broken into each predicate for easier debugging
         if(this.props.items.every((i) => 
@@ -76,24 +58,18 @@ class MatchListTable extends Component
             return isIdValid && isDateValid && isHomeValid && isAwayValid && isCompNameValid;
         }) === false)
         {
-
-            throw new Error("every piece of data should have valid date, home, away, comp name and plan");
-
+            throw new Error("every piece of data should have valid date, home, away, comp name");
         }
-
         let isSelectable = this.props.onSelect !== undefined;
 
-
-
         let rows = this.props.items.map((item, index) => (
-            <StructuredDataRow 
+            <MatchRow 
                 key={item.id} 
                 data={item} 
                 onSelect={this.state.selectFunc} 
                 isActive={item.id == this.state.activeRow}
             />
         ))
-
         return(
         <Table striped selectable={isSelectable} >        
             <Table.Header>
@@ -101,7 +77,6 @@ class MatchListTable extends Component
                     <Table.HeaderCell>Date</Table.HeaderCell>
                     <Table.HeaderCell>Match</Table.HeaderCell>
                     <Table.HeaderCell>Competition</Table.HeaderCell>
-                    <Table.HeaderCell>Plan</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>  
             <Table.Body>
@@ -111,7 +86,6 @@ class MatchListTable extends Component
         );
     }
 }
-
 /**
  * Represents a row of the structured data table
  * as this component isn't exported no additional validation is done 
@@ -120,15 +94,10 @@ class MatchListTable extends Component
  */
 function MatchRow(props)
 {
-    
     let date = props.data.date;
-
     let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
-
     let versus = props.data.home + " vs " + props.data.away;
-
     let selectFunc = props.onSelect != undefined ? props.onSelect : () => {};
-
     return(
         <Table.Row onClick={() => selectFunc(props.data)} active={props.isActive}>
             <Table.Cell>{dateString}</Table.Cell>
@@ -138,5 +107,4 @@ function MatchRow(props)
     );
     
 }
-
-export default StructuredDataTable;
+export default MatchListTable;
