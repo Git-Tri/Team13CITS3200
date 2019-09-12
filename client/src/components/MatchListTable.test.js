@@ -22,8 +22,8 @@ describe("Match List Table Tests",function()
         });
     
     const testMatchList = [
-        new Match(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{}),
-        new Match(2,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{})
+            new Match(1,new Date("1991-04-20T00:00:00.000Z"),"team A","team B",1,"comp A"),
+            new Match(2,new Date("1991-04-20T00:00:00.000Z"),"team C","test D",1,"comp B")
         ];
     
     test("Should throw error when given undefined items",(done) => 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
-import { Match } from "../domain";
 /**
  * shows a table of match data 
  * has the ability to select a row 
@@ -20,7 +19,6 @@ class MatchListTable extends Component
         {
             selectFunc = (data) => 
                 {
-                    
                     this.setState({activeRow: data.id})
                     this.props.onSelect(data);
                 }
@@ -104,7 +102,7 @@ function MatchRow(props)
             <Table.Cell>{versus}</Table.Cell>
             <Table.Cell>{props.data.competitionName}</Table.Cell>
         </Table.Row>
-    );
-    
+    );  
 }
+
 export default MatchListTable;

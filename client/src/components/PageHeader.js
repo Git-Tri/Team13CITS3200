@@ -19,7 +19,10 @@ class PageHeader extends Component {
 					</Header>
 					</Grid.Column>
 					<Grid.Column>
-					<Button onClick={() => {window.history.back()}}>
+					<Button 
+						onClick={() => {window.history.back()}}
+						disabled={!this.props.backButtonRequired}
+					>
 						Back
 					</Button>
 					</Grid.Column>

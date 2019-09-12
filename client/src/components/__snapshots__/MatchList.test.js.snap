@@ -5,6 +5,7 @@ exports[`Match List Tests should match snapshot 1`] = `
   className="page"
 >
   <PageHeader
+    backButtonRequired={true}
     header="Match List"
   />
   <Container
@@ -74,19 +75,19 @@ exports[`Match List Tests should match snapshot 1`] = `
         items={
           Array [
             Match {
-              "away": "some other team",
+              "away": "team B",
               "competitionID": 1,
-              "competitionName": "some comp",
+              "competitionName": "comp A",
               "date": 1991-04-20T00:00:00.000Z,
-              "home": "some team",
+              "home": "team A",
               "id": 1,
             },
             Match {
-              "away": "some other team",
+              "away": "test D",
               "competitionID": 1,
-              "competitionName": "some comp",
+              "competitionName": "comp B",
               "date": 1991-04-20T00:00:00.000Z,
-              "home": "some team",
+              "home": "team C",
               "id": 2,
             },
           ]

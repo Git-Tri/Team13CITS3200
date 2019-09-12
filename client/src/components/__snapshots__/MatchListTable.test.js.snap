@@ -42,12 +42,12 @@ exports[`Match List Table Tests Should render correctly for correct input 1`] = 
       <td
         className=""
       >
-        some team vs some other team
+        team A vs team B
       </td>
       <td
         className=""
       >
-        some comp
+        comp A
       </td>
     </tr>
     <tr
@@ -62,12 +62,12 @@ exports[`Match List Table Tests Should render correctly for correct input 1`] = 
       <td
         className=""
       >
-        some team vs some other team
+        team C vs test D
       </td>
       <td
         className=""
       >
-        some comp
+        comp B
       </td>
     </tr>
   </tbody>
@@ -116,12 +116,12 @@ exports[`Match List Table Tests Should render correctly for correct input with o
       <td
         className=""
       >
-        some team vs some other team
+        team A vs team B
       </td>
       <td
         className=""
       >
-        some comp
+        comp A
       </td>
     </tr>
     <tr
@@ -136,12 +136,12 @@ exports[`Match List Table Tests Should render correctly for correct input with o
       <td
         className=""
       >
-        some team vs some other team
+        team C vs test D
       </td>
       <td
         className=""
       >
-        some comp
+        comp B
       </td>
     </tr>
   </tbody>
@@ -217,11 +217,11 @@ exports[`Match List Table Tests Should render correctly with selected row 1`] = 
     <MatchRow
       data={
         Match {
-          "away": "some other team",
+          "away": "team B",
           "competitionID": 1,
-          "competitionName": "some comp",
+          "competitionName": "comp A",
           "date": 1991-04-20T00:00:00.000Z,
-          "home": "some team",
+          "home": "team A",
           "id": 1,
         }
       }
@@ -232,11 +232,11 @@ exports[`Match List Table Tests Should render correctly with selected row 1`] = 
     <MatchRow
       data={
         Match {
-          "away": "some other team",
+          "away": "test D",
           "competitionID": 1,
-          "competitionName": "some comp",
+          "competitionName": "comp B",
           "date": 1991-04-20T00:00:00.000Z,
-          "home": "some team",
+          "home": "team C",
           "id": 2,
         }
       }

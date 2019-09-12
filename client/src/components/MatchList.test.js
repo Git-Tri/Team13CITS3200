@@ -20,21 +20,6 @@ describe("Match List Tests",function() {
 		expect(page).toMatchSnapshot();
 	})
 
-	it("should call handleChange on searchtext", () => {
-		const mockEvent = {
-			target: {
-				name: 'searchtext',
-				value: "Sample text"
-			}
-		};
-		const expected = {
-			searchtext: "Sample text",
-			startdate: '0000-00-00',
-			enddate: '0000-00-00',
-			competition: ''
-		};
-		page.instance().handleChange(mockEvent);
-		expect(page.state()).toEqual(expected);
-	});
+	//More tests to come
 
 })
