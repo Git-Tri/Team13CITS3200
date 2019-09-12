@@ -7,7 +7,7 @@ import { bindUnstructureData } from "../Databinding";
 class UnstructuredDataList extends Component {
     constructor(props) {
         super(props)
-
+        this.isLoaded = false;
         this.state = {
             search: '',
             start: '',
@@ -46,7 +46,10 @@ class UnstructuredDataList extends Component {
     }
 
     render() {
-        this.load()
+        if (!this.isLoaded) {
+            this.load()
+            this.isLoaded = true;
+        }
         const { search, start, end, match, league, data } = this.state
         var test = [
             new UnstructuredData(1, 1, "some title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
