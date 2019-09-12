@@ -48,8 +48,8 @@ export function bindEdit(rawEdit)
 {
 
     return new Edit(Number.parseInt(rawEdit.editID),
-        Number.parseInt(rawEdit.structuredDataID),
-        Number.parseInt(rawEdit.unstructuredDataID),
+        Number.isInteger(rawEdit.structuredDataID) ? Number.parseInt(rawEdit.structuredDataID) : null,
+        Number.isInteger(rawEdit.unstructuredDataID) ? Number.parseInt(rawEdit.unstructuredDataID) : null,
         rawEdit.isCorpus,
         rawEdit.settings,
         rawEdit.replace,

@@ -28,6 +28,7 @@ export class EditList extends Component {
 
     }
 
+
 	/**
      * Loads all edits and bind the parsed json to edit objects
      */
