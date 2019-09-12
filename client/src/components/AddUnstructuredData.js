@@ -54,13 +54,13 @@ class AddUnstructuredData extends Component {
         }
     }
 
-    deleteHandler = (e) => {
+    deleteHandler = (id) => {
         e.preventDefault()
         if (this.exists) {
             var request = new XMLHttpRequest()
-            request.open('DELETE', '/unstructuredData', true)
+            request.open('DELETE', `/unstructuredData?id=${id}`, true)
             request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-            request.send(JSON.stringify(this.state.id))
+            request.send()
             request.onload = function () {
                 if (request.status != 200) {
                     alert(`Error ${request.status}: ${request.statusText}`)
