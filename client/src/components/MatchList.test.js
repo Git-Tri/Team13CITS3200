@@ -31,16 +31,10 @@ describe("Match List Tests",function() {
 			searchtext: "Sample text",
 			startdate: '0000-00-00',
 			enddate: '0000-00-00',
-			league: '',
-			dateError: false
+			competition: ''
 		};
 		page.instance().handleChange(mockEvent);
 		expect(page.state()).toEqual(expected);
 	});
 
-	it("should throw error if dates are invalid", () => {
-		page.setState({'startdate':'2001-01-02'})
-		page.setState({'enddate':'2001-01-01'})
-		expect(page.state().dateError).toEqual(true)
-	});
 })

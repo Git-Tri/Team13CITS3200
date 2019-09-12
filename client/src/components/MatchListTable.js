@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import { Match } from "../domain";
 /**
- * shows a table of structured data 
+ * shows a table of match data 
  * has the ability to select a row 
  */
 class MatchListTable extends Component
 {
     /**
-     * constructs a new structured data table
+     * constructs a new match data table
      * data is mandatory however onSelect is optional 
      * @param {*} props the props passed in
      */
@@ -41,7 +41,7 @@ class MatchListTable extends Component
     {
         if(! Array.isArray( this.props.items))
         {
-            throw Error("Props.items should contain a list of structured data")
+            throw Error("Props.items should contain a list of match data")
         }
         if(this.props.items.every((i) => i != undefined && i != null) == false)
         {
@@ -87,7 +87,7 @@ class MatchListTable extends Component
     }
 }
 /**
- * Represents a row of the structured data table
+ * Represents a row of the match data table
  * as this component isn't exported no additional validation is done 
  * by this component 
  * @param {*} props 

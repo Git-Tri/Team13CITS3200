@@ -47,8 +47,8 @@ exports[`Match List Tests should match snapshot 1`] = `
         </FormField>
         <FormField>
           <Input
-            label="League"
-            name="league"
+            label="Competition"
+            name="competition"
             onChange={[Function]}
             type="text"
           />
@@ -63,8 +63,36 @@ exports[`Match List Tests should match snapshot 1`] = `
       </FormButton>
     </Form>
     <div
-      className="results"
-    />
+      id="container"
+      style={
+        Object {
+          "height": "100vh",
+        }
+      }
+    >
+      <MatchListTable
+        items={
+          Array [
+            Match {
+              "away": "some other team",
+              "competitionID": 1,
+              "competitionName": "some comp",
+              "date": 1991-04-20T00:00:00.000Z,
+              "home": "some team",
+              "id": 1,
+            },
+            Match {
+              "away": "some other team",
+              "competitionID": 1,
+              "competitionName": "some comp",
+              "date": 1991-04-20T00:00:00.000Z,
+              "home": "some team",
+              "id": 2,
+            },
+          ]
+        }
+      />
+    </div>
   </Container>
 </div>
 `;
