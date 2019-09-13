@@ -333,6 +333,17 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 
         }
 
+        let parsedId = Number.parseInt(matchid);
+
+        if(Number.isNaN(parsedId))
+        {
+
+                errorCallback(new Error("bad input"));
+
+                return;
+
+        }
+
         query("select * from football.unstructured_data where matchid = " + matchid + " ;",(result) => 
         {
 

@@ -940,6 +940,26 @@ describe('Database Access Tests ', function() {
         
         it("Should exist",() => should.exist(dbAccess.getAllEdits))
 
+        it("Should throw error for no callback",() => assert.throws(
+            () => dbAccess.getUnstructuredDataByMatchId(1,undefined,assert.fail,assert.fail),
+            Error,
+            "callback must be defined and be a function"));
+    
+        it("Should call error callback with invalid id",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId("bob",assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with undefined id",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(undefined,assert.fail,() => done(),assert.fail);
+
+        });
+
+
         it("should have correct number of unstructured data in result for match id 1",(done) => 
         {
 
