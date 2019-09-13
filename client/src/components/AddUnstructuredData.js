@@ -18,7 +18,7 @@ class AddUnstructuredData extends Component {
             url: '',
             match: '',
             data: '',
-            exists: true
+            exists: false
         }
     }
 
@@ -33,7 +33,7 @@ class AddUnstructuredData extends Component {
         console.log(this.state)
         console.log(toSend)
         var request = new XMLHttpRequest()
-        if (!this.exists) {
+        if (!this.state.exists) {
             request.open('POST', '/unstructuredData', true)
             request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
             request.send(JSON.stringify(this.state))
@@ -101,13 +101,16 @@ class AddUnstructuredData extends Component {
 
     handleChosenMatch(chosenMatch) {
         console.log(chosenMatch)
+        this.setState({
+            matchid: chosenMatch.id,
+            match: `${chosenMatch.home} vs ${chosenMatch.away}`,
+            exists: true
+        })
     }
 
     render() {
         console.log(this.state)
         const { id, matchid, title, author, published, extracted, url, match, data, exists } = this.state
-        this.state.id = 1
-        this.state.exists = true
 		return (
 			<div className="page">
 				<PageHeader 

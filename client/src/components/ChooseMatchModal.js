@@ -24,7 +24,7 @@ class ChooseMatchModal extends Component {
 
         this.state = {
             isLoaded: false,
-            data: undefined,
+            data: ['sss'],
             isError: false,
             lastSelectedId: -1,
             isModalOpen: false,
@@ -51,6 +51,10 @@ class ChooseMatchModal extends Component {
      */
     loadData() {
 
+        var test = [
+            new Match(1, new Date("1991-04-20T00:00:00.000Z"), 'ispep', 'pepsi', 1, 'bepis'),
+            new Match(2, new Date("1992-05-20T00:00:00.000Z"), 'olos', 'solo', 1, 'silo')
+        ]
         fetch("/matchList")
             .then(res => res.json())
             .then(result => {
@@ -60,7 +64,10 @@ class ChooseMatchModal extends Component {
                 this.setState({ data: result, isLoaded: true, isError: false });
 
             })
-            .catch(err => this.setState({ isError: true }));
+//            .catch(err => this.setState({ isError: true }));
+            .catch(err => {
+                this.setState({ data: test, isLoaded: true, isError: false })
+            })
 
     }
 
@@ -87,10 +94,19 @@ class ChooseMatchModal extends Component {
     }
 
     /**
+     * handles the selection of data
+     * @param {*} data should be type unstructured or structured data 
+     */
+    handleSelection(data) {
+
+        this.setState({ lastSelectedId: data.id, selectedItem: data });
+
+    }
+
+    /**
      * Renders the page if the data has been loaded 
      */
     renderLoaded() {
-
         return (<div>
             <Tab menu={{ pointing: true }} panes={
                 [
@@ -98,7 +114,7 @@ class ChooseMatchModal extends Component {
                         menuItem: 'Match',
                         render: () =>
                             <Tab.Pane>
-                                <MatchTable items={this.state.data.matches}
+                                <MatchTable items={this.state.data}
                                     onSelect={this.handleSelection.bind(this)} />
                             </Tab.Pane>
                     },
@@ -199,7 +215,7 @@ class ChooseMatchModal extends Component {
             <Modal
                 closeIcon
                 onOpen={loadIfNotAlready.bind(this)}
-                trigger={<Button primary onClick={this.handleOpen.bind(this)}>{this.props.text !== undefined ? this.props.text : "Change"}</Button>}
+                trigger={<Button primary type ="button" onClick={this.handleOpen.bind(this)}>{this.props.text !== undefined ? this.props.text : "Change"}</Button>}
                 onClose={this.handleClose.bind(this)}
                 open={this.state.isModalOpen}>
                 <Modal.Header>Choose Match</Modal.Header>
