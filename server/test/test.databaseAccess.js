@@ -243,7 +243,7 @@ describe('Database Access Tests ', function() {
             this.timeout(10000)
 
             let queries = 
-            ["delete from football.unstructured_data","delete from football.match",'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            ["delete from football.unstructured_data where author = 'testAuthor'","delete from football.match where home = 'testTeam'",'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
@@ -348,8 +348,8 @@ describe('Database Access Tests ', function() {
 
             let queries = 
             [   
-                "delete from football.unstructured_data",
-                "delete from football.match",
+                "delete from football.unstructured_data where author = 'testAuthor'",
+                "delete from football.match where home = 'testTeam'",
                 'insert into football.match (date,home,away,competitionID,data)' +
                     'values ("1991/4/20","testTeam","bob",1,"{}");'
             ];
@@ -740,65 +740,61 @@ describe('Database Access Tests ', function() {
 
         before(function(done)
         {
-            cleanUp(() => 
-            {
+            //mini clean up 
+            dbAccess.query("delete from football.edit where replace_text = 'testEdit'",() => {
+            //just in case 
+            this.timeout(10000)
 
-                //just in case 
-                this.timeout(10000)
-
-                let queries = 
-                [
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");',
-                ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                'values (null,null,true,null,"testEdit","goodbye","replace");'
-
+            let queries = 
+            [
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");',
+            ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+            'values (null,null,true,null,"testEdit","goodbye","replace");'
             ];
         
 
-        dbAccess.multiInsertQuery(queries,() => {
-            
-            done()
-        
-            },assert.fail,assert.fail);
-
-        },(err) => {throw err},(err) => {throw err});
+                dbAccess.multiInsertQuery(queries,() => {
+                    
+                    done()
+                
+                },(err) => {throw err},(err) => {throw err});
        
-    
+        },(err) => {throw err},(err) => {throw err});
        });
 
        it("Should exist",() => should.exist(dbAccess.getAllEdits))
@@ -872,6 +868,206 @@ describe('Database Access Tests ', function() {
 
     });
 
+    describe("get UnstructuredData by Match id Tests",function()
+    {
+
+        let matchid1 = 0;
+
+        let matchid2 = 0;
+
+        before(function(done)
+        {
+            //just in case 
+            this.timeout(10000)
+
+            let queries = 
+            [   
+                "delete from football.unstructured_data where author = 'testAuthor'",
+                "delete from football.match where home = 'testTeam'",
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","testTeam","team1",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","testTeam","team2",1,"{}");'
+            ];
+            
+            
+
+            dbAccess.multiInsertQuery(queries,() => {
+                
+                dbAccess.query("select id from football.match where away = 'team1';",(id) => 
+                    {
+
+                        matchid1 = id[0][0];
+                        
+                        let insertQueries = 
+                        [
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid1 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid1 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid1 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid1 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid1 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
+                            
+
+                        ]
+
+                        dbAccess.multiInsertQuery(insertQueries,() => 
+                        {
+
+                            dbAccess.query("select id from football.match where away = 'team2';",(id) => 
+                            {
+                                
+                            matchid2 = id[0][0];
+                        
+                            let insertQueries = 
+                            [
+                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid2 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid2 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid2 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid2 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid2 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid2 + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
+                                
+    
+                            ]
+
+                            dbAccess.multiInsertQuery(insertQueries,() => done(),(err) => {throw err},(err) => {throw err})
+                            },(err) => {throw err},(err) => {throw err});
+                        },(err) => {throw err},(err) => {throw err});
+                    },(err) => {throw err},(err) => {throw err});       
+                },(err) => {throw err},(err) => {throw err});        
+    
+       });
+        
+        it("Should exist",() => should.exist(dbAccess.getAllEdits))
+
+        it("should have correct number of unstructured data in result for match id 1",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
+            {
+
+                result.length.should.equal(5);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+        });
+        
+        it("should have correct types of unstructured data in result for match id 1",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
+            {
+
+                result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+        });
+        
+        it("should have correct fields of unstructured data in result for match id 1",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
+            {
+
+
+                let modelObject = new domain.UnstructuredData(undefined,matchid1,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                    new Date("2000-01-21T00:00:00.000Z"),"some text")
+
+                result.every((r) => 
+                {
+
+                    let isMatchid = modelObject.matchid == r.matchid;
+                    let isTitle = modelObject.title == r.title;
+                    let isAuthor = modelObject.author == r.author;
+                    let isUrl = modelObject.url == r.url;
+                    let isPublished = JSON.stringify(modelObject.published) == JSON.stringify(r.published);
+                    let isExtracted = JSON.stringify(modelObject.extracted) == JSON.stringify(r.extracted);
+                    let isData = modelObject.data == r.data;
+
+
+                    return isMatchid && isTitle && isAuthor && isUrl 
+                        && isPublished && isExtracted && isData;
+
+
+                }).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail);
+
+        });
+
+        it("should have correct number of unstructured data in result for match id 2",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
+            {
+
+                result.length.should.equal(6);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+        });
+        
+        it("should have correct types of unstructured data in result for match id 2",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
+            {
+
+                result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+        });
+        
+        it("should have correct fields of unstructured data in result for match id 1",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
+            {
+
+
+                let modelObject = new domain.UnstructuredData(undefined,matchid2,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                    new Date("2000-01-21T00:00:00.000Z"),"some text")
+
+                result.every((r) => 
+                {
+
+                    let isMatchid = modelObject.matchid == r.matchid;
+                    let isTitle = modelObject.title == r.title;
+                    let isAuthor = modelObject.author == r.author;
+                    let isUrl = modelObject.url == r.url;
+                    let isPublished = JSON.stringify(modelObject.published) == JSON.stringify(r.published);
+                    let isExtracted = JSON.stringify(modelObject.extracted) == JSON.stringify(r.extracted);
+                    let isData = modelObject.data == r.data;
+
+
+                    return isMatchid && isTitle && isAuthor && isUrl 
+                        && isPublished && isExtracted && isData;
+
+
+                }).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail);
+
+        });
+
+
+    });
+
+    
     after(function(done)
     {
 
