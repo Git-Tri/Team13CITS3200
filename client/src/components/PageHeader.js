@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Header, Button, Grid } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
 class PageHeader extends Component {
 
 
 	render() {
+		let isBackable = this.props.id === undefined ?
+			new URLSearchParams(this.props.location.search).get("isbackable") : this.props.id;
+
 		return (
 			<Grid container columns={3}>
 				<Grid.Row>
@@ -20,8 +24,8 @@ class PageHeader extends Component {
 					</Grid.Column>
 					<Grid.Column>
 					<Button 
-						onClick={() => {window.history.back()}}
-						disabled={!this.props.backButtonRequired}
+						onClick={() => {this.props.history.goBack()}}
+						disabled={!isBackable}
 					>
 						Back
 					</Button>
@@ -32,4 +36,4 @@ class PageHeader extends Component {
 	}
 }
 
-export default PageHeader;
+export default withRouter(PageHeader);

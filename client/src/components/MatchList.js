@@ -45,7 +45,6 @@ class MatchList extends Component {
 					header={"Match List"}
 					sidebarVisible={this.props.sidebarVisible}
 					handleSidebarClick={this.props.handleSidebarClick}
-					backButtonRequired={true}
 				/>
 				<Container style={{height:"100vh"}}>
 					<Form>
