@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
+exports[`Chose Data Modal Tests should match snapshot on no data choosen error 1`] = `
 <ChooseDataModal
   onSelect={[Function]}
 >
@@ -18,8 +18,9 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -189,11 +190,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                             >
                               Competition
                             </th>
-                            <th
-                              class=""
-                            >
-                              Plan
-                            </th>
                           </tr>
                         </thead>
                         <tbody
@@ -342,8 +338,9 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -550,11 +547,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                                 class=""
                               >
                                 Competition
-                              </th>
-                              <th
-                                class=""
-                              >
-                                Plan
                               </th>
                             </tr>
                           </thead>
@@ -859,11 +851,6 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                                   class=""
                                 >
                                   Competition
-                                </th>
-                                <th
-                                  class=""
-                                >
-                                  Plan
                                 </th>
                               </tr>
                             </thead>
@@ -1271,14 +1258,15 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -1287,22 +1275,22 @@ exports[`Chose Data Modal Tests should call load data when modal opens 1`] = `
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>
@@ -1332,8 +1320,9 @@ exports[`Chose Data Modal Tests should render Error correctly 1`] = `
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -1443,8 +1432,9 @@ exports[`Chose Data Modal Tests should render Error correctly 1`] = `
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -2053,14 +2043,15 @@ exports[`Chose Data Modal Tests should render Error correctly 1`] = `
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -2069,22 +2060,22 @@ exports[`Chose Data Modal Tests should render Error correctly 1`] = `
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>
@@ -2098,14 +2089,14 @@ exports[`Chose Data Modal Tests should render Error correctly 1`] = `
 
 exports[`Chose Data Modal Tests should render correctly when closed 1`] = `
 <button
-  className="ui button"
+  className="ui primary button"
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  Show Modal
+  Change
 </button>
 `;
 
@@ -2127,8 +2118,9 @@ exports[`Chose Data Modal Tests should render double selection correctly 1`] = `
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -2189,8 +2181,9 @@ exports[`Chose Data Modal Tests should render double selection correctly 1`] = `
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -2207,14 +2200,15 @@ exports[`Chose Data Modal Tests should render double selection correctly 1`] = `
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -2223,22 +2217,22 @@ exports[`Chose Data Modal Tests should render double selection correctly 1`] = `
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>
@@ -2268,8 +2262,9 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -2439,11 +2434,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                             >
                               Competition
                             </th>
-                            <th
-                              class=""
-                            >
-                              Plan
-                            </th>
                           </tr>
                         </thead>
                         <tbody
@@ -2652,11 +2642,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                             >
                               Competition
                             </th>
-                            <th
-                              class=""
-                            >
-                              Plan
-                            </th>
                           </tr>
                         </thead>
                         <tbody
@@ -2731,8 +2716,9 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -2810,11 +2796,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 Competition
-                              </th>
-                              <th
-                                class=""
-                              >
-                                Plan
                               </th>
                             </tr>
                           </thead>
@@ -3042,11 +3023,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 Competition
                               </th>
-                              <th
-                                class=""
-                              >
-                                Plan
-                              </th>
                             </tr>
                           </thead>
                           <tbody
@@ -3254,11 +3230,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 class=""
                               >
                                 Competition
-                              </th>
-                              <th
-                                class=""
-                              >
-                                Plan
                               </th>
                             </tr>
                           </thead>
@@ -3490,11 +3461,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 >
                                   Competition
                                 </th>
-                                <th
-                                  class=""
-                                >
-                                  Plan
-                                </th>
                               </tr>
                             </thead>
                             <tbody
@@ -3703,11 +3669,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                 >
                                   Competition
                                 </th>
-                                <th
-                                  class=""
-                                >
-                                  Plan
-                                </th>
                               </tr>
                             </thead>
                             <tbody
@@ -3853,11 +3814,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                       >
                                         Competition
                                       </th>
-                                      <th
-                                        class=""
-                                      >
-                                        Plan
-                                      </th>
                                     </tr>
                                   </thead>
                                   <tbody
@@ -3992,11 +3948,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                           class=""
                                         >
                                           Competition
-                                        </th>
-                                        <th
-                                          class=""
-                                        >
-                                          Plan
                                         </th>
                                       </tr>
                                     </thead>
@@ -4277,20 +4228,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                                                         </th>
                                                       </TableCell>
                                                     </TableHeaderCell>
-                                                    <TableHeaderCell
-                                                      as="th"
-                                                    >
-                                                      <TableCell
-                                                        as="th"
-                                                        className=""
-                                                      >
-                                                        <th
-                                                          className=""
-                                                        >
-                                                          Plan
-                                                        </th>
-                                                      </TableCell>
-                                                    </TableHeaderCell>
                                                   </tr>
                                                 </TableRow>
                                               </thead>
@@ -4560,11 +4497,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 Competition
                               </th>
-                              <th
-                                class=""
-                              >
-                                Plan
-                              </th>
                             </tr>
                           </thead>
                           <tbody
@@ -4708,11 +4640,6 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                               >
                                 Competition
                               </th>
-                              <th
-                                class=""
-                              >
-                                Plan
-                              </th>
                             </tr>
                           </thead>
                           <tbody
@@ -4809,14 +4736,15 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -4825,22 +4753,22 @@ exports[`Chose Data Modal Tests should render error message when sub-component f
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>
@@ -4870,8 +4798,9 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -5041,11 +4970,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                             >
                               Competition
                             </th>
-                            <th
-                              class=""
-                            >
-                              Plan
-                            </th>
                           </tr>
                         </thead>
                         <tbody
@@ -5120,8 +5044,9 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -5199,11 +5124,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 class=""
                               >
                                 Competition
-                              </th>
-                              <th
-                                class=""
-                              >
-                                Plan
                               </th>
                             </tr>
                           </thead>
@@ -5430,11 +5350,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 class=""
                               >
                                 Competition
-                              </th>
-                              <th
-                                class=""
-                              >
-                                Plan
                               </th>
                             </tr>
                           </thead>
@@ -5666,11 +5581,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                 >
                                   Competition
                                 </th>
-                                <th
-                                  class=""
-                                >
-                                  Plan
-                                </th>
                               </tr>
                             </thead>
                             <tbody
@@ -5816,11 +5726,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                       >
                                         Competition
                                       </th>
-                                      <th
-                                        class=""
-                                      >
-                                        Plan
-                                      </th>
                                     </tr>
                                   </thead>
                                   <tbody
@@ -5955,11 +5860,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                           class=""
                                         >
                                           Competition
-                                        </th>
-                                        <th
-                                          class=""
-                                        >
-                                          Plan
                                         </th>
                                       </tr>
                                     </thead>
@@ -6240,20 +6140,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                                                         </th>
                                                       </TableCell>
                                                     </TableHeaderCell>
-                                                    <TableHeaderCell
-                                                      as="th"
-                                                    >
-                                                      <TableCell
-                                                        as="th"
-                                                        className=""
-                                                      >
-                                                        <th
-                                                          className=""
-                                                        >
-                                                          Plan
-                                                        </th>
-                                                      </TableCell>
-                                                    </TableHeaderCell>
                                                   </tr>
                                                 </TableRow>
                                               </thead>
@@ -6523,11 +6409,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               >
                                 Competition
                               </th>
-                              <th
-                                class=""
-                              >
-                                Plan
-                              </th>
                             </tr>
                           </thead>
                           <tbody
@@ -6671,11 +6552,6 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                               >
                                 Competition
                               </th>
-                              <th
-                                class=""
-                              >
-                                Plan
-                              </th>
                             </tr>
                           </thead>
                           <tbody
@@ -6772,14 +6648,15 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -6788,22 +6665,22 @@ exports[`Chose Data Modal Tests should render loaded data correctly 1`] = `
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>
@@ -6833,8 +6710,9 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -7004,11 +6882,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                             >
                               Competition
                             </th>
-                            <th
-                              class=""
-                            >
-                              Plan
-                            </th>
                           </tr>
                         </thead>
                         <tbody
@@ -7120,8 +6993,9 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -7328,11 +7202,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                                 class=""
                               >
                                 Competition
-                              </th>
-                              <th
-                                class=""
-                              >
-                                Plan
                               </th>
                             </tr>
                           </thead>
@@ -7600,11 +7469,6 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                                   class=""
                                 >
                                   Competition
-                                </th>
-                                <th
-                                  class=""
-                                >
-                                  Plan
                                 </th>
                               </tr>
                             </thead>
@@ -7975,14 +7839,15 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -7991,22 +7856,22 @@ exports[`Chose Data Modal Tests should render loading correctly 1`] = `
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>
@@ -8036,8 +7901,9 @@ exports[`Chose Data Modal Tests should render single selection correctly 1`] = `
       <Button
         as="button"
         onClick={[Function]}
+        primary={true}
       >
-        Show Modal
+        Change
       </Button>
     }
   >
@@ -8098,8 +7964,9 @@ exports[`Chose Data Modal Tests should render single selection correctly 1`] = `
         <Button
           as="button"
           onClick={[Function]}
+          primary={true}
         >
-          Show Modal
+          Change
         </Button>
       }
     >
@@ -8116,14 +7983,15 @@ exports[`Chose Data Modal Tests should render single selection correctly 1`] = `
             onFocus={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
+            primary={true}
           >
             <Ref
               innerRef={
                 Object {
                   "current": <button
-                    class="ui button"
+                    class="ui primary button"
                   >
-                    Show Modal
+                    Change
                   </button>,
                 }
               }
@@ -8132,22 +8000,22 @@ exports[`Chose Data Modal Tests should render single selection correctly 1`] = `
                 innerRef={
                   Object {
                     "current": <button
-                      class="ui button"
+                      class="ui primary button"
                     >
-                      Show Modal
+                      Change
                     </button>,
                   }
                 }
               >
                 <button
-                  className="ui button"
+                  className="ui primary button"
                   onBlur={[Function]}
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseEnter={[Function]}
                   onMouseLeave={[Function]}
                 >
-                  Show Modal
+                  Change
                 </button>
               </RefFindNode>
             </Ref>

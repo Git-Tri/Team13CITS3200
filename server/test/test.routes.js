@@ -283,7 +283,6 @@ describe("Route Tests",function()
 
         });
 
-
     });
 
     describe("PUT:/edit tests",function()
@@ -291,8 +290,8 @@ describe("Route Tests",function()
 
         function routeGen(edit)
         {
-            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
-                body:"edit="+JSON.stringify(edit)}
+            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/json' },
+                body:JSON.stringify(edit)}
 
             return options;
         };
@@ -386,8 +385,8 @@ describe("Route Tests",function()
 
         function routeGen(edit)
         {
-            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
-                body:"edit="+JSON.stringify(edit)}
+            let options = {url: localHost + "/edit",headers:{ 'Content-Type': 'application/json' },
+                body:JSON.stringify(edit)}
 
             return options;
         };
@@ -627,6 +626,75 @@ describe("Route Tests",function()
 
         });
 
+
+    });
+
+    describe("GET:/getUnstructuredDataByMatchId tests",function()
+    {
+
+        //edit id is only assigned when before is run
+        //thus i have to add ?id at the end of each route 
+        let routeGen = () => localHost + "/getUnstructuredDataByMatchId?id=" + actualMatchId;
+
+        it("route should exist and not cuase error",(done) => 
+        {
+
+            request(routeGen(),(error,response,body) =>
+            {
+
+                should.not.exist(error,null);                
+
+                done();
+
+            })
+
+        });
+
+        it("route should return empty for non-existient id",(done) => 
+        {
+
+            request(routeGen()+"5",(error,response,body) =>
+            {
+
+                let resultObject = JSON.parse(body);
+
+                resultObject.unstructuredData.length.should.equal(0); 
+
+                done();
+
+            })
+
+        });
+
+        it("route should return unstructured data",(done) => 
+        {
+
+            //due to limitations of the database schema can't test if ids are equal
+            //since ids will change with every test run
+            //due to limitations in json.parse the numbers needs to be converted from string to int. 
+            request(routeGen(),(error,response,body) =>
+            {
+
+                let resultObjects = JSON.parse(body);
+
+                let expectedObject = new domain.UnstructuredData(undefined,actualMatchId,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                    new Date("2000-01-21T00:00:00.000Z"),"some text")
+
+                delete expectedObject.id;
+
+                let expectedResult = [expectedObject,expectedObject,expectedObject,expectedObject,expectedObject];
+
+                resultObjects.unstructuredData.map((s) => delete s.id);
+                
+                resultObjects.unstructuredData.map((s) => s.matchid = Number.parseInt(s.matchid));
+
+                JSON.stringify(resultObjects.unstructuredData).should.equal(JSON.stringify(expectedResult));
+
+                done();
+
+            })
+
+        });
 
     });
 

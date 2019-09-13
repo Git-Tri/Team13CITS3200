@@ -101,7 +101,6 @@ class StructuredDataTable extends Component
                     <Table.HeaderCell>Date</Table.HeaderCell>
                     <Table.HeaderCell>Match</Table.HeaderCell>
                     <Table.HeaderCell>Competition</Table.HeaderCell>
-                    <Table.HeaderCell>Plan</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>  
             <Table.Body>
