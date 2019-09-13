@@ -82,8 +82,8 @@ class UnstructuredDataList extends Component {
                                 <label>
                                     Between
                                 </label>
-                                <input type="text" name="start" value={start} onchange={this.changeHandler} placeholder="Start Date" />
-                                <input type="text" name="end" value={end} onchange={this.changeHandler} placeholder= "End Date" />
+                                <input type="date" name="start" value={start} onchange={this.changeHandler}/>
+                                <input type="date" name="end" value={end} onchange={this.changeHandler}/>
                             </div>
                             <div class="six wide field">
                                 <label>

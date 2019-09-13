@@ -1,4 +1,4 @@
-import {StructuredData, UnstructuredData, Edit} from "./domain";
+import {StructuredData, UnstructuredData, Edit, Match} from "./domain";
 /**
  * converts a parsed json object of structured data
  * to an instance of structured data 
@@ -56,4 +56,21 @@ export function bindEdit(rawEdit)
         rawEdit.replaceWith,
         rawEdit.type);    
 
+}
+
+/**
+ * converts a parsed json object to a match
+ * no validation is done
+ * @param {*} rawMatch the parsed json object
+ */
+
+export function bindMatch(rawMatch)
+{
+
+    return new Match(Number.parseInt(rawMatch.id),
+        new Date(rawMatch.date),
+        rawMatch.home,
+        rawMatch.away,
+        Number.parseInt(rawMatch.competitionID),
+        rawMatch.competitionName);
 }
