@@ -67,7 +67,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       <td
         className=""
       >
-        some title r...
+        some title really really really really rea...
       </td>
     </tr>
   </tbody>
@@ -141,7 +141,7 @@ exports[`Unstructured Data Table Tests Should render correctly for correct input
       <td
         className=""
       >
-        some title r...
+        some title really really really really rea...
       </td>
     </tr>
   </tbody>

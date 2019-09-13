@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data Pair Tests Should render correctly 1`] = `
+<div
+  style={
+    Object {
+      "padding": "0px 15px 0px 15px",
+    }
+  }
+>
+  <b>
+     
+    hello
+    :
+  </b>
+  <div
+    style={
+      Object {
+        "float": "right",
+        "padding": "0px 0px 0px 5px",
+      }
+    }
+  >
+    world
+     
+  </div>
+</div>
+`;

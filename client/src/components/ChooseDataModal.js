@@ -252,7 +252,7 @@ class ChooseDataModal extends Component
             <Modal 
                 closeIcon
                 onOpen={loadIfNotAlready.bind(this)}  
-                trigger={<Button onClick={this.handleOpen.bind(this)}>Show Modal</Button>}
+                trigger={<Button primary onClick={this.handleOpen.bind(this)}>{this.props.text !== undefined ? this.props.text : "Change"}</Button>}
                 onClose={this.handleClose.bind(this)}
                 open={this.state.isModalOpen}>
                 <Modal.Header>Choose Data</Modal.Header>

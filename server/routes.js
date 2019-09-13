@@ -163,7 +163,7 @@ exports.createRoutes = function(app)
 
       let edit = req.body;
 
-      let putErrorHandler = (err) => 
+      let postErrorHandler = (err) => 
       {
 
         if(err.message.toLowerCase().includes("cannot add or update a child row"))
@@ -186,15 +186,13 @@ exports.createRoutes = function(app)
         res.sendStatus(200);
 
       },
-      (err) => putErrorHandler(err,res),
-      (err) => putErrorHandler(err,res));
+      (err) => postErrorHandler(err,res),
+      (err) => postErrorHandler(err,res));
       
     })
 
     middleware.delete(app,"/edit",(req,res) => 
     {
-      
-      
 
       var editId = req.query.id;
 
@@ -250,5 +248,23 @@ exports.createRoutes = function(app)
 
     });
 
+    //used for the structured data list page 
+    middleware.get(app,"/getUnstructuredDataByMatchId",(req,res) => 
+    {
+
+      var matchId = req.query.id;
+
+      res.setHeader("Content-Type","application/json");
+
+      dbAccess.getUnstructuredDataByMatchId(matchId,(result => 
+        {          
+
+          let responseObject = {unstructuredData: result};
+
+          res.send(JSON.stringify(responseObject));
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+    });
 
 }

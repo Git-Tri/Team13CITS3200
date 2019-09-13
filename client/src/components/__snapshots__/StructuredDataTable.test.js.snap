@@ -25,11 +25,6 @@ exports[`Structured Data Table Tests Should render correctly for correct input 1
       >
         Competition
       </th>
-      <th
-        className=""
-      >
-        Plan
-      </th>
     </tr>
   </thead>
   <tbody
@@ -103,11 +98,6 @@ exports[`Structured Data Table Tests Should render correctly for correct input w
         className=""
       >
         Competition
-      </th>
-      <th
-        className=""
-      >
-        Plan
       </th>
     </tr>
   </thead>
@@ -183,11 +173,6 @@ exports[`Structured Data Table Tests Should render correctly for correct with no
       >
         Competition
       </th>
-      <th
-        className=""
-      >
-        Plan
-      </th>
     </tr>
   </thead>
   <tbody
@@ -223,11 +208,6 @@ exports[`Structured Data Table Tests Should render correctly with selected row 1
         as="th"
       >
         Competition
-      </TableHeaderCell>
-      <TableHeaderCell
-        as="th"
-      >
-        Plan
       </TableHeaderCell>
     </TableRow>
   </TableHeader>

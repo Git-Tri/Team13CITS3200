@@ -323,6 +323,36 @@ function getAllEdits(callback,errorCallback,noConnectionCallback)
 
 }
 
+function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectionCallback)
+{
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        let parsedId = Number.parseInt(matchid);
+
+        if(Number.isNaN(parsedId))
+        {
+
+                errorCallback(new Error("bad input"));
+
+                return;
+
+        }
+
+        query("select * from football.unstructured_data where matchid = " + matchid + " ;",(result) => 
+        {
+
+                callback(dataBinding.bindUnstructuredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
@@ -331,5 +361,6 @@ module.exports = { query,
         updateEdit,
         insertEdit,
         deleteEditById,
-        getAllEdits };
+        getAllEdits,
+        getUnstructuredDataByMatchId };
 

@@ -18,7 +18,6 @@ describe("Data binding tests",() =>
 
         test("should have correct fields for valid input",() => expect(JSON.stringify(bindFunc(rawObject)))
                                                                     .toEqual(JSON.stringify(correctObject)));
-
     }    
 
     describe("bindUnstructuredData tests",() => 

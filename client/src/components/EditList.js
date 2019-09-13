@@ -12,7 +12,7 @@ export class EditList extends Component {
 
 		super(props)
 
-		this.state = {data: undefined, isLoaded: false, isError: false}
+		this.state = {data: [], isLoaded: false, isError: false}
 
 	}
 
@@ -28,6 +28,7 @@ export class EditList extends Component {
 
     }
 
+
 	/**
      * Loads all edits and bind the parsed json to edit objects
      */
@@ -41,7 +42,7 @@ export class EditList extends Component {
 
 					result.editList = result.editList.map((d) => bindEdit(d));
 					
-					let edits = result.editList
+                    let edits = result.editList;
 
 					this.setState({data:edits,isLoaded: true, isError: false})
                 })
@@ -105,7 +106,7 @@ export class EditList extends Component {
 	routeToEdit(edit)
 	{
 
-		this.props.history.push("/add_edit?id=" + edit.editID + "&isBack=true");
+		this.props.history.push("/add_edit?id=" + edit.editID + "&isbackable=true");
 		
 	}
 
