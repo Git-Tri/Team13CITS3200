@@ -9,7 +9,7 @@ class AddUnstructuredData extends Component {
         super(props)
 
         this.state = {
-            id: '',
+            id: null,
             matchid: '',
             title: '',
             author: '',
@@ -22,26 +22,33 @@ class AddUnstructuredData extends Component {
         }
     }
 
+    /**
+    * deals with filling out inputs in the form
+    * @param e - the event that caused the change
+    **/
     changeHandler = (e) => {
         e.preventDefault()
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    /**
+    * deals with submission of the form
+    * @param e - the event that caused the submission
+    **/
     submit = (e) => {
         e.preventDefault()
         var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, this.state.published, this.state.extracted, this.state.data)
-        console.log(this.state)
         console.log(toSend)
         var request = new XMLHttpRequest()
         if (!this.state.exists) {
             request.open('POST', '/unstructuredData', true)
             request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-            request.send(JSON.stringify(this.state))
+            request.send(JSON.stringify(toSend))
         }
         else {
             request.open('PUT', '/unstructuredData', true)
             request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-            request.send(JSON.stringify(this.state))
+            request.send(JSON.stringify(toSend))
         }
         request.onload = function () {
             if (request.status != 200) {
@@ -56,6 +63,10 @@ class AddUnstructuredData extends Component {
         }
     }
 
+    /**
+    * deals with deleting the data
+    * @param e - the event that caused the delete
+    **/
     delete = (e) => {
         e.preventDefault()
         if (this.state.exists) {
@@ -81,24 +92,10 @@ class AddUnstructuredData extends Component {
         }
     }
 
-    load = (id) => {
-        var request = new XMLHttpRequest()
-        request.open('GET', `/unstructuredData?id=${id}`, true)
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-        request.send()
-        request.onload = function () {
-            if (request.status != 200) {
-                alert(`Error ${request.status}: ${request.statusText}`)
-            }
-            else {
-                // what to do with the retrieved data
-            }
-        }
-        request.onerror = function () {
-            alert("Load failed")
-        }
-    }
-
+    /**
+     * deals with the match chosen by the choose match modal
+     * @param {any} chosenMatch - the chosen match
+     */
     handleChosenMatch(chosenMatch) {
         console.log(chosenMatch)
         this.setState({
@@ -108,6 +105,9 @@ class AddUnstructuredData extends Component {
         })
     }
 
+    /**
+     * renders the page
+     */
     render() {
         console.log(this.state)
         const { id, matchid, title, author, published, extracted, url, match, data, exists } = this.state

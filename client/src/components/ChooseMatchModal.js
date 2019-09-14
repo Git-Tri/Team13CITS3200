@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Tab, Button, Header, Modal, Loader, Message, Container } from 'semantic-ui-react';
 import StructuredDataTable from './StructuredDataTable';
 import { Match } from "../domain";
-import MatchTable from "./MatchTable";
+import ChooseMatchTable from "./ChooseMatchTable";
 import { bindMatch } from "../Databinding";
 
 
@@ -114,7 +114,7 @@ class ChooseMatchModal extends Component {
                         menuItem: 'Match',
                         render: () =>
                             <Tab.Pane>
-                                <MatchTable items={this.state.data}
+                                <ChooseMatchTable items={this.state.data}
                                     onSelect={this.handleSelection.bind(this)} />
                             </Tab.Pane>
                     },

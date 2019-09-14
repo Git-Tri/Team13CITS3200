@@ -6,7 +6,7 @@ import { Match } from "../domain";
  * shows a table of match data 
  * has the ability to select a row 
  */
-class MatchTable extends Component
+class ChooseMatchTable extends Component
 {
 
     /**
@@ -145,4 +145,4 @@ function MatchRow(props)
     
 }
 
-export default MatchTable;
+export default ChooseMatchTable;

@@ -18,10 +18,17 @@ class UnstructuredDataList extends Component {
         }
     }
 
+    /**
+    * deals with filling out inputs in the form
+    * @param e - the event that caused the change
+    **/
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    /**
+    * loads all the unstructured data into the list
+    **/
     load = () => {
         var request = new XMLHttpRequest()
         request.open('GET', '/allchooseableData', true)
@@ -45,6 +52,9 @@ class UnstructuredDataList extends Component {
         }
     }
 
+    /**
+     * renders the page
+     */
     render() {
         if (!this.isLoaded) {
             this.load()
