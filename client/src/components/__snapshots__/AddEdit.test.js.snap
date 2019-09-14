@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add Edit Tests Should render correctly for existing edit 1`] = `
+<div
+  className="page"
+>
+  <PageHeader
+    header="Create new Edit"
+  />
+  <div
+    id="container"
+    style={
+      Object {
+        "height": "100vh",
+      }
+    }
+  >
+    <withRouter(EditForm)
+      data={
+        Edit {
+          "editID": 1,
+          "isCorpus": true,
+          "replace": "some",
+          "replaceWith": "all",
+          "settings": Object {},
+          "structuredDataID": 1,
+          "type": "replace",
+          "unstructuredDataID": 1,
+        }
+      }
+      id={1}
+    />
+  </div>
+</div>
+`;
+
+exports[`Add Edit Tests Should render correctly for new edit 1`] = `
+<div
+  className="page"
+>
+  <PageHeader
+    header="View Edit"
+  />
+  <div
+    id="container"
+    style={
+      Object {
+        "height": "100vh",
+      }
+    }
+  >
+    <withRouter(EditForm)
+      id={null}
+    />
+  </div>
+</div>
+`;

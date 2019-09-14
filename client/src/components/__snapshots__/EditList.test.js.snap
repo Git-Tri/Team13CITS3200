@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit List Tests should render Error correctly 1`] = `
+<EditList>
+  <div
+    className="page"
+  >
+    <PageHeader
+      header="Edit List"
+    >
+      <div>
+        <Button
+          as="button"
+        >
+          <Ref
+            innerRef={
+              Object {
+                "current": <button
+                  class="ui button"
+                >
+                  Show sidebar
+                </button>,
+              }
+            }
+          >
+            <RefFindNode
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui button"
+                  >
+                    Show sidebar
+                  </button>,
+                }
+              }
+            >
+              <button
+                className="ui button"
+                onClick={[Function]}
+              >
+                Show sidebar
+              </button>
+            </RefFindNode>
+          </Ref>
+        </Button>
+        <Header>
+          <div
+            className="ui header"
+          >
+            Edit List
+          </div>
+        </Header>
+      </div>
+    </PageHeader>
+    <br />
+    <div
+      id="container"
+      style={
+        Object {
+          "height": "100vh",
+        }
+      }
+    >
+      <Message
+        negative={true}
+      >
+        <div
+          className="ui negative message"
+        >
+          <MessageHeader>
+            <div
+              className="header"
+            >
+              An error has occured
+            </div>
+          </MessageHeader>
+          <p>
+            Failed to get data from the server.
+          </p>
+          <Button
+            as="button"
+            color="red"
+            onClick={[Function]}
+          >
+            <Ref
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui red button"
+                  >
+                    Try Again?
+                  </button>,
+                }
+              }
+            >
+              <RefFindNode
+                innerRef={
+                  Object {
+                    "current": <button
+                      class="ui red button"
+                    >
+                      Try Again?
+                    </button>,
+                  }
+                }
+              >
+                <button
+                  className="ui red button"
+                  onClick={[Function]}
+                >
+                  Try Again?
+                </button>
+              </RefFindNode>
+            </Ref>
+          </Button>
+        </div>
+      </Message>
+    </div>
+  </div>
+</EditList>
+`;
+
+exports[`Edit List Tests should render correctly on first load 1`] = `
+<div
+  className="page"
+>
+  <div>
+    <button
+      className="ui button"
+      onClick={[Function]}
+    >
+      Show sidebar
+    </button>
+    <div
+      className="ui header"
+    >
+      Edit List
+    </div>
+  </div>
+  <br />
+  <div
+    id="container"
+    style={
+      Object {
+        "height": "100vh",
+      }
+    }
+  >
+    <div
+      className="ui text loader"
+    >
+      Loading Data
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Edit List Tests should render error message when sub-component fails 1`] = `<EditList />`;
+
+exports[`Edit List Tests should render loaded data correctly 1`] = `<EditList />`;
+
+exports[`Edit List Tests should render loading correctly 1`] = `
+<EditList>
+  <div
+    className="page"
+  >
+    <PageHeader
+      header="Edit List"
+    >
+      <div>
+        <Button
+          as="button"
+        >
+          <Ref
+            innerRef={
+              Object {
+                "current": <button
+                  class="ui button"
+                >
+                  Show sidebar
+                </button>,
+              }
+            }
+          >
+            <RefFindNode
+              innerRef={
+                Object {
+                  "current": <button
+                    class="ui button"
+                  >
+                    Show sidebar
+                  </button>,
+                }
+              }
+            >
+              <button
+                className="ui button"
+                onClick={[Function]}
+              >
+                Show sidebar
+              </button>
+            </RefFindNode>
+          </Ref>
+        </Button>
+        <Header>
+          <div
+            className="ui header"
+          >
+            Edit List
+          </div>
+        </Header>
+      </div>
+    </PageHeader>
+    <br />
+    <div
+      id="container"
+      style={
+        Object {
+          "height": "100vh",
+        }
+      }
+    >
+      <Loader>
+        <div
+          className="ui text loader"
+        >
+          Loading Data
+        </div>
+      </Loader>
+    </div>
+  </div>
+</EditList>
+`;

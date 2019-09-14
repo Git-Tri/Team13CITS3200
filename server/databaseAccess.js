@@ -8,6 +8,14 @@ const dataBinding = require("./dataBinding");
 
 const dataValidation = require("./dataValidation");
 
+
+function __listToSQList(list)
+{
+
+        return JSON.stringify(list).replace("[","(").replace("]",")");
+
+}
+
 /**
  * Querys the database with the given query and then callback on error or success
  * noConnectionCallback is used when you want to handle a failded connection
@@ -457,6 +465,13 @@ function getAllEdits(callback,errorCallback,noConnectionCallback)
 
 }
 
+/**
+ * Gets all unstructured data which matches a given idea 
+ * @param {*} matchid the idea to matchid to get all unstructured data matching of
+ * @param {*} callback the call back on success 
+ * @param {*} errorCallback the callback on error
+ * @param {*} noConnectionCallback the call back on no connection
+ */
 function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectionCallback)
 {
 
@@ -487,6 +502,87 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 
 }
 
+
+
+function getUnstructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
+{
+
+        if(ids.length == 0)
+        {
+
+                callback([]);
+
+                return;
+
+        }
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        if(Array.isArray(ids) && ids.every((i) => Number.isInteger(Number.parseInt(i))) === false)
+        {
+
+                errorCallback(new Error("bad input"));
+
+                return;
+
+        };       
+
+        query("select * from football.unstructured_data where usid in " + __listToSQList(ids) + " ;",(result) => 
+        {
+
+                callback(dataBinding.bindUnstructuredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
+
+function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
+{
+
+        if(ids.length == 0)
+        {
+
+                callback([]);
+
+                return;
+
+        }
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        if(Array.isArray(ids) && ids.every((i) => Number.isInteger(Number.parseInt(i))) === false)
+        {
+
+                errorCallback(new Error("bad input"));
+
+                return;
+
+        };       
+
+        let sqlQuery = "select * from football.structured_data where id in " + __listToSQList(ids) + " ;" 
+
+        query(sqlQuery,(result) => 
+        {
+
+                callback(dataBinding.bindStructredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
+
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
@@ -501,5 +597,7 @@ module.exports = { query,
         insertEdit,
         deleteEditById,
         getAllEdits,
-        getUnstructuredDataByMatchId };
+        getUnstructuredDataByMatchId,
+        getUnstructuredDataByIds,
+        getStructuredDataByIds };
 
