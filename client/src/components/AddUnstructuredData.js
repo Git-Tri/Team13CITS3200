@@ -11,7 +11,7 @@ class AddUnstructuredData extends Component {
         this.state = {
             id: null,
             matchid: '',
-            title: '',
+            title: 'New unstructured data',
             author: '',
             published: '',
             extracted: '',
@@ -32,12 +32,31 @@ class AddUnstructuredData extends Component {
     }
 
     /**
+     * loosely validates inputs
+     * @param {any} data the data collected by the form which will be sent if it passes validation
+     */
+    valid(data) {
+        if (data.title === '') {
+            alert('title is required')
+            return false
+        }
+        if (data.author === '') {
+            alert('author is required')
+            return false
+        }
+        return true
+    }
+
+    /**
     * deals with submission of the form
     * @param e - the event that caused the submission
     **/
     submit = (e) => {
         e.preventDefault()
         var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, this.state.published, this.state.extracted, this.state.data)
+        if (!this.valid(toSend)) {
+            return
+        }
         console.log(toSend)
         var request = new XMLHttpRequest()
         if (!this.state.exists) {
@@ -88,7 +107,7 @@ class AddUnstructuredData extends Component {
             }
         }
         else {
-            console.log("You can't delete what doesn't exist.")
+            alert("Can't delete an entry that doesn't exist")
         }
     }
 
@@ -109,7 +128,6 @@ class AddUnstructuredData extends Component {
      * renders the page
      */
     render() {
-        console.log(this.state)
         const { id, matchid, title, author, published, extracted, url, match, data, exists } = this.state
 		return (
 			<div className="page">
@@ -119,7 +137,7 @@ class AddUnstructuredData extends Component {
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
                 <div id="container" style={{ height: "100vh" }}>
-                    <form className="ui form">
+                    <form className="ui form" id="dataform">
                         <div className="inline fields">
                             <div className="one wide field"/>
                             <div className="two wide field">
@@ -130,7 +148,7 @@ class AddUnstructuredData extends Component {
                             <div className="three wide field"/>
                             <div className="four wide field">
                                 <h1>
-                                    New Unstructured Data (or a proper header if available)
+                                    {title}
                                 </h1>
                             </div>
                             <div className="three wide field" />
@@ -142,13 +160,13 @@ class AddUnstructuredData extends Component {
                         </div>
                         <div className="inline fields">
                             <div className="one wide field"/>
-                            <div className="ten wide field">
+                            <div className="required ten wide field">
                                 <label>
                                     Title
                                 </label>
                                 <input type="text" name="title" value={title} onChange={this.changeHandler} />
                             </div>
-                            <div className="four wide field">
+                            <div className="required four wide field">
                                 <label>
                                     Author
                                 </label>
@@ -185,9 +203,11 @@ class AddUnstructuredData extends Component {
                             </div>
                             <div className="seven wide field">
                                 <label>
-                                    Match
+                                    Match:
                                 </label>
-                                <input type="text" name="match" value={match} onChange={this.changeHandler} />
+                                <label>
+                                    {match} 
+                                </label>
                             </div>
                             <div className="two wide field">
                                 <ChooseMatchModal onSelect= { this.handleChosenMatch.bind(this) } ></ChooseMatchModal>
