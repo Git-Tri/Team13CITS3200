@@ -5777,7 +5777,7 @@ exports[`Edit Form Tests Should render structured data selected 1`] = `
               }
             }
           >
-            Structured Data: 1
+            6/3/1991 - some comp : some team vs some other team
              
           </div>
         </div>
@@ -5981,7 +5981,7 @@ exports[`Edit Form Tests Should render unstructured data selected 1`] = `
               }
             }
           >
-            Unstructured Data: 1
+            7/4/1991 - some author : some title really really really really rea...
              
           </div>
         </div>
@@ -6069,6 +6069,17 @@ exports[`Edit Form Tests Should render validation errors 1`] = `
       "structuredDataID": null,
       "type": "",
       "unstructuredDataID": null,
+    }
+  }
+  target={
+    StructuredData {
+      "away": "some other team",
+      "competitionID": 1,
+      "competitionName": "some comp",
+      "data": Object {},
+      "date": 1991-04-20T00:00:00.000Z,
+      "home": "some team",
+      "id": 1,
     }
   }
 >

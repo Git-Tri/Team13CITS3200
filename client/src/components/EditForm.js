@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Container, Button, Message} from 'semantic-ui-react'
 import ChooseDataModal from "./ChooseDataModal";
-import {bindEdit} from "../Databinding";
+import {bindEdit,bindStructuredData,bindUnstructureData} from "../Databinding";
 import {Edit,StructuredData,UnstructuredData} from "../domain";
 import {STRUCTURED_DATA_FIELDS,EDIT_TYPES,EDIT_NAMES} from "../Constants"
 import DataPair from "./DataPair";
 import { withRouter } from 'react-router-dom';
+import {genSummary} from "../EditUtils";
 
 /**
  * An edit form which for creating and editing edits
@@ -39,6 +40,7 @@ export class EditForm extends Component {
 		}
 		
 		this.state = {data: props.data,
+			target: props.target,
 			queryId:id,
 			isNew:(this.props.id === undefined || this.props.id === null) && props.data === undefined,
 			isMissing:false,
@@ -97,9 +99,7 @@ export class EditForm extends Component {
 		let {isValid,isSaveAttempted} = this.state;		
 
 		if(isValid[value] === undefined || isValid[value] === true || isSaveAttempted === false )
-		{						
-			
-			
+		{	
 
 			return undefined;
 
@@ -145,24 +145,9 @@ export class EditForm extends Component {
 
 		let edit = this.state.data;
 
-		if(Number.parseInt(edit.structuredDataID) > 0)
-		{
+		let target = this.state.target;
 
-			return "Structured Data: " + edit.structuredDataID; 
-
-		}
-		else if(Number.parseInt(edit.unstructuredDataID) > 0)
-		{
-
-			return "Unstructured Data: " + edit.unstructuredDataID;
-
-		}
-		else
-		{
-
-			return "No Data Selected";
-
-		}
+		return genSummary(edit,target)
 
 	}
 
@@ -378,7 +363,7 @@ export class EditForm extends Component {
 
 		this.state.isValid.isCorpus = this.isFieldValid(data,"isCorpus");
 
-		this.setState({data:data,isValid:this.state.isValid})
+		this.setState({data:data,isValid:this.state.isValid,target:undefined})
 
 	}
 
@@ -390,6 +375,11 @@ export class EditForm extends Component {
 	{
 
 		let edit = this.state.data;
+
+		//reset
+		edit.structuredDataID = null;
+
+		edit.unstructuredDataID = null;
 
 		if(chosenData instanceof StructuredData)
 		{
@@ -413,7 +403,7 @@ export class EditForm extends Component {
 		this.state.isValid.isCorpus = this.isFieldValid(edit,"isCorpus");
 
 
-		this.setState({data:edit,isValid:this.state.isValid});
+		this.setState({data:edit,isValid:this.state.isValid,target: chosenData});
 
 	}
 
@@ -451,12 +441,21 @@ export class EditForm extends Component {
 				})
             .then(result => 
                 {
-					result = bindEdit(result);
+					let edit = bindEdit(result.edit);
 
-					this.setState({data:result,hasData:true,isError:false})
+					let unstructuredData = result.unstructuredData !== undefined && result.unstructuredData !== null
+						? bindUnstructureData(result.unstructuredData) : undefined;
+					
+					let structuredData = result.structuredData !== undefined && result.structuredData !== null
+						 ? bindStructuredData(result.structuredData) : undefined;
+
+					let target = unstructuredData === undefined ? structuredData : unstructuredData;
+
+					this.setState({data:edit,hasData:true,isError:false,target: target})
                 })
             .catch(err => {
 
+				
 				switch(err.message)
 				{
 				

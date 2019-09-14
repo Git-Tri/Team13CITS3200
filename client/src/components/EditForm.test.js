@@ -1,7 +1,7 @@
 import {EditForm} from "./EditForm";
 import renderer from 'react-test-renderer';
 import React from 'react';
-import {Edit,StructuredData} from "../domain";
+import {Edit,StructuredData,UnstructuredData} from "../domain";
 import {filterConsoleError,unfilterConsoleError} from "../TestUtils";
 import {mount} from "enzyme";
 import { configure } from 'enzyme';
@@ -15,6 +15,8 @@ describe("Edit Form Tests",function()
     
     const testData = new Edit(1,null,null,true,{},"apple","banna","replace")
 
+    const testTarget =  new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{});
+    
     const badData =  new Edit(null,null,null,false,{},"","","")
 
     const saveDataMock = EditForm.prototype.saveData = jest.fn();
@@ -150,7 +152,7 @@ describe("Edit Form Tests",function()
     test("Should render validation errors",(done) =>
     {
 
-        let Component = mount(<EditForm data={badData}/>)
+        let Component = mount(<EditForm data={badData} target={testTarget}/>)
 
         Component.setState({isSaveAttempted: true,
             isValid:{editID: false, 
@@ -177,7 +179,7 @@ describe("Edit Form Tests",function()
 
         let structuredTestData = new Edit(1,1,null,false,{},"apple","banna","replace")
 
-        let Component = renderer.create(<EditForm data={structuredTestData}/>)
+        let Component = renderer.create(<EditForm data={structuredTestData} target={testTarget}/>)
 
         expect(Component.toJSON()).toMatchSnapshot();
 
@@ -186,9 +188,11 @@ describe("Edit Form Tests",function()
     test("Should render unstructured data selected",() => 
     {
 
-        let unstructuredTestData = new Edit(1,null,1,false,{},"apple","banna","replace")
+        let unstructuredTestData = new Edit(1,null,1,false,{},"apple","banna","replace");
 
-        let Component = renderer.create(<EditForm data={unstructuredTestData}/>)
+        let unstructuredTestTarget = new UnstructuredData(2,1,"some title really really really really really long title","some author","some url",new Date("1991-04-20T00:00:00.000Z"),new Date("1991-04-20T00:00:00.000Z"),"some data");
+
+        let Component = renderer.create(<EditForm data={unstructuredTestData} target={unstructuredTestTarget}/>)
 
         expect(Component.toJSON()).toMatchSnapshot();
 

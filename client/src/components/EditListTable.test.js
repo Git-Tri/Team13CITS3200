@@ -2,7 +2,7 @@ import EditListTable from "./EditListTable";
 import renderer from 'react-test-renderer';
 import React from 'react';
 import ErrorTester from "./ErrorTester";
-import {Edit} from "../domain";
+import {Edit,StructuredData,UnstructuredData} from "../domain";
 import {filterConsoleError,unfilterConsoleError} from "../TestUtils";
 import {shallow, mount} from "enzyme";
 
@@ -29,10 +29,21 @@ describe("Edit List Table Tests",function()
 
         });   
     
-    const testItems = [new Edit(1,1,null,false,{},"apple","banna","replace"),
+    const testEdit = [new Edit(1,1,null,false,{},"apple","banna","replace"),
         new Edit(2,null,1,false,{},"football","soccer","replace"),
         new Edit(3,1,null,false,{field:"player"},"gary jones","player 1","replacewithfield"),
-        new Edit(4,null,null,true,{},"reece","ryan","replace")]    
+        new Edit(4,null,null,true,{},"reece","ryan","replace")]
+        
+
+       
+    const targets = [new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{}),
+    new UnstructuredData(1,1,"some title","some author","some url",new Date("1991-04-20T00:00:00.000Z"),new Date("1991-04-20T00:00:00.000Z"),"some data"),
+    new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{}),
+    undefined]
+
+    let testItemGen = (e) => { return{edits:e,targets:targets}};
+
+    const testItems = testItemGen(testEdit);
 
     test("Should throw error when given undefined items",(done) => 
     {
@@ -65,7 +76,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error when one item is undefined",(done) => 
     {
 
-        let missingItemData = testItems.slice();
+        let missingItemData = testEdit.slice();
 
         missingItemData.push(undefined);
 
@@ -74,7 +85,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("props.data must be an instance of edit"); 
                    done();}
                    }>
-                <EditListTable items={missingItemData}></EditListTable>
+                <EditListTable items={testItemGen(missingItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -83,7 +94,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error when item id wrong type",(done) => 
     {
 
-        let wrongIDItemData = testItems.slice();
+        let wrongIDItemData = testEdit.slice();
 
         wrongIDItemData.push(new Edit("not an id",1,null,false,{},"apple","banna","replace"));
 
@@ -92,7 +103,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("every piece of data should be a valid edit"); 
                    done();}
                    }>
-                <EditListTable items={wrongIDItemData}></EditListTable>
+                <EditListTable items={testItemGen(wrongIDItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -101,7 +112,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error with no target for edit",(done) => 
     {
 
-        let wrongIDItemData = testItems.slice();
+        let wrongIDItemData = testEdit.slice();
 
         wrongIDItemData.push(new Edit(132,null,null,false,{},"apple","banna","replace"));
 
@@ -110,7 +121,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("every piece of data should be a valid edit"); 
                    done();}
                    }>
-                <EditListTable items={wrongIDItemData}></EditListTable>
+                <EditListTable items={testItemGen(wrongIDItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -119,7 +130,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error with wrong type",(done) => 
     {
 
-        let wrongIDItemData = testItems.slice();
+        let wrongIDItemData = testEdit.slice();
 
         wrongIDItemData.push(new Edit(12,1,null,false,{},"apple","banna",null));
 
@@ -128,7 +139,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("every piece of data should be a valid edit"); 
                    done();}
                    }>
-                <EditListTable items={wrongIDItemData}></EditListTable>
+                <EditListTable items={testItemGen(wrongIDItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -137,7 +148,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error with missing settings for replacewithfield type",(done) => 
     {
 
-        let wrongIDItemData = testItems.slice();
+        let wrongIDItemData = testEdit.slice();
 
         wrongIDItemData.push(new Edit(21,1,null,false,{},"apple","banna","replacewithfield"));
 
@@ -146,7 +157,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("every piece of data should be a valid edit"); 
                    done();}
                    }>
-                <EditListTable items={wrongIDItemData}></EditListTable>
+                <EditListTable items={testItemGen(wrongIDItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -155,7 +166,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error with wrong replace field",(done) => 
     {
 
-        let wrongIDItemData = testItems.slice();
+        let wrongIDItemData = testEdit.slice();
 
         wrongIDItemData.push(new Edit(1,1,null,false,null,undefined,"with","replace"));
 
@@ -164,7 +175,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("every piece of data should be a valid edit"); 
                    done();}
                    }>
-                <EditListTable items={wrongIDItemData}></EditListTable>
+                <EditListTable items={testItemGen(wrongIDItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -173,7 +184,7 @@ describe("Edit List Table Tests",function()
     test("Should throw error with wrong replace with field",(done) => 
     {
 
-        let wrongIDItemData = testItems.slice();
+        let wrongIDItemData = testEdit.slice();
 
         wrongIDItemData.push(new Edit(1,1,null,false,null,"replace",undefined,"replace"));
 
@@ -182,7 +193,7 @@ describe("Edit List Table Tests",function()
                    expect(e.message).toEqual("every piece of data should be a valid edit"); 
                    done();}
                    }>
-                <EditListTable items={wrongIDItemData}></EditListTable>
+                <EditListTable items={testItemGen(wrongIDItemData)}></EditListTable>
             </ErrorTester>
            );       
 
@@ -191,7 +202,7 @@ describe("Edit List Table Tests",function()
     test("Should render correctly for correct input",() => 
     {        
                  
-        let Component = renderer.create(<EditListTable items={testItems.slice()}/>)
+        let Component = renderer.create(<EditListTable items={testItems}/>)
 
         expect(Component.toJSON()).toMatchSnapshot();
 
@@ -200,7 +211,7 @@ describe("Edit List Table Tests",function()
     test("Should render correctly for correct input with onSelect handler",() => 
     {        
         
-        let Component = renderer.create(<EditListTable onSelect={() => {}} items={testItems.slice()}/>)
+        let Component = renderer.create(<EditListTable onSelect={() => {}} items={testItems}/>)
 
         expect(Component.toJSON()).toMatchSnapshot();
 
@@ -209,9 +220,9 @@ describe("Edit List Table Tests",function()
     test("Should call callback when onselect is trigerred",(done) => 
     {
 
-        let wrapper = mount(<EditListTable onSelect={() => done()} items={testItems.slice()}/>)
+        let wrapper = mount(<EditListTable onSelect={() => done()} items={testItems}/>)
 
-        wrapper.state().selectFunc(testItems[0]);
+        wrapper.state().selectFunc(testEdit[0]);
 
 
     })
@@ -219,9 +230,9 @@ describe("Edit List Table Tests",function()
     test("Should render correctly with selected row",() => 
     {
 
-        let wrapper = shallow(<EditListTable onSelect={() => {}} items={testItems.slice()}/>)
+        let wrapper = shallow(<EditListTable onSelect={() => {}} items={testItems}/>)
 
-        wrapper.state().selectFunc(testItems[0]);
+        wrapper.state().selectFunc(testEdit[0]);
 
         expect(wrapper).toMatchSnapshot();
 
@@ -231,7 +242,7 @@ describe("Edit List Table Tests",function()
     test("Should render correctly for correct with no data",() => 
     {        
         
-        let Component = renderer.create(<EditListTable onSelect={() => {}} items={[]}/>)
+        let Component = renderer.create(<EditListTable onSelect={() => {}} items={{edits:[],targets:[]}}/>)
 
         expect(Component.toJSON()).toMatchSnapshot();
 

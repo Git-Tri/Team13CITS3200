@@ -17,7 +17,9 @@ exports.createRoutes = function(app)
       else if(err != undefined && err != null)
       {
 
-        console.log(err)
+        console.error(err);
+
+        res.sendStatus(500);
 
       }
       else
@@ -84,16 +86,16 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type","application/json");
 
-        dbAccess.getEditById(editId,(result) => 
+        dbAccess.getEditById(editId,(editResult) => 
         {
 
-          if(result.length > 1)
+          if(editResult.length > 1)
           {
 
             standardServerErrorHandler(new Error("More then 1 edit with same id"),res);
 
           }
-          if(result.length == 0)
+          if(editResult.length == 0)
           {
 
             res.sendStatus(404);
@@ -101,11 +103,35 @@ exports.createRoutes = function(app)
           }
           else
           {
+           
 
-            res.send(JSON.stringify(result[0]));
+            let edit = editResult[0];
 
-          }
+            let sid = Number.isInteger(edit.structuredDataID) ? [edit.structuredDataID] : [];
 
+            let usid = Number.isInteger(edit.unstructuredDataID) ? [edit.unstructuredDataID] : [];
+
+            dbAccess.getUnstructuredDataByIds(usid,(unstructuredResult) => 
+            {
+
+              let unstructuredData = unstructuredResult.length > 0 ? unstructuredResult[0] : null;
+
+              dbAccess.getStructuredDataByIds(sid,(structuredResult) => 
+              {
+
+                let structuredData =  structuredResult.length > 0 ? structuredResult[0] : null;
+
+                let responseObject = {edit:edit,
+                                      unstructuredData:unstructuredData,
+                                      structuredData:structuredData}
+
+                res.send(JSON.stringify(responseObject));
+
+              },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+            },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+          }         
 
         },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
 
@@ -114,7 +140,6 @@ exports.createRoutes = function(app)
       //updates an edit 
       middleware.put(app,"/edit",(req,res) => 
       {
-
         
         res.setHeader("Content-Type","application/json");
 
@@ -240,9 +265,33 @@ exports.createRoutes = function(app)
       dbAccess.getAllEdits((result => 
         {
 
-          let responseObject = {editList: result};
+          let editList = result;
 
-          res.send(JSON.stringify(responseObject));
+          let sids = result.filter(edit => edit.structuredDataID !== null && edit.structuredDataID !== undefined)
+                          .map(edit => edit.structuredDataID)
+
+          let usids = result.filter(edit => edit.unstructuredDataID !== null && edit.unstructuredDataID !== undefined)
+                          .map(edit => edit.unstructuredDataID)
+
+          dbAccess.getUnstructuredDataByIds(usids,(unstructuredResult) => 
+          {
+
+            let unstructuredDataList = unstructuredResult;
+
+            dbAccess.getStructuredDataByIds(sids,(structuredResult) => 
+            {
+
+              let structuredDataList = structuredResult; 
+
+              let responseObject = {editList:editList,
+                                    unstructuredData:unstructuredDataList,
+                                    structuredData:structuredDataList}
+
+              res.send(JSON.stringify(responseObject));
+
+            },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+          },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
 
         }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
 
