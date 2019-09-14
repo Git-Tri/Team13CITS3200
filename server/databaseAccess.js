@@ -140,7 +140,7 @@ function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 function getUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
 {
          
-        query("select * from football.unstructured_data where usid="+ usid + ";",
+        query("select * from football.unstructured_data where usid = "+ usid + ";",
         (result) => 
         {
 
@@ -181,26 +181,30 @@ function getMatch(usid,callback,errorCallback,noConnectionCallback)
 function updateUnstructuredData(UnstructuredData,callback,errorCallback,noConnectionCallback)
 {
                 
-        getUnstrucredData(UnstructuredData.unstructuredDataID,(result) => 
+        getUnstrucredData(UnstructuredData.id,(result) => 
         {
                         
                 if(result.length !== 1)
                 {
 
-                        errorCallback(new Error("Could not find an edit with id " + UnstructuredData.unstructuredDataID));
+                        errorCallback(new Error("Could not find an edit with id " + UnstructuredData.id));
                         return;
 
                 }
 
-                let sqlquery = "update football.UnstructuredData set " + 
-                " matchid = " + UnstructuredData.matchID +
-                ",title = '" + UnstructuredData.title + "'"
-                ",author = '" + UnstructuredData.author + "'"
+                UnstructuredData.published = new Date(UnstructuredData.published)
+
+                UnstructuredData.extracted = new Date(UnstructuredData.extracted)
+
+                let sqlquery = "update football.unstructured_data set " + 
+                " matchid = " + UnstructuredData.matchid +
+                ",title = '" + UnstructuredData.title + "'" +
+                ",author = '" + UnstructuredData.author + "'" +
                 ",url = '" + UnstructuredData.url + "'" + 
-                ",published = '" + UnstructuredData.published + "'" +
-                ",extracted = '" + UnstructuredData.extracted + "'" + 
+                ",published = '" + UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDay()+1) + "'" +
+                ",extracted = '" + UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDay()+1) +"'" +
                 ",data = '" + UnstructuredData.data + "'" +
-                "where usid = " + UnstructuredData.unstructuredDataID + ";";
+                "where usid = " + UnstructuredData.id + ";";
         
                 query(sqlquery,callback,errorCallback,noConnectionCallback);
         
@@ -219,11 +223,15 @@ function updateUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
 function insertUnstructuredData(UnstructuredData,callback,errorCallback,noConnectionCallback)
 {
 
-        let sqlquery = "insert into football.UnstructuredData(matchid,title,author,url,published,extracted,data) " + 
-        "values(" + UnstructuredData.matchID + "," + UnstructuredData.title + "," + 
-        UnstructuredData.author + ",'" + UnstructuredData.url + "','" + 
-        UnstructuredData.published.getFullyear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDay()+1) + "','" + 
-        UnstructuredData.extracted.getFullyear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDay()+1) +"','" +
+        UnstructuredData.published = new Date(UnstructuredData.published)
+
+        UnstructuredData.extracted = new Date(UnstructuredData.extracted)
+
+        let sqlquery = "insert into football.unstructured_data(matchid,title,author,url,published,extracted,data) " + 
+        "values('" + UnstructuredData.matchid + "','" + UnstructuredData.title + "','" + 
+        UnstructuredData.author + "','" + UnstructuredData.url + "','" + 
+        UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDay()+1) + "','" + 
+        UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDay()+1) +"','" +
         UnstructuredData.data  + "')";
 
         query(sqlquery,callback,errorCallback,noConnectionCallback);
@@ -241,7 +249,7 @@ function insertUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
  */
 function deleteUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
 {
-        query("delete from football.unstructed_data where usid =" + usid + ";",
+        query("delete from football.unstructured_data where usid =" + usid + ";",
         (result) => 
         {
                 callback(dataBinding.bindUnstructuredData(result));

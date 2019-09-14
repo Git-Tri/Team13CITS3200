@@ -158,40 +158,15 @@ exports.createRoutes = function(app)
     {
 
       var usid = req.query.id;
+          
+      res.setHeader("Content-Type","application/json");
 
-      dbAccess.getEditById(usid,(result) => 
+      dbAccess.deleteUnstrucredData(usid,(result) => 
       {
 
+      res.sendStatus(200);
 
-        /*if(result.length > 1)
-        {
-
-          standardServerErrorHandler(new Error("mutiple entry with single id"),res);
-
-        }*/
-        if(result.length < 1)
-        {
-
-          res.sendStatus(404);
-
-        }
-        else
-        {
-          
-          res.setHeader("Content-Type","application/json");
-
-          dbAccess.deleteUnstrucredData(editId,(result) => 
-          {
-    
-          res.sendStatus(200);
-    
-          },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
-   
-        }
-
-      },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
-
-     
+      },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
     })
 
     //used for the choose data page
