@@ -1,7 +1,7 @@
 const request = require('request');
 
 
-const baseUrl = 'https://api.football-data.org/v2/competitions/';
+const baseUrl = 'https://api.football-data.org/v2/matches/';
 const apiKey = process.env.APIKEY;
 
 
@@ -23,10 +23,12 @@ function getAllMatches(compID, callbackFunction) {
 
 //date in format 'YYYY-MM-DD'
 function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
-  console.log("Trying to get all matches from: " + baseUrl + compID + 'matches' + '/?dateFrom=' + startDate + "/?dateTo=" + endDate);
+  
+  customURL = baseUrl + '?competitions=' + [2002] + '&dateFrom=' + startDate + "&dateTo=" + endDate
+  console.log("Trying to get all matches from: " + customURL);
   request({
     headers: { 'X-Auth-Token': apiKey },
-    url: baseUrl + compID + '/matches' + '/?dateFrom=' + startDate + "&dateTo=" + endDate,
+    url: customURL,
     dataType: 'json',
     type: 'GET'
   }, (error, response) => {

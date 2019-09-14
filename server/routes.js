@@ -271,16 +271,14 @@ exports.createRoutes = function(app)
     //Route to get all matches (GET)
     middleware.get(app,"/matchlist",(req,res) =>  {
 
-      res.setHeader("Content-Type","application/json");
-
       dbAccess.getAllMatches((result => {
-
+          console.log("sending for all matches " + JSON.stringify(result));
+          
+          res.setHeader("Content-Type","application/json");
           res.send(JSON.stringify(result));
-          res.sendStatus(200);
-          
           
 
-       }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
      
     });
 
@@ -290,7 +288,9 @@ exports.createRoutes = function(app)
       console.log(req.body.importRequest.compId);
       api.getAllMatchesBetween(req.body.importRequest.compId, req.body.importRequest.begin, req.body.importRequest.end, (id, start, end, result) => {
         console.log("Got matches for id: " + id + " between " + start + " and " + end);
-        console.log(result);
+        //console.log(result);
+        matches = JSON.parse(result);
+        console.log(matches);
       });
       res.sendStatus(200);
 
