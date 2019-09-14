@@ -288,7 +288,10 @@ exports.createRoutes = function(app)
 
       console.log(req.body);
       console.log(req.body.importRequest.compId);
-      api.getAllMatchesBetween(req.body.importRequest.compID,req.body.importRequest.begin,req.body.importRequest.end);
+      api.getAllMatchesBetween(req.body.importRequest.compId, req.body.importRequest.begin, req.body.importRequest.end, (id, start, end, result) => {
+        console.log("Got matches for id: " + id + " between " + start + " and " + end);
+        console.log(result);
+      });
       res.sendStatus(200);
 
       

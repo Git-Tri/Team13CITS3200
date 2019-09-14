@@ -33,17 +33,11 @@ function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
     if (error != null) {
       throw Error(error);
     }
-    callbackFunction(response.body);
+    callbackFunction(compID, startDate, endDate, response.body);
 
   });
 }
 
-
-
-getAllMatchesBetween('WC', '2018-05-30', '2019-09-06', function (response) {
-  //console.log(response);
-  console.log("recieved matches between 2018-05-30 and 2019-09-06");
-});
 
 
 module.exports = { getAllMatches, getAllMatchesBetween };
