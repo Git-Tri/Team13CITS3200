@@ -1,5 +1,6 @@
 const middleware = require("./middleware.js")
 const dbAccess = require("./databaseAccess")
+const api = require("./football-api")
 
 exports.createRoutes = function(app)
 {
