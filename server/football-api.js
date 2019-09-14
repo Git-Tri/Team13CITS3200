@@ -19,7 +19,6 @@ function getAllMatches(compID, callbackFunction) {
     callbackFunction(response.body);
 
   });
-
 }
 
 //date in format 'YYYY-MM-DD'
@@ -37,7 +36,6 @@ function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
     callbackFunction(response.body);
 
   });
-
 }
 
 

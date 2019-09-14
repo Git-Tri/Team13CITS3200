@@ -268,4 +268,31 @@ exports.createRoutes = function(app)
 
     });
 
+    //Route to get all matches (GET)
+    middleware.get(app,"/matchlist",(req,res) =>  {
+
+      res.setHeader("Content-Type","application/json");
+
+      dbAccess.getAllMatches((result => {
+
+          res.send(JSON.stringify(result));
+          res.sendStatus(200);
+          
+          
+
+       }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+     
+    });
+
+    middleware.post(app,"/importdata",(req,res) =>  {
+
+      console.log(req.body);
+      console.log(req.body.importRequest.compId);
+      api.getAllMatchesBetween(req.body.importRequest.compID,req.body.importRequest.begin,req.body.importRequest.end);
+      res.sendStatus(200);
+
+      
+     
+    });
+
 }

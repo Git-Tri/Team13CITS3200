@@ -353,6 +353,24 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 
 }
 
+/**
+ * geet all matches from the databasee
+ * @param {*} callback the callback for the result
+ * @param {*} errorCallback th callback used on error
+ * @param {*} noConnectionCallback the callback if there is no connection
+ */
+function getAllMatches(callback,errorCallback,noConnectionCallback)
+{
+
+        query("select * from football.match;",(result) => 
+        {
+
+                callback(dataBinding.bindUnstructuredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+} 
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
@@ -362,5 +380,6 @@ module.exports = { query,
         insertEdit,
         deleteEditById,
         getAllEdits,
-        getUnstructuredDataByMatchId };
+        getUnstructuredDataByMatchId, 
+        getAllMatches };
 
