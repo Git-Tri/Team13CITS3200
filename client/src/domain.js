@@ -99,6 +99,29 @@ class Competition
 
 }
 
+class ImportRequest
+{
+
+    constructor(begin,end,competition)
+    {
+
+        this.begin = begin; //optional
+
+        this.end = end; //optional
+
+        if(typeof(competition !== "string"))
+        {
+
+            throw new Error("Competition must exist and of type string");
+
+        }
+
+        this.competition = competition; //mandatory 
+
+    }
+
+}
+
 //export all classes 
 module.exports = 
 {
