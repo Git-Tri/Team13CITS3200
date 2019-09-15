@@ -2,6 +2,7 @@ const envResult = require("dotenv").config();
 
 if (envResult.error) 
 {
+    
     throw envResult.error
 }
 

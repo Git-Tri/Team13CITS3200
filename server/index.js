@@ -45,7 +45,7 @@ app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
 );
 
-if(process.env.APIKEY !== undefined)
+if(process.env.APIKEY !== undefined && process.env.APIKEY !== "undefined")
 {
   
   api.getAllCompetitions((result) => {
