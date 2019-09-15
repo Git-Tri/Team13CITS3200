@@ -282,6 +282,24 @@ exports.createRoutes = function(app)
      
     });
 
+    //Route to get all matches (GET)
+    middleware.get(app,"/match",(req,res) =>  {
+
+      var matchId = req.query.id;
+
+      
+
+      dbAccess.getMatchById(matchId, (result => {
+          console.log("Sending just match" + matchId);
+          
+          res.setHeader("Content-Type","application/json");
+          res.send(JSON.stringify(result));
+          
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+     
+    });
+
     middleware.post(app,"/importdata",(req,res) =>  {
 
       console.log(req.body);
