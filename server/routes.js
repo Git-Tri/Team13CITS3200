@@ -66,7 +66,7 @@ exports.createRoutes = function(app)
       {
         unstructuredDatabyId = result[0];
         
-        dbAccess.getMatch(usid,(result)=>
+        dbAccess.getMatchById(unstructuredDatabyId.matchid,(result)=>
           {
 
             matchDatabyId = result[0];
