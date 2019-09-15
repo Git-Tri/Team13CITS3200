@@ -1,4 +1,4 @@
-select * from football.competition;INSERT INTO `football`.`match`
+INSERT INTO `football`.`match`
 (`id`,
 `competitionID`,
 `date`,
@@ -7,8 +7,9 @@ select * from football.competition;INSERT INTO `football`.`match`
 `data`)
 VALUES
 (909,
-100,
-"2016-08-16",
-"Team Home",
-"Team Away",
+null,
+"1999-02-12",
+"Home Team",
+"Away Team",
 null);
+

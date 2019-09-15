@@ -1,6 +1,7 @@
 const middleware = require("./middleware.js")
 const dbAccess = require("./databaseAccess")
 const api = require("./football-api")
+const domain = require("./domain")
 
 exports.createRoutes = function(app)
 {
@@ -516,9 +517,16 @@ exports.createRoutes = function(app)
           console.log("Got matches for id: " + compId + " between " + begin + " and " + end);
           let parsed = JSON.parse(result);
           console.log(parsed);
-          res.sendStatus(200);
+          let matches = []          
 
+          parsed.forEach(e => {
+            matches.push(new domain.InsertMatch(e.match_id, e.league_id, e.match_date, e.match_hometeam_name, e.match_awayteam_name, JSON.stringify(e)));
           });
+                    
+          dbAccess.insertMatches(matches, (result) =>{
+            console.log("Inserted " + parsed.length + " matches!");
+          }, (err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req))
+        });
       }
 
     });
