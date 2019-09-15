@@ -45,18 +45,25 @@ app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
 );
 
-api.getAllCompetitions((result) => {
-  let mappedComps = []
+if(process.env.APIKEY !== undefined)
+{
   
-  let parsedResult = JSON.parse(result);
-  
-  parsedResult.forEach((e) => {
-    mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
-  
+  api.getAllCompetitions((result) => {
+    
+    let mappedComps = []
+    
+    let parsedResult = JSON.parse(result);
+    
+    parsedResult.forEach((e) => {
+      mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
+    
+    });
+    dbAccess.insertComps(mappedComps, (result) => {
+      console.log("Updated all competitions from API and updated database");
+    }, (err) => {console.log(err);},(err) => {console.log(err);});
   });
-  dbAccess.insertComps(mappedComps, (result) => {
-    console.log("Updated all competitions from API and updated database");
-  }, (err) => {console.log(err);},(err) => {console.log(err);});
-});
+
+}
+
 
 module.exports = {getPort};

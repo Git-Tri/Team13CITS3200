@@ -506,10 +506,10 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 function getAllMatches(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from football.match;",(result) => 
+        query("select id,date,home,away,competitionID,name from football.structured_data;",(result) => 
         {
 
-                callback(dataBinding.bindMatchData(result));
+                callback(dataBinding.bindMatch(result));
 
         },errorCallback,noConnectionCallback);
 
@@ -518,10 +518,10 @@ function getAllMatches(callback,errorCallback,noConnectionCallback)
 function getMatchById(matchId, callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from football.match where football.match.id = + " + matchId + ";",(result) => 
+        query("select id,date,home,away,competitionID,name from football.structured_data where football.structured_data.id = + " + matchId + ";",(result) => 
         {
 
-                callback(dataBinding.bindMatchData(result));
+                callback(dataBinding.bindMatch(result));
 
         },errorCallback,noConnectionCallback);
 
