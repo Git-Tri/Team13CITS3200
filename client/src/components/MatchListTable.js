@@ -48,7 +48,7 @@ class MatchListTable extends Component
         //broken into each predicate for easier debugging
         if(this.props.items.every((i) => 
         {
-            let isMatchIdValid = typeof(i.matchID) === "number"
+            let isMatchIdValid = typeof(i.id) === "number"
             let isDateValid = i.date instanceof Date;
             let isHomeValid = typeof(i.home) === "string";
             let isAwayValid = typeof(i.away) === "string";

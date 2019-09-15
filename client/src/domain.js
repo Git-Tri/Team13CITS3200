@@ -49,10 +49,10 @@ class StructuredData
 class Match
 {
 
-    constructor(matchID,date,home,away,competitionID,competitionName)
+    constructor(id,date,home,away,competitionID,competitionName)
     {
 
-        this.matchID = matchID;
+        this.id = id;
         this.date = date;
         this.home = home;
         this.away = away;

@@ -18,7 +18,7 @@ class MatchList extends Component {
 			enddate: '0000-00-00',
 			competition: '',
 			handling: {
-				date: undefined,
+				data: undefined,
 				isLoaded: false,
 				isError: false
 			}
@@ -41,7 +41,7 @@ class MatchList extends Component {
 	}
 
 	loadData(){
-		// fetch("/matchList")
+		// fetch("/allchooseableData")
 		// 	.then(res => res.json())
 		// 	.then(result => 
 		// 		{
@@ -60,7 +60,7 @@ class MatchList extends Component {
 
 	routeToMatch(match) {
 		console.log(match)
-		this.props.history.push("/view_match?id=" + match.matchID + "&isbackable=true");
+		this.props.history.push("/view_match?id=" + match.id + "&isbackable=true");
 	}
 
 	executeRender() {

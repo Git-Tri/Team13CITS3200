@@ -218,7 +218,7 @@ exports[`Match List Table Tests Should render correctly with selected row 1`] = 
       data={
         Match {
           "away": "team B",
-          "competitionID": 1,
+          "competitionID": 3,
           "competitionName": "comp A",
           "date": 1991-04-20T00:00:00.000Z,
           "home": "team A",
@@ -233,7 +233,7 @@ exports[`Match List Table Tests Should render correctly with selected row 1`] = 
       data={
         Match {
           "away": "test D",
-          "competitionID": 1,
+          "competitionID": 4,
           "competitionName": "comp B",
           "date": 1991-04-20T00:00:00.000Z,
           "home": "team C",

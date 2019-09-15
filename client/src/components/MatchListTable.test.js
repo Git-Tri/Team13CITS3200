@@ -2,9 +2,9 @@ import MatchListTable from "./MatchListTable";
 import renderer from 'react-test-renderer';
 import React from 'react';
 import ErrorTester from "./ErrorTester";
-import {Match} from "../domain";
-import {filterConsoleError,unfilterConsoleError} from "../TestUtils";
-import {shallow, mount} from "enzyme";
+import { Match } from "../domain";
+import { filterConsoleError, unfilterConsoleError } from "../TestUtils";
+import { shallow, mount } from "enzyme";
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
@@ -22,8 +22,8 @@ describe("Match List Table Tests",function()
         });
     
     const testMatchList = [
-            new Match(1,new Date("1991-04-20T00:00:00.000Z"),"team A","team B",1,"comp A"),
-            new Match(2,new Date("1991-04-20T00:00:00.000Z"),"team C","test D",1,"comp B")
+            new Match(1,new Date("1991-04-20T00:00:00.000Z"),"team A","team B",3,"comp A"),
+            new Match(2,new Date("1991-04-20T00:00:00.000Z"),"team C","test D",4,"comp B")
         ];
     
     test("Should throw error when given undefined items",(done) => 
