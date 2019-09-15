@@ -114,23 +114,25 @@ function bindUnstructuredData(rawUnstructuredData)
 }
 
 /**
- * binds a table representation of a match to an object representation
- * @param {*} rawMatchData the table representation
+ * takes a match data row and converts to unstructurd data object
+ * @param {*} rawMatch the unstructurd data row
  */
-function bindMatchData(rawMatchData) {
+function bindMatch(rawMatch)
+{
 
-    if(! Array.isArray(rawMatchData)) {
+    if(! Array.isArray(rawMatch))
+    {
 
-        throw Error("rawMatchData must be an array");
+        throw Error("rawMatch must be an array");
 
     }
 
     let results = [];
 
-    rawMatchData.forEach((item) => 
+    rawMatch.forEach((item) => 
     {
 
-        if(item.length != 8)
+        if(item.length != 6)
         {
 
            throw Error("improper item length");
@@ -139,8 +141,42 @@ function bindMatchData(rawMatchData) {
 
         let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
 
+
         results.push(new domain.Match(processedItem[0],processedItem[1],processedItem[2],
-            processedItem[3],processedItem[4],processedItem[5],processedItem[6]))
+            processedItem[3],processedItem[4],processedItem[5]))
+    })
+
+    return results;
+
+}
+
+function bindCompetition(rawComps)
+{
+
+    if(! Array.isArray(rawComps))
+    {
+
+        throw Error("rawMatch must be an array");
+
+    }
+
+    let results = [];
+
+    rawComps.forEach((item) => 
+    {
+
+        if(item.length != 4)
+        {
+
+           throw Error("improper item length");
+
+        }
+
+        let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
+
+
+        results.push(new domain.Competition(processedItem[0],processedItem[1],processedItem[2],
+            processedItem[3]));
     })
 
     return results;
@@ -148,4 +184,4 @@ function bindMatchData(rawMatchData) {
 }
 
 
-module.exports = {bindEdits,bindUnstructuredData,bindStructredData, bindMatchData}
+module.exports = {bindEdits,bindUnstructuredData,bindStructredData,bindMatch,bindCompetition }

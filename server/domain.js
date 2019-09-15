@@ -100,10 +100,34 @@ class Competition
 
 }
 
+
+class ImportRequest
+{
+
+    constructor(begin,end,compId)
+    {
+
+        this.begin = begin; //optional
+
+        this.end = end; //optional
+
+        if(typeof(compId !== "string"))
+        {
+
+            throw new Error("Competition must exist and of type string");
+
+        }
+
+        this.compId = compId; //mandatory 
+
+    }
+
+}
+
 //export all classes 
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest
 
 }

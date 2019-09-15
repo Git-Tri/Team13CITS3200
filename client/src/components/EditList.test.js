@@ -1,7 +1,7 @@
 import {EditList} from "./EditList";
 import renderer from 'react-test-renderer';
 import React from 'react';
-import {Edit} from "../domain";
+import {Edit,StructuredData,UnstructuredData} from "../domain";
 import {filterConsoleError,unfilterConsoleError} from "../TestUtils";
 import {shallow, mount} from "enzyme";
 import { configure } from 'enzyme';
@@ -19,7 +19,10 @@ describe("Edit List Tests",function()
         new Edit(3,1,null,false,{field:"player"},"gary jones","player 1","replacewithfield"),
         new Edit(4,null,null,true,{},"reece","ryan","replace")]
 
-
+    const targets = [new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{}),
+        new UnstructuredData(1,1,"some title","some author","some url",new Date("1991-04-20T00:00:00.000Z"),new Date("1991-04-20T00:00:00.000Z"),"some data"),
+        new StructuredData(1,new Date("1991-04-20T00:00:00.000Z"),"some team","some other team",1,"some comp",{}),
+        undefined]
 
     const loadDataMock = EditList.prototype.loadData = jest.fn();
 
@@ -116,7 +119,7 @@ describe("Edit List Tests",function()
         
         let component = mount(<EditList />);
 
-        component.setState({isLoaded: true, data: testData},() => 
+        component.setState({isLoaded: true, data: testData,target: targets},() => 
         {
 
             component.find("EditRow").first().simulate("click");

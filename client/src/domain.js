@@ -88,12 +88,13 @@ class Edit
 class Competition
 {
 
-    constructor(id,name,plan)
+    constructor(id,name,countryName,countryId)
     {
 
         this.id = id; 
         this.name = name; 
-        this.plan = plan;
+        this.countryName = countryName;
+        this.countryId = countryId
 
     }
 
@@ -102,21 +103,21 @@ class Competition
 class ImportRequest
 {
 
-    constructor(begin,end,competition)
+    constructor(begin,end,compId)
     {
 
         this.begin = begin; //optional
 
         this.end = end; //optional
 
-        if(typeof(competition !== "string"))
+        if(typeof(compId !== "string"))
         {
 
             throw new Error("Competition must exist and of type string");
 
         }
 
-        this.competition = competition; //mandatory 
+        this.compId = compId; //mandatory 
 
     }
 
@@ -126,6 +127,6 @@ class ImportRequest
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest
 
 }

@@ -18,7 +18,9 @@ exports.createRoutes = function(app)
       else if(err != undefined && err != null)
       {
 
-        console.log(err)
+        console.error(err);
+
+        res.sendStatus(500);
 
       }
       else
@@ -30,6 +32,143 @@ exports.createRoutes = function(app)
 
 
     }
+
+    middleware.get(app,"/UnstructuredDataList",(req,res) => 
+      {
+
+        res.setHeader("Content-Type","application/json");
+
+        dbAccess.getAllUnstrucredData((result => 
+          {
+
+            let responseObject = {UnstructuredData: result};
+
+            res.send(JSON.stringify(responseObject));
+
+          }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+      });
+
+      middleware.get(app,'/UnstructuredData',(req, res)=>
+    {
+      var usid=req.query.id;
+      
+
+      res.setHeader("Content-Type","application/json");
+      //var data="'usid'";
+      let unstructuredData;
+      let matchData;
+      
+      dbAccess.getUnstrucredData(usid,(result =>
+      {
+        unstructuredDatabyId = result[0];
+        
+        dbAccess.getMatch(usid,(result)=>
+          {
+
+            matchDatabyId = result[0];
+
+            let responseObject = {unstructuredData:unstructuredDatabyId , match:matchDatabyId}
+
+            res.send(JSON.stringify(responseObject));
+          },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res))
+        
+      }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res)); 
+    });
+
+    //updates an edit 
+    middleware.put(app,"/UnstructuredData",(req,res) => 
+    {
+
+      
+      res.setHeader("Content-Type","application/json");
+
+      let putErrorHandler = (err) => 
+      {
+
+        if(err.message.toLowerCase().includes("cannot add or update a child row"))
+        {
+
+          res.sendStatus(400);
+
+        }
+        else if(err.message.toLowerCase().includes("could not find an edit with"))
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+
+          standardServerErrorHandler(err,res);
+
+        }
+
+      }
+
+      let UnstructuredData = req.body;
+
+      dbAccess.updateUnstructuredData(UnstructuredData,() => 
+      {                
+
+        res.sendStatus(200);          
+
+      },
+      (err) => putErrorHandler(err), 
+      (err) => putErrorHandler(err));
+
+    })
+
+    middleware.post(app,"/UnstructuredData",(req,res) => 
+    {
+
+      res.setHeader("Content-Type","application/json");
+
+      let UnstructuredData = req.body;
+
+      let postErrorHandler = (err) => 
+      {
+
+        if(err.message.toLowerCase().includes("cannot add or update a child row"))
+        {
+
+          res.sendStatus(400);
+
+        }
+        else 
+        {
+
+          standardServerErrorHandler(err,res);
+
+        }
+      }
+
+      dbAccess.insertUnstructuredData(UnstructuredData,() => 
+      {
+
+        res.sendStatus(200);
+
+      },
+      (err) => postErrorHandler(err,res),
+      (err) => postErrorHandler(err,res));
+      
+    })
+
+    middleware.delete(app,"/UnstructuredData",(req,res) => 
+    {
+
+      var usid = req.query.id;
+          
+      res.setHeader("Content-Type","application/json");
+
+      dbAccess.deleteUnstrucredData(usid,(result) => 
+      {
+
+      res.sendStatus(200);
+
+      },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
+    })
 
     //used for the choose data page
     middleware.get(app,"/allchooseableData",(req,res) => 
@@ -85,16 +224,16 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type","application/json");
 
-        dbAccess.getEditById(editId,(result) => 
+        dbAccess.getEditById(editId,(editResult) => 
         {
 
-          if(result.length > 1)
+          if(editResult.length > 1)
           {
 
             standardServerErrorHandler(new Error("More then 1 edit with same id"),res);
 
           }
-          if(result.length == 0)
+          if(editResult.length == 0)
           {
 
             res.sendStatus(404);
@@ -102,11 +241,35 @@ exports.createRoutes = function(app)
           }
           else
           {
+           
 
-            res.send(JSON.stringify(result[0]));
+            let edit = editResult[0];
 
-          }
+            let sid = Number.isInteger(edit.structuredDataID) ? [edit.structuredDataID] : [];
 
+            let usid = Number.isInteger(edit.unstructuredDataID) ? [edit.unstructuredDataID] : [];
+
+            dbAccess.getUnstructuredDataByIds(usid,(unstructuredResult) => 
+            {
+
+              let unstructuredData = unstructuredResult.length > 0 ? unstructuredResult[0] : null;
+
+              dbAccess.getStructuredDataByIds(sid,(structuredResult) => 
+              {
+
+                let structuredData =  structuredResult.length > 0 ? structuredResult[0] : null;
+
+                let responseObject = {edit:edit,
+                                      unstructuredData:unstructuredData,
+                                      structuredData:structuredData}
+
+                res.send(JSON.stringify(responseObject));
+
+              },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+            },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+          }         
 
         },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
 
@@ -115,7 +278,6 @@ exports.createRoutes = function(app)
       //updates an edit 
       middleware.put(app,"/edit",(req,res) => 
       {
-
         
         res.setHeader("Content-Type","application/json");
 
@@ -241,9 +403,33 @@ exports.createRoutes = function(app)
       dbAccess.getAllEdits((result => 
         {
 
-          let responseObject = {editList: result};
+          let editList = result;
 
-          res.send(JSON.stringify(responseObject));
+          let sids = result.filter(edit => edit.structuredDataID !== null && edit.structuredDataID !== undefined)
+                          .map(edit => edit.structuredDataID)
+
+          let usids = result.filter(edit => edit.unstructuredDataID !== null && edit.unstructuredDataID !== undefined)
+                          .map(edit => edit.unstructuredDataID)
+
+          dbAccess.getUnstructuredDataByIds(usids,(unstructuredResult) => 
+          {
+
+            let unstructuredDataList = unstructuredResult;
+
+            dbAccess.getStructuredDataByIds(sids,(structuredResult) => 
+            {
+
+              let structuredDataList = structuredResult; 
+
+              let responseObject = {editList:editList,
+                                    unstructuredData:unstructuredDataList,
+                                    structuredData:structuredDataList}
+
+              res.send(JSON.stringify(responseObject));
+
+            },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
+
+          },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
 
         }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
 
@@ -331,8 +517,71 @@ exports.createRoutes = function(app)
       });
       res.sendStatus(200);
 
-      
+    });
      
+    middleware.delete(app,"/structuredData",(req,res) => 
+    {
+
+      var id = req.query.id;
+
+      dbAccess.getStructuredData(id,(result) => 
+      {
+
+
+        if(result.length > 1)
+        {
+
+          standardServerErrorHandler(new Error("mutiple entry with single id"),res);
+
+        }
+        else if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+          
+          res.setHeader("Content-Type","application/json");
+
+          dbAccess.deleteStructuredDataById(id,(result) => 
+          {
+    
+          res.sendStatus(200);
+    
+          },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
+   
+        }
+
+      },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
+
+    })
+
+    middleware.get(app,'/StructuredData',(req, res)=>
+    {
+      var id=req.query.id;
+      
+
+      res.setHeader("Content-Type","application/json");
+      
+      dbAccess.getStructuredData(id,(result =>
+      {
+        
+        if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+
+          res.send(JSON.stringify(result[0]));
+
+        }              
+        
+      }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res)); 
     });
 
 }
