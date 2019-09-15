@@ -21,7 +21,8 @@ class AddUnstructuredData extends Component {
             match: '',
             data: '',
             exists: false,
-            message: ''
+            message: '',
+            hasMessage: false
         }
 
         if (this.state.id !== null) {
@@ -124,14 +125,14 @@ class AddUnstructuredData extends Component {
         request.send(JSON.stringify(toSend))
         request.onload = function () {
             if (request.status != 200) {
-                this.setState({ message: `Error ${request.status}: ${request.statusText}` })
+                this.setState({ message: `Error ${request.status}: ${request.statusText}`, hasMessage: true })
             }
             else {
                 this.props.history.goBack()
             }
         }.bind(this)
         request.onerror = function () {
-            this.setState({message: 'save failed'})
+            this.setState({ message: 'save failed', hasMessage: true })
         }.bind(this)
     }
 
@@ -149,14 +150,14 @@ class AddUnstructuredData extends Component {
             request.send()
             request.onload = function () {
                 if (request.status != 200) {
-                    this.setState({ message: `Error ${request.status}: ${request.statusText}` })
+                    this.setState({ message: `Error ${request.status}: ${request.statusText}`, hasMessage: true })
                 }
                 else {
                     this.props.history.goBack();
                 }
             }.bind(this)
             request.onerror = function () {
-                this.setState({message: 'delete failed'})
+                this.setState({ message: 'delete failed', hasMessage: true })
             }.bind(this)
         }
     }
@@ -177,7 +178,7 @@ class AddUnstructuredData extends Component {
      * renders the page
      */
     render() {
-        const { id, matchid, title, author, published, extracted, url, match, data, exists, message } = this.state
+        const { id, matchid, title, author, published, extracted, url, match, data, exists, message, hasMessage } = this.state
 		return (
 			<div className="page">
 				<PageHeader 
@@ -256,9 +257,7 @@ class AddUnstructuredData extends Component {
                                 </button>
                             </div>
                             <div className="eight wide field">
-                                <Message>
-                                    {message}
-                                </Message>
+                                {hasMessage ? <Message negative> {message} </Message> : undefined}
                             </div>
                             <div className="two wide field">
                                 {!this.state.exists ? "" : <button className="fluid ui red button" type="button" onClick={this.delete.bind(this)} >
