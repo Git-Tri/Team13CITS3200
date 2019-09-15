@@ -282,7 +282,21 @@ exports.createRoutes = function(app)
      
     });
 
-    //Route to get all matches (GET)
+    //Route to get all competitions (GET)
+    middleware.get(app,"/competitions",(req,res) =>  {
+
+      dbAccess.getAllComps((result => {
+          console.log("Sending all competitions");
+          
+          res.setHeader("Content-Type","application/json");
+          res.send(JSON.stringify(result));
+          
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+     
+    });
+
+    //Route to get single match (GET)
     middleware.get(app,"/match",(req,res) =>  {
 
       var matchId = req.query.id;
