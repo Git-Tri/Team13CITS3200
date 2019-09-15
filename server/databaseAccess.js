@@ -383,6 +383,7 @@ function getMatchById(matchId, callback,errorCallback,noConnectionCallback)
 
 } 
 
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
@@ -394,5 +395,5 @@ module.exports = { query,
         getAllEdits,
         getUnstructuredDataByMatchId, 
         getAllMatches,
-        getMatchById };
+        getMatchById};
 

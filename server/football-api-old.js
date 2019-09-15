@@ -1,7 +1,7 @@
 const request = require('request');
 
 
-const baseUrl = 'https://apiv2.apifootball.com/';
+const baseUrl = 'https://api.football-data.org/v2/matches/';
 const apiKey = process.env.APIKEY;
 
 
@@ -10,21 +10,6 @@ function getAllMatches(compID, callbackFunction) {
   request({
     headers: { 'X-Auth-Token': apiKey },
     url: baseUrl + compID + 'matches',
-    dataType: 'json',
-    type: 'GET'
-  }, (error, response) => {
-    if (error != null) {
-      throw Error(error);
-    }
-    callbackFunction(response.body);
-
-  });
-}
-
-function getAllCompetitions(callbackFunction) {
-
-  request({
-    url: baseUrl + '?action=get_leagues',
     dataType: 'json',
     type: 'GET'
   }, (error, response) => {
@@ -57,7 +42,7 @@ function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
 
 
 
-module.exports = { getAllMatches, getAllMatchesBetween, getAllCompetitions };
+module.exports = { getAllMatches, getAllMatchesBetween };
 
 
 // Available Subresources:
