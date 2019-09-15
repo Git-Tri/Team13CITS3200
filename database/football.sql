@@ -62,7 +62,8 @@ DROP TABLE IF EXISTS `competition`;
 CREATE TABLE `competition` (
   `id` int(11) NOT NULL,
   `name` varchar(50) not null,
-  `plan` varchar(50) not null,
+  `countryName` varchar(50) default null,
+  `countryId` int(11) default null,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

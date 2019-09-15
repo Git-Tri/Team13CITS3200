@@ -88,16 +88,18 @@ class Edit
 class Competition
 {
 
-    constructor(id,name,plan)
+    constructor(id,name,countryName,countryId)
     {
 
         this.id = id; 
         this.name = name; 
-        this.plan = plan;
+        this.countryName = countryName;
+        this.countryId = countryId
 
     }
 
 }
+
 
 class ImportRequest
 {

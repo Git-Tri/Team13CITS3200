@@ -41,7 +41,7 @@ describe("Route Tests",function()
             {
 
                     
-                dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");'],() => 
+                dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],() => 
                 {
                     
                     let queries = 
