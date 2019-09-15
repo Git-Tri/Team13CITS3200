@@ -38,8 +38,8 @@ CREATE TABLE `edit` (
   PRIMARY KEY (`editid`),
   KEY `sid` (`sid`),
   KEY `usid` (`usid`),
-  CONSTRAINT `edit_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `match` (`id`),
-  CONSTRAINT `edit_ibfk_3` FOREIGN KEY (`usid`) REFERENCES `unstructured_data` (`usid`)
+  CONSTRAINT `edit_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `match` (`id`) ON DELETE CASCADE ,
+  CONSTRAINT `edit_ibfk_3` FOREIGN KEY (`usid`) REFERENCES `unstructured_data` (`usid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -62,7 +62,8 @@ DROP TABLE IF EXISTS `competition`;
 CREATE TABLE `competition` (
   `id` int(11) NOT NULL,
   `name` varchar(50) not null,
-  `plan` varchar(50) not null,
+  `countryName` varchar(50) default null,
+  `countryId` int(11) default null,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -120,6 +121,7 @@ CREATE TABLE `unstructured_data` (
   PRIMARY KEY (`usid`),
   KEY `matchid` (`matchid`),
   CONSTRAINT `unstructured_data_ibfk_1` FOREIGN KEY (`matchid`) REFERENCES `match` (`id`)
+	ON DELETE CASCADE	
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

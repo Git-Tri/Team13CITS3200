@@ -131,6 +131,135 @@ function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 } 
 
 /**
+ * geet unstructured data from the databasee
+ * @param {*} usid the id of the unstrucredData which need to be selected
+ * @param {*} callback the callback for the result
+ * @param {*} errorCallback th callback used on error
+ * @param {*} noConnectionCallback thee call if there is no connection
+ */
+function getUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
+{
+         
+        query("select * from football.unstructured_data where usid = "+ usid + ";",
+        (result) => 
+        {
+
+                callback(dataBinding.bindUnstructuredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
+/**
+ * geet unstructured data from the databasee
+ * @param {*} usid the id of the match which need to be selected
+ * @param {*} callback the callback for the result
+ * @param {*} errorCallback th callback used on error
+ * @param {*} noConnectionCallback thee call if there is no connection
+ */
+function getMatch(usid,callback,errorCallback,noConnectionCallback)
+{
+        
+        query("select m.* from football.match m , football.unstructured_Data u where m.id=u.matchid and u.usid =" + usid +";",
+        (result) => 
+        {
+
+                callback(dataBinding.bindMatch(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
+/**
+ * Updates a given edit 
+ * Fails slightly if id does not exist
+ * @param {*} UnstructuredData  the edit update with
+ * @param {*} callback the callback on success 
+ * @param {*} errorCallback  the callback on error
+ * @param {*} noConnectionCallback  the call back if connection fails
+ */
+function updateUnstructuredData(UnstructuredData,callback,errorCallback,noConnectionCallback)
+{
+                
+        getUnstrucredData(UnstructuredData.id,(result) => 
+        {
+                        
+                if(result.length !== 1)
+                {
+
+                        errorCallback(new Error("Could not find an edit with id " + UnstructuredData.id));
+                        return;
+
+                }
+
+                UnstructuredData.published = new Date(UnstructuredData.published)
+
+                UnstructuredData.extracted = new Date(UnstructuredData.extracted)
+
+                let sqlquery = "update football.unstructured_data set " + 
+                " matchid = " + UnstructuredData.matchid +
+                ",title = '" + UnstructuredData.title + "'" +
+                ",author = '" + UnstructuredData.author + "'" +
+                ",url = '" + UnstructuredData.url + "'" + 
+                ",published = '" + UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDay()+1) + "'" +
+                ",extracted = '" + UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDay()+1) +"'" +
+                ",data = '" + UnstructuredData.data + "'" +
+                "where usid = " + UnstructuredData.id + ";";
+        
+                query(sqlquery,callback,errorCallback,noConnectionCallback);
+        
+        },errorCallback,noConnectionCallback)
+
+
+}
+
+/**
+ * insert a given edit 
+ * @param {*} edit  the edit to insert with
+ * @param {*} callback the callback on success 
+ * @param {*} errorCallback  the callback on error
+ * @param {*} noConnectionCallback  the call back if connection fails
+ */
+function insertUnstructuredData(UnstructuredData,callback,errorCallback,noConnectionCallback)
+{
+
+        UnstructuredData.published = new Date(UnstructuredData.published)
+
+        UnstructuredData.extracted = new Date(UnstructuredData.extracted)
+
+        let sqlquery = "insert into football.unstructured_data(matchid,title,author,url,published,extracted,data) " + 
+        "values('" + UnstructuredData.matchid + "','" + UnstructuredData.title + "','" + 
+        UnstructuredData.author + "','" + UnstructuredData.url + "','" + 
+        UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDay()+1) + "','" + 
+        UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDay()+1) +"','" +
+        UnstructuredData.data  + "')";
+
+        query(sqlquery,callback,errorCallback,noConnectionCallback);
+
+        
+
+}
+
+/**
+ * Delete an unstructuredData by the id
+ * @param {*} usid the id of the unstructuredData
+ * @param {*} callback the callback function on success
+ * @param {*} errorCallback the callback used on error
+ * @param {*} noConnectionCallback the callback used if there is no connection
+ */
+function deleteUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
+{
+        query("delete from football.unstructured_data where usid =" + usid + ";",
+        (result) => 
+        {
+                callback(dataBinding.bindUnstructuredData(result));
+
+        },errorCallback,noConnectionCallback)
+}
+
+
+
+/**
  * Gets an edit by the id  
  * @param {*} id the id of the edit to get must be a number
  * @param {*} callback the callback function on success
@@ -369,7 +498,13 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 }
 
 
-
+/**
+ * Gets all unstructured data which have keys in the list of ids
+ * @param {*} ids the ids 
+ * @param {*} callback the callback on success
+ * @param {*} errorCallback the callback on error
+ * @param {*} noConnectionCallback the callback on no connection
+ */
 function getUnstructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 {
 
@@ -407,7 +542,13 @@ function getUnstructuredDataByIds(ids,callback,errorCallback,noConnectionCallbac
 
 }
 
-
+/**
+ * Get all structured data which are in a list oids 
+ * @param {*} ids the list of ids
+ * @param {*} callback the callback on success
+ * @param {*} errorCallback the callback on error
+ * @param {*} noConnectionCallback the callback on no connection
+ */
 function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 {
 
@@ -447,12 +588,70 @@ function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 
 }
 
+/**
+ * get structured data from the databasee
+ * @param {*} usid the id of the strucredData which need to be selected
+ * @param {*} callback the callback for the result
+ * @param {*} errorCallback th callback used on error
+ * @param {*} noConnectionCallback thee call if there is no connection
+ */
+function getStructuredData(id,callback,errorCallback,noConnectionCallback)
+{
+         
+        query("select * from football.structured_data where id = " + id + ";",
+        (result) => 
+        {
+
+                callback(dataBinding.bindStructredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
+function deleteStructuredData(id,callback,errorCallback,noConnectionCallback)
+{
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        let parsedId = Number.parseInt(id);
+
+        if(Number.isNaN(parsedId))
+        {
+
+                errorCallback(new Error("Id must be a number"));
+
+                return;
+
+        }
+        else
+        {
+
+                query("delete from football.match where id =" + parsedId + ";",
+                (result) => 
+                {
+
+                        callback(result);
+
+                },errorCallback,noConnectionCallback)
+
+        }
+}
 
 
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
         getAllUnstrucredData, 
+        getUnstrucredData,
+        getMatch,
+        updateUnstructuredData,
+        insertUnstructuredData,
+        deleteUnstrucredData,
         getEditById,
         updateEdit,
         insertEdit,
@@ -460,5 +659,7 @@ module.exports = { query,
         getAllEdits,
         getUnstructuredDataByMatchId,
         getUnstructuredDataByIds,
-        getStructuredDataByIds };
+        getStructuredDataByIds,
+        deleteStructuredDataById: deleteStructuredData,
+        getStructuredData };
 

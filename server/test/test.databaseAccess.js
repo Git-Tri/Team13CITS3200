@@ -34,7 +34,7 @@ describe('Database Access Tests ', function() {
         cleanUp(() => 
         {
             
-            dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");',
+            dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");',
             ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
                 'values (null,null,true,null,"testEdit","goodbye","replace");'
             ],() => 
