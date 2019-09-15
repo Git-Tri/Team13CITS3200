@@ -60,6 +60,22 @@ class AddUnstructuredData extends Component {
         fetch("unstructuredData?id=" + this.state.id)
             .then(res => res.json())
             .then(result => {
+                console.log(result)
+                if (result.unstructuredData.extracted !== null) {
+                    var split = result.unstructuredData.extracted.split('-')
+                    var ext = `${split[0]}-${split[1]}-${parseInt(split[2])}`
+                    if (parseInt(split[2]) < 10) {
+                        ext = ext.slice(0, -1) + '0' + parseInt(split[2])
+                    }
+                }
+                if (result.unstructuredData.published !== null) {
+                    split = result.unstructuredData.published.split('-')
+                    var pub = `${split[0]}-${split[1]}-${parseInt(split[2])}`
+                    if (parseInt(split[2]) < 10) {
+                        pub = pub.slice(0, -1) + '0' + parseInt(split[2])
+                    }
+                }
+                console.log(ext + ' ' + pub)
                 this.setState({
                     exists: true,
                     matchid: result.match.id,
@@ -68,10 +84,13 @@ class AddUnstructuredData extends Component {
                     title: result.unstructuredData.title,
                     url: result.unstructuredData.url,
                     data: result.unstructuredData.data,
-                    extracted: result.unstructuredData.extracted
+                    extracted: ext,
+                    published: pub
                 })
                 console.log(result.match)
                 console.log(result.unstructuredData)
+                console.log(result.unstructuredData.extracted)
+                console.log(new Date(result.unstructuredData.extracted))
             })
             .catch(err => {
                 console.log('error loading' + err)
@@ -85,7 +104,12 @@ class AddUnstructuredData extends Component {
     **/
     submit = (e) => {
         e.preventDefault()
-        var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, this.state.published, this.state.extracted, this.state.data)
+        console.log(this.state.published)
+        var split = this.state.published.split('-')
+        var pub = new Date(split[0], split[1]-1, split[2], 0, 0, 0)
+        split = this.state.extracted.split('-')
+        var ext = new Date(split[0], split[1]-1, split[2], 0, 0, 0)
+        var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, pub, ext, this.state.data)
         if (!this.valid(toSend)) {
             return
         }
@@ -96,9 +120,7 @@ class AddUnstructuredData extends Component {
         if (!this.state.exists) {
             method = 'POST'
             idtext = ''
-            console.log("hello")
         }
-        console.log(method + 'unstructuredData' + idtext)
         request.open(method, '/unstructuredData' + idtext, true)
         request.setRequestHeader('Content-Type', 'application/json')
         request.send(JSON.stringify(toSend))
