@@ -1,5 +1,8 @@
 const middleware = require("./middleware.js")
 const dbAccess = require("./databaseAccess")
+const domain = require("./domain")
+const editEngine = require("./editEngine")
+var o2x = require('object-to-xml')
 
 exports.createRoutes = function(app)
 {
@@ -32,6 +35,8 @@ exports.createRoutes = function(app)
 
     }
 
+    
+
     middleware.get(app,"/UnstructuredDataList",(req,res) => 
       {
 
@@ -62,7 +67,7 @@ exports.createRoutes = function(app)
       {
         unstructuredDatabyId = result[0];
         
-        dbAccess.getMatch(usid,(result)=>
+        dbAccess.getMatchById(unstructuredDatabyId.matchid,(result)=>
           {
 
             matchDatabyId = result[0];
@@ -391,7 +396,7 @@ exports.createRoutes = function(app)
       },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
 
      
-    })
+    });
 
     //used for the edit list page 
     middleware.get(app,"/editList",(req,res) => 
@@ -452,5 +457,137 @@ exports.createRoutes = function(app)
         }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));
 
     });
+
+    
+     
+    middleware.delete(app,"/structuredData",(req,res) => 
+    {
+
+      var id = req.query.id;
+
+      dbAccess.getStructuredData(id,(result) => 
+      {
+
+
+        if(result.length > 1)
+        {
+
+          standardServerErrorHandler(new Error("mutiple entry with single id"),res);
+
+        }
+        else if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+          
+          res.setHeader("Content-Type","application/json");
+
+          dbAccess.deleteStructuredDataById(id,(result) => 
+          {
+    
+          res.sendStatus(200);
+    
+          },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
+   
+        }
+
+      },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
+
+    })
+
+    middleware.get(app,'/StructuredData',(req, res)=>
+    {
+      var id=req.query.id;
+      
+
+      res.setHeader("Content-Type","application/json");
+      
+      dbAccess.getStructuredData(id,(result =>
+      {
+        
+        if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+
+          res.send(JSON.stringify(result[0]));
+
+        }              
+        
+      }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res)); 
+    });
+
+    
+    middleware.get(app,"/export",(req,res)=>
+    {
+      var export_type = req.query.type;
+      var filename = "data";
+
+      var unstructuredDataArray;
+      var structuredDataArray;
+      var unstructuredDataResult;
+      var structuredDataResult;
+
+      dbAccess.getAllStructuredData((result =>
+        {
+
+          structuredDataArray = result;
+
+          editEngine.applyRulesMutiInputs(structuredDataArray,result=>
+            {
+              structuredDataResult = result;
+            
+
+          dbAccess.getAllUnstrucredData(result=>
+            {
+              unstructuredDataArray = result;
+
+              editEngine.applyRulesMutiInputs(unstructuredDataArray,result=>
+                {
+                  unstructuredDataResult = result;
+                
+
+                let responseObject = {structuredData: structuredDataResult, UnstructuredData: unstructuredDataResult}
+                let xml = o2x(responseObject);
+
+                if(export_type == "xml"){
+                  res.setHeader("Content_Type","application/xml");
+                  //var fileContents = Buffer.from(xml, "base64");
+                  //var readStream = new stream.PassThrough();
+                  //readStream.end(fileContents);
+                  //res.set('Content-disposition', 'attachment; filename=' + filename);
+                  //res.set('Content-Type', 'text/plain');
+                  //readStream.pipe(res);
+                  /*var savedFilePath = '/temp/' + filename;
+                  fs.writeFile(savedFilePath, fileContents, function() {
+                    res.status(200).download(savedFilePath, filename);
+                  });*/
+                  res.send(xml);
+                }
+                else if(export_type == "json"){
+                  res.setHeader("Content-Type","application/json");
+                  /*var savedFilePath = '/temp/' + filename;
+                  fs.writeFile(savedFilePath, fileContents, function() {
+                    res.status(200).download(savedFilePath, filename);
+                  });*/
+                  res.send(JSON.stringify(responseObject));
+                }
+                else{
+                  standardServerErrorHandler(new Error("need a type"),res);
+                }
+            })
+            },standardServerErrorHandler,standardServerErrorHandler);
+          })
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
+    })    
+
 
 }
