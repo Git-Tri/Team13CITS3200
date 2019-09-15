@@ -124,20 +124,21 @@ export class StructuredDataPage extends Component
         let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
 
 		return (
-				<div>			
-					<div id="container" style={{height:"100vh"}}>
-                        
-                        <Container textAlign="left">
-                            <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
-                            <ReactJson src={this.state.data.data}/>   
-                            <br/>
-                            <Button negative onClick={this.deleteData.bind(this)}>Delete</Button> 
-                        </Container>
-                        
-                        
-					</div>
+							
+                <div>
                     
-				</div>
+                    <Container textAlign="left">
+                        <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
+                        <br/>
+                        <Button negative onClick={this.deleteData.bind(this)}>Delete</Button> 
+                        <br/>
+                        <ReactJson src={this.state.data.data}/>   
+                        
+                    </Container>
+                    
+                    
+                </div>                  
+				
 		);
 
 	}
@@ -223,7 +224,7 @@ export class StructuredDataPage extends Component
 				handleSidebarClick={this.props.handleSidebarClick}
 			/>
 			<br/>							    
-			<div id="container" style={{height:"100vh"}}>
+			<div id="container" style={{minHeight:"100vh"}}>
 				{this.executeRender()}
 			</div>
 		</div>)

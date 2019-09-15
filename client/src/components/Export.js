@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
 import { Button, Loader, Message, Segment, Container, TextArea,Form} from 'semantic-ui-react';
-import {bindCompetition} from "../Databinding"
 import {ImportRequest} from "../domain";
-
 class Export extends Component {
 
 	constructor(props)
     {
         
-        super(props)
+		super(props)
+		
+		let types = ["json","xml"];
 
-        this.state = {items: [],isSaving: false, isLoaded: false,isImportSuccessful: false, isError: false, request: new ImportRequest() }
+		let names = ["JSON","XML"];
+
+		this.state = {items:this.genDropDownItems(types,names),
+			type:"json",
+			isLoaded: true,
+			isError: false,
+			request: new ImportRequest(),
+			isExported: false,
+			export: undefined,
+			exportedType: undefined }
 
 
     }
@@ -37,92 +46,30 @@ class Export extends Component {
     loadData()
     {
 
-        fetch("/competitions")
-            .then(res => res.json())
+		this.setState({isLoaded: false, isExported: false,exportedType: this.state.type});
+
+		fetch("/export?type=" + this.state.type)
+			.then((b) => b.text())            
             .then(result => 
                 {
 
-                    let data = result.map(r => bindCompetition(r));
-					
-					let values = data.map(c => c.id);
 
-					let names = data.map(c => c.name);					
+					let data = result
 
-					this.setState({items:this.genDropDownItems(values,names),isLoaded: true, isError: false})
+					this.setState({export:data,isLoaded: true, isError: false,isExported: true})
                 })
-            .catch(err => this.setState({isError: true}));
+            .catch(err => console.log(err));
 
     }
 
-	loadIfNotAlready()
-	{
-
-		if(this.state.isLoaded === false)
-		{
-
-			this.loadData();
-
-		}
-
-
-	}
 
 	handleChange(e, { name, value })
 	{
 
-		let request = this.state.request; 
-
-		if(name === "begin" || name === "end")
-		{
-
-			let dateParts = value.split("-")
-
-			value = new Date(dateParts[0],Number.parseInt(dateParts[1])-1,dateParts[2],0,0,0,0);
-
-		}
-
-		request[name] = value;
-
-		console.log(request)
-
-		this.setState({ request: request});		
+		this.setState({ type: value});		
 
 	}
 
-	saveData()
-	{
-
-			this.setState({isSaving: true})
-
-			fetch("/importdata",
-			{method: "POST",
-			body: JSON.stringify(this.state.request),
-			headers: {
-				'Content-Type': 'application/json'
-			}}).then((res) => 
-			{
-
-				console.log(res)
-
-				if(res.ok)
-				{
-
-					console.log("lol?")
-
-					this.setState({isSaving: false, isError: false,isImportSuccessful: true},() => console.log(this.state))
-					
-				}
-				else
-				{
-					
-					this.setState({isError: true});
-
-				}
-			})
-
-
-
-	}
 
 	renderErrorMessage()
 	{
@@ -141,19 +88,25 @@ class Export extends Component {
 
 	}
 
-	renderSuccessMessage()
+
+	renderData()
 	{
 
-		console.log("message")
-
-		if(this.state.isImportSuccessful)
+		if(this.state.isExported)
 		{
 
-			console.log("message")
+			if(this.state.exportedType === "json")
+			{
 
-			return(<Message positive>
-				<Message.Header>Successfully imported data into the corpus!</Message.Header>
-		   </Message>)
+				return(<Container textAlign="left" >{this.state.export}</Container>)
+
+			}
+			else
+			{
+
+				return(<Container textAlign="left"> {this.state.export}</Container>)
+
+			}
 
 		}
 
@@ -161,7 +114,6 @@ class Export extends Component {
 
 	render() {
 
-		this.loadIfNotAlready();
 		return (
 			<div className="page">
 				<PageHeader 
@@ -169,22 +121,23 @@ class Export extends Component {
 					sidebarVisible={this.props.sidebarVisible}
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
-				<div id="container" style={{height:"100vh"}}>
+				<div id="container" style={{minHeight:"100vh"}}>
 					<br/>
 					<Container>
-						<Form loading={! this.state.isLoaded || this.state.isSaving}>
+						<Form loading={! this.state.isLoaded}>
 							<Form.Group inline>
 								<Form.Select
-								label="Competition"
+								label="Export Type"
 								name="compId"
 								options={this.state.items}
 								onChange={this.handleChange.bind(this)}
+								value={this.state.type}
 								/>
 							</Form.Group>
-							<Button primary onClick={this.saveData.bind(this)}>Export</Button>
-						</Form>
-						{this.renderSuccessMessage()}
+							<Button primary onClick={this.loadData.bind(this)}>Export</Button>
+						</Form>						
 						{this.renderErrorMessage()}
+						{this.renderData()}
 					</Container>
 				</div>
 			</div>
@@ -192,4 +145,4 @@ class Export extends Component {
 	}
 }
 
-export default ImportStructuredData;
+export default Export;
