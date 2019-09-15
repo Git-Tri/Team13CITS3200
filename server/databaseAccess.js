@@ -705,6 +705,32 @@ function getAllComps(callback,errorCallback,noConnectionCallback)
 
 }
 
+function insertMatches(matches,callback,errorCallback,noConnectionCallback)
+{
+
+        if(Array.isArray(matches) !== true)
+        {
+
+                throw new Error("matches must of type array")
+
+        }
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+        //id
+        console.log(matches);
+        let queries = matches.map((c) => "insert ignore into football.match(id,competitionID,date,home,away,data)" +
+                                "values (" + c.id + "," + c.competitionID  + ",'" + c.date + "','" + c.home + "','" + c.away + "','" + c.data + "')");
+        console.log(queries);
+
+        multiInsertQuery(queries,callback,errorCallback,noConnectionCallback);
+
+}
+
 module.exports = { query, 
         multiInsertQuery, 
         getAllStructuredData, 
@@ -727,5 +753,6 @@ module.exports = { query,
         insertComps,
         getAllComps,
         getAllMatches,
-        getMatchById };
+        getMatchById,
+        insertMatches };
 
