@@ -3,6 +3,7 @@ import PageHeader from './PageHeader.js';
 import UnstructuredDataTable from "./UnstructuredDataTable";
 import { UnstructuredData } from "../domain";
 import { bindUnstructureData } from "../Databinding";
+import { withRouter } from 'react-router-dom';
 
 class UnstructuredDataList extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class UnstructuredDataList extends Component {
     **/
     load = () => {
         var request = new XMLHttpRequest()
-        request.open('GET', '/allchooseableData', true)
+        request.open('GET', '/allChooseableData', true)
         request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
         request.send()
         request.onload = () => {
@@ -40,7 +41,7 @@ class UnstructuredDataList extends Component {
             }
             else {
                 let data = JSON.parse(request.responseText)
-                
+                console.log(data)
                 data.unstructuredData = data.unstructuredData.map((d) => bindUnstructureData(d));
                 
                 this.setState({ data: data.unstructuredData });
@@ -50,6 +51,14 @@ class UnstructuredDataList extends Component {
         request.onerror = function () {
             alert("Load failed")
         }
+    }
+
+    /**
+     * takes the user to the add unstructured data page with the id of the selected data
+     * @param {any} data - the selected data
+     */
+    routeToUnstructuredData(data) {
+        this.props.history.push("/add_unstructured_data?id=" + data.id + "&isbackable=true")
     }
 
     /**
@@ -114,7 +123,7 @@ class UnstructuredDataList extends Component {
                         <div class="inline fields" >
                             <div class="one wide field"/>
                             <div class="fourteen wide field">
-                                <UnstructuredDataTable items={this.state.data}>
+                                <UnstructuredDataTable items={this.state.data} onSelect={this.routeToUnstructuredData.bind(this)}>
                                 </UnstructuredDataTable>
                             </div>
                         </div>
@@ -125,4 +134,4 @@ class UnstructuredDataList extends Component {
 	}
 }
 
-export default UnstructuredDataList;
+export default withRouter(UnstructuredDataList);

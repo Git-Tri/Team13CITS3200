@@ -51,23 +51,19 @@ class ChooseMatchModal extends Component {
      */
     loadData() {
 
-        var test = [
-            new Match(1, new Date("1991-04-20T00:00:00.000Z"), 'ispep', 'pepsi', 1, 'bepis'),
-            new Match(2, new Date("1992-05-20T00:00:00.000Z"), 'olos', 'solo', 1, 'silo')
-        ]
         fetch("/matchList")
             .then(res => res.json())
             .then(result => {
 
-                result.matches = result.matches.map((d) => bindMatch(d));
+                console.log(result)
+                result = result.map((d) => bindMatch(d));
 
                 this.setState({ data: result, isLoaded: true, isError: false });
 
             })
-//            .catch(err => this.setState({ isError: true }));
             .catch(err => {
-                this.setState({ data: test, isLoaded: true, isError: false })
-            })
+                this.setState({ isError: true })
+            });
 
     }
 

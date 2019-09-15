@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
 import { UnstructuredData } from "../domain";
 import ChooseMatchModal from "./ChooseMatchModal";
+import { withRouter } from "react-router-dom";
 
 
 class AddUnstructuredData extends Component {
@@ -9,7 +10,7 @@ class AddUnstructuredData extends Component {
         super(props)
 
         this.state = {
-            id: null,
+            id: new URLSearchParams(props.location.search).get("id"),
             matchid: '',
             title: 'New unstructured data',
             author: '',
@@ -20,6 +21,11 @@ class AddUnstructuredData extends Component {
             data: '',
             exists: false
         }
+
+        if (this.state.id !== null) {
+            this.load()
+        }
+
     }
 
     /**
@@ -48,6 +54,32 @@ class AddUnstructuredData extends Component {
     }
 
     /**
+     * loads the data with id passed into the page if one exists
+     */
+    load() {
+        fetch("unstructuredData?id=" + this.state.id)
+            .then(res => res.json())
+            .then(result => {
+                this.setState({
+                    exists: true,
+                    matchid: result.match.id,
+                    match: `${result.match.home} vs ${result.match.away}`,
+                    author: result.unstructuredData.author,
+                    title: result.unstructuredData.title,
+                    url: result.unstructuredData.url,
+                    data: result.unstructuredData.data,
+                    extracted: result.unstructuredData.extracted
+                })
+                console.log(result.match)
+                console.log(result.unstructuredData)
+            })
+            .catch(err => {
+                console.log('error loading' + err)
+            })
+              
+    }
+
+    /**
     * deals with submission of the form
     * @param e - the event that caused the submission
     **/
@@ -59,16 +91,18 @@ class AddUnstructuredData extends Component {
         }
         console.log(toSend)
         var request = new XMLHttpRequest()
+        var method = 'PUT'
+        var idtext = `?id=${this.state.id}`
         if (!this.state.exists) {
-            request.open('POST', '/unstructuredData', true)
-            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-            request.send(JSON.stringify(toSend))
+            method = 'POST'
+            idtext = ''
+            console.log("hello")
         }
-        else {
-            request.open('PUT', '/unstructuredData', true)
-            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-            request.send(JSON.stringify(toSend))
-        }
+        console.log(method + 'unstructuredData' + idtext)
+        request.open(method, '/unstructuredData' + idtext, true)
+        request.setRequestHeader('Content-Type', 'application/json')
+        request.send(JSON.stringify(toSend))
+
         request.onload = function () {
             if (request.status != 200) {
                 alert(`Error ${request.status}: ${request.statusText}`)
@@ -92,7 +126,7 @@ class AddUnstructuredData extends Component {
             var request = new XMLHttpRequest()
             console.log(this.state.id)
             request.open('DELETE', `/unstructuredData?id=${this.state.id}`, true)
-            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+            request.setRequestHeader('Content-Type', 'application/json')
             request.send()
             request.onload = function () {
                 if (request.status != 200) {
@@ -100,15 +134,25 @@ class AddUnstructuredData extends Component {
                 }
                 else {
                     alert(`Deleted`)
+
                 }
             }
             request.onerror = function () {
                 alert("Delete failed")
             }
         }
-        else {
-            alert("Can't delete an entry that doesn't exist")
-        }
+        this.setState({
+            id: null,
+            matchid: '',
+            title: 'New unstructured data',
+            author: '',
+            published: '',
+            extracted: '',
+            url: '',
+            match: '',
+            data: '',
+            exists: false
+        })
     }
 
     /**
@@ -120,7 +164,6 @@ class AddUnstructuredData extends Component {
         this.setState({
             matchid: chosenMatch.id,
             match: `${chosenMatch.home} vs ${chosenMatch.away}`,
-            exists: true
         })
     }
 
@@ -222,9 +265,9 @@ class AddUnstructuredData extends Component {
                         <div className="inline fields">
                             <div className="eleven wide field" />
                             <div className="two wide field">
-                                <button className="fluid ui red button" type="button" onClick={this.delete} >
+                                {!this.state.exists ? "" : <button className="fluid ui red button" type="button" onClick={this.delete} >
                                     Delete
-                                </button>
+                                </button>}
                             </div>
                             <div className="two wide field">
                                 <button className="fluid ui primary button" type="button" onClick={this.submit} >
@@ -239,4 +282,4 @@ class AddUnstructuredData extends Component {
 	}
 }
 
-export default AddUnstructuredData;
+export default withRouter(AddUnstructuredData);
