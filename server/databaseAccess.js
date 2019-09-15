@@ -201,8 +201,8 @@ function updateUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
                 ",title = '" + UnstructuredData.title + "'" +
                 ",author = '" + UnstructuredData.author + "'" +
                 ",url = '" + UnstructuredData.url + "'" + 
-                ",published = '" + UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()) + "/" + (UnstructuredData.published.getDate()) + "'" +
-                ",extracted = '" + UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()) + "/" + (UnstructuredData.extracted.getDate()) +"'" +
+                ",published = '" + UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDate()) + "'" +
+                ",extracted = '" + UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDate()) +"'" +
                 ",data = '" + UnstructuredData.data + "'" +
                 "where usid = " + UnstructuredData.id + ";"
         
@@ -230,8 +230,8 @@ function insertUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
         let sqlquery = "insert into football.unstructured_data(matchid,title,author,url,published,extracted,data) " + 
         "values('" + UnstructuredData.matchid + "','" + UnstructuredData.title + "','" + 
         UnstructuredData.author + "','" + UnstructuredData.url + "','" + 
-        UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()) + "/" + (UnstructuredData.published.getDate()) + "','" + 
-        UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()) + "/" + (UnstructuredData.extracted.getDate()) +"','" +
+        UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDate()) + "','" + 
+        UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDate()) +"','" +
         UnstructuredData.data  + "')";
 
         query(sqlquery,callback,errorCallback,noConnectionCallback);
