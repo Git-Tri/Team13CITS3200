@@ -285,14 +285,19 @@ exports.createRoutes = function(app)
     //Route to get all competitions (GET)
     middleware.get(app,"/competitions",(req,res) =>  {
 
-      dbAccess.getAllComps((result => {
-          console.log("Sending all competitions");
+      api.getAllCompetitions((result) => {
+        console.log(result);
+
+      });
+
+      // dbAccess.getAllComps((result => {
+      //     console.log("Sending all competitions");
           
-          res.setHeader("Content-Type","application/json");
-          res.send(JSON.stringify(result));
+      //     res.setHeader("Content-Type","application/json");
+      //     res.send(JSON.stringify(result));
           
 
-        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+      //   }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
      
     });
 

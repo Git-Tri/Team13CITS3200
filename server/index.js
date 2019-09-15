@@ -44,4 +44,8 @@ app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
 );
 
+api.getAllCompetitions((result) => {
+  //Add all comps to DB
+});
+
 module.exports = {getPort};

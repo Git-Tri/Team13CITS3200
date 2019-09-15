@@ -21,25 +21,12 @@ function getAllMatches(compID, callbackFunction) {
   });
 }
 
-function getAllCompetitions(callbackFunction) {
 
-  request({
-    url: baseUrl + '?action=get_leagues',
-    dataType: 'json',
-    type: 'GET'
-  }, (error, response) => {
-    if (error != null) {
-      throw Error(error);
-    }
-    callbackFunction(response.body);
-
-  });
-}
 
 //date in format 'YYYY-MM-DD'
 function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
   
-  customURL = baseUrl + '?competitions=' + [2002] + '&dateFrom=' + startDate + "&dateTo=" + endDate
+  let customURL = baseUrl + '?competitions=' + [2002] + '&dateFrom=' + startDate + "&dateTo=" + endDate
   console.log("Trying to get all matches from: " + customURL);
   request({
     headers: { 'X-Auth-Token': apiKey },
@@ -51,6 +38,22 @@ function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
       throw Error(error);
     }
     callbackFunction(compID, startDate, endDate, response.body);
+
+  });
+}
+
+function getAllCompetitions(callbackFunction) {
+  let customURL = baseUrl + '?action=get_leagues&APIkey=' + apiKey;
+  console.log("Trying to get all comps from: " + customURL);
+  request({
+    url: customURL,
+    dataType: 'json',
+    type: 'GET'
+  }, (error, response) => {
+    if (error != null) {
+      throw Error(error);
+    }
+    callbackFunction(response.body);
 
   });
 }
