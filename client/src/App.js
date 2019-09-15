@@ -45,10 +45,7 @@ class App extends Component {
 						vertical
 						visible={this.state.sidebarVisible}
 						width='thin'
-					>
-						<Menu.Header as='h1'>
-							Navigation
-						</Menu.Header>
+					>						
 						<Menu.Item as='a' href='/'>
 							Home
 						</Menu.Item>
@@ -79,7 +76,7 @@ class App extends Component {
 					</Sidebar>
 
 					<Sidebar.Pusher>
-						<div className="App">
+						<div className="App" style={{minHeight:"100vh"}}>
 							<Switch>
 								<Route 	exact path='/' 
 										component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}

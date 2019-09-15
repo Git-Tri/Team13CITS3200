@@ -32,6 +32,8 @@ class ChooseMatchModal extends Component {
             isNoChooseError: false
         };
 
+        
+
     }
 
     /**
@@ -95,9 +97,25 @@ class ChooseMatchModal extends Component {
      */
     handleSelection(data) {
 
-        this.setState({ lastSelectedId: data.id, selectedItem: data });
+        if(data.id === this.state.lastSelectedId)
+        {
+
+            this.props.onSelect(data);      
+
+            this.setState({isModalOpen: false,isNoChooseError: false});
+
+        }
+        else
+        {
+
+            this.setState({ lastSelectedId: data.id, selectedItem: data });
+
+        }
+
+        
 
     }
+
 
     /**
      * Renders the page if the data has been loaded 

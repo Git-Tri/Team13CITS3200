@@ -1,94 +1,248 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
-import { Container, Loader, Message, Button, Header } from 'semantic-ui-react';
-import { bindMatch } from '../Databinding';
+import DataPair from "./DataPair"
+import ReactJson from 'react-json-view'
+import {bindStructuredData, bindUnstructureData} from "../Databinding";
+import { Button, Loader, Message, Segment, Container, TextArea,Form,Header} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-
-import { Match } from "../domain"; //Removed after searching is enabled
+import UnstructuredDataTable from "./UnstructuredDataTable";
 
 class ViewMatch extends Component {
 	
-	constructor(props){
-		super(props)
+	constructor(props)
+    {
+        
+        super(props)
 
-		let id = this.props.id === undefined ? 
-			new URLSearchParams(this.props.location.search).get("id") : this.props.id;
+        //allow passing in of id for testing 
+        let id = props.id === undefined ? 
+        new URLSearchParams(props.location.search).get("id") : props.id;
 
-		this.state = { 
-			data: undefined,
-			isLoaded: false,
-			isError: false,
-			matchID: id
+        if(id === undefined || id === null)
+        {
+
+            throw new Error("id must be defined")
+
+        }
+
+        this.state = {unstructuredData: [],data: [],isUnstructuredLoaded: false, isLoaded: false, isError: false, id:id,headerText:"Loading"}
+
+
+    }
+
+	/**
+     * Handles any errors cuased by a sub-component 
+     * @param {*} error the error recieved
+     * @param {*} errorInfo information about the error
+     */
+    componentDidCatch(error, errorInfo)
+    {
+
+        this.setState({isError: true});
+
+    }
+
+	/**
+     * Loads all edits and bind the parsed json to edit objects
+     */
+    loadData()
+    {
+
+        fetch("/StructuredData?id=" + this.state.id)
+            .then(res => res.json())
+            .then(result => 
+                {
+
+                    let data = bindStructuredData(result);
+
+                    let date = data.date;
+
+                    let dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+                    
+                    let headerText = data.home + " vs " + data.away + " on " + dateString; 
+
+					this.setState({data:data,isLoaded: true, isError: false,headerText: headerText})
+                })
+            .catch(err => this.setState({isError: true,isLoaded:true}));
+
+	}
+	
+	/**
+     * Loads all edits and bind the parsed json to edit objects
+     */
+    loadUnstructuredData()
+    {
+
+        fetch("/getUnstructuredDataByMatchId?id=" + this.state.id)
+            .then(res => res.json())
+            .then(result => 
+                {
+
+					console.log(result)
+
+					let data = result.unstructuredData.map((d) => bindUnstructureData(d));
+                
+
+					console.log(data)
+
+					this.setState({unstructuredData:data,isUnstructuredLoaded: true, isError: false})
+                })
+            .catch(err => this.setState({isError: true,isUnstructuredLoaded: true}));
+
+    }
+
+    /**
+     * loads the data if it is not already loaded
+     */
+	loadIfNotAlready()
+	{
+
+		if(this.state.isLoaded === false)
+		{
+
+			this.loadData();
+
 		}
+
+
 	}
 
-	loadData(){
-		// fetch("/match")
-		// 	.then(res => res.json())
-		// 	.then(result => 
-		// 		{
-		// 			result.matchList = result.matchList.map((d) => bindMatch(d));
-		// 			let match = result.matchList
-		// 			this.setState({data: match ,isLoaded: true, isError: false})
-		// 		})
-		// 	.catch(err => this.setState({isError: true}));
+	loadUnstructuredIfNotAlready()
+	{
 
-		var testMatch = new Match(1,new Date("1991-04-20T00:00:00.000Z"),"team A","team B",3,"Not real data!")
-		this.setState({data: testMatch ,isLoaded: true, isError: false})
+		if(this.state.isUnstructuredLoaded === false)
+		{
+
+			this.loadUnstructuredData();
+
+		}
+
 	}
 
-	executeRender() {
-		if(this.state.isError){
-			return (<Message negative>
-				<Message.Header>An error has occured</Message.Header>
-				<p>Failed to get data from the server.</p>
-				<Button color="red" onClick={this.loadData.bind(this)}>Try Again?</Button>
-			  </Message>
-			);
-		}
+	renderLoadedUnstructuredData()
+	{
 
-		else if(this.state.isLoaded){
-			return (
-				<div>			
-					<div id="container" style={{height:"100vh"}}>
-						<Container>
-							<Header sub>Match</Header>
-							<span>{this.state.data.home} vs. {this.state.data.away}</span>
-
-							<Header sub>Date</Header>
-							<span>{Date(this.state.data.date)}</span>
-
-							<Header sub>Competition</Header>
-							<span>{this.state.data.competitionName}</span>
-						</Container>
-					</div>
-				</div>
-			); 
-		}
-
-		else {
-			this.loadData()
-			return (
-				<Message>Loading Data</Message>
-			);
-		}
 	}
 
-	render(){
+    /**
+     * renders the page in loading state 
+     */
+	renderLoaded()
+	{
 
-		return ( //This is a placeholder
-			<div className="page">
-				<PageHeader 
-					header={"View Match"}
-					sidebarVisible={this.props.sidebarVisible}
-					handleSidebarClick={this.props.handleSidebarClick}
-				/>
-				<div id="container" style={{height:"100vh"}}>
-					{this.executeRender()}
-				</div>
-			</div>
+        let date = this.state.data.date;
+
+        let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+
+		return (
+							
+                <div>
+                    
+                    <Container textAlign="left">
+                        <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
+                    	<Header>Unstructured Data</Header>
+						<UnstructuredDataTable items={this.state.unstructuredData}/>
+						<Header>Structured Data</Header>
+                        <ReactJson src={this.state.data.data}/>   
+                        
+                    </Container>
+                    
+                    
+                </div>                  
+				
 		);
-	}	
+
+	}
+
+	 /**
+     * Renders the page if an error has occured
+     */
+    renderError()
+    {
+
+        return(  
+        <Message negative>
+            <Message.Header>An error has occured</Message.Header>
+            <p>Failed to get data from the server.</p>
+            <Button color="red" onClick={this.loadData.bind(this)}>Try Again?</Button>
+          </Message>
+          )
+
+    }
+
+    /**
+     * navigates to an edit page with parameters given by inputted edit
+     * @param {*} edit the edit inputted 
+     */
+	routeToData(data)
+	{
+
+		this.props.history.push("/structured_data_page?id=" + data.id + "&isbackable=true");
+		
+	}
+
+    /**
+     * renders the page if the data is still loading 
+     */
+    renderLoading()
+    {
+
+        return(<Loader>Loading Data</Loader>)
+
+    }
+    
+    /**
+     * Chooses which render that should be rendered based on 
+     * state of the object 
+     */
+    executeRender()
+    {
+
+        if(this.state.isError)
+        {
+
+            return this.renderError();
+
+        }
+        else if(this.state.isLoaded)
+        {
+
+            return this.renderLoaded();
+
+        }
+        else
+        {
+
+            return this.renderLoading();
+
+        }
+
+    }
+
+	
+
+    /**
+     * renders the page 
+     */
+	render() {
+
+		this.loadIfNotAlready();
+
+		this.loadUnstructuredIfNotAlready();
+
+		return (<div className="page">
+			<PageHeader 
+				header={this.state.headerText}
+				sidebarVisible={this.props.sidebarVisible}
+				handleSidebarClick={this.props.handleSidebarClick}
+			/>
+			<br/>							    
+			<div id="container" style={{minHeight:"100vh"}}>
+				{this.executeRender()}
+			</div>
+		</div>)
+		
+	}
 }
 
 export default withRouter(ViewMatch);

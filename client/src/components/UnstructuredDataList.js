@@ -4,6 +4,7 @@ import UnstructuredDataTable from "./UnstructuredDataTable";
 import { UnstructuredData } from "../domain";
 import { bindUnstructureData } from "../Databinding";
 import { withRouter } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 
 class UnstructuredDataList extends Component {
     constructor(props) {
@@ -81,7 +82,8 @@ class UnstructuredDataList extends Component {
 					sidebarVisible={this.props.sidebarVisible}
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
-				<div id="container" style={{height:"100vh"}}>
+                <Container>
+				<div id="container" style={{minHeight:"100vh"}}>
                     <form class="ui form">
                         <div class="inline fields">
                             <div class="one wide field"/>
@@ -129,6 +131,7 @@ class UnstructuredDataList extends Component {
                         </div>
                     </form>
 				</div>
+                </Container>
 			</div>
 		);
 	}

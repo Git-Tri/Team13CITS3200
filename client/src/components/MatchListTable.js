@@ -94,7 +94,7 @@ class MatchListTable extends Component
 function MatchRow(props)
 {
     let date = props.data.date;
-    let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+    let dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
     let versus = props.data.home + " vs " + props.data.away;
     let selectFunc = props.onSelect != undefined ? props.onSelect : () => {};
     return(

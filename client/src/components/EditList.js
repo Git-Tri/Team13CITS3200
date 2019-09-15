@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
 import EditListTable from "./EditListTable";
 import {bindEdit, bindUnstructureData, bindStructuredData} from "../Databinding";
-import { Button, Loader, Message} from 'semantic-ui-react';
+import { Button, Loader, Message, Container} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 
@@ -174,10 +174,11 @@ export class EditList extends Component {
 				handleSidebarClick={this.props.handleSidebarClick}
 			/>
 			<br/>
-							
-			<div id="container" style={{height:"100vh"}}>
+			<Container>
+			<div id="container" style={{minHeight:"100vh"}}>
 				{this.executeRender()}
 			</div>
+            </Container>	
 		</div>)
 		
 	}

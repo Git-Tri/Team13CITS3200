@@ -29,7 +29,7 @@ export function AddEdit(props)
 				sidebarVisible={props.sidebarVisible}
 				handleSidebarClick={props.handleSidebarClick}
 			/>
-			<div id="container" style={{height:"100vh"}}>
+			<div id="container" style={{minHeight:"100vh"}}>
 				<EditForm id={id} data={props.data} target={props.target}/>
 			</div>
 		</div>

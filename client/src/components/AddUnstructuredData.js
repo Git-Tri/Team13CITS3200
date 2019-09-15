@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Message } from 'semantic-ui-react'
+import { Message, Container } from 'semantic-ui-react'
 import PageHeader from './PageHeader.js';
 import { UnstructuredData } from "../domain";
 import ChooseMatchModal from "./ChooseMatchModal";
@@ -186,6 +186,7 @@ class AddUnstructuredData extends Component {
 					sidebarVisible={this.props.sidebarVisible}
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
+                <Container>
                 <div id="container" style={{ height: "100vh" }}>
                     <form className="ui form">
                         <div className="inline fields">
@@ -272,6 +273,7 @@ class AddUnstructuredData extends Component {
                         </div>
                     </form>
 				</div>
+                </Container>
 			</div>
 		);
 	}

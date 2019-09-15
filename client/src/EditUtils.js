@@ -60,7 +60,7 @@ export function genSummary(edit,data)
 		else
 		{
 
-			return "No Data Selected";
+			return "Entire Corpus";
 
 		}
 

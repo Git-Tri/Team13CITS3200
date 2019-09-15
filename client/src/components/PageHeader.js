@@ -9,7 +9,7 @@ class PageHeader extends Component {
 			new URLSearchParams(this.props.location.search).get("isbackable") : this.props.isbackable;
 
 		return (
-			<Grid container columns={3}>
+			<Grid style={{padding:"15px 15px 15px 15px"}} container columns={3}>
 				<Grid.Row>
 					<Grid.Column>
 						<Button onClick={this.props.handleSidebarClick} >
@@ -22,12 +22,13 @@ class PageHeader extends Component {
 					</Header>
 					</Grid.Column>
 					<Grid.Column>
-					<Button 
+					{isBackable ? <Button 
 						onClick={() => {this.props.history.goBack()}}
 						disabled={!isBackable}
 					>
 						Back
-					</Button>
+					</Button> : undefined }
+					
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>

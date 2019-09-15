@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
 import StructuredDataTable from "./StructuredDataTable";
 import {bindStructuredData} from "../Databinding";
-import { Button, Loader, Message} from 'semantic-ui-react';
+import { Button, Loader, Message, Container} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 export class StructuredDataList extends Component {
@@ -164,7 +164,9 @@ export class StructuredDataList extends Component {
 			<br/>
 							
 			<div id="container" style={{height:"100vh"}}>
-				{this.executeRender()}
+                <Container>
+                {this.executeRender()}
+                </Container>
 			</div>
 		</div>)
 		

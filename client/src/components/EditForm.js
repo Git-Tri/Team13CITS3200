@@ -206,6 +206,13 @@ export class EditForm extends Component {
 		//and it returns false anyway. 
 		isValidObj.settings = {};
 
+		if(edit.settings === undefined || edit.settings === null)
+		{
+
+			edit.settings = {};
+
+		}
+
 		Object.keys(edit.settings).forEach((item) => 
 		{
 
