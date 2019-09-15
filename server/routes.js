@@ -453,4 +453,69 @@ exports.createRoutes = function(app)
 
     });
 
+    middleware.delete(app,"/structuredData",(req,res) => 
+    {
+
+      var id = req.query.id;
+
+      dbAccess.getStructuredData(id,(result) => 
+      {
+
+
+        if(result.length > 1)
+        {
+
+          standardServerErrorHandler(new Error("mutiple entry with single id"),res);
+
+        }
+        else if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+          
+          res.setHeader("Content-Type","application/json");
+
+          dbAccess.deleteStructuredDataById(id,(result) => 
+          {
+    
+          res.sendStatus(200);
+    
+          },(err) => standardServerErrorHandler(err,res), (err) => standardServerErrorHandler(err,res))
+   
+        }
+
+      },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
+
+    })
+
+    middleware.get(app,'/StructuredData',(req, res)=>
+    {
+      var id=req.query.id;
+      
+
+      res.setHeader("Content-Type","application/json");
+      
+      dbAccess.getStructuredData(id,(result =>
+      {
+        
+        if(result.length < 1)
+        {
+
+          res.sendStatus(404);
+
+        }
+        else
+        {
+
+          res.send(JSON.stringify(result[0]));
+
+        }              
+        
+      }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res)); 
+    });
+
 }

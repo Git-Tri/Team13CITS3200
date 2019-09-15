@@ -259,19 +259,6 @@ function deleteUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
 
 
 
-/*function (usid,callback,errorCallback,noConnectionCallback)
-{
-
-        query("delete from football.unstructured_data where usid =" + usid + ";",
-        (result) => 
-        {
-
-                callback(dataBinding.bindUnstructuredData(result));
-
-        },errorCallback,noConnectionCallback)
-
-        
-}*/
 /**
  * Gets an edit by the id  
  * @param {*} id the id of the edit to get must be a number
@@ -511,7 +498,13 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 }
 
 
-
+/**
+ * Gets all unstructured data which have keys in the list of ids
+ * @param {*} ids the ids 
+ * @param {*} callback the callback on success
+ * @param {*} errorCallback the callback on error
+ * @param {*} noConnectionCallback the callback on no connection
+ */
 function getUnstructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 {
 
@@ -549,7 +542,13 @@ function getUnstructuredDataByIds(ids,callback,errorCallback,noConnectionCallbac
 
 }
 
-
+/**
+ * Get all structured data which are in a list oids 
+ * @param {*} ids the list of ids
+ * @param {*} callback the callback on success
+ * @param {*} errorCallback the callback on error
+ * @param {*} noConnectionCallback the callback on no connection
+ */
 function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 {
 
@@ -589,6 +588,59 @@ function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 
 }
 
+/**
+ * get structured data from the databasee
+ * @param {*} usid the id of the strucredData which need to be selected
+ * @param {*} callback the callback for the result
+ * @param {*} errorCallback th callback used on error
+ * @param {*} noConnectionCallback thee call if there is no connection
+ */
+function getStructuredData(id,callback,errorCallback,noConnectionCallback)
+{
+         
+        query("select * from football.structured_data where id = " + id + ";",
+        (result) => 
+        {
+
+                callback(dataBinding.bindStructredData(result));
+
+        },errorCallback,noConnectionCallback);
+
+}
+
+function deleteStructuredData(id,callback,errorCallback,noConnectionCallback)
+{
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        let parsedId = Number.parseInt(id);
+
+        if(Number.isNaN(parsedId))
+        {
+
+                errorCallback(new Error("Id must be a number"));
+
+                return;
+
+        }
+        else
+        {
+
+                query("delete from football.match where id =" + parsedId + ";",
+                (result) => 
+                {
+
+                        callback(result);
+
+                },errorCallback,noConnectionCallback)
+
+        }
+}
 
 
 module.exports = { query, 
@@ -607,5 +659,7 @@ module.exports = { query,
         getAllEdits,
         getUnstructuredDataByMatchId,
         getUnstructuredDataByIds,
-        getStructuredDataByIds };
+        getStructuredDataByIds,
+        deleteStructuredDataById: deleteStructuredData,
+        getStructuredData };
 
