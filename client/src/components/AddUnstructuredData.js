@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Message } from 'semantic-ui-react'
 import PageHeader from './PageHeader.js';
 import { UnstructuredData } from "../domain";
 import ChooseMatchModal from "./ChooseMatchModal";
@@ -19,7 +20,9 @@ class AddUnstructuredData extends Component {
             url: '',
             match: '',
             data: '',
-            exists: false
+            exists: false,
+            message: '',
+            hasMessage: false
         }
 
         if (this.state.id !== null) {
@@ -87,10 +90,6 @@ class AddUnstructuredData extends Component {
                     extracted: ext,
                     published: pub
                 })
-                console.log(result.match)
-                console.log(result.unstructuredData)
-                console.log(result.unstructuredData.extracted)
-                console.log(new Date(result.unstructuredData.extracted))
             })
             .catch(err => {
                 console.log('error loading' + err)
@@ -124,18 +123,17 @@ class AddUnstructuredData extends Component {
         request.open(method, '/unstructuredData' + idtext, true)
         request.setRequestHeader('Content-Type', 'application/json')
         request.send(JSON.stringify(toSend))
-
         request.onload = function () {
             if (request.status != 200) {
-                alert(`Error ${request.status}: ${request.statusText}`)
+                this.setState({ message: `Error ${request.status}: ${request.statusText}`, hasMessage: true })
             }
             else {
-                alert(`Saved`)
+                this.props.history.goBack()
             }
-        }
+        }.bind(this)
         request.onerror = function () {
-            alert("Save failed")
-        }
+            this.setState({ message: 'save failed', hasMessage: true })
+        }.bind(this)
     }
 
     /**
@@ -152,29 +150,16 @@ class AddUnstructuredData extends Component {
             request.send()
             request.onload = function () {
                 if (request.status != 200) {
-                    alert(`Error ${request.status}: ${request.statusText}`)
+                    this.setState({ message: `Error ${request.status}: ${request.statusText}`, hasMessage: true })
                 }
                 else {
-                    alert(`Deleted`)
-
+                    this.props.history.goBack();
                 }
-            }
+            }.bind(this)
             request.onerror = function () {
-                alert("Delete failed")
-            }
+                this.setState({ message: 'delete failed', hasMessage: true })
+            }.bind(this)
         }
-        this.setState({
-            id: null,
-            matchid: '',
-            title: 'New unstructured data',
-            author: '',
-            published: '',
-            extracted: '',
-            url: '',
-            match: '',
-            data: '',
-            exists: false
-        })
     }
 
     /**
@@ -193,36 +178,16 @@ class AddUnstructuredData extends Component {
      * renders the page
      */
     render() {
-        const { id, matchid, title, author, published, extracted, url, match, data, exists } = this.state
+        const { id, matchid, title, author, published, extracted, url, match, data, exists, message, hasMessage } = this.state
 		return (
 			<div className="page">
 				<PageHeader 
-					header={"Add Unstructured Data"}
+					header={title}
 					sidebarVisible={this.props.sidebarVisible}
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
                 <div id="container" style={{ height: "100vh" }}>
-                    <form className="ui form" id="dataform">
-                        <div className="inline fields">
-                            <div className="one wide field"/>
-                            <div className="two wide field">
-                                <button className="fluid ui primary button" type="button">
-                                    Edit
-                                </button>
-                            </div>
-                            <div className="three wide field"/>
-                            <div className="four wide field">
-                                <h1>
-                                    {title}
-                                </h1>
-                            </div>
-                            <div className="three wide field" />
-                            <div className="two wide field">
-                                <button className="fluid ui primary button" type="button">
-                                    Toggle: Edited
-                                </button>
-                            </div>
-                        </div>
+                    <form className="ui form">
                         <div className="inline fields">
                             <div className="one wide field"/>
                             <div className="required ten wide field">
@@ -285,14 +250,22 @@ class AddUnstructuredData extends Component {
                             </div>
                         </div>
                         <div className="inline fields">
-                            <div className="eleven wide field" />
+                            <div className="one wide field" />
                             <div className="two wide field">
-                                {!this.state.exists ? "" : <button className="fluid ui red button" type="button" onClick={this.delete} >
+                                <button className="fluid ui primary button" type="button">
+                                    Toggle: edited
+                                </button>
+                            </div>
+                            <div className="eight wide field">
+                                {hasMessage ? <Message negative> {message} </Message> : undefined}
+                            </div>
+                            <div className="two wide field">
+                                {!this.state.exists ? "" : <button className="fluid ui red button" type="button" onClick={this.delete.bind(this)} >
                                     Delete
                                 </button>}
                             </div>
                             <div className="two wide field">
-                                <button className="fluid ui primary button" type="button" onClick={this.submit} >
+                                <button className="fluid ui primary button" type="button" onClick={this.submit.bind(this)} >
                                     Save
                                 </button>
                             </div>
