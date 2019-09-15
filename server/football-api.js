@@ -5,11 +5,14 @@ const baseUrl = 'https://apiv2.apifootball.com/';
 const apiKey = process.env.APIKEY;
 
 
-function getAllMatches(compID, callbackFunction) {
+function getAllMatchesForComp(compID, callbackFunction) {
+
+  let customURL = baseUrl + "?action=get_events&league_id=" + compID + "&APIkey=" + apiKey;
+  console.log("Trying to get all matches for compID: " + compID + " from: " + customURL);
 
   request({
     headers: { 'X-Auth-Token': apiKey },
-    url: baseUrl + compID + 'matches',
+    url: customURL,
     dataType: 'json',
     type: 'GET'
   }, (error, response) => {
@@ -22,14 +25,13 @@ function getAllMatches(compID, callbackFunction) {
 }
 
 
-
+//https://apiv2.apifootball.com/?action=get_events&from=2019-04-01&to=2019-04-03&league_id=148&APIkey=xxxxxxxxxxxxxx
 //date in format 'YYYY-MM-DD'
 function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
   
-  let customURL = baseUrl + '?competitions=' + [2002] + '&dateFrom=' + startDate + "&dateTo=" + endDate
-  console.log("Trying to get all matches from: " + customURL);
+  let customURL = baseUrl + '?action=get_events&from=' + startDate + "&to=" + endDate + "&league_id=" + compID + "&APIkey=" + apiKey;
+  console.log("Trying to get all matches between " + startDate + " and " + endDate + "from: " + customURL);
   request({
-    headers: { 'X-Auth-Token': apiKey },
     url: customURL,
     dataType: 'json',
     type: 'GET'
@@ -37,7 +39,7 @@ function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
     if (error != null) {
       throw Error(error);
     }
-    callbackFunction(compID, startDate, endDate, response.body);
+    callbackFunction(response.body);
 
   });
 }
@@ -60,15 +62,5 @@ function getAllCompetitions(callbackFunction) {
 
 
 
-module.exports = { getAllMatches, getAllMatchesBetween, getAllCompetitions };
+module.exports = { getAllMatchesForComp, getAllMatchesBetween, getAllCompetitions };
 
-
-// Available Subresources:
-
-//     Matches (shows all matches of that competition. Defaults to the current season; use ?season=YYYY to retrieve former seasons)
-
-//     Teams (shows all teams of that competition. Defaults to the current season by default; use ?season=YYYY to retrieve former seasons))
-
-//     Standings (shows latest tables (total, home, away) for the current season; not yet available for former seasons)
-
-//     Scorers (shows all goal scorers by shot goals descending for the current season)

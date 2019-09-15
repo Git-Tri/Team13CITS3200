@@ -509,7 +509,7 @@ function getAllMatches(callback,errorCallback,noConnectionCallback)
         query("select * from football.match;",(result) => 
         {
 
-                callback(dataBinding.bindMatchData(result));
+                callback(dataBinding.bindMatch(result));
 
         },errorCallback,noConnectionCallback);
 
@@ -521,7 +521,7 @@ function getMatchById(matchId, callback,errorCallback,noConnectionCallback)
         query("select * from football.match where football.match.id = + " + matchId + ";",(result) => 
         {
 
-                callback(dataBinding.bindMatchData(result));
+                callback(dataBinding.bindMatch(result));
 
         },errorCallback,noConnectionCallback);
 

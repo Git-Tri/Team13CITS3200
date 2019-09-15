@@ -503,16 +503,20 @@ exports.createRoutes = function(app)
     });
 
     middleware.post(app,"/importdata",(req,res) =>  {
-
-      console.log(req.body);
-      console.log(req.body.importRequest.compId);
-      api.getAllMatchesBetween(req.body.importRequest.compId, req.body.importRequest.begin, req.body.importRequest.end, (id, start, end, result) => {
-        console.log("Got matches for id: " + id + " between " + start + " and " + end);
-        //console.log(result);
-        matches = JSON.parse(result);
-        console.log(matches);
-      });
-      res.sendStatus(200);
+      
+      let compId = req.body.importRequest.compId;
+      let begin = req.body.importRequest.begin;
+      let end = req.body.importRequest.end;
+             
+      if (begin == null || end == null || compId == null) {
+        console.log("Invalid request to import matches");
+        res.sendStatus(400);
+      } else {
+        api.getAllMatchesBetween(compId, begin, end, (result) => {
+          console.log("Got matches for id: " + compId + " between " + begin + " and " + end);
+          res.send(result);
+          });
+      }
 
     });
      
