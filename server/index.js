@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const routes = require("./routes.js");
 const dbAccess = require("./databaseAccess");
 const api = require("./football-api");
+const domain = require("./domain");
 
 //start app
 const app = express();
@@ -45,7 +46,17 @@ app.listen(3001, () =>
 );
 
 api.getAllCompetitions((result) => {
-  //Add all comps to DB
+  let mappedComps = []
+  
+  let parsedResult = JSON.parse(result);
+  
+  parsedResult.forEach((e) => {
+    mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
+  
+  });
+  dbAccess.insertComps(mappedComps, (result) => {
+    console.log("Updated all competitions from API and updated database");
+  }, (err) => {console.log(err);},(err) => {console.log(err);});
 });
 
 module.exports = {getPort};
