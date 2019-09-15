@@ -725,5 +725,7 @@ module.exports = { query,
         deleteStructuredData,
         getStructuredData,
         insertComps,
-        getAllComps };
+        getAllComps,
+        getAllMatches,
+        getMatchById };
 
