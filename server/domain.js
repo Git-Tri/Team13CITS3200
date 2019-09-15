@@ -63,6 +63,24 @@ class Match
 
 }
 
+class InsertMatch
+{
+
+    constructor(id,competitionID,date,home,away,data)
+    {
+
+        this.id = id;
+        this.competitionID = competitionID;
+        this.date = date;
+        this.home = home;
+        this.away = away;
+        this.data = data;
+          
+
+    }
+
+}
+
 /**
  * A class representing an edit 
  */
@@ -128,6 +146,6 @@ class ImportRequest
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch
 
 }
