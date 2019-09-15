@@ -1,3 +1,5 @@
+process.env.APIKEY = "undefined"
+
 const assert = require('assert');
 const should = require('chai').should();
 const request = require("request");
@@ -7,6 +9,7 @@ const domain = require("../domain");
 
 //start server
 const server = require("../index");
+
 
 describe("Route Tests",function()
 {
