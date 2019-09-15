@@ -365,7 +365,19 @@ function getAllMatches(callback,errorCallback,noConnectionCallback)
         query("select * from football.match;",(result) => 
         {
 
-                callback(dataBinding.bindUnstructuredData(result));
+                callback(dataBinding.bindMatchData(result));
+
+        },errorCallback,noConnectionCallback);
+
+} 
+
+function getMatchById(matchId, callback,errorCallback,noConnectionCallback)
+{
+
+        query("select * from football.match where football.match.id = + " + matchId + ";",(result) => 
+        {
+
+                callback(dataBinding.bindMatchData(result));
 
         },errorCallback,noConnectionCallback);
 
@@ -381,5 +393,6 @@ module.exports = { query,
         deleteEditById,
         getAllEdits,
         getUnstructuredDataByMatchId, 
-        getAllMatches };
+        getAllMatches,
+        getMatchById };
 

@@ -272,7 +272,7 @@ exports.createRoutes = function(app)
     middleware.get(app,"/matchlist",(req,res) =>  {
 
       dbAccess.getAllMatches((result => {
-          console.log("sending for all matches " + JSON.stringify(result));
+          console.log("Sending all matches");
           
           res.setHeader("Content-Type","application/json");
           res.send(JSON.stringify(result));
