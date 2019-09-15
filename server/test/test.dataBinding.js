@@ -111,7 +111,7 @@ describe("DataBinding Tests",function()
 
         let structured = [3,new Date(),"home","away",1,"some comp",{some:"data"}];
 
-        allBindingTests(dataBinding.bindStructredData,structured,["rawStructuredData must be an array"],["rawUnstructuredData"]);
+        allBindingTests(dataBinding.bindStructredData,structured,["rawStructuredData must be an array"],["rawStructuredData"]);
 
     });
 
@@ -127,9 +127,9 @@ describe("DataBinding Tests",function()
     describe("Bind Match Data Tests",function()
     {
 
-        let unStructured = [2,"27/02/2019","home team","away team",2,"competiton name"];
+        let match = [2,"27/02/2019","home team","away team",2,"competiton name"];
 
-        allBindingTests(dataBinding.bindUnstructuredData,unStructured,["rawUnstructuredData must be an array"],["rawUnstructuredData"]);
+        allBindingTests(dataBinding.bindMatch,match,["rawMatch must be an array"],["rawMatch"]);
 
     });
 

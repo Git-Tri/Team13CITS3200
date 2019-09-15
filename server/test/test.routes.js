@@ -1,10 +1,12 @@
 const assert = require('assert');
 const should = require('chai').should();
 const request = require("request");
-//start server
-const server = require("../index");
+
 const dbAccess = require("../databaseAccess");
 const domain = require("../domain");
+
+//start server
+const server = require("../index");
 
 describe("Route Tests",function()
 {
@@ -34,6 +36,8 @@ describe("Route Tests",function()
     //CALLBACK HELL
     before(done =>
         {               
+
+            
             //just in case 
             this.timeout(10000)
             
