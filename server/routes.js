@@ -514,7 +514,10 @@ exports.createRoutes = function(app)
       } else {
         api.getAllMatchesBetween(compId, begin, end, (result) => {
           console.log("Got matches for id: " + compId + " between " + begin + " and " + end);
-          res.send(result);
+          let parsed = JSON.parse(result);
+          console.log(parsed);
+          res.sendStatus(200);
+
           });
       }
 
