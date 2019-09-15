@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PageHeader Tests should render correctly 1`] = `
+exports[`Match List Tests should match snapshot 1`] = `
 <ContextConsumer>
   <Component />
 </ContextConsumer>

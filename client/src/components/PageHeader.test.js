@@ -2,7 +2,6 @@ import PageHeader from "./PageHeader";
 import renderer from 'react-test-renderer';
 import React from 'react';
 import ErrorTester from "./ErrorTester";
-import { filterConsoleError, unfilterConsoleError } from "../TestUtils";
 import { shallow, mount } from "enzyme";
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';

@@ -11,6 +11,7 @@ import Home from './components/Home.js';
 import UnstructuredDataList from './components/UnstructuredDataList.js';
 import StructuredDataList from './components/StructuredDataList.js';
 import MatchList from './components/MatchList.js';
+import ViewMatch from './components/ViewMatch.js';
 import EditList from './components/EditList.js';
 import AddEdit from './components/AddEdit.js';
 import ImportStructuredData from './components/ImportStructuredData.js';
@@ -27,7 +28,6 @@ class App extends Component {
 
 		this.handleSidebarClick = () => {
 			this.setState({ sidebarVisible: !this.state.sidebarVisible })
-			console.log(this.state.sidebarVisible);
 		}
 	}
 	
@@ -92,6 +92,9 @@ class App extends Component {
 					    		/>
 								<Route 	path='/match_list'
 										component={() => <MatchList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
+								<Route 	path='/view_match'
+										component={() => <ViewMatch sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 								<Route 	path='/edit_list'
 										component={() => <EditList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
