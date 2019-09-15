@@ -642,6 +642,38 @@ function deleteStructuredData(id,callback,errorCallback,noConnectionCallback)
         }
 }
 
+function insertComps(comps,callback,errorCallback,noConnectionCallback)
+{
+
+        if(Array.isArray(comps) !== true)
+        {
+
+                throw new Error("comps must of type array")
+
+        }
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        let queries = comps.map((c) => "insert ignore into football.competition(id,name,countryName,countryId)" +
+                                "values (" + c.id + ",'" + c.name  + "','" + c.countryName + "'," + c.countryId + ")");
+
+        multiInsertQuery(queries,callback,errorCallback,noConnectionCallback);
+
+}
+
+function getAllComps(callback,errorCallback,noConnectionCallback)
+{
+
+        return query("select * from football.competition;",
+                (r) => callback(dataBinding.bindCompetition(r)),
+                errorCallback,noConnectionCallback);
+
+}
 
 module.exports = { query, 
         multiInsertQuery, 
@@ -655,11 +687,13 @@ module.exports = { query,
         getEditById,
         updateEdit,
         insertEdit,
-        deleteEditById,
+        deleteEditById,       
         getAllEdits,
         getUnstructuredDataByMatchId,
         getUnstructuredDataByIds,
         getStructuredDataByIds,
-        deleteStructuredDataById: deleteStructuredData,
-        getStructuredData };
+        deleteStructuredData,
+        getStructuredData,
+        insertComps,
+        getAllComps };
 

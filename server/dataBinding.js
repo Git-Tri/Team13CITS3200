@@ -150,6 +150,38 @@ function bindMatch(rawMatch)
 
 }
 
+function bindCompetition(rawComps)
+{
+
+    if(! Array.isArray(rawComps))
+    {
+
+        throw Error("rawMatch must be an array");
+
+    }
+
+    let results = [];
+
+    rawComps.forEach((item) => 
+    {
+
+        if(item.length != 4)
+        {
+
+           throw Error("improper item length");
+
+        }
+
+        let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
 
 
-module.exports = {bindEdits,bindUnstructuredData,bindStructredData,bindMatch }
+        results.push(new domain.Competition(processedItem[0],processedItem[1],processedItem[2],
+            processedItem[3]));
+    })
+
+    return results;
+
+}
+
+
+module.exports = {bindEdits,bindUnstructuredData,bindStructredData,bindMatch,bindCompetition }
