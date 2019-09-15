@@ -497,6 +497,36 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 
 }
 
+/**
+ * geet all matches from the databasee
+ * @param {*} callback the callback for the result
+ * @param {*} errorCallback th callback used on error
+ * @param {*} noConnectionCallback the callback if there is no connection
+ */
+function getAllMatches(callback,errorCallback,noConnectionCallback)
+{
+
+        query("select id,date,home,away,competitionID,name from football.structured_data;",(result) => 
+        {
+
+                callback(dataBinding.bindMatch(result));
+
+        },errorCallback,noConnectionCallback);
+
+} 
+
+function getMatchById(matchId, callback,errorCallback,noConnectionCallback)
+{
+
+        query("select id,date,home,away,competitionID,name from football.structured_data where football.structured_data.id = + " + matchId + ";",(result) => 
+        {
+
+                callback(dataBinding.bindMatch(result));
+
+        },errorCallback,noConnectionCallback);
+
+} 
+
 
 /**
  * Gets all unstructured data which have keys in the list of ids
@@ -642,6 +672,38 @@ function deleteStructuredData(id,callback,errorCallback,noConnectionCallback)
         }
 }
 
+function insertComps(comps,callback,errorCallback,noConnectionCallback)
+{
+
+        if(Array.isArray(comps) !== true)
+        {
+
+                throw new Error("comps must of type array")
+
+        }
+
+        if(typeof(callback) != "function")
+        {
+
+                throw new Error("callback must be defined and be a function");
+
+        }
+
+        let queries = comps.map((c) => "insert ignore into football.competition(id,name,countryName,countryId)" +
+                                "values (" + c.id + ",'" + c.name  + "','" + c.countryName + "'," + c.countryId + ")");
+
+        multiInsertQuery(queries,callback,errorCallback,noConnectionCallback);
+
+}
+
+function getAllComps(callback,errorCallback,noConnectionCallback)
+{
+
+        return query("select * from football.competition;",
+                (r) => callback(dataBinding.bindCompetition(r)),
+                errorCallback,noConnectionCallback);
+
+}
 
 module.exports = { query, 
         multiInsertQuery, 
@@ -655,11 +717,15 @@ module.exports = { query,
         getEditById,
         updateEdit,
         insertEdit,
-        deleteEditById,
+        deleteEditById,       
         getAllEdits,
         getUnstructuredDataByMatchId,
         getUnstructuredDataByIds,
         getStructuredDataByIds,
-        deleteStructuredDataById: deleteStructuredData,
-        getStructuredData };
+        deleteStructuredData,
+        getStructuredData,
+        insertComps,
+        getAllComps,
+        getAllMatches,
+        getMatchById };
 

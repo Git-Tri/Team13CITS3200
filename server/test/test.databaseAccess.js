@@ -2,6 +2,7 @@ const envResult = require("dotenv").config();
 
 if (envResult.error) 
 {
+    
     throw envResult.error
 }
 
@@ -20,7 +21,7 @@ describe('Database Access Tests ', function() {
 
         let cleanup = ["delete from football.edit where replace_text = 'testEdit'","delete from football.unstructured_data where author = 'testAuthor';"
         ,"delete from football.match where home = 'testTeam';"
-        ,"delete from football.competition where id = 1;"];
+        ,"delete from football.competition where name = 'some comp'"];
 
         dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
 
@@ -1385,6 +1386,41 @@ describe('Database Access Tests ', function() {
 
     });
     
+    describe("Insert & Get Comp Tests",function()
+    {
+
+
+        let comps = [new domain.Competition(12,"some comp","some country",1),
+                    new domain.Competition(13,"some comp","some country",1),
+                    new domain.Competition(14,"some comp","some country",1),
+                    new domain.Competition(15,"some comp","some country",1)];
+
+        it("should exist",() => should.exist(dbAccess.insertComps));
+
+        it("should insert comps without error",(done) => 
+        {
+
+            dbAccess.insertComps(comps,() => done(),assert.fail,assert.fail);
+
+        })
+
+        it("should be able to get insert comps",(done) => 
+        {
+
+            dbAccess.getAllComps((result) => 
+            {
+
+                let expected = [new domain.Competition(1,"some comp",null,null)].concat(comps);
+
+                JSON.stringify(result).should.equal(JSON.stringify(expected));
+
+                done();
+
+            })
+
+        });
+    })
+
     after(function(done)
     {
 

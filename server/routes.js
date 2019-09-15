@@ -1,5 +1,6 @@
 const middleware = require("./middleware.js")
 const dbAccess = require("./databaseAccess")
+const api = require("./football-api")
 
 exports.createRoutes = function(app)
 {
@@ -31,6 +32,8 @@ exports.createRoutes = function(app)
 
 
     }
+
+    
 
     middleware.get(app,"/UnstructuredDataList",(req,res) => 
       {
@@ -391,7 +394,7 @@ exports.createRoutes = function(app)
       },(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,res));
 
      
-    })
+    });
 
     //used for the edit list page 
     middleware.get(app,"/editList",(req,res) => 
@@ -453,6 +456,73 @@ exports.createRoutes = function(app)
 
     });
 
+    //Route to get all matches (GET)
+    middleware.get(app,"/matchlist",(req,res) =>  {
+
+      dbAccess.getAllMatches((result => {
+          console.log("Sending all matches");
+          
+          res.setHeader("Content-Type","application/json");
+          res.send(JSON.stringify(result));
+          
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+     
+    });
+
+    //Route to get all competitions (GET)
+    middleware.get(app,"/competitions",(req,res) =>  {
+     
+      dbAccess.getAllComps((result => {
+          console.log("Sending all competitions");
+          
+          res.setHeader("Content-Type","application/json");
+          res.send(JSON.stringify(result));
+          
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+     
+    });
+
+    //Route to get single match (GET)
+    middleware.get(app,"/match",(req,res) =>  {
+
+      var matchId = req.query.id;
+
+      
+
+      dbAccess.getMatchById(matchId, (result => {
+          console.log("Sending just match" + matchId);
+          
+          res.setHeader("Content-Type","application/json");
+          res.send(JSON.stringify(result));
+          
+
+        }),(err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req));  
+     
+    });
+
+    middleware.post(app,"/importdata",(req,res) =>  {
+      
+      let compId = req.body.importRequest.compId;
+      let begin = req.body.importRequest.begin;
+      let end = req.body.importRequest.end;
+             
+      if (begin == null || end == null || compId == null) {
+        console.log("Invalid request to import matches");
+        res.sendStatus(400);
+      } else {
+        api.getAllMatchesBetween(compId, begin, end, (result) => {
+          console.log("Got matches for id: " + compId + " between " + begin + " and " + end);
+          let parsed = JSON.parse(result);
+          console.log(parsed);
+          res.sendStatus(200);
+
+          });
+      }
+
+    });
+     
     middleware.delete(app,"/structuredData",(req,res) => 
     {
 
