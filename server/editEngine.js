@@ -121,7 +121,7 @@ function strongReplace(input,edit)
     else
     {
 
-        throw Error("Unhandled object type");
+        return input;
 
     }
 

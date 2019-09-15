@@ -18,8 +18,7 @@ function DataPair(props)
 
     return(
     <div style={{padding:"0px 15px 0px 15px"}}>
-        <b> {props.label}:</b>
-        <div style={{padding:"0px 0px 0px 5px",float:"right"}}>{props.text} </div>
+        <b style={{padding:"0px 0px 0px 15px"}}> {props.label}:</b>{props.text}        
     </div>);
 
 }

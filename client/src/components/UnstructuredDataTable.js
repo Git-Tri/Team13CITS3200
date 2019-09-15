@@ -136,7 +136,7 @@ function UnstructuredDataRow(props)
     
     let date = props.data.published;
 
-    let dateString = (date.getDay()+1) + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+    let dateString = (date.getDate()) + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 
     let title = props.data.title;
 

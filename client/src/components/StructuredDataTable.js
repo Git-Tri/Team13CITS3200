@@ -129,7 +129,7 @@ function StructuredDataRow(props)
     
     let date = props.data.date;
 
-    let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+    let dateString = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
 
     let versus = props.data.home + " vs " + props.data.away;
 

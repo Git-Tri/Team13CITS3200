@@ -109,14 +109,7 @@ class ImportRequest
         this.begin = begin; //optional
 
         this.end = end; //optional
-
-        if(typeof(compId !== "string"))
-        {
-
-            throw new Error("Competition must exist and of type string");
-
-        }
-
+        
         this.compId = compId; //mandatory 
 
     }

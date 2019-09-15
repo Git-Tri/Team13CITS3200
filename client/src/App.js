@@ -16,6 +16,7 @@ import AddEdit from './components/AddEdit.js';
 import ImportStructuredData from './components/ImportStructuredData.js';
 import AddUnstructuredData from './components/AddUnstructuredData.js';
 import Export from './components/Export.js';
+import StructuredDataPage from "./components/StructuredDataPage"
 
 class App extends Component {
 	constructor() {
@@ -106,6 +107,9 @@ class App extends Component {
 								/>
 								<Route 	path='/export'
 										component={() => <Export sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
+								<Route 	path='/structured_data_page'
+										component={() => <StructuredDataPage sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 							</Switch>
 						</div>

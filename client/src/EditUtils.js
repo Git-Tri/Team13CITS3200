@@ -7,7 +7,7 @@ function summariseStructuredData(data)
 
     let date = data.date;
 
-    let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+    let dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 
     let compName = data.competitionName
 
@@ -25,7 +25,7 @@ function summariseUnstructuredData(data)
 
     let date = data.published;
 
-    let dateString = (date.getDay()+1) + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+    let dateString = (date.getDate()) + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 
     let author = data.author;
 

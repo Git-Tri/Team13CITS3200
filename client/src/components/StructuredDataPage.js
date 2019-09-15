@@ -1,22 +1,39 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
-import StructuredDataTable from "./StructuredDataTable";
+import DataPair from "./DataPair"
+import ReactJson from 'react-json-view'
 import {bindStructuredData} from "../Databinding";
-import { Button, Loader, Message} from 'semantic-ui-react';
+import { Button, Loader, Message, Segment, Container, TextArea,Form} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+/**
+ * The page for adding an edit 
+ * @param {*} props should only be passed in for testing purposes 
+ */
+export class StructuredDataPage extends Component
+{
 
-export class StructuredDataList extends Component {
+    constructor(props)
+    {
+        
+        super(props)
 
-	constructor(props)
-	{
+        //allow passing in of id for testing 
+        let id = props.id === undefined ? 
+        new URLSearchParams(props.location.search).get("id") : props.id;
 
-		super(props)
+        if(id === undefined || id === null)
+        {
 
-		this.state = {data: [], isLoaded: false, isError: false}
+            throw new Error("id must be defined")
 
-	}
+        }
 
-     /**
+        this.state = {data: [], isLoaded: false, isError: false, id:id,headerText:"Loading"}
+
+
+    }
+
+    /**
      * Handles any errors cuased by a sub-component 
      * @param {*} error the error recieved
      * @param {*} errorInfo information about the error
@@ -28,6 +45,32 @@ export class StructuredDataList extends Component {
 
     }
 
+    deleteData()
+	{
+
+		fetch("/structureddata?id=" + this.state.id,
+			{method: "DELETE",
+			headers: {
+				'Content-Type': 'application/json'
+			}}).then((res) => 
+			{
+
+				if(res.ok)
+				{
+
+					this.props.history.goBack();
+
+				}
+				else
+				{
+					
+					this.setState({isError: true,hasData: false});
+
+				}
+			})
+	}
+
+
 
 	/**
      * Loads all edits and bind the parsed json to edit objects
@@ -35,14 +78,20 @@ export class StructuredDataList extends Component {
     loadData()
     {
 
-        fetch("/StructuredDataList")
+        fetch("/StructuredData?id=" + this.state.id)
             .then(res => res.json())
             .then(result => 
                 {
 
-					let data = result.structuredData.map((d) => bindStructuredData(d));
+                    let data = bindStructuredData(result);
 
-					this.setState({data:data,isLoaded: true, isError: false})
+                    let date = data.date;
+
+                    let dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+                    
+                    let headerText = data.home + " vs " + data.away + " on " + dateString; 
+
+					this.setState({data:data,isLoaded: true, isError: false,headerText: headerText})
                 })
             .catch(err => this.setState({isError: true}));
 
@@ -70,12 +119,24 @@ export class StructuredDataList extends Component {
 	renderLoaded()
 	{
 
+        let date = this.state.data.date;
+
+        let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+
 		return (
-				<div>
-					<p> A list of all structured data. Click on an item to view it in detail </p>				
+				<div>			
 					<div id="container" style={{height:"100vh"}}>
-						<StructuredDataTable onSelect={this.routeToData.bind(this)} items={this.state.data}/>
+                        
+                        <Container textAlign="left">
+                            <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
+                            <ReactJson src={this.state.data.data}/>   
+                            <br/>
+                            <Button negative onClick={this.deleteData.bind(this)}>Delete</Button> 
+                        </Container>
+                        
+                        
 					</div>
+                    
 				</div>
 		);
 
@@ -157,18 +218,25 @@ export class StructuredDataList extends Component {
 
 		return (<div className="page">
 			<PageHeader 
-				header={"Structured Data List"}
+				header={this.state.headerText}
 				sidebarVisible={this.props.sidebarVisible}
 				handleSidebarClick={this.props.handleSidebarClick}
 			/>
-			<br/>
-							
+			<br/>							    
 			<div id="container" style={{height:"100vh"}}>
 				{this.executeRender()}
 			</div>
 		</div>)
 		
 	}
+
+
 }
 
-export default withRouter(StructuredDataList);
+
+
+
+
+
+
+export default withRouter(StructuredDataPage);

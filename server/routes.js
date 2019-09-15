@@ -505,9 +505,9 @@ exports.createRoutes = function(app)
 
     middleware.post(app,"/importdata",(req,res) =>  {
       
-      let compId = req.body.importRequest.compId;
-      let begin = req.body.importRequest.begin;
-      let end = req.body.importRequest.end;
+      let compId = req.body.compId;
+      let begin = req.body.begin;
+      let end = req.body.end;
              
       if (begin == null || end == null || compId == null) {
         console.log("Invalid request to import matches");
@@ -515,6 +515,8 @@ exports.createRoutes = function(app)
       } else {
         api.getAllMatchesBetween(compId, begin, end, (result) => {
           console.log("Got matches for id: " + compId + " between " + begin + " and " + end);
+          //delete this when we fix the issue          
+          result = result.split("'").join("")
           let parsed = JSON.parse(result);
           console.log(parsed);
           let matches = []          
@@ -522,9 +524,10 @@ exports.createRoutes = function(app)
           parsed.forEach(e => {
             matches.push(new domain.InsertMatch(e.match_id, e.league_id, e.match_date, e.match_hometeam_name, e.match_awayteam_name, JSON.stringify(e)));
           });
-                    
+        
+
           dbAccess.insertMatches(matches, (result) =>{
-            console.log("Inserted " + parsed.length + " matches!");
+            res.sendStatus(200);
           }, (err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req))
         });
       }
@@ -557,7 +560,7 @@ exports.createRoutes = function(app)
           
           res.setHeader("Content-Type","application/json");
 
-          dbAccess.deleteStructuredDataById(id,(result) => 
+          dbAccess.deleteStructuredData(id,(result) => 
           {
     
           res.sendStatus(200);
