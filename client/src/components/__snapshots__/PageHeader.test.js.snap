@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageHeader Tests should render correctly 1`] = `
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
+`;
+
+exports[`PageHeader Tests should render correctly with content 1`] = `
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
+`;
+
+exports[`PageHeader Tests should render correctly with isbackable 1`] = `
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
+`;

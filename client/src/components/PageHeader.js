@@ -4,10 +4,9 @@ import { withRouter } from 'react-router-dom';
 
 class PageHeader extends Component {
 
-
-	render() {
-		let isBackable = this.props.id === undefined ?
-			new URLSearchParams(this.props.location.search).get("isbackable") : this.props.id;
+	render() { //isbackable prop only used for testing purposes, should be passed through URL under all other circumstances
+		let isBackable = this.props.isbackable === undefined ?
+			new URLSearchParams(this.props.location.search).get("isbackable") : this.props.isbackable;
 
 		return (
 			<Grid container columns={3}>
