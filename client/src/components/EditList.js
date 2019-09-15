@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
 import EditListTable from "./EditListTable";
-import {bindEdit} from "../Databinding";
+import {bindEdit, bindUnstructureData, bindStructuredData} from "../Databinding";
 import { Button, Loader, Message} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+
 
 export class EditList extends Component {
 
@@ -12,7 +13,7 @@ export class EditList extends Component {
 
 		super(props)
 
-		this.state = {data: [], isLoaded: false, isError: false}
+		this.state = {data: [],target:[], isLoaded: false, isError: false}
 
 	}
 
@@ -40,11 +41,20 @@ export class EditList extends Component {
             .then(result => 
                 {
 
-					result.editList = result.editList.map((d) => bindEdit(d));
-					
-                    let edits = result.editList;
+					let editList = result.editList.map((d) => bindEdit(d));
 
-					this.setState({data:edits,isLoaded: true, isError: false})
+                    let unstructuredData = result.unstructuredData.map((u) => bindUnstructureData(u))
+
+                    let structuredData = result.structuredData.map((u) => bindStructuredData(u)); 
+
+                    let allData = structuredData.concat(unstructuredData);
+
+                    let target = [];
+
+                    editList.forEach((e,index) => target[index] = allData
+                            .find((i) => i.id === e.structuredDataID || i.id === e.unstructuredDataID))
+
+					this.setState({data:editList,isLoaded: true, isError: false,target: target})
                 })
             .catch(err => this.setState({isError: true}));
 
@@ -76,7 +86,7 @@ export class EditList extends Component {
 				<div>
 					<p> A list of all edits. Click on an edit to view it in detail </p>				
 					<div id="container" style={{height:"100vh"}}>
-						<EditListTable onSelect={this.routeToEdit.bind(this)} items={this.state.data}/>
+						<EditListTable onSelect={this.routeToEdit.bind(this)} items={{edits:this.state.data,targets:this.state.target}}/>
 					</div>
 				</div>
 		);

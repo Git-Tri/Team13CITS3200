@@ -1,10 +1,15 @@
+process.env.APIKEY = "undefined"
+
 const assert = require('assert');
 const should = require('chai').should();
 const request = require("request");
-//start server
-const server = require("../index");
+
 const dbAccess = require("../databaseAccess");
 const domain = require("../domain");
+
+//start server
+const server = require("../index");
+
 
 describe("Route Tests",function()
 {
@@ -13,10 +18,10 @@ describe("Route Tests",function()
     {
 
         
-        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor'"
+        let cleanup = ["delete from football.edit where replace_text = 'testEdit'",
+        "delete from football.unstructured_data where author = 'testAuthor'"
         ,"delete from football.match where home = 'testTeam'"
-        ,"delete from football.competition where id = 1"
-        ,"delete from football.edit where replace_text = 'testEdit'"];
+        ,"delete from football.competition where id = 1"];
 
         dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
 
@@ -25,6 +30,8 @@ describe("Route Tests",function()
 
     let actualMatchId;
 
+    let actualUnstructuredDataId; 
+
     let localHost = "http://localhost:" + server.getPort();
 
     let editId; 
@@ -32,6 +39,8 @@ describe("Route Tests",function()
     //CALLBACK HELL
     before(done =>
         {               
+
+            
             //just in case 
             this.timeout(10000)
             
@@ -39,7 +48,7 @@ describe("Route Tests",function()
             {
 
                     
-                dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");'],() => 
+                dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],() => 
                 {
                     
                     let queries = 
@@ -50,8 +59,6 @@ describe("Route Tests",function()
                             'values ("1991/4/20","testTeam","bob",1,"{}");',
                         'insert into football.match (date,home,away,competitionID,data)' +
                             'values ("1991/4/20","testTeam","bob",1,"{}");',
-                        ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                            'values (null,null,true,null,"testEdit","goodbye","toDelete");',
                         ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
                             'values (null,null,true,null,"testEdit","goodbye","replace");',
                         ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
@@ -73,8 +80,9 @@ describe("Route Tests",function()
                                     'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
                                     'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
                                     'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
-                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
-                                    
+                                    'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + actualMatchId + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                                    ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                                    'values (' +  actualMatchId +',null,true,null,"testEdit","goodbye","replace");',
 
                                 ]
 
@@ -82,13 +90,26 @@ describe("Route Tests",function()
                                 {
 
 
-                                    dbAccess.query("select editid from football.edit where type = 'toDelete';",(result) => 
+                                    dbAccess.query("select usid from football.unstructured_data where author = 'testAuthor';",(result) => 
                                     {
 
-                                        editId = result[0][0];
+                                        actualUnstructuredDataId = result[0][0];
 
-                                        done();
+                                        dbAccess.multiInsertQuery( [' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                                        'values (null,'+ actualUnstructuredDataId + ',true,null,"testEdit","goodbye","replace");',
+                                        ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
+                                            'values (' + actualMatchId + ',' + actualUnstructuredDataId + ',true,null,"testEdit","goodbye","toDelete");'],() => 
+                                            {
 
+                                                dbAccess.query("select editid from football.edit where type = 'toDelete';",(result) =>
+                                                {
+
+                                                    editId = result[0][0];
+
+                                                    done();
+
+                                                },(err) => {throw err},(err) => {throw err});
+                                            },(err) => {throw err},(err) => {throw err});
                                     },(err) => {throw err},(err) => {throw err});
                                 },(err) => {throw err},(err) => {throw err});
                             },(err) => {throw err},(err) => {throw err});
@@ -101,7 +122,6 @@ describe("Route Tests",function()
 
     describe("/allchooseableData",function()
     {
-
         
         let route = localHost + "/allchooseableData";
 
@@ -129,7 +149,7 @@ describe("Route Tests",function()
 
                 let resultObjects = JSON.parse(body);
 
-                let expectedObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
+                let expectedObject = new domain.StructuredData(null,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
 
                 delete expectedObject.id;
 
@@ -209,7 +229,7 @@ describe("Route Tests",function()
 
                 let resultObjects = JSON.parse(body);
 
-                let expectedObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
+                let expectedObject = new domain.StructuredData(null,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
 
                 delete expectedObject.id;
 
@@ -273,15 +293,58 @@ describe("Route Tests",function()
 
                 let resultObject = JSON.parse(body);
 
-                let expectedObject = new domain.Edit(editId,null,null,true,null,"testEdit","goodbye","toDelete");
+                let expectedObject = new domain.Edit(editId,actualMatchId,actualUnstructuredDataId,true,null,"testEdit","goodbye","toDelete");
 
-                JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
+                JSON.stringify(resultObject.edit).should.equal(JSON.stringify(expectedObject));
 
                 done();
 
             })
 
         });
+
+        it("route should give correct unstructured data",(done) => 
+        {
+
+            request(routeGen(),(error,response,body) =>
+            {
+
+                let resultObject = JSON.parse(body);
+
+                let expectedObject = new domain.UnstructuredData(null,actualMatchId,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                new Date("2000-01-21T00:00:00.000Z"),"some text");
+
+                delete resultObject.unstructuredData.id;
+
+                delete expectedObject.id;
+
+                JSON.stringify(resultObject.unstructuredData).should.equal(JSON.stringify(expectedObject));
+
+                done();
+            })
+        })
+
+        it("route should give correct structured data",(done) => 
+        {
+
+            request(routeGen(),(error,response,body) =>
+            {
+
+                let resultObject = JSON.parse(body);
+
+                let expectedObject = new domain.StructuredData(null,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
+
+                delete resultObject.structuredData.id;
+
+                delete expectedObject.id;
+
+                JSON.stringify(resultObject.structuredData).should.equal(JSON.stringify(expectedObject));
+
+                done();
+            })
+        })
+
+        
 
     });
 
@@ -371,7 +434,7 @@ describe("Route Tests",function()
 
                 let expectedObject = new domain.Edit(editId,null,null,true,null,"testEdit","UpdateText","replace");
 
-                JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
+                JSON.stringify(resultObject.edit).should.equal(JSON.stringify(expectedObject));
 
                 done();
 
@@ -473,7 +536,7 @@ describe("Route Tests",function()
     
                     let expectedObject = new domain.Edit(newEditID,null,null,true,null,"testEdit","insertTest","replace");
     
-                    JSON.stringify(resultObject).should.equal(JSON.stringify(expectedObject));
+                    JSON.stringify(resultObject.edit).should.equal(JSON.stringify(expectedObject));
     
                     done();
     
@@ -598,8 +661,8 @@ describe("Route Tests",function()
                 {
 
 
-                    let isSid = result.structuredDataID === null;
-                    let isUid = result.unstructuredDataID === null;
+                    let isSid = result.structuredDataID === null || actualMatchId;
+                    let isUid = result.unstructuredDataID === null || actualUnstructuredDataId;
                     let isCorpus = result.isCorpus === true;
                     let isSettings = result.settings === null;
                     let isReplace = result.replace == "testEdit";
@@ -626,6 +689,61 @@ describe("Route Tests",function()
 
         });
 
+        it("route should return correct structured data",(done) => 
+        {
+            //due to limitations of the database schema can't test if ids are equal
+            //since ids will change with every test run
+            //due to limitations in json.parse the numbers needs to be converted from string to int. 
+            request(route,(error,response,body) =>
+            {
+
+                let resultObjects = JSON.parse(body);
+
+                let expectedObject = new domain.StructuredData(null,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
+
+                delete expectedObject.id;
+
+                let expectedResult = [expectedObject];
+
+                resultObjects.structuredData.map((s) => delete s.id)
+
+                resultObjects.structuredData.map((s) => s.competitionID = Number.parseInt(s.competitionID));
+
+                JSON.stringify(resultObjects.structuredData).should.equal(JSON.stringify(expectedResult));
+
+                done();
+
+            })
+
+        });
+
+        it("route should return correct unstructured data",(done) => 
+        {
+
+            //due to limitations of the database schema can't test if ids are equal
+            //since ids will change with every test run
+            //due to limitations in json.parse the numbers needs to be converted from string to int. 
+            request(route,(error,response,body) =>
+            {
+
+                let resultObjects = JSON.parse(body);
+
+                let expectedObject = new domain.UnstructuredData(null,actualMatchId,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                    new Date("2000-01-21T00:00:00.000Z"),"some text")
+
+                delete expectedObject.id;
+
+                let expectedResult = [expectedObject];
+
+                resultObjects.unstructuredData.map((s) => delete s.id);
+
+                JSON.stringify(resultObjects.unstructuredData).should.equal(JSON.stringify(expectedResult));
+
+                done();
+
+            })
+
+        });
 
     });
 
@@ -666,7 +784,7 @@ describe("Route Tests",function()
 
         });
 
-        it("route should return unstructured data",(done) => 
+        it("route should return correct unstructured data",(done) => 
         {
 
             //due to limitations of the database schema can't test if ids are equal
@@ -677,7 +795,7 @@ describe("Route Tests",function()
 
                 let resultObjects = JSON.parse(body);
 
-                let expectedObject = new domain.UnstructuredData(undefined,actualMatchId,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                let expectedObject = new domain.UnstructuredData(null,actualMatchId,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
                     new Date("2000-01-21T00:00:00.000Z"),"some text")
 
                 delete expectedObject.id;

@@ -2,6 +2,7 @@ const envResult = require("dotenv").config();
 
 if (envResult.error) 
 {
+    
     throw envResult.error
 }
 
@@ -18,10 +19,9 @@ describe('Database Access Tests ', function() {
     function cleanUp(callback)
     {
 
-        let cleanup = ["delete from football.unstructured_data where author = 'testAuthor';"
+        let cleanup = ["delete from football.edit where replace_text = 'testEdit'","delete from football.unstructured_data where author = 'testAuthor';"
         ,"delete from football.match where home = 'testTeam';"
-        ,"delete from football.competition where id = 1;"
-        ,"delete from football.edit where replace_text = 'testEdit'"];
+        ,"delete from football.competition where name = 'some comp'"];
 
         dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
 
@@ -35,7 +35,7 @@ describe('Database Access Tests ', function() {
         cleanUp(() => 
         {
             
-            dbAccess.multiInsertQuery(['insert into football.competition(id,name,plan) values (1,"some comp","some plan");',
+            dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");',
             ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
                 'values (null,null,true,null,"testEdit","goodbye","replace");'
             ],() => 
@@ -243,7 +243,8 @@ describe('Database Access Tests ', function() {
             this.timeout(10000)
 
             let queries = 
-            ["delete from football.unstructured_data where author = 'testAuthor'","delete from football.match where home = 'testTeam'",'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+            ["delete from football.unstructured_data where author = 'testAuthor'","delete from football.match where home = 'testTeam'",
+            'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
@@ -268,9 +269,7 @@ describe('Database Access Tests ', function() {
            
         done()
     
-        },assert.fail,assert.fail);
-
-       
+        },assert.fail,assert.fail);       
     
        });
 
@@ -938,7 +937,7 @@ describe('Database Access Tests ', function() {
     
        });
         
-        it("Should exist",() => should.exist(dbAccess.getAllEdits))
+        it("Should exist",() => should.exist(dbAccess.getUnstructuredDataByMatchId))
 
         it("Should throw error for no callback",() => assert.throws(
             () => dbAccess.getUnstructuredDataByMatchId(1,undefined,assert.fail,assert.fail),
@@ -1050,7 +1049,7 @@ describe('Database Access Tests ', function() {
 
         });
         
-        it("should have correct fields of unstructured data in result for match id 1",(done) => 
+        it("should have correct fields of unstructured data in result for match id 2",(done) => 
         {
 
             dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
@@ -1087,7 +1086,341 @@ describe('Database Access Tests ', function() {
 
     });
 
+    describe("get UnstructuredData by id Tests",function()
+    {
+
+        let ids = [];
+
+        let matchid;
+
+        before(function(done)
+        {
+            //just in case 
+            this.timeout(10000)
+
+            let queries = 
+            [   
+                "delete from football.unstructured_data where author = 'testAuthor'",
+                "delete from football.match where home = 'testTeam'",
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","testTeam","team1",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data)' +
+                    'values ("1991/4/20","testTeam","team2",1,"{}");'
+            ];           
+           
+            dbAccess.multiInsertQuery(queries,() => {
+                
+                dbAccess.query("select id from football.match where away = 'team1';",(id) => 
+                    {
+
+                        matchid = id[0][0];
+                        
+                        let insertQueries = 
+                        [
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")',
+                            'insert into football.unstructured_data(matchid,title,author,url,published,extracted,data)values(' + matchid + ',"some title","testAuthor","some url","2000/1/21","2000/1/21","some text")'
+                            
+
+                        ]
+
+                        dbAccess.multiInsertQuery(insertQueries,() => 
+                        {
+
+                            dbAccess.query("select usid from football.unstructured_data",(result) => 
+                            {
+
+                                result.forEach((i) => ids.push(i[0]));
+
+                                done();
+
+                            },(err) => {throw err},(err) => {throw err});
+                        },(err) => {throw err},(err) => {throw err});
+                    },(err) => {throw err},(err) => {throw err});
+                },(err) => {throw err},(err) => {throw err});       
+            });        
     
+            it("Should exist",() => should.exist(dbAccess.getStructuredDataByIds))
+
+            it("Should throw error for no callback",() => assert.throws(
+                () => dbAccess.getUnstructuredDataByIds([1],undefined,assert.fail,assert.fail),
+                Error,
+                "callback must be defined and be a function"));
+        
+            it("Should call error callback with invalid id",(done) => 
+            {
+    
+                dbAccess.getUnstructuredDataByIds(["bob"],assert.fail,() => done(),assert.fail);
+    
+            });
+    
+            it("Should call error callback with undefined id",(done) => 
+            {
+    
+                dbAccess.getUnstructuredDataByIds([undefined],assert.fail,() => done(),assert.fail);
+    
+            });
+    
+            it("Should have no results for empty ids passed in",(done) => 
+            {
+     
+                 dbAccess.getUnstructuredDataByIds([],(result) => 
+                 {
+     
+                     result.length.should.equal(0);
+     
+                     done();
+     
+                 },assert.fail,assert.fail)
+     
+            });
+     
+
+             it("should have correct number of unstructured data",(done) => 
+            {
+
+                dbAccess.getUnstructuredDataByIds(ids,(result) => 
+                {
+
+                    result.length.should.equal(5);
+
+                    done();
+
+                },assert.fail,assert.fail)
+
+            });
+        
+        it("should have correct types of unstructured data in result",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByIds(ids,(result) => 
+            {
+
+                result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+        });
+        
+        it("should have correct fields of unstructured data in result",(done) => 
+        {
+
+            dbAccess.getUnstructuredDataByIds(ids,(result) => 
+            {
+
+                let modelObject = new domain.UnstructuredData(undefined,matchid,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
+                    new Date("2000-01-21T00:00:00.000Z"),"some text")
+
+                result.every((r) => 
+                {
+
+                    let isMatchid = modelObject.matchid == r.matchid;
+                    let isTitle = modelObject.title == r.title;
+                    let isAuthor = modelObject.author == r.author;
+                    let isUrl = modelObject.url == r.url;
+                    let isPublished = JSON.stringify(modelObject.published) == JSON.stringify(r.published);
+                    let isExtracted = JSON.stringify(modelObject.extracted) == JSON.stringify(r.extracted);
+                    let isData = modelObject.data == r.data;
+
+
+                    return isMatchid && isTitle && isAuthor && isUrl 
+                        && isPublished && isExtracted && isData;
+
+
+                }).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail);
+
+        });
+    });
+
+    describe("get UnstructuredData by id Tests",function()
+    {
+
+        let ids = [];
+
+        before(function(done)
+        {
+            //just in case 
+            this.timeout(10000)
+
+            let queries = 
+            [   
+                "delete from football.unstructured_data where author = 'testAuthor'",
+                "delete from football.match where home = 'testTeam'",
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");',
+                'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");'
+            ];           
+           
+            dbAccess.multiInsertQuery(queries,() => {
+                
+                dbAccess.query("select id from football.match where home = 'testTeam';",(result) => 
+                    {
+
+                                result.forEach((i) => ids.push(i[0]));
+
+                                done();
+                           
+                    },(err) => {throw err},(err) => {throw err});
+            },(err) => {throw err},(err) => {throw err});       
+        });
+
+        it("Should exist",() => should.exist(dbAccess.getStructuredDataByIds))
+
+        it("Should throw error for no callback",() => assert.throws(
+            () => dbAccess.getStructuredDataByIds([1],undefined,assert.fail,assert.fail),
+            Error,
+            "callback must be defined and be a function"));
+    
+        it("Should call error callback with invalid id",(done) => 
+        {
+
+            dbAccess.getStructuredDataByIds(["bob"],assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should call error callback with undefined id",(done) => 
+        {
+
+            dbAccess.getStructuredDataByIds([undefined],assert.fail,() => done(),assert.fail);
+
+        });
+
+        it("Should have no results for empty ids passed in",(done) => 
+       {
+
+            dbAccess.getStructuredDataByIds([],(result) => 
+            {
+
+                result.length.should.equal(0);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+        
+       it("Should have correct number of structured data in result",(done) => 
+       {
+
+            dbAccess.getStructuredDataByIds(ids,(result) => 
+            {
+
+                result.length.should.equal(19);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+       it("Should have correct types of structured data in result",(done) => 
+       {
+
+            dbAccess.getStructuredDataByIds(ids,(result) => 
+            {
+
+                result.every((r) => r instanceof domain.StructuredData).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail)
+
+       });
+
+       it("Should have correct fields of structured data in result",(done) => 
+       {
+
+            dbAccess.getStructuredDataByIds(ids,(result) => 
+            {
+
+                let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
+
+                result.every((r) => 
+                {
+
+                    let isHome = modelObject.home == r.home;
+                    let isAway = modelObject.away == r.away;
+                    let isCompId = modelObject.competitionID == r.competitionID;
+                    let isCompName = modelObject.competitionName == r.competitionName;
+                    let isPlan = modelObject.plan == r.plan;
+                    let isData = JSON.stringify(modelObject.data) == JSON.stringify(r.data); 
+                    let isDate = JSON.stringify(modelObject.date) == JSON.stringify(r.date); 
+                    let isEqual = isHome && isAway && isCompId && isCompName 
+                        && isPlan && isData && isDate;
+
+                    return isEqual;
+
+                }).should.equal(true);
+
+                done();
+
+            },assert.fail,assert.fail);
+
+       });
+
+
+    });
+    
+    describe("Insert & Get Comp Tests",function()
+    {
+
+
+        let comps = [new domain.Competition(12,"some comp","some country",1),
+                    new domain.Competition(13,"some comp","some country",1),
+                    new domain.Competition(14,"some comp","some country",1),
+                    new domain.Competition(15,"some comp","some country",1)];
+
+        it("should exist",() => should.exist(dbAccess.insertComps));
+
+        it("should insert comps without error",(done) => 
+        {
+
+            dbAccess.insertComps(comps,() => done(),assert.fail,assert.fail);
+
+        })
+
+        it("should be able to get insert comps",(done) => 
+        {
+
+            dbAccess.getAllComps((result) => 
+            {
+
+                let expected = [new domain.Competition(1,"some comp",null,null)].concat(comps);
+
+                JSON.stringify(result).should.equal(JSON.stringify(expected));
+
+                done();
+
+            })
+
+        });
+    })
+
     after(function(done)
     {
 

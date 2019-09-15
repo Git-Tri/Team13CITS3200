@@ -113,5 +113,77 @@ function bindUnstructuredData(rawUnstructuredData)
 
 }
 
+/**
+ * takes a match data row and converts to unstructurd data object
+ * @param {*} rawMatch the unstructurd data row
+ */
+function bindMatch(rawMatch)
+{
 
-module.exports = {bindEdits,bindUnstructuredData,bindStructredData }
+
+
+    if(! Array.isArray(rawMatch))
+    {
+
+        throw Error("rawMatch must be an array");
+
+    }
+
+    let results = [];
+
+    rawMatch.forEach((item) => 
+    {
+
+        if(item.length != 6)
+        {
+
+           throw Error("improper item length");
+
+        }
+
+        let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
+
+
+        results.push(new domain.Match(processedItem[0],processedItem[1],processedItem[2],
+            processedItem[3],processedItem[4],processedItem[5]))
+    })
+
+    return results;
+
+}
+
+function bindCompetition(rawComps)
+{
+
+    if(! Array.isArray(rawComps))
+    {
+
+        throw Error("rawMatch must be an array");
+
+    }
+
+    let results = [];
+
+    rawComps.forEach((item) => 
+    {
+
+        if(item.length != 4)
+        {
+
+           throw Error("improper item length");
+
+        }
+
+        let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
+
+
+        results.push(new domain.Competition(processedItem[0],processedItem[1],processedItem[2],
+            processedItem[3]));
+    })
+
+    return results;
+
+}
+
+
+module.exports = {bindEdits,bindUnstructuredData,bindStructredData,bindMatch,bindCompetition }
