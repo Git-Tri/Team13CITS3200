@@ -30,7 +30,7 @@ export function AddEdit(props)
 				handleSidebarClick={props.handleSidebarClick}
 			/>
 			<div id="container" style={{height:"100vh"}}>
-				<EditForm id={id} data={props.data}/>
+				<EditForm id={id} data={props.data} target={props.target}/>
 			</div>
 		</div>
 	);

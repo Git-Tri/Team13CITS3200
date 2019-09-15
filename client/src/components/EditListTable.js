@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import { Edit} from "../domain";
+import { genSummary} from "../EditUtils";
 
 /**
  * shows a table of structured data 
@@ -53,20 +54,20 @@ class EditListTable extends Component
     render()
     {
 
-        if(! Array.isArray( this.props.items))
+        if(this.props.items === undefined || ! Array.isArray( this.props.items.edits))
         {
 
             throw Error("Props.items should contain a list of edits")
 
         }
-        if(this.props.items.every((i) => i != undefined && i != null) == false)
+        if(this.props.items.edits.every((i) => i != undefined && i != null) == false)
         {
 
             throw new Error("props.data must be an instance of edit")
 
         }
         //borken into each predicate for easier debugging
-        if(this.props.items.every((i) => 
+        if(this.props.items.edits.every((i) => 
         {
             let isEditID = Number.isInteger(i.editID);
             let isTargetValid = i.isCorpus || Number.isInteger(i.structuredDataID) || Number.isInteger(i.unstructuredDataID)
@@ -85,10 +86,10 @@ class EditListTable extends Component
 
         let isSelectable = this.props.onSelect !== undefined;
 
-        let rows = this.props.items.map((item, index) => (
+        let rows = this.props.items.edits.map((item, index) => (
             <EditRow 
                 key={item.editID} 
-                data={item} 
+                data={{edit:item,target:this.props.items.targets[index]}} 
                 onSelect={this.state.selectFunc} 
                 isActive={item.id == this.state.activeRow}
             />
@@ -169,55 +170,23 @@ function FormatType(edit)
 function EditRow(props)
 {
 
-    if((props.data instanceof Edit) == false)
+    if((props.data.edit instanceof Edit) == false)
     {
 
-        throw Error("props.data must be an instance of structured data");
+        throw Error("props.data must be an instance of edit");
 
     }
     
 
-    let edit = props.data;
+    let edit = props.data.edit;
 
-
-    let sid = edit.structuredDataID;
-    let uid = edit.unstructuredDataID;
-    let isCorpus = edit.isCorpus;
-
-    let target; 
-
-    if(Number.parseInt(sid) > 0)
-    {
-
-        target = "Structured Data: " + sid; 
-
-    }
-    else if(Number.parseInt(uid) > 0)
-    {
-
-        target = "Unstructured Data: " + uid;
-
-    }
-    else if(isCorpus)
-    {
-
-        target = "All Corpus";
-
-    }
-    else
-    {
-
-        target = "Invalid";
-
-    }
-
-
+    let target = props.data.target;
 
     let selectFunc = props.onSelect != undefined ? props.onSelect : () => {};
 
     return(
-        <Table.Row onClick={() => selectFunc(props.data)} active={props.isActive}>
-            <Table.Cell>{target}</Table.Cell>
+        <Table.Row onClick={() => selectFunc(props.data.edit)} active={props.isActive}>
+            <Table.Cell>{genSummary(edit,target)}</Table.Cell>
             <Table.Cell>{FormatType(edit)}</Table.Cell>
             <Table.Cell>{SummaryBuilder(edit)}</Table.Cell>
         </Table.Row>

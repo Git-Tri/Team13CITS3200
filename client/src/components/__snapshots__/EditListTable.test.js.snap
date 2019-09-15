@@ -37,7 +37,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        Structured Data: 1
+        6/3/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -69,7 +69,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        Unstructured Data: 1
+        7/4/1991 - some author : some title
       </td>
       <td
         className=""
@@ -101,7 +101,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        Structured Data: 1
+        6/3/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -139,7 +139,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        All Corpus
+        No Data Selected
       </td>
       <td
         className=""
@@ -205,7 +205,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        Structured Data: 1
+        6/3/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -237,7 +237,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        Unstructured Data: 1
+        7/4/1991 - some author : some title
       </td>
       <td
         className=""
@@ -269,7 +269,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        Structured Data: 1
+        6/3/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -307,7 +307,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        All Corpus
+        No Data Selected
       </td>
       <td
         className=""
@@ -404,15 +404,26 @@ exports[`Edit List Table Tests Should render correctly with selected row 1`] = `
   >
     <EditRow
       data={
-        Edit {
-          "editID": 1,
-          "isCorpus": false,
-          "replace": "apple",
-          "replaceWith": "banna",
-          "settings": Object {},
-          "structuredDataID": 1,
-          "type": "replace",
-          "unstructuredDataID": null,
+        Object {
+          "edit": Edit {
+            "editID": 1,
+            "isCorpus": false,
+            "replace": "apple",
+            "replaceWith": "banna",
+            "settings": Object {},
+            "structuredDataID": 1,
+            "type": "replace",
+            "unstructuredDataID": null,
+          },
+          "target": StructuredData {
+            "away": "some other team",
+            "competitionID": 1,
+            "competitionName": "some comp",
+            "data": Object {},
+            "date": 1991-04-20T00:00:00.000Z,
+            "home": "some team",
+            "id": 1,
+          },
         }
       }
       isActive={true}
@@ -421,15 +432,27 @@ exports[`Edit List Table Tests Should render correctly with selected row 1`] = `
     />
     <EditRow
       data={
-        Edit {
-          "editID": 2,
-          "isCorpus": false,
-          "replace": "football",
-          "replaceWith": "soccer",
-          "settings": Object {},
-          "structuredDataID": null,
-          "type": "replace",
-          "unstructuredDataID": 1,
+        Object {
+          "edit": Edit {
+            "editID": 2,
+            "isCorpus": false,
+            "replace": "football",
+            "replaceWith": "soccer",
+            "settings": Object {},
+            "structuredDataID": null,
+            "type": "replace",
+            "unstructuredDataID": 1,
+          },
+          "target": UnstructuredData {
+            "author": "some author",
+            "data": "some data",
+            "extracted": 1991-04-20T00:00:00.000Z,
+            "id": 1,
+            "matchid": 1,
+            "published": 1991-04-20T00:00:00.000Z,
+            "title": "some title",
+            "url": "some url",
+          },
         }
       }
       isActive={true}
@@ -438,17 +461,28 @@ exports[`Edit List Table Tests Should render correctly with selected row 1`] = `
     />
     <EditRow
       data={
-        Edit {
-          "editID": 3,
-          "isCorpus": false,
-          "replace": "gary jones",
-          "replaceWith": "player 1",
-          "settings": Object {
-            "field": "player",
+        Object {
+          "edit": Edit {
+            "editID": 3,
+            "isCorpus": false,
+            "replace": "gary jones",
+            "replaceWith": "player 1",
+            "settings": Object {
+              "field": "player",
+            },
+            "structuredDataID": 1,
+            "type": "replacewithfield",
+            "unstructuredDataID": null,
           },
-          "structuredDataID": 1,
-          "type": "replacewithfield",
-          "unstructuredDataID": null,
+          "target": StructuredData {
+            "away": "some other team",
+            "competitionID": 1,
+            "competitionName": "some comp",
+            "data": Object {},
+            "date": 1991-04-20T00:00:00.000Z,
+            "home": "some team",
+            "id": 1,
+          },
         }
       }
       isActive={true}
@@ -457,15 +491,18 @@ exports[`Edit List Table Tests Should render correctly with selected row 1`] = `
     />
     <EditRow
       data={
-        Edit {
-          "editID": 4,
-          "isCorpus": true,
-          "replace": "reece",
-          "replaceWith": "ryan",
-          "settings": Object {},
-          "structuredDataID": null,
-          "type": "replace",
-          "unstructuredDataID": null,
+        Object {
+          "edit": Edit {
+            "editID": 4,
+            "isCorpus": true,
+            "replace": "reece",
+            "replaceWith": "ryan",
+            "settings": Object {},
+            "structuredDataID": null,
+            "type": "replace",
+            "unstructuredDataID": null,
+          },
+          "target": undefined,
         }
       }
       isActive={true}
