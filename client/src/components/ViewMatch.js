@@ -1,40 +1,44 @@
 import React, { Component } from 'react';
 import PageHeader from './PageHeader.js';
+import { Container, Loader, Message, Button, Header } from 'semantic-ui-react';
+import { bindMatch } from '../Databinding';
 import { withRouter } from 'react-router-dom';
+
+import { Match } from "../domain"; //Removed after searching is enabled
 
 class ViewMatch extends Component {
 	
-
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 
 		let id = this.props.id === undefined ? 
 			new URLSearchParams(this.props.location.search).get("id") : this.props.id;
-
-		this.loadData(id)
 
 		this.state = { 
 			data: undefined,
 			isLoaded: false,
 			isError: false,
-			matchID: -1
+			matchID: id
 		}
 	}
 
-	loadData(matchID){
-		fetch("/allchooseableData")
-			.then(res => res.json())
-			.then(result => 
-				{
-					result.matchList = result.matchList.map((d) => bindMatch(d));
-					let match = result.matchList
-					this.setState({data: match ,isLoaded: true, isError: false, matchID: matchID})
-				})
-			.catch(err => this.setState({isError: true}));
+	loadData(){
+		// fetch("/match")
+		// 	.then(res => res.json())
+		// 	.then(result => 
+		// 		{
+		// 			result.matchList = result.matchList.map((d) => bindMatch(d));
+		// 			let match = result.matchList
+		// 			this.setState({data: match ,isLoaded: true, isError: false})
+		// 		})
+		// 	.catch(err => this.setState({isError: true}));
+
+		var testMatch = new Match(1,new Date("1991-04-20T00:00:00.000Z"),"team A","team B",3,"Not real data!")
+		this.setState({data: testMatch ,isLoaded: true, isError: false})
 	}
 
 	executeRender() {
-		if(this.state.handling.isError){
+		if(this.state.isError){
 			return (<Message negative>
 				<Message.Header>An error has occured</Message.Header>
 				<p>Failed to get data from the server.</p>
@@ -43,19 +47,29 @@ class ViewMatch extends Component {
 			);
 		}
 
-		else if(this.state.handling.isLoaded){
+		else if(this.state.isLoaded){
 			return (
 				<div>			
 					<div id="container" style={{height:"100vh"}}>
-						<MatchListTable onSelect={this.routeToMatch.bind(this)} items={this.state.handling.data}/>
+						<Container>
+							<Header sub>Match</Header>
+							<span>{this.state.data.home} vs. {this.state.data.away}</span>
+
+							<Header sub>Date</Header>
+							<span>{Date(this.state.data.date)}</span>
+
+							<Header sub>Competition</Header>
+							<span>{this.state.data.competitionName}</span>
+						</Container>
 					</div>
 				</div>
 			); 
 		}
 
 		else {
+			this.loadData()
 			return (
-				<Loader>Loading Data</Loader>
+				<Message>Loading Data</Message>
 			);
 		}
 	}
@@ -70,7 +84,7 @@ class ViewMatch extends Component {
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
 				<div id="container" style={{height:"100vh"}}>
-					Match content of {id} goes here
+					{this.executeRender()}
 				</div>
 			</div>
 		);

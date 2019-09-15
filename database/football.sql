@@ -151,4 +151,13 @@ SELECT football.match.id,football.match.date,football.match.home,football.match.
 FROM football.match 
 Inner join football.competition on football.match.competitionID = football.competition.id;
 
+-- Adding data
+INSERT INTO `competition` (  `id`, `name`, `countryName`, `countryId` ) VALUES ( 1, "Grand Foo", "Bar", 1 );
+
+INSERT INTO `match` ( `id` , `competitionID`, `date`, `home`, `away` ) VALUES 
+	( 1, 1, "1991-04-20", "team A", "team B" ),
+    ( 2, 1, "1991-04-21", "team C", "team D" ),
+    ( 3, 1, "1991-04-22", "team E", "team F" );
+    
+SELECT * FROM `match`
 

@@ -26,12 +26,12 @@ class MatchList extends Component {
 
 		this.submitHandler = (e) => { //Currently logs state, 500 error
 			console.log(this.state);
-			var xhr = new XMLHttpRequest()
-			xhr.addEventListener('load', () => {
-				console.log(xhr.responseText)
-			})
-			xhr.open('POST', '/matchlist')
-			xhr.send(JSON.stringify(this.state))
+			// var xhr = new XMLHttpRequest()
+			// xhr.addEventListener('load', () => {
+			// 	console.log(xhr.responseText)
+			// })
+			// xhr.open('POST', '/matchlist')
+			// xhr.send(JSON.stringify(this.state))
 			this.loadData()
 		}
 
@@ -41,13 +41,13 @@ class MatchList extends Component {
 	}
 
 	loadData(){
-		// fetch("/allchooseableData")
+		// fetch("/matchlist")
 		// 	.then(res => res.json())
 		// 	.then(result => 
 		// 		{
 		// 			result.matchList = result.matchList.map((d) => bindMatch(d));
 		// 			let matches = result.matchList
-		// 			this.setState({handling: {data: matches ,isLoaded: true, isError: false}})
+		// 			this.setState({handling: {data: matches, isLoaded: true, isError: false}})
 		// 		})
 		// 	.catch(err => this.setState({handling: {isError: true}}));
 
