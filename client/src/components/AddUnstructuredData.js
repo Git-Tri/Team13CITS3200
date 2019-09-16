@@ -98,7 +98,7 @@ class AddUnstructuredData extends Component {
     }
 
     /**
-    * deals with submission of the form
+    * deal with submission of the form
     * @param e - the event that caused the submission
     **/
     submit = (e) => {
@@ -128,7 +128,22 @@ class AddUnstructuredData extends Component {
                 this.setState({ message: `Error ${request.status}: ${request.statusText}`, hasMessage: true })
             }
             else {
-                this.props.history.goBack()
+
+                if(this.state.exists)
+                {
+
+                    this.props.history.goBack()
+
+                }
+                else
+                {
+
+                    //TODO replace with clear
+                    this.setState({id:undefined,matchid:0,tite:"",author:"",url:"",published:"",extracted:"",data:""})
+
+                }
+
+                
             }
         }.bind(this)
         request.onerror = function () {

@@ -160,8 +160,8 @@ function replaceRuleWithField(input,edit)
 
     if(typeof(input) != "object")
     {
-
-        throw Error("Invalid object type for this type of edit");
+        //wrong type of input, pass it back
+        return input;
 
     }
 
