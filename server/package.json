@@ -25,6 +25,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "object-sizeof": "^1.5.1"
   }
 }
