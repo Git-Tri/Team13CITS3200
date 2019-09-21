@@ -5,6 +5,7 @@ const editAccess = require("../database-access/edit");
 const unstructuredDataAccess = require("../database-access/unstructured-data");
 const structuredDataAccess = require("../database-access/structured-data");
 const errorHandler = require("./errorHandler");
+const dataValidation = require("../dataValidation");
 
 exports.createRoutes = function(app)
 {
@@ -37,7 +38,16 @@ exports.createRoutes = function(app)
     //get an edit by id 
     middleware.get(app, "/edit", (req, res) => {
 
-        var editId = req.query.id;
+        let editId = Number.parseInt(req.query.id);
+
+        if(Number.isInteger(editId) == false)
+        {
+
+            res.sendStatus(400);
+
+            return;
+
+        }
 
         res.setHeader("Content-Type", "application/json");
 
@@ -115,6 +125,15 @@ exports.createRoutes = function(app)
 
         let edit = req.body;
 
+        if(dataValidation.validateEdit(edit) === false)
+        {
+
+            res.sendStatus(400)
+
+            return;
+
+        }
+
         editAccess.updateEdit(edit, () => {
 
             res.sendStatus(200);
@@ -131,6 +150,15 @@ exports.createRoutes = function(app)
         res.setHeader("Content-Type", "application/json");
 
         let edit = req.body;
+
+        if(dataValidation.validateEdit(edit) === false)
+        {
+
+            res.sendStatus(400)
+
+            return;
+
+        }
 
         let postErrorHandler = (err) => {
 
@@ -158,7 +186,16 @@ exports.createRoutes = function(app)
 
     middleware.delete(app, "/edit", (req, res) => {
 
-        var editId = req.query.id;
+        let editId = Number.parseInt(req.query.id);
+
+        if(Number.isInteger(editId) == false)
+        {
+
+            res.sendStatus(400);
+
+            return;
+
+        }
 
         editAccess.getEditById(editId, (result) => {
 
