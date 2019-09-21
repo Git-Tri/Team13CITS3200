@@ -9,7 +9,7 @@ if (envResult.error) {
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const routes = require("./routes.js");
+const routes = require("./routes/routeSetup.js");
 const compsAccess = require("./database-access/comps");
 const api = require("./football-api");
 const domain = require("./domain");
