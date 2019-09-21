@@ -31,7 +31,7 @@ describe("Edit Engine Tests",function()
             editQuery1,editQuery2
         ]
 
-        dbAccess.multiInsertQuery(queries,() => 
+        dbAccess.multiInsertQuery(queries,[],() => 
         {
 
             done();
@@ -50,7 +50,7 @@ describe("Edit Engine Tests",function()
 
         let queries = [deleteQuery1,deleteQuery2]
 
-        dbAccess.multiInsertQuery(queries,() => 
+        dbAccess.multiInsertQuery(queries,[],() => 
         {
 
             done();

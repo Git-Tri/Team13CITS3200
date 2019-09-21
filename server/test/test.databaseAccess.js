@@ -23,7 +23,7 @@ describe('Database Access Tests ', function() {
         ,"delete from football.match where home = 'testTeam';"
         ,"delete from football.competition where name = 'some comp'"];
 
-        dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
+        dbAccess.multiInsertQuery(cleanup,[],() => callback(),(err) => {throw err},(err) => {throw err});
 
 
 
@@ -38,10 +38,10 @@ describe('Database Access Tests ', function() {
             dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");',
             ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
                 'values (null,null,true,null,"testEdit","goodbye","replace");'
-            ],() => 
+            ],[],() => 
             {
 
-                dbAccess.query("select editid from football.edit where replace_text = 'testEdit';",
+                dbAccess.query("select editid from football.edit where replace_text = 'testEdit';",[],
                     (result) => 
                     {
                         
@@ -104,7 +104,7 @@ describe('Database Access Tests ', function() {
                              'values ("1991/3/23","bob","testTeam",1,"{}");'
             
 
-            dbAccess.query(insertQuery,() => done(),assert.fail)
+            dbAccess.query(insertQuery,[],() => done(),assert.fail)
 
         });
         
@@ -112,14 +112,14 @@ describe('Database Access Tests ', function() {
             
             let updateQuery = "update football.match set home = 'not bob' where home = 'bob';"
             
-            dbAccess.query(updateQuery,() => done(),assert.fail)
+            dbAccess.query(updateQuery,[],() => done(),assert.fail)
 
         });
                 
         it('query function should update row with updated data',function(done)
         {
 
-            dbAccess.query("select home from football.match where home = 'not bob' limit 1",function(result)
+            dbAccess.query("select home from football.match where home = 'not bob' limit 1",[],function(result)
             {
                 result[0][0].should.equal('not bob');
                 done();
@@ -130,7 +130,7 @@ describe('Database Access Tests ', function() {
         it('query function should select correct number of rows',function(done)
         {
 
-            dbAccess.query("select * from football.match limit 1;",function(result)
+            dbAccess.query("select * from football.match limit 1;",[],function(result)
             {
                 result.length.should.equal(1);
                 done();
@@ -141,7 +141,7 @@ describe('Database Access Tests ', function() {
         it('query function should select correct row contents',function(done)
         {
 
-            dbAccess.query("select home from football.match where home = 'not bob' limit 1;",function(result)
+            dbAccess.query("select home from football.match where home = 'not bob' limit 1;",[],function(result)
             {
                 result[0][0].should.equal('not bob');
                 done();
@@ -152,7 +152,7 @@ describe('Database Access Tests ', function() {
         it('query function should delete rows without error',function(done)
         {
 
-            dbAccess.query("delete from football.match where home = 'not bob'",function(result)
+            dbAccess.query("delete from football.match where home = 'not bob'",[],function(result)
             {
                 done();
             },assert.fail)
@@ -162,7 +162,7 @@ describe('Database Access Tests ', function() {
         it('query function should delete rows',function(done)
         {
 
-            dbAccess.query("select count(*) from football.match where home = 'not bob'",(result) => 
+            dbAccess.query("select count(*) from football.match where home = 'not bob'",[],(result) => 
             {
 
                 result[0][0].should.equal(0);
@@ -175,14 +175,14 @@ describe('Database Access Tests ', function() {
         it("should throw error with undefined connection string",function(done)
         {
 
-            dbAccess.query("select home from football.match limit 1;",assert.fail,assert.fail,() => done(),undefined)
+            dbAccess.query("select home from football.match limit 1;",[],assert.fail,assert.fail,() => done(),undefined)
             
         })
 
         it("should throw error with incorrect connection string",function(done)
         {
 
-            dbAccess.query("select home from football.match limit 1;",assert.fail,assert.fail,() => done(),
+            dbAccess.query("select home from football.match limit 1;",[],assert.fail,assert.fail,() => done(),
                 "mysqlx://" + process.env.USER +  ":" + "lolwrong" + "@" + process.env.HOST + ":33060/" + process.env.DATABASE)
             
         })
@@ -217,14 +217,14 @@ describe('Database Access Tests ', function() {
                 'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");'
            ];
 
-           dbAccess.multiInsertQuery(queries,() => done(),assert.fail,assert.fail);
+           dbAccess.multiInsertQuery(queries,[],() => done(),assert.fail,assert.fail);
 
         })
 
         it("should have correct number of rows after mutiple insert queries",function(done)
         {
 
-            dbAccess.query("select * from football.match where home = 'testTeam';",function(result)
+            dbAccess.query("select * from football.match where home = 'testTeam';",[],function(result)
             {
                 result.length.should.equal(19);
                 done();
@@ -265,7 +265,7 @@ describe('Database Access Tests ', function() {
             'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");'
        ];
 
-       dbAccess.multiInsertQuery(queries,() => {
+       dbAccess.multiInsertQuery(queries,[],() => {
            
         done()
     
@@ -355,9 +355,9 @@ describe('Database Access Tests ', function() {
             
             
 
-            dbAccess.multiInsertQuery(queries,() => {
+            dbAccess.multiInsertQuery(queries,[],() => {
                 
-                dbAccess.query("select id from football.match where home = 'testTeam';",(uid) => 
+                dbAccess.query("select id from football.match where home = 'testTeam';",[],(uid) => 
                     {
 
                         actualUid = uid[0][0];
@@ -373,7 +373,7 @@ describe('Database Access Tests ', function() {
 
                         ]
 
-                        dbAccess.multiInsertQuery(insertQueries,() => done(),(err) => {throw err},(err) => {throw err});
+                        dbAccess.multiInsertQuery(insertQueries,[],() => done(),(err) => {throw err},(err) => {throw err});
 
 
                     },(err) => {throw err},(err) => {throw err})
@@ -644,7 +644,7 @@ describe('Database Access Tests ', function() {
         it("Should have edit with updated fields",(done) => 
         {
 
-            dbAccess.query("select * from football.edit where replace_with = 'insertTest'",(result) => 
+            dbAccess.query("select * from football.edit where replace_with = 'insertTest'",[],(result) => 
             {
                 
                 result = dataBinding.bindEdits(result)[0];
@@ -740,7 +740,7 @@ describe('Database Access Tests ', function() {
         before(function(done)
         {
             //mini clean up 
-            dbAccess.query("delete from football.edit where replace_text = 'testEdit'",() => {
+            dbAccess.query("delete from football.edit where replace_text = 'testEdit'",[],() => {
             //just in case 
             this.timeout(10000)
 
@@ -787,7 +787,7 @@ describe('Database Access Tests ', function() {
             ];
         
 
-                dbAccess.multiInsertQuery(queries,() => {
+                dbAccess.multiInsertQuery(queries,[],() => {
                     
                     done()
                 
@@ -891,9 +891,9 @@ describe('Database Access Tests ', function() {
             
             
 
-            dbAccess.multiInsertQuery(queries,() => {
+            dbAccess.multiInsertQuery(queries,[],() => {
                 
-                dbAccess.query("select id from football.match where away = 'team1';",(id) => 
+                dbAccess.query("select id from football.match where away = 'team1';",[],(id) => 
                     {
 
                         matchid1 = id[0][0];
@@ -909,10 +909,10 @@ describe('Database Access Tests ', function() {
 
                         ]
 
-                        dbAccess.multiInsertQuery(insertQueries,() => 
+                        dbAccess.multiInsertQuery(insertQueries,[],() => 
                         {
 
-                            dbAccess.query("select id from football.match where away = 'team2';",(id) => 
+                            dbAccess.query("select id from football.match where away = 'team2';",[],(id) => 
                             {
                                 
                             matchid2 = id[0][0];
@@ -929,7 +929,7 @@ describe('Database Access Tests ', function() {
     
                             ]
 
-                            dbAccess.multiInsertQuery(insertQueries,() => done(),(err) => {throw err},(err) => {throw err})
+                            dbAccess.multiInsertQuery(insertQueries,[],() => done(),(err) => {throw err},(err) => {throw err})
                             },(err) => {throw err},(err) => {throw err});
                         },(err) => {throw err},(err) => {throw err});
                     },(err) => {throw err},(err) => {throw err});       
@@ -1108,9 +1108,9 @@ describe('Database Access Tests ', function() {
                     'values ("1991/4/20","testTeam","team2",1,"{}");'
             ];           
            
-            dbAccess.multiInsertQuery(queries,() => {
+            dbAccess.multiInsertQuery(queries,[],() => {
                 
-                dbAccess.query("select id from football.match where away = 'team1';",(id) => 
+                dbAccess.query("select id from football.match where away = 'team1';",[],(id) => 
                     {
 
                         matchid = id[0][0];
@@ -1126,10 +1126,10 @@ describe('Database Access Tests ', function() {
 
                         ]
 
-                        dbAccess.multiInsertQuery(insertQueries,() => 
+                        dbAccess.multiInsertQuery(insertQueries,[],() => 
                         {
 
-                            dbAccess.query("select usid from football.unstructured_data",(result) => 
+                            dbAccess.query("select usid from football.unstructured_data",[],(result) => 
                             {
 
                                 result.forEach((i) => ids.push(i[0]));
@@ -1275,9 +1275,9 @@ describe('Database Access Tests ', function() {
                 'insert into football.match (date,home,away,competitionID,data) values ("1991/4/20","testTeam","bob",1,"{}");'
             ];           
            
-            dbAccess.multiInsertQuery(queries,() => {
+            dbAccess.multiInsertQuery(queries,[],() => {
                 
-                dbAccess.query("select id from football.match where home = 'testTeam';",(result) => 
+                dbAccess.query("select id from football.match where home = 'testTeam';",[],(result) => 
                     {
 
                                 result.forEach((i) => ids.push(i[0]));

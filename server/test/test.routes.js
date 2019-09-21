@@ -1,3 +1,12 @@
+const envResult = require("dotenv").config();
+
+if (envResult.error) 
+{
+    
+    throw envResult.error
+}
+
+
 process.env.APIKEY = "undefined"
 
 const assert = require('assert');
@@ -23,7 +32,7 @@ describe("Route Tests",function()
         ,"delete from football.match where home = 'testTeam'"
         ,"delete from football.competition where id = 1"];
 
-        dbAccess.multiInsertQuery(cleanup,() => callback(),(err) => {throw err},(err) => {throw err});
+        dbAccess.multiInsertQuery(cleanup,[],() => callback(),(err) => {throw err},(err) => {throw err});
 
 
     }
@@ -48,7 +57,7 @@ describe("Route Tests",function()
             {
 
                     
-                dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],() => 
+                dbAccess.multiInsertQuery(['insert into football.competition(id,name) values (1,"some comp");'],[],() => 
                 {
                     
                     let queries = 
@@ -67,9 +76,9 @@ describe("Route Tests",function()
                             'values (null,null,true,null,"testEdit","goodbye","replace");'                            
                     ];                       
 
-                    dbAccess.multiInsertQuery(queries,() => {
+                    dbAccess.multiInsertQuery(queries,[],() => {
                         
-                        dbAccess.query("select id from football.match where home = 'testTeam';",(matchID) => 
+                        dbAccess.query("select id from football.match where home = 'testTeam';",[],(matchID) => 
                             {
 
                                 actualMatchId = matchID[0][0];
@@ -86,11 +95,11 @@ describe("Route Tests",function()
 
                                 ]
 
-                                dbAccess.multiInsertQuery(insertQueries,() => 
+                                dbAccess.multiInsertQuery(insertQueries,[],() => 
                                 {
 
 
-                                    dbAccess.query("select usid from football.unstructured_data where author = 'testAuthor';",(result) => 
+                                    dbAccess.query("select usid from football.unstructured_data where author = 'testAuthor';",[],(result) => 
                                     {
 
                                         actualUnstructuredDataId = result[0][0];
@@ -98,10 +107,10 @@ describe("Route Tests",function()
                                         dbAccess.multiInsertQuery( [' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
                                         'values (null,'+ actualUnstructuredDataId + ',true,null,"testEdit","goodbye","replace");',
                                         ' INSERT INTO football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type)' +
-                                            'values (' + actualMatchId + ',' + actualUnstructuredDataId + ',true,null,"testEdit","goodbye","toDelete");'],() => 
+                                            'values (' + actualMatchId + ',' + actualUnstructuredDataId + ',true,null,"testEdit","goodbye","toDelete");'],[],() => 
                                             {
 
-                                                dbAccess.query("select editid from football.edit where type = 'toDelete';",(result) =>
+                                                dbAccess.query("select editid from football.edit where type = 'toDelete';",[],(result) =>
                                                 {
 
                                                     editId = result[0][0];
@@ -524,7 +533,7 @@ describe("Route Tests",function()
 
             let newEditID; 
 
-            dbAccess.query("select editId from football.edit where replace_with = 'insertTest';",(r) => 
+            dbAccess.query("select editId from football.edit where replace_with = 'insertTest';",[],(r) => 
             {
 
                 newEditID = r[0][0]; 

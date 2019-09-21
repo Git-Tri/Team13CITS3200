@@ -14,6 +14,8 @@ const dbAccess = require("./databaseAccess");
 const api = require("./football-api");
 const domain = require("./domain");
 
+dbAccess.query("select * from football.match",[],console.log,console.log);
+
 //start app
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));

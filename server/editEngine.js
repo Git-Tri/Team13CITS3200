@@ -299,13 +299,11 @@ function applyRules(input,callback)
 
     }
 
-    let queryField = input instanceof domain.StructuredData ? "sid" : "usid";
+    let queryField = input instanceof domain.StructuredData ? "sid" : "usid";    
 
-    let queryID = input.id;
+    let query = "select * from football.edit where " + queryField + " = ? or iscorpus = true";
 
-    let query = "select * from football.edit where " + queryField + " = " + queryID + " or iscorpus = true";
-
-    dbAccess.query(query,(result) =>
+    dbAccess.query(query,[input.id],(result) =>
     {
         
         let edits = dataBinding.bindEdits(result);
@@ -341,14 +339,10 @@ function applyRulesMutiInputs(inputs,callback)
         
     }
 
-    let query = "select * from football.edit"
-
-    dbAccess.query(query,(result) => 
+    dbAccess.getAllEdits((result) => 
     {
 
-        let edits = dataBinding.bindEdits(result);
-
-        callback(inputs.map((input) => applyRulesWithEdits(input,edits)));
+        callback(inputs.map((input) => applyRulesWithEdits(input,result)));
 
     },(err) => {throw err},(err) => {throw err});
 

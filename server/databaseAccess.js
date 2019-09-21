@@ -21,8 +21,15 @@ function __listToSQList(list)
  * noConnectionCallback is used when you want to handle a failded connection
  * testConnectionString is for failure testing only. 
  */
-function query(query,callback,errorCallback,noConnectionCallback,testConnectionString)
+function query(query,params,callback,errorCallback,noConnectionCallback,testConnectionString)
 {   
+
+        if(! Array.isArray(params) || params.length == 0)
+        {
+
+
+
+        }
 
 
         let results = [];
@@ -44,7 +51,7 @@ function query(query,callback,errorCallback,noConnectionCallback,testConnectionS
             
         }
 
-        session.then(session => session.sql(query) //execute query
+        session.then(session => session.sql(query).bind(params) //execute query
         .execute(result => results.push(result)) //get results for each row
         .catch(err => onError(err))) //the error for any given row 
         .then(() =>  
@@ -69,7 +76,7 @@ function query(query,callback,errorCallback,noConnectionCallback,testConnectionS
  * noConnectionCallback is used when you want to handle a failded connection
  * testConnectionString is for failure testing only. 
  */
-function multiInsertQuery(querys,callback,errorCallback,noConnectionCallback,testConnectionString)
+function multiInsertQuery(querys,params,callback,errorCallback,noConnectionCallback,testConnectionString)
 {   
 
    let results = [];
@@ -78,11 +85,11 @@ function multiInsertQuery(querys,callback,errorCallback,noConnectionCallback,tes
 
    let localNoConnectionCallback = noConnectionCallback != undefined ? noConnectionCallback : console.log
    
-   let promises = []
+   let promises = [];
 
    let session = client.getSession(localConnectionString)
     session.then(session => {
-        querys.forEach((item,index) => promises.push(session.sql(item).execute()))
+        querys.forEach((item,index) => promises.push(session.sql(item).bind(params[index] != undefined ? params[index] : []).execute()))
         return Promise
             .all(promises)
             .then((result => 
@@ -103,7 +110,7 @@ function multiInsertQuery(querys,callback,errorCallback,noConnectionCallback,tes
 function getAllStructuredData(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from structured_data;",(result) => 
+        query("select * from structured_data;",[],(result) => 
         {
 
                 callback(dataBinding.bindStructredData(result));
@@ -121,7 +128,7 @@ function getAllStructuredData(callback,errorCallback,noConnectionCallback)
 function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from football.unstructured_data;",(result) => 
+        query("select * from football.unstructured_data;",[],(result) => 
         {
 
                 callback(dataBinding.bindUnstructuredData(result));
@@ -140,7 +147,7 @@ function getAllUnstrucredData(callback,errorCallback,noConnectionCallback)
 function getUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
 {
          
-        query("select * from football.unstructured_data where usid = "+ usid + ";",
+        query("select * from football.unstructured_data where usid = ? ;",[usid],
         (result) => 
         {
 
@@ -157,10 +164,10 @@ function getUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
  * @param {*} errorCallback th callback used on error
  * @param {*} noConnectionCallback thee call if there is no connection
  */
-function getMatch(usid,callback,errorCallback,noConnectionCallback)
+function getMatch(sid,callback,errorCallback,noConnectionCallback)
 {
         
-        query("select m.* from football.match m , football.unstructured_Data u where m.id=u.matchid and u.usid =" + usid +";",
+        query("select m.* from football.match m , football.unstructured_Data u where m.id=u.matchid and u.usid = ? ;",[sid],
         (result) => 
         {
 
@@ -196,17 +203,28 @@ function updateUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
 
                 UnstructuredData.extracted = new Date(UnstructuredData.extracted)
 
+                let params = [
+                            UnstructuredData.matchid, 
+                            UnstructuredData.title,
+                            UnstructuredData.author,    
+                            UnstructuredData.url,
+                            UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDate()),
+                            UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDate()) +"'",
+                            UnstructuredData.data,
+                            UnstructuredData.id
+                        ];
+
                 let sqlquery = "update football.unstructured_data set " + 
-                " matchid = " + UnstructuredData.matchid +
-                ",title = '" + UnstructuredData.title + "'" +
-                ",author = '" + UnstructuredData.author + "'" +
-                ",url = '" + UnstructuredData.url + "'" + 
-                ",published = '" + UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDate()) + "'" +
-                ",extracted = '" + UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDate()) +"'" +
-                ",data = '" + UnstructuredData.data + "'" +
-                "where usid = " + UnstructuredData.id + ";"
+                " matchid = ?" +
+                ",title = ?" +
+                ",author = ?" +
+                ",url = ?" + 
+                ",published = ?" +
+                ",extracted = ?" + 
+                ",data = ?" +
+                "where usid = ?";
         
-                query(sqlquery,callback,errorCallback,noConnectionCallback);
+                query(sqlquery,params,callback,errorCallback,noConnectionCallback);
         
         },errorCallback,noConnectionCallback)
 
@@ -227,14 +245,19 @@ function insertUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
 
         UnstructuredData.extracted = new Date(UnstructuredData.extracted)
 
-        let sqlquery = "insert into football.unstructured_data(matchid,title,author,url,published,extracted,data) " + 
-        "values('" + UnstructuredData.matchid + "','" + UnstructuredData.title + "','" + 
-        UnstructuredData.author + "','" + UnstructuredData.url + "','" + 
-        UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDate()) + "','" + 
-        UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDate()) +"','" +
-        UnstructuredData.data  + "')";
+        let params = [
+                UnstructuredData.matchid, 
+                UnstructuredData.title,
+                UnstructuredData.author,    
+                UnstructuredData.url,
+                UnstructuredData.published.getFullYear() +"/" + (UnstructuredData.published.getMonth()+1) + "/" + (UnstructuredData.published.getDate()),
+                UnstructuredData.extracted.getFullYear() +"/" + (UnstructuredData.extracted.getMonth()+1) + "/" + (UnstructuredData.extracted.getDate()) +"'",
+                UnstructuredData.data
+            ];
 
-        query(sqlquery,callback,errorCallback,noConnectionCallback);
+        let sqlquery = "insert into football.unstructured_data(matchid,title,author,url,published,extracted,data) values(?,?,?,?,?,?,?)";
+
+        query(sqlquery,params,callback,errorCallback,noConnectionCallback);
 
         
 
@@ -249,7 +272,7 @@ function insertUnstructuredData(UnstructuredData,callback,errorCallback,noConnec
  */
 function deleteUnstrucredData(usid,callback,errorCallback,noConnectionCallback)
 {
-        query("delete from football.unstructured_data where usid =" + usid + ";",
+        query("delete from football.unstructured_data where usid = ?;",[usid],
         (result) => 
         {
                 callback(dataBinding.bindUnstructuredData(result));
@@ -289,7 +312,7 @@ function getEditById(id,callback,errorCallback,noConnectionCallback)
         else
         {
 
-                query("select * from football.edit where editid =" + parsedId + ";",
+                query("select * from football.edit where editid = ? ;",[parsedId],
                 (result) => 
                 {
 
@@ -335,17 +358,29 @@ function updateEdit(edit,callback,errorCallback,noConnectionCallback)
 
                         }
 
+                        let params = 
+                        [
+                        edit.structuredDataID,
+                        edit.unstructuredDataID,
+                        edit.isCorpus,
+                        JSON.stringify(edit.settings),
+                        edit.replace,
+                        edit.replaceWith,
+                        edit.type,
+                        edit.editID
+                        ]                        
+
                         let sqlquery = "update football.edit set " + 
-                        " sid = " + edit.structuredDataID +
-                        ",usid = " + edit.unstructuredDataID +
-                        ",iscorpus = " + edit.isCorpus + 
-                        ",settings = '" + JSON.stringify(edit.settings) + "'" + 
-                        ",replace_text = '" + edit.replace + "'" +
-                        ",replace_with = '" + edit.replaceWith + "'" + 
-                        ",type = '" + edit.type + "'" +
-                        "where editid = " + edit.editID + ";";
+                        " sid = ?" +
+                        ",usid = ?" +
+                        ",iscorpus = ?" + 
+                        ",settings = ?" + 
+                        ",replace_text = ?" +
+                        ",replace_with = ?" + 
+                        ",type = ?" +
+                        "where editid = ?";
         
-                        query(sqlquery,callback,errorCallback,noConnectionCallback);
+                        query(sqlquery,params,callback,errorCallback,noConnectionCallback);
         
                 },errorCallback,noConnectionCallback)
 
@@ -383,12 +418,21 @@ function insertEdit(edit,callback,errorCallback,noConnectionCallback)
         if(isEditValid)
         {
 
-                let sqlquery = "insert into football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type) " + 
-                "values(" + edit.structuredDataID + "," + edit.unstructuredDataID + "," + 
-                        edit.isCorpus + ",'" + JSON.stringify(edit.settings) + "','" + 
-                        edit.replace + "','" + edit.replaceWith + "','" + edit.type + "')";
+                let params = 
+                [
+                edit.structuredDataID,
+                edit.unstructuredDataID,
+                edit.isCorpus,
+                JSON.stringify(edit.settings),
+                edit.replace,
+                edit.replaceWith,
+                edit.type
+                ]                   
 
-                query(sqlquery,callback,errorCallback,noConnectionCallback);
+                let sqlquery = "insert into football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type) " + 
+                "values(?,?,?,?,?,?,?)";
+
+                query(sqlquery,params,callback,errorCallback,noConnectionCallback);
 
         }
         else
@@ -431,7 +475,7 @@ function deleteEditById(id,callback,errorCallback,noConnectionCallback)
         else
         {
 
-                query("delete from football.edit where editid =" + parsedId + ";",
+                query("delete from football.edit where editid = ?;",[parsedId],
                 (result) => 
                 {
 
@@ -451,7 +495,7 @@ function deleteEditById(id,callback,errorCallback,noConnectionCallback)
 function getAllEdits(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from football.edit;",(result) => 
+        query("select * from football.edit;",[],(result) => 
         {
 
                 callback(dataBinding.bindEdits(result));
@@ -488,7 +532,7 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 
         }
 
-        query("select * from football.unstructured_data where matchid = " + matchid + " ;",(result) => 
+        query("select * from football.unstructured_data where matchid = ?;",[matchid],(result) => 
         {
 
                 callback(dataBinding.bindUnstructuredData(result));
@@ -506,7 +550,7 @@ function getUnstructuredDataByMatchId(matchid,callback,errorCallback,noConnectio
 function getAllMatches(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select id,date,home,away,competitionID,name from football.structured_data;",(result) => 
+        query("select id,date,home,away,competitionID,name from football.structured_data;",[],(result) => 
         {
 
                 callback(dataBinding.bindMatch(result));
@@ -518,7 +562,7 @@ function getAllMatches(callback,errorCallback,noConnectionCallback)
 function getMatchById(matchId, callback,errorCallback,noConnectionCallback)
 {
 
-        query("select id,date,home,away,competitionID,name from football.structured_data where football.structured_data.id = + " + matchId + ";",(result) => 
+        query("select id,date,home,away,competitionID,name from football.structured_data where football.structured_data.id = ?;",[matchId],(result) => 
         {
 
                 callback(dataBinding.bindMatch(result));
@@ -563,7 +607,13 @@ function getUnstructuredDataByIds(ids,callback,errorCallback,noConnectionCallbac
 
         };       
 
-        query("select * from football.unstructured_data where usid in " + __listToSQList(ids) + " ;",(result) => 
+        let idsText = "(" 
+
+        ids.forEach(() => idsText = idsText + "?,")
+
+        idsText = idsText.replace(/.$/,")");
+
+        query("select * from football.unstructured_data where usid in" + idsText + ";",ids,(result) => 
         {
 
                 callback(dataBinding.bindUnstructuredData(result));
@@ -607,9 +657,15 @@ function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 
         };       
 
-        let sqlQuery = "select * from football.structured_data where id in " + __listToSQList(ids) + " ;" 
+        let idsText = "(" 
 
-        query(sqlQuery,(result) => 
+        ids.forEach(() => idsText = idsText + "?,")
+
+        idsText = idsText.replace(/.$/,")");
+
+        let sqlQuery = "select * from football.structured_data where id in " + idsText + ";"; 
+
+        query(sqlQuery,ids,(result) => 
         {
 
                 callback(dataBinding.bindStructredData(result));
@@ -628,7 +684,7 @@ function getStructuredDataByIds(ids,callback,errorCallback,noConnectionCallback)
 function getStructuredData(id,callback,errorCallback,noConnectionCallback)
 {
          
-        query("select * from football.structured_data where id = " + id + ";",
+        query("select * from football.structured_data where id = ?;",[id],
         (result) => 
         {
 
@@ -661,7 +717,7 @@ function deleteStructuredData(id,callback,errorCallback,noConnectionCallback)
         else
         {
 
-                query("delete from football.match where id =" + parsedId + ";",
+                query("delete from football.match where id = ?;",[parsedId],
                 (result) => 
                 {
 
@@ -689,17 +745,25 @@ function insertComps(comps,callback,errorCallback,noConnectionCallback)
 
         }
 
-        let queries = comps.map((c) => "insert ignore into football.competition(id,name,countryName,countryId)" +
-                                "values (" + c.id + ",'" + c.name  + "','" + c.countryName + "'," + c.countryId + ")");
+        let params = [];
 
-        multiInsertQuery(queries,callback,errorCallback,noConnectionCallback);
+        let queries = comps.map((c) => 
+                                {
+                                        let compParams = [c.id,c.name,c.countryName,c.countryId];                                        
+
+                                        params.push(compParams)
+
+                                        return "insert ignore into football.competition(id,name,countryName,countryId) values(?,?,?,?);";
+                                });
+
+        multiInsertQuery(queries,params,callback,errorCallback,noConnectionCallback);
 
 }
 
 function getAllComps(callback,errorCallback,noConnectionCallback)
 {
 
-        return query("select * from football.competition;",
+        return query("select * from football.competition;",[],
                 (r) => callback(dataBinding.bindCompetition(r)),
                 errorCallback,noConnectionCallback);
 
@@ -721,13 +785,18 @@ function insertMatches(matches,callback,errorCallback,noConnectionCallback)
                 throw new Error("callback must be defined and be a function");
 
         }
-        //id
-        console.log(matches);
-        let queries = matches.map((c) => "insert ignore into football.match(id,competitionID,date,home,away,data)" +
-                                "values (" + c.id + "," + c.competitionID  + ",'" + c.date + "','" + c.home + "','" + c.away + "','" + c.data + "')");
-        console.log(queries);
+        
+        let params = [];
 
-        multiInsertQuery(queries,callback,errorCallback,noConnectionCallback);
+        let queries = matches.map((s) => 
+                                {
+                                
+                                        params.push([s.id,s.competitionID,s.date,s.home,s.away,s.data]);
+                                        
+                                return "insert ignore into football.match(id,competitionID,date,home,away,data) values(?,?,?,?,?,?);"
+                                })
+
+        multiInsertQuery(queries,params,callback,errorCallback,noConnectionCallback);
 
 }
 
