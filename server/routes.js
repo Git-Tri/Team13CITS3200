@@ -1,8 +1,13 @@
-const middleware = require("./middleware.js")
-const dbAccess = require("./databaseAccess")
-const api = require("./football-api")
-const domain = require("./domain")
-const editEngine = require("./editEngine")
+const middleware = require("./middleware.js");
+const dbAccess = require("./database-access/access");
+const getAll = require("./database-access/get-all-data");
+const editAccess = require("./database-access/edit");
+const unstructuredDataAccess = require("./database-access/unstructured-data");
+const structuredDataAccess = require("./database-access/structured-data");
+const matchAccess = require("./database-access/match");
+const api = require("./football-api");
+const domain = require("./domain");
+const editEngine = require("./editEngine");
 var o2x = require('object-to-xml')
 
 exports.createRoutes = function(app)
@@ -43,7 +48,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type","application/json");
 
-        dbAccess.getAllUnstrucredData((result => 
+        getAll.getAllUnstrucredData((result => 
           {
 
             let responseObject = {UnstructuredData: result};
@@ -64,11 +69,11 @@ exports.createRoutes = function(app)
       let unstructuredData;
       let matchData;
       
-      dbAccess.getUnstrucredData(usid,(result =>
+      unstructuredDataAccess.deleteEditById(usid,(result =>
       {
         unstructuredDatabyId = result[0];
         
-        dbAccess.getMatchById(unstructuredDatabyId.matchid,(result)=>
+        matchAccess.getMatchById(unstructuredDatabyId.matchid,(result)=>
           {
 
             matchDatabyId = result[0];
@@ -114,7 +119,7 @@ exports.createRoutes = function(app)
 
       let UnstructuredData = req.body;
 
-      dbAccess.updateUnstructuredData(UnstructuredData,() => 
+      unstructuredDataAccess.updateUnstructuredData(UnstructuredData,() => 
       {                
 
         res.sendStatus(200);          
@@ -149,7 +154,7 @@ exports.createRoutes = function(app)
         }
       }
 
-      dbAccess.insertUnstructuredData(UnstructuredData,() => 
+      unstructuredDataAccess.insertUnstructuredData(UnstructuredData,() => 
       {
 
         res.sendStatus(200);
@@ -167,7 +172,7 @@ exports.createRoutes = function(app)
           
       res.setHeader("Content-Type","application/json");
 
-      dbAccess.deleteUnstrucredData(usid,(result) => 
+      unstructuredDataAccess.deleteUnstrucredData(usid,(result) => 
       {
 
       res.sendStatus(200);
@@ -184,12 +189,12 @@ exports.createRoutes = function(app)
       let unstructuredDataList;
       let structuredDataList; 
 
-      dbAccess.getAllStructuredData((result => 
+      getAll.getAllStructuredData((result => 
         {
 
           structuredDataList = result;
 
-          dbAccess.getAllUnstrucredData(result => 
+          getAll.getAllUnstrucredData(result => 
             {
 
               unstructuredDataList = result; 
@@ -210,7 +215,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type","application/json");
 
-        dbAccess.getAllStructuredData((result => 
+        getAll.getAllStructuredData((result => 
           {
 
             let responseObject = {structuredData: result};
@@ -229,7 +234,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type","application/json");
 
-        dbAccess.getEditById(editId,(editResult) => 
+        editAccess.getEditById(editId,(editResult) => 
         {
 
           if(editResult.length > 1)
@@ -254,12 +259,12 @@ exports.createRoutes = function(app)
 
             let usid = Number.isInteger(edit.unstructuredDataID) ? [edit.unstructuredDataID] : [];
 
-            dbAccess.getUnstructuredDataByIds(usid,(unstructuredResult) => 
+            unstructuredDataAccess.getUnstructuredDataByIds(usid,(unstructuredResult) => 
             {
 
               let unstructuredData = unstructuredResult.length > 0 ? unstructuredResult[0] : null;
 
-              dbAccess.getStructuredDataByIds(sid,(structuredResult) => 
+              structuredDataAccess.getStructuredDataByIds(sid,(structuredResult) => 
               {
 
                 let structuredData =  structuredResult.length > 0 ? structuredResult[0] : null;
@@ -312,7 +317,7 @@ exports.createRoutes = function(app)
 
         let edit = req.body;
 
-        dbAccess.updateEdit(edit,() => 
+        editAccess.updateEdit(edit,() => 
         {                
 
           res.sendStatus(200);          
@@ -348,7 +353,7 @@ exports.createRoutes = function(app)
         }
       }
 
-      dbAccess.insertEdit(edit,() => 
+      editAccess.insertEdit(edit,() => 
       {
 
         res.sendStatus(200);
@@ -364,7 +369,7 @@ exports.createRoutes = function(app)
 
       var editId = req.query.id;
 
-      dbAccess.getEditById(editId,(result) => 
+      editAccess.getEditById(editId,(result) => 
       {
 
 
@@ -385,7 +390,7 @@ exports.createRoutes = function(app)
           
           res.setHeader("Content-Type","application/json");
 
-          dbAccess.deleteEditById(editId,(result) => 
+          editAccess.deleteEditById(editId,(result) => 
           {
     
           res.sendStatus(200);
@@ -405,7 +410,7 @@ exports.createRoutes = function(app)
 
       res.setHeader("Content-Type","application/json");
 
-      dbAccess.getAllEdits((result => 
+      getAll.getAllEdits((result => 
         {
 
           let editList = result;
@@ -416,12 +421,12 @@ exports.createRoutes = function(app)
           let usids = result.filter(edit => edit.unstructuredDataID !== null && edit.unstructuredDataID !== undefined)
                           .map(edit => edit.unstructuredDataID)
 
-          dbAccess.getUnstructuredDataByIds(usids,(unstructuredResult) => 
+          unstructuredDataAccess.getUnstructuredDataByIds(usids,(unstructuredResult) => 
           {
 
             let unstructuredDataList = unstructuredResult;
 
-            dbAccess.getStructuredDataByIds(sids,(structuredResult) => 
+            structuredDataAccess.getStructuredDataByIds(sids,(structuredResult) => 
             {
 
               let structuredDataList = structuredResult; 
@@ -448,7 +453,7 @@ exports.createRoutes = function(app)
 
       res.setHeader("Content-Type","application/json");
 
-      dbAccess.getUnstructuredDataByMatchId(matchId,(result => 
+      unstructuredDataAccess.getUnstructuredDataByMatchId(matchId,(result => 
         {          
 
           let responseObject = {unstructuredData: result};
@@ -462,7 +467,7 @@ exports.createRoutes = function(app)
     //Route to get all matches (GET)
     middleware.get(app,"/matchlist",(req,res) =>  {
 
-      dbAccess.getAllMatches((result => {
+      getAll.getAllMatches((result => {
           console.log("Sending all matches");
           
           res.setHeader("Content-Type","application/json");
@@ -476,8 +481,7 @@ exports.createRoutes = function(app)
     //Route to get all competitions (GET)
     middleware.get(app,"/competitions",(req,res) =>  {
      
-      dbAccess.getAllComps((result => {
-          console.log("Sending all competitions");
+      getAll.getAllComps((result => {
           
           res.setHeader("Content-Type","application/json");
           res.send(JSON.stringify(result));
@@ -494,7 +498,7 @@ exports.createRoutes = function(app)
 
       
 
-      dbAccess.getMatchById(matchId, (result => {
+      matchAccess.getMatchById(matchId, (result => {
           console.log("Sending just match" + matchId);
           
           res.setHeader("Content-Type","application/json");
@@ -528,7 +532,7 @@ exports.createRoutes = function(app)
           });
         
 
-          dbAccess.insertMatches(matches, (result) =>{
+          matchAccess.insertMatches(matches, (result) =>{
             res.sendStatus(200);
           }, (err) => standardServerErrorHandler(err,res),(err) => standardServerErrorHandler(err,req))
         });
@@ -541,7 +545,7 @@ exports.createRoutes = function(app)
 
       var id = req.query.id;
 
-      dbAccess.getStructuredData(id,(result) => 
+      structuredDataAccess.getStructuredData(id,(result) => 
       {
 
 
@@ -562,7 +566,7 @@ exports.createRoutes = function(app)
           
           res.setHeader("Content-Type","application/json");
 
-          dbAccess.deleteStructuredData(id,(result) => 
+          structuredDataAccess.deleteStructuredData(id,(result) => 
           {
     
           res.sendStatus(200);
@@ -582,7 +586,7 @@ exports.createRoutes = function(app)
 
       res.setHeader("Content-Type","application/json");
       
-      dbAccess.getStructuredData(id,(result =>
+      structuredDataAccess.getStructuredData(id,(result =>
       {
         
         if(result.length < 1)
@@ -612,7 +616,7 @@ exports.createRoutes = function(app)
       var unstructuredDataResult;
       var structuredDataResult;
 
-      dbAccess.getAllStructuredData((result =>
+      getAll.getAllStructuredData((result =>
         {
 
           structuredDataArray = result;
@@ -622,7 +626,7 @@ exports.createRoutes = function(app)
               structuredDataResult = result;
             
 
-          dbAccess.getAllUnstrucredData(result=>
+          getAll.getAllUnstrucredData(result=>
             {
               unstructuredDataArray = result;
 

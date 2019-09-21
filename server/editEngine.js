@@ -1,5 +1,6 @@
 const domain = require("./domain");
-const dbAccess = require("./databaseAccess");
+const dbAccess = require("./database-access/access");
+const getAll = require("./database-access/get-all-data")
 const dataBinding = require("./dataBinding");
 
 /**
@@ -339,7 +340,7 @@ function applyRulesMutiInputs(inputs,callback)
         
     }
 
-    dbAccess.getAllEdits((result) => 
+    getAll.getAllEdits((result) => 
     {
 
         callback(inputs.map((input) => applyRulesWithEdits(input,result)));

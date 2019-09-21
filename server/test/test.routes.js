@@ -13,7 +13,7 @@ const assert = require('assert');
 const should = require('chai').should();
 const request = require("request");
 
-const dbAccess = require("../databaseAccess");
+const dbAccess = require("../database-access/access");
 const domain = require("../domain");
 
 //start server

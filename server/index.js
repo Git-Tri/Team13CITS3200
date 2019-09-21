@@ -10,11 +10,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const routes = require("./routes.js");
-const dbAccess = require("./databaseAccess");
+const compsAccess = require("./database-access/comps");
 const api = require("./football-api");
 const domain = require("./domain");
 
-dbAccess.query("select * from football.match",[],console.log,console.log);
 
 //start app
 const app = express();
@@ -60,7 +59,7 @@ if(process.env.APIKEY !== undefined && process.env.APIKEY !== "undefined")
       mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
     
     });
-    dbAccess.insertComps(mappedComps, (result) => {
+    compsAccess.insertComps(mappedComps, (result) => {
       console.log("Updated all competitions from API and updated database");
     }, (err) => {console.log(err);},(err) => {console.log(err);});
   });

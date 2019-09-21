@@ -7,10 +7,16 @@ if (envResult.error)
 }
 
 const assert = require('assert');
-const should = require('chai').should()
-const dbAccess = require("../databaseAccess") 
+const should = require('chai').should();
+const dbAccess = require("../database-access/access");
 const domain = require("../domain");
 const dataBinding = require("../dataBinding");
+const getAll = require("../database-access/get-all-data");
+const editAccess = require("../database-access/edit");
+const unstructuredDataAccess = require("../database-access/unstructured-data");
+const structuredDataAccess = require("../database-access/structured-data");
+const compsDataAccess = require("../database-access/comps");
+
 
 describe('Database Access Tests ', function() {
 
@@ -276,7 +282,7 @@ describe('Database Access Tests ', function() {
        it("should have correct number of structured data in result",(done) => 
        {
 
-            dbAccess.getAllStructuredData((result) => 
+            getAll.getAllStructuredData((result) => 
             {
 
                 result.length.should.equal(19);
@@ -290,7 +296,7 @@ describe('Database Access Tests ', function() {
        it("should have correct types of structured data in result",(done) => 
        {
 
-            dbAccess.getAllStructuredData((result) => 
+            getAll.getAllStructuredData((result) => 
             {
 
                 result.every((r) => r instanceof domain.StructuredData).should.equal(true);
@@ -304,7 +310,7 @@ describe('Database Access Tests ', function() {
        it("should have correct fields of structured data in result",(done) => 
        {
 
-            dbAccess.getAllStructuredData((result) => 
+            getAll.getAllStructuredData((result) => 
             {
 
                 let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
@@ -389,7 +395,7 @@ describe('Database Access Tests ', function() {
        it("should have correct number of unstructured data in result",(done) => 
        {
 
-            dbAccess.getAllUnstrucredData((result) => 
+            getAll.getAllUnstrucredData((result) => 
             {
 
                 result.length.should.equal(5);
@@ -403,7 +409,7 @@ describe('Database Access Tests ', function() {
        it("should have correct types of unstructured data in result",(done) => 
        {
 
-            dbAccess.getAllUnstrucredData((result) => 
+            getAll.getAllUnstrucredData((result) => 
             {
 
                 result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
@@ -417,7 +423,7 @@ describe('Database Access Tests ', function() {
        it("should have correct fields of unstructured data in result",(done) => 
        {
 
-            dbAccess.getAllUnstrucredData((result) => 
+            getAll.getAllUnstrucredData((result) => 
             {
 
 
@@ -453,52 +459,52 @@ describe('Database Access Tests ', function() {
     describe("get edit tests",() => 
     {
 
-        it("Should exist",() => should.exist(dbAccess.getEditById));
+        it("Should exist",() => should.exist(editAccess.getEditById));
 
         it("Should throw error for no callback",() => assert.throws(
-                () => dbAccess.getEditById(1,undefined,assert.fail,assert.fail),
+                () => editAccess.getEditById(1,undefined,assert.fail,assert.fail),
                 Error,
                 "callback must be defined and be a function"));
         
         it("Should call error callback with invalid id",(done) => 
         {
 
-            dbAccess.getEditById("bob",assert.fail,() => done(),assert.fail);
+            editAccess.getEditById("bob",assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with undefined id",(done) => 
         {
 
-            dbAccess.getEditById(undefined,assert.fail,() => done(),assert.fail);
+            editAccess.getEditById(undefined,assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with null id",(done) => 
         {
 
-            dbAccess.getEditById(null,assert.fail,() => done(),assert.fail);
+            editAccess.getEditById(null,assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with object id",(done) => 
         {
 
-            dbAccess.getEditById({someId: 5},assert.fail,() => done(),assert.fail);
+            editAccess.getEditById({someId: 5},assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should get edit",(done) => 
         {
 
-            dbAccess.getEditById(editId,() => done(),assert.fail,assert.fail);
+            editAccess.getEditById(editId,() => done(),assert.fail,assert.fail);
 
         });
 
         it("Should get edit with fields",(done) => 
         {
 
-            dbAccess.getEditById(editId,(result) => 
+            editAccess.getEditById(editId,(result) => 
             {
 
                 result = result[0];
@@ -535,10 +541,10 @@ describe('Database Access Tests ', function() {
 
         let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","hello","replaceWith");
 
-        it("Should exist",() => should.exist(dbAccess.updateEdit));
+        it("Should exist",() => should.exist(editAccess.updateEdit));
 
         it("Should throw error for no callback",() => assert.throws(
-            () => dbAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail),
+            () => editAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail),
             Error,
             "callback must be defined and be a function"));
 
@@ -549,7 +555,7 @@ describe('Database Access Tests ', function() {
 
             delete edit.type;
 
-            dbAccess.updateEdit(edit,assert.fail,() => done(),assert.fail)
+            editAccess.updateEdit(edit,assert.fail,() => done(),assert.fail)
 
         });
 
@@ -560,14 +566,14 @@ describe('Database Access Tests ', function() {
                 
                 edit.editID += 10;
 
-                dbAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail)
+                editAccess.updateEdit(editGen(),undefined,assert.fail,assert.fail)
             },
             Error,"Could not find an edit with id " + editId));
 
         it("Should execute update edit",(done) => 
         {
            
-            dbAccess.updateEdit(editGen(),(r) => 
+            editAccess.updateEdit(editGen(),(r) => 
             {
 
                 done();
@@ -579,7 +585,7 @@ describe('Database Access Tests ', function() {
         it("Should have edit with updated fields",(done) => 
         {
 
-            dbAccess.getEditById(editId,(result) => 
+            editAccess.getEditById(editId,(result) => 
             {
 
                 result = result[0];
@@ -616,10 +622,10 @@ describe('Database Access Tests ', function() {
 
         let editGen = () => new domain.Edit(editId,null,null,false,{},"testEdit","insertTest","replaceWith");
 
-        it("Should exist",() => should.exist(dbAccess.insertEdit));
+        it("Should exist",() => should.exist(editAccess.insertEdit));
 
         it("Should throw error for no callback",() => assert.throws(
-            () => dbAccess.insertEdit(editGen(),undefined,assert.fail,assert.fail),
+            () => editAccess.insertEdit(editGen(),undefined,assert.fail,assert.fail),
             Error,
             "callback must be defined and be a function"));
 
@@ -630,14 +636,14 @@ describe('Database Access Tests ', function() {
 
             delete edit.type;
 
-            dbAccess.insertEdit(edit,assert.fail,() => done(),assert.fail)
+            editAccess.insertEdit(edit,assert.fail,() => done(),assert.fail)
 
         });
 
         it("Should successfull insert an edit",(done) => 
         {
 
-            dbAccess.insertEdit(editGen(),() => done(),assert.fail,assert.fail);
+            editAccess.insertEdit(editGen(),() => done(),assert.fail,assert.fail);
 
         });
 
@@ -677,52 +683,52 @@ describe('Database Access Tests ', function() {
     describe("Delete edit by id tests",function()
     {
 
-        it("Should exist",() => should.exist(dbAccess.getEditById));
+        it("Should exist",() => should.exist(editAccess.getEditById));
 
         it("Should throw error for no callback",() => assert.throws(
-                () => dbAccess.deleteEditById(1,undefined,assert.fail,assert.fail),
+                () => editAccess.deleteEditById(1,undefined,assert.fail,assert.fail),
                 Error,
                 "callback must be defined and be a function"));
         
         it("Should call error callback with invalid id",(done) => 
         {
 
-            dbAccess.deleteEditById("bob",assert.fail,() => done(),assert.fail);
+            editAccess.deleteEditById("bob",assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with undefined id",(done) => 
         {
 
-            dbAccess.deleteEditById(undefined,assert.fail,() => done(),assert.fail);
+            editAccess.deleteEditById(undefined,assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with null id",(done) => 
         {
 
-            dbAccess.deleteEditById(null,assert.fail,() => done(),assert.fail);
+            editAccess.deleteEditById(null,assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with object id",(done) => 
         {
 
-            dbAccess.deleteEditById({someId: 5},assert.fail,() => done(),assert.fail);
+            editAccess.deleteEditById({someId: 5},assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should delete edit",(done) => 
         {
 
-            dbAccess.deleteEditById(editId,() => done(),assert.fail,assert.fail);
+            editAccess.deleteEditById(editId,() => done(),assert.fail,assert.fail);
 
         });
 
         it("Should not have deleted edit in database",(done) => 
         {
 
-            dbAccess.getEditById(editId,(result) => 
+            editAccess.getEditById(editId,(result) => 
             {
 
                 assert.equal(result.length == 0,true);             
@@ -796,12 +802,12 @@ describe('Database Access Tests ', function() {
         },(err) => {throw err},(err) => {throw err});
        });
 
-       it("Should exist",() => should.exist(dbAccess.getAllEdits))
+       it("Should exist",() => should.exist(getAll.getAllEdits))
 
        it("should have correct number of edits in result",(done) => 
        {
 
-            dbAccess.getAllEdits((result) => 
+            getAll.getAllEdits((result) => 
             {
 
 
@@ -816,7 +822,7 @@ describe('Database Access Tests ', function() {
        it("Should have correct types of edit in result",(done) => 
        {
 
-            dbAccess.getAllEdits((result) => 
+            getAll.getAllEdits((result) => 
             {
 
                 result.every((r) => r instanceof domain.Edit).should.equal(true);
@@ -830,7 +836,7 @@ describe('Database Access Tests ', function() {
        it("should have correct fields of edits in result",(done) => 
        {
             //delete ids as schema doesn't support id
-            dbAccess.getAllEdits((edits) => 
+            getAll.getAllEdits((edits) => 
             {
 
                 edits.every((result) => 
@@ -937,24 +943,24 @@ describe('Database Access Tests ', function() {
     
        });
         
-        it("Should exist",() => should.exist(dbAccess.getUnstructuredDataByMatchId))
+        it("Should exist",() => should.exist(unstructuredDataAccess.getUnstructuredDataByMatchId))
 
         it("Should throw error for no callback",() => assert.throws(
-            () => dbAccess.getUnstructuredDataByMatchId(1,undefined,assert.fail,assert.fail),
+            () => unstructuredDataAccess.getUnstructuredDataByMatchId(1,undefined,assert.fail,assert.fail),
             Error,
             "callback must be defined and be a function"));
     
         it("Should call error callback with invalid id",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId("bob",assert.fail,() => done(),assert.fail);
+            unstructuredDataAccess.getUnstructuredDataByMatchId("bob",assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with undefined id",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(undefined,assert.fail,() => done(),assert.fail);
+            unstructuredDataAccess.getUnstructuredDataByMatchId(undefined,assert.fail,() => done(),assert.fail);
 
         });
 
@@ -962,7 +968,7 @@ describe('Database Access Tests ', function() {
         it("should have correct number of unstructured data in result for match id 1",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
             {
 
                 result.length.should.equal(5);
@@ -976,7 +982,7 @@ describe('Database Access Tests ', function() {
         it("should have correct types of unstructured data in result for match id 1",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
             {
 
                 result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
@@ -990,7 +996,7 @@ describe('Database Access Tests ', function() {
         it("should have correct fields of unstructured data in result for match id 1",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByMatchId(matchid1,(result) => 
             {
 
 
@@ -1024,7 +1030,7 @@ describe('Database Access Tests ', function() {
         it("should have correct number of unstructured data in result for match id 2",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
             {
 
                 result.length.should.equal(6);
@@ -1038,7 +1044,7 @@ describe('Database Access Tests ', function() {
         it("should have correct types of unstructured data in result for match id 2",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
             {
 
                 result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
@@ -1052,7 +1058,7 @@ describe('Database Access Tests ', function() {
         it("should have correct fields of unstructured data in result for match id 2",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByMatchId(matchid2,(result) => 
             {
 
 
@@ -1142,31 +1148,31 @@ describe('Database Access Tests ', function() {
                 },(err) => {throw err},(err) => {throw err});       
             });        
     
-            it("Should exist",() => should.exist(dbAccess.getStructuredDataByIds))
+            it("Should exist",() => should.exist(structuredDataAccess.getStructuredDataByIds))
 
             it("Should throw error for no callback",() => assert.throws(
-                () => dbAccess.getUnstructuredDataByIds([1],undefined,assert.fail,assert.fail),
+                () => unstructuredDataAccess.getUnstructuredDataByIds([1],undefined,assert.fail,assert.fail),
                 Error,
                 "callback must be defined and be a function"));
         
             it("Should call error callback with invalid id",(done) => 
             {
     
-                dbAccess.getUnstructuredDataByIds(["bob"],assert.fail,() => done(),assert.fail);
+                unstructuredDataAccess.getUnstructuredDataByIds(["bob"],assert.fail,() => done(),assert.fail);
     
             });
     
             it("Should call error callback with undefined id",(done) => 
             {
     
-                dbAccess.getUnstructuredDataByIds([undefined],assert.fail,() => done(),assert.fail);
+                unstructuredDataAccess.getUnstructuredDataByIds([undefined],assert.fail,() => done(),assert.fail);
     
             });
     
             it("Should have no results for empty ids passed in",(done) => 
             {
      
-                 dbAccess.getUnstructuredDataByIds([],(result) => 
+                 unstructuredDataAccess.getUnstructuredDataByIds([],(result) => 
                  {
      
                      result.length.should.equal(0);
@@ -1181,7 +1187,7 @@ describe('Database Access Tests ', function() {
              it("should have correct number of unstructured data",(done) => 
             {
 
-                dbAccess.getUnstructuredDataByIds(ids,(result) => 
+                unstructuredDataAccess.getUnstructuredDataByIds(ids,(result) => 
                 {
 
                     result.length.should.equal(5);
@@ -1195,7 +1201,7 @@ describe('Database Access Tests ', function() {
         it("should have correct types of unstructured data in result",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByIds(ids,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByIds(ids,(result) => 
             {
 
                 result.every((r) => r instanceof domain.UnstructuredData).should.equal(true);
@@ -1209,7 +1215,7 @@ describe('Database Access Tests ', function() {
         it("should have correct fields of unstructured data in result",(done) => 
         {
 
-            dbAccess.getUnstructuredDataByIds(ids,(result) => 
+            unstructuredDataAccess.getUnstructuredDataByIds(ids,(result) => 
             {
 
                 let modelObject = new domain.UnstructuredData(undefined,matchid,"some title","testAuthor","some url",new Date("2000-01-21T00:00:00.000Z"),
@@ -1288,31 +1294,31 @@ describe('Database Access Tests ', function() {
             },(err) => {throw err},(err) => {throw err});       
         });
 
-        it("Should exist",() => should.exist(dbAccess.getStructuredDataByIds))
+        it("Should exist",() => should.exist(structuredDataAccess.getStructuredDataByIds))
 
         it("Should throw error for no callback",() => assert.throws(
-            () => dbAccess.getStructuredDataByIds([1],undefined,assert.fail,assert.fail),
+            () => structuredDataAccess.getStructuredDataByIds([1],undefined,assert.fail,assert.fail),
             Error,
             "callback must be defined and be a function"));
     
         it("Should call error callback with invalid id",(done) => 
         {
 
-            dbAccess.getStructuredDataByIds(["bob"],assert.fail,() => done(),assert.fail);
+            structuredDataAccess.getStructuredDataByIds(["bob"],assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should call error callback with undefined id",(done) => 
         {
 
-            dbAccess.getStructuredDataByIds([undefined],assert.fail,() => done(),assert.fail);
+            structuredDataAccess.getStructuredDataByIds([undefined],assert.fail,() => done(),assert.fail);
 
         });
 
         it("Should have no results for empty ids passed in",(done) => 
        {
 
-            dbAccess.getStructuredDataByIds([],(result) => 
+            structuredDataAccess.getStructuredDataByIds([],(result) => 
             {
 
                 result.length.should.equal(0);
@@ -1327,7 +1333,7 @@ describe('Database Access Tests ', function() {
        it("Should have correct number of structured data in result",(done) => 
        {
 
-            dbAccess.getStructuredDataByIds(ids,(result) => 
+            structuredDataAccess.getStructuredDataByIds(ids,(result) => 
             {
 
                 result.length.should.equal(19);
@@ -1341,7 +1347,7 @@ describe('Database Access Tests ', function() {
        it("Should have correct types of structured data in result",(done) => 
        {
 
-            dbAccess.getStructuredDataByIds(ids,(result) => 
+            structuredDataAccess.getStructuredDataByIds(ids,(result) => 
             {
 
                 result.every((r) => r instanceof domain.StructuredData).should.equal(true);
@@ -1355,7 +1361,7 @@ describe('Database Access Tests ', function() {
        it("Should have correct fields of structured data in result",(done) => 
        {
 
-            dbAccess.getStructuredDataByIds(ids,(result) => 
+            structuredDataAccess.getStructuredDataByIds(ids,(result) => 
             {
 
                 let modelObject = new domain.StructuredData(undefined,new Date("1991-04-20T00:00:00.000Z"),"testTeam","bob",1,"some comp",{})
@@ -1395,19 +1401,19 @@ describe('Database Access Tests ', function() {
                     new domain.Competition(14,"some comp","some country",1),
                     new domain.Competition(15,"some comp","some country",1)];
 
-        it("should exist",() => should.exist(dbAccess.insertComps));
+        it("should exist",() => should.exist(compsDataAccess.insertComps));
 
         it("should insert comps without error",(done) => 
         {
 
-            dbAccess.insertComps(comps,() => done(),assert.fail,assert.fail);
+            compsDataAccess.insertComps(comps,() => done(),assert.fail,assert.fail);
 
         })
 
         it("should be able to get insert comps",(done) => 
         {
 
-            dbAccess.getAllComps((result) => 
+            getAll.getAllComps((result) => 
             {
 
                 let expected = [new domain.Competition(1,"some comp",null,null)].concat(comps);

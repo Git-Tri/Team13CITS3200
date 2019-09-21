@@ -6,9 +6,8 @@ if (envResult.error)
 }
 
 const assert = require('assert');
-const should = require('chai').should()
-const dbAccess = require("../databaseAccess") 
-const domain = require("../domain")
+const should = require('chai').should();
+const domain = require("../domain");
 
 describe("Domain Tests",function()
 {

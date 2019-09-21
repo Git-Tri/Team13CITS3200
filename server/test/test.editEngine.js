@@ -3,7 +3,7 @@ const should = require('chai').should();
 const editEngine = require("../editEngine");
 const domain = require("../domain");
 const testUtils = require("./testUtils");
-const dbAccess = require("../databaseAccess");
+const dbAccess = require("../database-access/access");
 
 describe("Edit Engine Tests",function()
 {
