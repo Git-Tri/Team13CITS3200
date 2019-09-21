@@ -4,14 +4,14 @@ exports[`Add Edit Tests Should render correctly for existing edit 1`] = `
 <div
   className="page"
 >
-  <PageHeader
+  <withRouter(PageHeader)
     header="Create new Edit"
   />
   <div
     id="container"
     style={
       Object {
-        "height": "100vh",
+        "minHeight": "100vh",
       }
     }
   >
@@ -38,14 +38,14 @@ exports[`Add Edit Tests Should render correctly for new edit 1`] = `
 <div
   className="page"
 >
-  <PageHeader
+  <withRouter(PageHeader)
     header="View Edit"
   />
   <div
     id="container"
     style={
       Object {
-        "height": "100vh",
+        "minHeight": "100vh",
       }
     }
   >

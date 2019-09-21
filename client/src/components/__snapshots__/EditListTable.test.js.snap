@@ -37,7 +37,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        6/3/1991 - some comp : some team vs some other team
+        20/4/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -69,7 +69,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        7/4/1991 - some author : some title
+        20/4/1991 - some author : some title
       </td>
       <td
         className=""
@@ -101,7 +101,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        6/3/1991 - some comp : some team vs some other team
+        20/4/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -139,7 +139,7 @@ exports[`Edit List Table Tests Should render correctly for correct input 1`] = `
       <td
         className=""
       >
-        No Data Selected
+        Entire Corpus
       </td>
       <td
         className=""
@@ -205,7 +205,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        6/3/1991 - some comp : some team vs some other team
+        20/4/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -237,7 +237,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        7/4/1991 - some author : some title
+        20/4/1991 - some author : some title
       </td>
       <td
         className=""
@@ -269,7 +269,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        6/3/1991 - some comp : some team vs some other team
+        20/4/1991 - some comp : some team vs some other team
       </td>
       <td
         className=""
@@ -307,7 +307,7 @@ exports[`Edit List Table Tests Should render correctly for correct input with on
       <td
         className=""
       >
-        No Data Selected
+        Entire Corpus
       </td>
       <td
         className=""

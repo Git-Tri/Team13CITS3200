@@ -8,21 +8,17 @@ exports[`Data Pair Tests Should render correctly 1`] = `
     }
   }
 >
-  <b>
+  <b
+    style={
+      Object {
+        "padding": "0px 0px 0px 15px",
+      }
+    }
+  >
      
     hello
     :
   </b>
-  <div
-    style={
-      Object {
-        "float": "right",
-        "padding": "0px 0px 0px 5px",
-      }
-    }
-  >
-    world
-     
-  </div>
+  world
 </div>
 `;

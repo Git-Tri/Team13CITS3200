@@ -37,7 +37,7 @@ exports[`Structured Data Table Tests Should render correctly for correct input 1
       <td
         className=""
       >
-        6/3/1991
+        20/3/1991
       </td>
       <td
         className=""
@@ -57,7 +57,7 @@ exports[`Structured Data Table Tests Should render correctly for correct input 1
       <td
         className=""
       >
-        6/3/1991
+        20/3/1991
       </td>
       <td
         className=""
@@ -111,7 +111,7 @@ exports[`Structured Data Table Tests Should render correctly for correct input w
       <td
         className=""
       >
-        6/3/1991
+        20/3/1991
       </td>
       <td
         className=""
@@ -131,7 +131,7 @@ exports[`Structured Data Table Tests Should render correctly for correct input w
       <td
         className=""
       >
-        6/3/1991
+        20/3/1991
       </td>
       <td
         className=""

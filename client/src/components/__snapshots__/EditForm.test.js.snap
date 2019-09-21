@@ -1231,14 +1231,49 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                   options={
                     Array [
                       Object {
-                        "key": "Player",
-                        "text": "Player",
-                        "value": "Player",
+                        "key": "cards",
+                        "text": "Cards",
+                        "value": "cards",
                       },
                       Object {
-                        "key": "Coach",
-                        "text": "Coach",
-                        "value": "Coach",
+                        "key": "lineup",
+                        "text": "Lineup",
+                        "value": "lineup",
+                      },
+                      Object {
+                        "key": "goalscorer",
+                        "text": "Goalscorer",
+                        "value": "goalscorer",
+                      },
+                      Object {
+                        "key": "league_name",
+                        "text": "League_name",
+                        "value": "league_name",
+                      },
+                      Object {
+                        "key": "country_name",
+                        "text": "Country_name",
+                        "value": "country_name",
+                      },
+                      Object {
+                        "key": "match_status",
+                        "text": "Match_status",
+                        "value": "match_status",
+                      },
+                      Object {
+                        "key": "substitutions",
+                        "text": "Substitutions",
+                        "value": "substitutions",
+                      },
+                      Object {
+                        "key": "match_hometeam_name",
+                        "text": "Match_hometeam_name",
+                        "value": "match_hometeam_name",
+                      },
+                      Object {
+                        "key": "match_awayteam_name",
+                        "text": "Match_awayteam_name",
+                        "value": "match_awayteam_name",
                       },
                     ]
                   }
@@ -1252,14 +1287,49 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                     options={
                       Array [
                         Object {
-                          "key": "Player",
-                          "text": "Player",
-                          "value": "Player",
+                          "key": "cards",
+                          "text": "Cards",
+                          "value": "cards",
                         },
                         Object {
-                          "key": "Coach",
-                          "text": "Coach",
-                          "value": "Coach",
+                          "key": "lineup",
+                          "text": "Lineup",
+                          "value": "lineup",
+                        },
+                        Object {
+                          "key": "goalscorer",
+                          "text": "Goalscorer",
+                          "value": "goalscorer",
+                        },
+                        Object {
+                          "key": "league_name",
+                          "text": "League_name",
+                          "value": "league_name",
+                        },
+                        Object {
+                          "key": "country_name",
+                          "text": "Country_name",
+                          "value": "country_name",
+                        },
+                        Object {
+                          "key": "match_status",
+                          "text": "Match_status",
+                          "value": "match_status",
+                        },
+                        Object {
+                          "key": "substitutions",
+                          "text": "Substitutions",
+                          "value": "substitutions",
+                        },
+                        Object {
+                          "key": "match_hometeam_name",
+                          "text": "Match_hometeam_name",
+                          "value": "match_hometeam_name",
+                        },
+                        Object {
+                          "key": "match_awayteam_name",
+                          "text": "Match_awayteam_name",
+                          "value": "match_awayteam_name",
                         },
                       ]
                     }
@@ -1277,14 +1347,49 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                         options={
                           Array [
                             Object {
-                              "key": "Player",
-                              "text": "Player",
-                              "value": "Player",
+                              "key": "cards",
+                              "text": "Cards",
+                              "value": "cards",
                             },
                             Object {
-                              "key": "Coach",
-                              "text": "Coach",
-                              "value": "Coach",
+                              "key": "lineup",
+                              "text": "Lineup",
+                              "value": "lineup",
+                            },
+                            Object {
+                              "key": "goalscorer",
+                              "text": "Goalscorer",
+                              "value": "goalscorer",
+                            },
+                            Object {
+                              "key": "league_name",
+                              "text": "League_name",
+                              "value": "league_name",
+                            },
+                            Object {
+                              "key": "country_name",
+                              "text": "Country_name",
+                              "value": "country_name",
+                            },
+                            Object {
+                              "key": "match_status",
+                              "text": "Match_status",
+                              "value": "match_status",
+                            },
+                            Object {
+                              "key": "substitutions",
+                              "text": "Substitutions",
+                              "value": "substitutions",
+                            },
+                            Object {
+                              "key": "match_hometeam_name",
+                              "text": "Match_hometeam_name",
+                              "value": "match_hometeam_name",
+                            },
+                            Object {
+                              "key": "match_awayteam_name",
+                              "text": "Match_awayteam_name",
+                              "value": "match_awayteam_name",
                             },
                           ]
                         }
@@ -1305,14 +1410,49 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                           options={
                             Array [
                               Object {
-                                "key": "Player",
-                                "text": "Player",
-                                "value": "Player",
+                                "key": "cards",
+                                "text": "Cards",
+                                "value": "cards",
                               },
                               Object {
-                                "key": "Coach",
-                                "text": "Coach",
-                                "value": "Coach",
+                                "key": "lineup",
+                                "text": "Lineup",
+                                "value": "lineup",
+                              },
+                              Object {
+                                "key": "goalscorer",
+                                "text": "Goalscorer",
+                                "value": "goalscorer",
+                              },
+                              Object {
+                                "key": "league_name",
+                                "text": "League_name",
+                                "value": "league_name",
+                              },
+                              Object {
+                                "key": "country_name",
+                                "text": "Country_name",
+                                "value": "country_name",
+                              },
+                              Object {
+                                "key": "match_status",
+                                "text": "Match_status",
+                                "value": "match_status",
+                              },
+                              Object {
+                                "key": "substitutions",
+                                "text": "Substitutions",
+                                "value": "substitutions",
+                              },
+                              Object {
+                                "key": "match_hometeam_name",
+                                "text": "Match_hometeam_name",
+                                "value": "match_hometeam_name",
+                              },
+                              Object {
+                                "key": "match_awayteam_name",
+                                "text": "Match_awayteam_name",
+                                "value": "match_awayteam_name",
                               },
                             ]
                           }
@@ -1339,9 +1479,7 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                     aria-live="polite"
                                     class="text"
                                     role="alert"
-                                  >
-                                    Player
-                                  </div>
+                                  />
                                   <i
                                     aria-hidden="true"
                                     class="dropdown icon"
@@ -1350,16 +1488,16 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                     class="menu transition"
                                   >
                                     <div
-                                      aria-checked="true"
+                                      aria-checked="false"
                                       aria-selected="true"
-                                      class="active selected item"
+                                      class="selected item"
                                       role="option"
                                       style="pointer-events: all;"
                                     >
                                       <span
                                         class="text"
                                       >
-                                        Player
+                                        Cards
                                       </span>
                                     </div>
                                     <div
@@ -1372,7 +1510,98 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                       <span
                                         class="text"
                                       >
-                                        Coach
+                                        Lineup
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Goalscorer
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        League_name
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Country_name
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Match_status
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Substitutions
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Match_hometeam_name
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Match_awayteam_name
                                       </span>
                                     </div>
                                   </div>
@@ -1395,9 +1624,7 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                       aria-live="polite"
                                       class="text"
                                       role="alert"
-                                    >
-                                      Player
-                                    </div>
+                                    />
                                     <i
                                       aria-hidden="true"
                                       class="dropdown icon"
@@ -1406,16 +1633,16 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                       class="menu transition"
                                     >
                                       <div
-                                        aria-checked="true"
+                                        aria-checked="false"
                                         aria-selected="true"
-                                        class="active selected item"
+                                        class="selected item"
                                         role="option"
                                         style="pointer-events: all;"
                                       >
                                         <span
                                           class="text"
                                         >
-                                          Player
+                                          Cards
                                         </span>
                                       </div>
                                       <div
@@ -1428,7 +1655,98 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                         <span
                                           class="text"
                                         >
-                                          Coach
+                                          Lineup
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Goalscorer
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          League_name
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Country_name
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Match_status
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Substitutions
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Match_hometeam_name
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Match_awayteam_name
                                         </span>
                                       </div>
                                     </div>
@@ -1474,7 +1792,7 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                   >
                                     <DropdownItem
                                       active={false}
-                                      key="Player"
+                                      key="cards"
                                       onClick={[Function]}
                                       selected={true}
                                       style={
@@ -1482,8 +1800,8 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                           "pointerEvents": "all",
                                         }
                                       }
-                                      text="Player"
-                                      value="Player"
+                                      text="Cards"
+                                      value="cards"
                                     >
                                       <div
                                         aria-checked={false}
@@ -1500,13 +1818,13 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                         <span
                                           className="text"
                                         >
-                                          Player
+                                          Cards
                                         </span>
                                       </div>
                                     </DropdownItem>
                                     <DropdownItem
                                       active={false}
-                                      key="Coach"
+                                      key="lineup"
                                       onClick={[Function]}
                                       selected={false}
                                       style={
@@ -1514,8 +1832,8 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                           "pointerEvents": "all",
                                         }
                                       }
-                                      text="Coach"
-                                      value="Coach"
+                                      text="Lineup"
+                                      value="lineup"
                                     >
                                       <div
                                         aria-checked={false}
@@ -1532,7 +1850,231 @@ exports[`Edit Form Tests Should handle change in data settings and render change
                                         <span
                                           className="text"
                                         >
-                                          Coach
+                                          Lineup
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="goalscorer"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Goalscorer"
+                                      value="goalscorer"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Goalscorer
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="league_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="League_name"
+                                      value="league_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          League_name
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="country_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Country_name"
+                                      value="country_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Country_name
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="match_status"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Match_status"
+                                      value="match_status"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Match_status
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="substitutions"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Substitutions"
+                                      value="substitutions"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Substitutions
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="match_hometeam_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Match_hometeam_name"
+                                      value="match_hometeam_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Match_hometeam_name
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="match_awayteam_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Match_awayteam_name"
+                                      value="match_awayteam_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Match_awayteam_name
                                         </span>
                                       </div>
                                     </DropdownItem>
@@ -2865,14 +3407,49 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                   options={
                     Array [
                       Object {
-                        "key": "Player",
-                        "text": "Player",
-                        "value": "Player",
+                        "key": "cards",
+                        "text": "Cards",
+                        "value": "cards",
                       },
                       Object {
-                        "key": "Coach",
-                        "text": "Coach",
-                        "value": "Coach",
+                        "key": "lineup",
+                        "text": "Lineup",
+                        "value": "lineup",
+                      },
+                      Object {
+                        "key": "goalscorer",
+                        "text": "Goalscorer",
+                        "value": "goalscorer",
+                      },
+                      Object {
+                        "key": "league_name",
+                        "text": "League_name",
+                        "value": "league_name",
+                      },
+                      Object {
+                        "key": "country_name",
+                        "text": "Country_name",
+                        "value": "country_name",
+                      },
+                      Object {
+                        "key": "match_status",
+                        "text": "Match_status",
+                        "value": "match_status",
+                      },
+                      Object {
+                        "key": "substitutions",
+                        "text": "Substitutions",
+                        "value": "substitutions",
+                      },
+                      Object {
+                        "key": "match_hometeam_name",
+                        "text": "Match_hometeam_name",
+                        "value": "match_hometeam_name",
+                      },
+                      Object {
+                        "key": "match_awayteam_name",
+                        "text": "Match_awayteam_name",
+                        "value": "match_awayteam_name",
                       },
                     ]
                   }
@@ -2886,14 +3463,49 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                     options={
                       Array [
                         Object {
-                          "key": "Player",
-                          "text": "Player",
-                          "value": "Player",
+                          "key": "cards",
+                          "text": "Cards",
+                          "value": "cards",
                         },
                         Object {
-                          "key": "Coach",
-                          "text": "Coach",
-                          "value": "Coach",
+                          "key": "lineup",
+                          "text": "Lineup",
+                          "value": "lineup",
+                        },
+                        Object {
+                          "key": "goalscorer",
+                          "text": "Goalscorer",
+                          "value": "goalscorer",
+                        },
+                        Object {
+                          "key": "league_name",
+                          "text": "League_name",
+                          "value": "league_name",
+                        },
+                        Object {
+                          "key": "country_name",
+                          "text": "Country_name",
+                          "value": "country_name",
+                        },
+                        Object {
+                          "key": "match_status",
+                          "text": "Match_status",
+                          "value": "match_status",
+                        },
+                        Object {
+                          "key": "substitutions",
+                          "text": "Substitutions",
+                          "value": "substitutions",
+                        },
+                        Object {
+                          "key": "match_hometeam_name",
+                          "text": "Match_hometeam_name",
+                          "value": "match_hometeam_name",
+                        },
+                        Object {
+                          "key": "match_awayteam_name",
+                          "text": "Match_awayteam_name",
+                          "value": "match_awayteam_name",
                         },
                       ]
                     }
@@ -2911,14 +3523,49 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                         options={
                           Array [
                             Object {
-                              "key": "Player",
-                              "text": "Player",
-                              "value": "Player",
+                              "key": "cards",
+                              "text": "Cards",
+                              "value": "cards",
                             },
                             Object {
-                              "key": "Coach",
-                              "text": "Coach",
-                              "value": "Coach",
+                              "key": "lineup",
+                              "text": "Lineup",
+                              "value": "lineup",
+                            },
+                            Object {
+                              "key": "goalscorer",
+                              "text": "Goalscorer",
+                              "value": "goalscorer",
+                            },
+                            Object {
+                              "key": "league_name",
+                              "text": "League_name",
+                              "value": "league_name",
+                            },
+                            Object {
+                              "key": "country_name",
+                              "text": "Country_name",
+                              "value": "country_name",
+                            },
+                            Object {
+                              "key": "match_status",
+                              "text": "Match_status",
+                              "value": "match_status",
+                            },
+                            Object {
+                              "key": "substitutions",
+                              "text": "Substitutions",
+                              "value": "substitutions",
+                            },
+                            Object {
+                              "key": "match_hometeam_name",
+                              "text": "Match_hometeam_name",
+                              "value": "match_hometeam_name",
+                            },
+                            Object {
+                              "key": "match_awayteam_name",
+                              "text": "Match_awayteam_name",
+                              "value": "match_awayteam_name",
                             },
                           ]
                         }
@@ -2939,14 +3586,49 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                           options={
                             Array [
                               Object {
-                                "key": "Player",
-                                "text": "Player",
-                                "value": "Player",
+                                "key": "cards",
+                                "text": "Cards",
+                                "value": "cards",
                               },
                               Object {
-                                "key": "Coach",
-                                "text": "Coach",
-                                "value": "Coach",
+                                "key": "lineup",
+                                "text": "Lineup",
+                                "value": "lineup",
+                              },
+                              Object {
+                                "key": "goalscorer",
+                                "text": "Goalscorer",
+                                "value": "goalscorer",
+                              },
+                              Object {
+                                "key": "league_name",
+                                "text": "League_name",
+                                "value": "league_name",
+                              },
+                              Object {
+                                "key": "country_name",
+                                "text": "Country_name",
+                                "value": "country_name",
+                              },
+                              Object {
+                                "key": "match_status",
+                                "text": "Match_status",
+                                "value": "match_status",
+                              },
+                              Object {
+                                "key": "substitutions",
+                                "text": "Substitutions",
+                                "value": "substitutions",
+                              },
+                              Object {
+                                "key": "match_hometeam_name",
+                                "text": "Match_hometeam_name",
+                                "value": "match_hometeam_name",
+                              },
+                              Object {
+                                "key": "match_awayteam_name",
+                                "text": "Match_awayteam_name",
+                                "value": "match_awayteam_name",
                               },
                             ]
                           }
@@ -2993,7 +3675,7 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                       <span
                                         class="text"
                                       >
-                                        Player
+                                        Cards
                                       </span>
                                     </div>
                                     <div
@@ -3006,7 +3688,98 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                       <span
                                         class="text"
                                       >
-                                        Coach
+                                        Lineup
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Goalscorer
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        League_name
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Country_name
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Match_status
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Substitutions
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Match_hometeam_name
+                                      </span>
+                                    </div>
+                                    <div
+                                      aria-checked="false"
+                                      aria-selected="false"
+                                      class="item"
+                                      role="option"
+                                      style="pointer-events: all;"
+                                    >
+                                      <span
+                                        class="text"
+                                      >
+                                        Match_awayteam_name
                                       </span>
                                     </div>
                                   </div>
@@ -3049,7 +3822,7 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                         <span
                                           class="text"
                                         >
-                                          Player
+                                          Cards
                                         </span>
                                       </div>
                                       <div
@@ -3062,7 +3835,98 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                         <span
                                           class="text"
                                         >
-                                          Coach
+                                          Lineup
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Goalscorer
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          League_name
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Country_name
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Match_status
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Substitutions
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Match_hometeam_name
+                                        </span>
+                                      </div>
+                                      <div
+                                        aria-checked="false"
+                                        aria-selected="false"
+                                        class="item"
+                                        role="option"
+                                        style="pointer-events: all;"
+                                      >
+                                        <span
+                                          class="text"
+                                        >
+                                          Match_awayteam_name
                                         </span>
                                       </div>
                                     </div>
@@ -3108,7 +3972,7 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                   >
                                     <DropdownItem
                                       active={false}
-                                      key="Player"
+                                      key="cards"
                                       onClick={[Function]}
                                       selected={true}
                                       style={
@@ -3116,8 +3980,8 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                           "pointerEvents": "all",
                                         }
                                       }
-                                      text="Player"
-                                      value="Player"
+                                      text="Cards"
+                                      value="cards"
                                     >
                                       <div
                                         aria-checked={false}
@@ -3134,13 +3998,13 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                         <span
                                           className="text"
                                         >
-                                          Player
+                                          Cards
                                         </span>
                                       </div>
                                     </DropdownItem>
                                     <DropdownItem
                                       active={false}
-                                      key="Coach"
+                                      key="lineup"
                                       onClick={[Function]}
                                       selected={false}
                                       style={
@@ -3148,8 +4012,8 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                           "pointerEvents": "all",
                                         }
                                       }
-                                      text="Coach"
-                                      value="Coach"
+                                      text="Lineup"
+                                      value="lineup"
                                     >
                                       <div
                                         aria-checked={false}
@@ -3166,7 +4030,231 @@ exports[`Edit Form Tests Should handle change of iscorpus and render change 1`] 
                                         <span
                                           className="text"
                                         >
-                                          Coach
+                                          Lineup
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="goalscorer"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Goalscorer"
+                                      value="goalscorer"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Goalscorer
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="league_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="League_name"
+                                      value="league_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          League_name
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="country_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Country_name"
+                                      value="country_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Country_name
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="match_status"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Match_status"
+                                      value="match_status"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Match_status
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="substitutions"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Substitutions"
+                                      value="substitutions"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Substitutions
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="match_hometeam_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Match_hometeam_name"
+                                      value="match_hometeam_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Match_hometeam_name
+                                        </span>
+                                      </div>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      active={false}
+                                      key="match_awayteam_name"
+                                      onClick={[Function]}
+                                      selected={false}
+                                      style={
+                                        Object {
+                                          "pointerEvents": "all",
+                                        }
+                                      }
+                                      text="Match_awayteam_name"
+                                      value="match_awayteam_name"
+                                    >
+                                      <div
+                                        aria-checked={false}
+                                        aria-selected={false}
+                                        className="item"
+                                        onClick={[Function]}
+                                        role="option"
+                                        style={
+                                          Object {
+                                            "pointerEvents": "all",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="text"
+                                        >
+                                          Match_awayteam_name
                                         </span>
                                       </div>
                                     </DropdownItem>
@@ -4094,22 +5182,18 @@ exports[`Edit Form Tests Should render correctly for new edit 1`] = `
             }
           }
         >
-          <b>
+          <b
+            style={
+              Object {
+                "padding": "0px 0px 0px 15px",
+              }
+            }
+          >
              
             Data
             :
           </b>
-          <div
-            style={
-              Object {
-                "float": "right",
-                "padding": "0px 0px 0px 5px",
-              }
-            }
-          >
-            No Data Selected
-             
-          </div>
+          Entire Corpus
         </div>
         <button
           className="ui primary button"
@@ -4628,7 +5712,7 @@ exports[`Edit Form Tests Should render correctly for saving new data 1`] = `
                 </FormCheckbox>
                 <DataPair
                   label="Data"
-                  text="No Data Selected"
+                  text="Entire Corpus"
                 >
                   <div
                     style={
@@ -4637,22 +5721,18 @@ exports[`Edit Form Tests Should render correctly for saving new data 1`] = `
                       }
                     }
                   >
-                    <b>
+                    <b
+                      style={
+                        Object {
+                          "padding": "0px 0px 0px 15px",
+                        }
+                      }
+                    >
                        
                       Data
                       :
                     </b>
-                    <div
-                      style={
-                        Object {
-                          "float": "right",
-                          "padding": "0px 0px 0px 5px",
-                        }
-                      }
-                    >
-                      No Data Selected
-                       
-                    </div>
+                    Entire Corpus
                   </div>
                 </DataPair>
                 <ChooseDataModal
@@ -5356,7 +6436,7 @@ exports[`Edit Form Tests Should render correctly for successful save 1`] = `
                 </FormCheckbox>
                 <DataPair
                   label="Data"
-                  text="No Data Selected"
+                  text="Entire Corpus"
                 >
                   <div
                     style={
@@ -5365,22 +6445,18 @@ exports[`Edit Form Tests Should render correctly for successful save 1`] = `
                       }
                     }
                   >
-                    <b>
+                    <b
+                      style={
+                        Object {
+                          "padding": "0px 0px 0px 15px",
+                        }
+                      }
+                    >
                        
                       Data
                       :
                     </b>
-                    <div
-                      style={
-                        Object {
-                          "float": "right",
-                          "padding": "0px 0px 0px 5px",
-                        }
-                      }
-                    >
-                      No Data Selected
-                       
-                    </div>
+                    Entire Corpus
                   </div>
                 </DataPair>
                 <ChooseDataModal
@@ -5764,22 +6840,18 @@ exports[`Edit Form Tests Should render structured data selected 1`] = `
             }
           }
         >
-          <b>
+          <b
+            style={
+              Object {
+                "padding": "0px 0px 0px 15px",
+              }
+            }
+          >
              
             Data
             :
           </b>
-          <div
-            style={
-              Object {
-                "float": "right",
-                "padding": "0px 0px 0px 5px",
-              }
-            }
-          >
-            6/3/1991 - some comp : some team vs some other team
-             
-          </div>
+          20/4/1991 - some comp : some team vs some other team
         </div>
         <button
           className="ui primary button"
@@ -5968,22 +7040,18 @@ exports[`Edit Form Tests Should render unstructured data selected 1`] = `
             }
           }
         >
-          <b>
+          <b
+            style={
+              Object {
+                "padding": "0px 0px 0px 15px",
+              }
+            }
+          >
              
             Data
             :
           </b>
-          <div
-            style={
-              Object {
-                "float": "right",
-                "padding": "0px 0px 0px 5px",
-              }
-            }
-          >
-            7/4/1991 - some author : some title really really really really rea...
-             
-          </div>
+          20/4/1991 - some author : some title really really really really rea...
         </div>
         <button
           className="ui primary button"
@@ -6575,7 +7643,7 @@ exports[`Edit Form Tests Should render validation errors 1`] = `
                 </FormCheckbox>
                 <DataPair
                   label="Data"
-                  text="No Data Selected"
+                  text="Entire Corpus"
                 >
                   <div
                     style={
@@ -6584,22 +7652,18 @@ exports[`Edit Form Tests Should render validation errors 1`] = `
                       }
                     }
                   >
-                    <b>
+                    <b
+                      style={
+                        Object {
+                          "padding": "0px 0px 0px 15px",
+                        }
+                      }
+                    >
                        
                       Data
                       :
                     </b>
-                    <div
-                      style={
-                        Object {
-                          "float": "right",
-                          "padding": "0px 0px 0px 5px",
-                        }
-                      }
-                    >
-                      No Data Selected
-                       
-                    </div>
+                    Entire Corpus
                   </div>
                 </DataPair>
                 <ChooseDataModal
