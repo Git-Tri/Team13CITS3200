@@ -1,5 +1,5 @@
-const dataBinding = require("../dataBinding");
-const dataValidation = require("../dataValidation");
+const dataBinding = require("../data-binding");
+const dataValidation = require("../data-validation");
 const { query } = require("./access");
 /**
  * Gets an edit by the id

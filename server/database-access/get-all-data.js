@@ -1,4 +1,4 @@
-const dataBinding = require("../dataBinding");
+const dataBinding = require("../data-binding");
 const { query } = require("./access");
 /**
  * Get all structured data from the database

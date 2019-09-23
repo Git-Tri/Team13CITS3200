@@ -1,9 +1,9 @@
 const assert = require('assert');
 const should = require('chai').should()
-const editEngine = require("../editEngine") 
+const editEngine = require("../edit-engine") 
 const domain = require("../domain")
 const testUtils = require("./testUtils")
-const dataBinding = require("../dataBinding")
+const dataBinding = require("../data-binding")
 
 describe("DataBinding Tests",function()
 {

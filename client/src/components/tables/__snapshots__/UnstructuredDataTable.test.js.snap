@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unstructured Data Table Tests Should render correctly for correct input 1`] = `
+<table
+  className="ui striped table"
+>
+  <thead
+    className=""
+  >
+    <tr
+      className=""
+    >
+      <th
+        className=""
+      >
+        Published
+      </th>
+      <th
+        className=""
+      >
+        Author
+      </th>
+      <th
+        className=""
+      >
+        Title
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    className=""
+  >
+    <tr
+      className=""
+      onClick={[Function]}
+    >
+      <td
+        className=""
+      >
+        20/4/1991
+      </td>
+      <td
+        className=""
+      >
+        some author
+      </td>
+      <td
+        className=""
+      >
+        some title
+      </td>
+    </tr>
+    <tr
+      className=""
+      onClick={[Function]}
+    >
+      <td
+        className=""
+      >
+        20/4/1991
+      </td>
+      <td
+        className=""
+      >
+        some author
+      </td>
+      <td
+        className=""
+      >
+        some title really really really really rea...
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Unstructured Data Table Tests Should render correctly for correct input with onSelect handler 1`] = `
+<table
+  className="ui selectable striped table"
+>
+  <thead
+    className=""
+  >
+    <tr
+      className=""
+    >
+      <th
+        className=""
+      >
+        Published
+      </th>
+      <th
+        className=""
+      >
+        Author
+      </th>
+      <th
+        className=""
+      >
+        Title
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    className=""
+  >
+    <tr
+      className=""
+      onClick={[Function]}
+    >
+      <td
+        className=""
+      >
+        20/4/1991
+      </td>
+      <td
+        className=""
+      >
+        some author
+      </td>
+      <td
+        className=""
+      >
+        some title
+      </td>
+    </tr>
+    <tr
+      className=""
+      onClick={[Function]}
+    >
+      <td
+        className=""
+      >
+        20/4/1991
+      </td>
+      <td
+        className=""
+      >
+        some author
+      </td>
+      <td
+        className=""
+      >
+        some title really really really really rea...
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Unstructured Data Table Tests Should render correctly for correct with no data 1`] = `
+<table
+  className="ui selectable striped table"
+>
+  <thead
+    className=""
+  >
+    <tr
+      className=""
+    >
+      <th
+        className=""
+      >
+        Published
+      </th>
+      <th
+        className=""
+      >
+        Author
+      </th>
+      <th
+        className=""
+      >
+        Title
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    className=""
+  />
+</table>
+`;
+
+exports[`Unstructured Data Table Tests Should render correctly with selected row 1`] = `
+<Table
+  as="table"
+  selectable={true}
+  striped={true}
+>
+  <TableHeader
+    as="thead"
+  >
+    <TableRow
+      as="tr"
+      cellAs="td"
+    >
+      <TableHeaderCell
+        as="th"
+      >
+        Published
+      </TableHeaderCell>
+      <TableHeaderCell
+        as="th"
+      >
+        Author
+      </TableHeaderCell>
+      <TableHeaderCell
+        as="th"
+      >
+        Title
+      </TableHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody
+    as="tbody"
+  >
+    <UnstructuredDataRow
+      data={
+        UnstructuredData {
+          "author": "some author",
+          "data": "some data",
+          "extracted": 1991-04-20T00:00:00.000Z,
+          "id": 1,
+          "matchid": 1,
+          "published": 1991-04-20T00:00:00.000Z,
+          "title": "some title",
+          "url": "some url",
+        }
+      }
+      isActive={false}
+      key="1"
+      onSelect={[Function]}
+    />
+    <UnstructuredDataRow
+      data={
+        UnstructuredData {
+          "author": "some author",
+          "data": "some data",
+          "extracted": 1991-04-20T00:00:00.000Z,
+          "id": 2,
+          "matchid": 1,
+          "published": 1991-04-20T00:00:00.000Z,
+          "title": "some title really really really really really long title",
+          "url": "some url",
+        }
+      }
+      isActive={false}
+      key="2"
+      onSelect={[Function]}
+    />
+  </TableBody>
+</Table>
+`;

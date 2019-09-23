@@ -5,7 +5,7 @@ const editAccess = require("../database-access/edit");
 const unstructuredDataAccess = require("../database-access/unstructured-data");
 const structuredDataAccess = require("../database-access/structured-data");
 const errorHandler = require("./errorHandler");
-const dataValidation = require("../dataValidation");
+const dataValidation = require("../data-validation");
 
 exports.createRoutes = function(app)
 {

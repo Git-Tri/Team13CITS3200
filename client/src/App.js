@@ -4,20 +4,20 @@ import {
 	Menu,
 	Segment,
 	Sidebar,
-} from 'semantic-ui-react';
+} from 'semantic-ui-react';  
 
 import { BrowserRouter as Switch, Route} from 'react-router-dom';
-import Home from './components/Home.js';
-import UnstructuredDataList from './components/UnstructuredDataList.js';
-import StructuredDataList from './components/StructuredDataList.js';
-import MatchList from './components/MatchList.js';
-import ViewMatch from './components/ViewMatch.js';
-import EditList from './components/EditList.js';
-import AddEdit from './components/AddEdit.js';
-import ImportStructuredData from './components/ImportStructuredData.js';
-import AddUnstructuredData from './components/AddUnstructuredData.js';
-import Export from './components/Export.js';
-import StructuredDataPage from "./components/StructuredDataPage"
+import Home from './components/home.js';
+import UnstructuredDataList from './components/listpages/unstructured-data-list.js';
+import StructuredDataList from './components/listpages/structured-data-list.js';
+import MatchList from './components/listpages/match-list.js';
+import ViewMatch from './components/view-match.js';
+import EditList from './components/listpages/edit-list';
+import AddEdit from './components/add-edit.js';
+import ImportStructuredData from './components/import-structured-data.js';
+import AddUnstructuredData from './components/add-unstructured-data.js';
+import Export from './components/export.js';
+import StructuredDataPage from "./components/structured-data-page"
 
 class App extends Component {
 	constructor() {

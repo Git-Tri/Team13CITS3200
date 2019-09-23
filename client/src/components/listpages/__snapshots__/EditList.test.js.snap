@@ -1,0 +1,1145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit List Tests should render Error correctly 1`] = `
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "key": "testKey",
+        "pathname": "/",
+      },
+    ]
+  }
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "canGo": [Function],
+        "createHref": [Function],
+        "entries": Array [
+          Object {
+            "hash": "",
+            "key": "testKey",
+            "pathname": "/",
+            "search": "",
+          },
+        ],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "index": 0,
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "key": "testKey",
+          "pathname": "/",
+          "search": "",
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <EditList>
+      <div
+        className="page"
+      >
+        <withRouter(PageHeader)
+          header="Edit List"
+        >
+          <PageHeader
+            header="Edit List"
+            history={
+              Object {
+                "action": "POP",
+                "block": [Function],
+                "canGo": [Function],
+                "createHref": [Function],
+                "entries": Array [
+                  Object {
+                    "hash": "",
+                    "key": "testKey",
+                    "pathname": "/",
+                    "search": "",
+                  },
+                ],
+                "go": [Function],
+                "goBack": [Function],
+                "goForward": [Function],
+                "index": 0,
+                "length": 1,
+                "listen": [Function],
+                "location": Object {
+                  "hash": "",
+                  "key": "testKey",
+                  "pathname": "/",
+                  "search": "",
+                },
+                "push": [Function],
+                "replace": [Function],
+              }
+            }
+            location={
+              Object {
+                "hash": "",
+                "key": "testKey",
+                "pathname": "/",
+                "search": "",
+              }
+            }
+            match={
+              Object {
+                "isExact": true,
+                "params": Object {},
+                "path": "/",
+                "url": "/",
+              }
+            }
+          >
+            <Grid
+              columns={3}
+              container={true}
+              style={
+                Object {
+                  "padding": "15px 15px 15px 15px",
+                }
+              }
+            >
+              <div
+                className="ui container three column grid"
+                style={
+                  Object {
+                    "padding": "15px 15px 15px 15px",
+                  }
+                }
+              >
+                <GridRow>
+                  <div
+                    className="row"
+                  >
+                    <GridColumn>
+                      <div
+                        className="column"
+                      >
+                        <Button
+                          as="button"
+                        >
+                          <Ref
+                            innerRef={
+                              Object {
+                                "current": <button
+                                  class="ui button"
+                                >
+                                  Show sidebar
+                                </button>,
+                              }
+                            }
+                          >
+                            <RefFindNode
+                              innerRef={
+                                Object {
+                                  "current": <button
+                                    class="ui button"
+                                  >
+                                    Show sidebar
+                                  </button>,
+                                }
+                              }
+                            >
+                              <button
+                                className="ui button"
+                                onClick={[Function]}
+                              >
+                                Show sidebar
+                              </button>
+                            </RefFindNode>
+                          </Ref>
+                        </Button>
+                      </div>
+                    </GridColumn>
+                    <GridColumn>
+                      <div
+                        className="column"
+                      >
+                        <Header>
+                          <div
+                            className="ui header"
+                          >
+                            Edit List
+                          </div>
+                        </Header>
+                      </div>
+                    </GridColumn>
+                    <GridColumn>
+                      <div
+                        className="column"
+                      />
+                    </GridColumn>
+                  </div>
+                </GridRow>
+              </div>
+            </Grid>
+          </PageHeader>
+        </withRouter(PageHeader)>
+        <Container>
+          <div
+            className="ui container"
+          >
+            <br />
+            <div
+              id="container"
+              style={
+                Object {
+                  "minHeight": "100vh",
+                }
+              }
+            >
+              <Loader>
+                <div
+                  className="ui text loader"
+                >
+                  Loading Data
+                </div>
+              </Loader>
+            </div>
+          </div>
+        </Container>
+      </div>
+    </EditList>
+  </Router>
+</MemoryRouter>
+`;
+
+exports[`Edit List Tests should render correctly on first load 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="ui container three column grid"
+    style={
+      Object {
+        "padding": "15px 15px 15px 15px",
+      }
+    }
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="column"
+      >
+        <button
+          className="ui button"
+          onClick={[Function]}
+        >
+          Show sidebar
+        </button>
+      </div>
+      <div
+        className="column"
+      >
+        <div
+          className="ui header"
+        >
+          Edit List
+        </div>
+      </div>
+      <div
+        className="column"
+      />
+    </div>
+  </div>
+  <div
+    className="ui container"
+  >
+    <br />
+    <div
+      id="container"
+      style={
+        Object {
+          "minHeight": "100vh",
+        }
+      }
+    >
+      <div
+        className="ui text loader"
+      >
+        Loading Data
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Edit List Tests should render error message when sub-component fails 1`] = `
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "key": "testKey",
+        "pathname": "/",
+      },
+    ]
+  }
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "canGo": [Function],
+        "createHref": [Function],
+        "entries": Array [
+          Object {
+            "hash": "",
+            "key": "testKey",
+            "pathname": "/",
+            "search": "",
+          },
+        ],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "index": 0,
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "key": "testKey",
+          "pathname": "/",
+          "search": "",
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <EditList>
+      <div
+        className="page"
+      >
+        <withRouter(PageHeader)
+          header="Edit List"
+        >
+          <PageHeader
+            header="Edit List"
+            history={
+              Object {
+                "action": "POP",
+                "block": [Function],
+                "canGo": [Function],
+                "createHref": [Function],
+                "entries": Array [
+                  Object {
+                    "hash": "",
+                    "key": "testKey",
+                    "pathname": "/",
+                    "search": "",
+                  },
+                ],
+                "go": [Function],
+                "goBack": [Function],
+                "goForward": [Function],
+                "index": 0,
+                "length": 1,
+                "listen": [Function],
+                "location": Object {
+                  "hash": "",
+                  "key": "testKey",
+                  "pathname": "/",
+                  "search": "",
+                },
+                "push": [Function],
+                "replace": [Function],
+              }
+            }
+            location={
+              Object {
+                "hash": "",
+                "key": "testKey",
+                "pathname": "/",
+                "search": "",
+              }
+            }
+            match={
+              Object {
+                "isExact": true,
+                "params": Object {},
+                "path": "/",
+                "url": "/",
+              }
+            }
+          >
+            <Grid
+              columns={3}
+              container={true}
+              style={
+                Object {
+                  "padding": "15px 15px 15px 15px",
+                }
+              }
+            >
+              <div
+                className="ui container three column grid"
+                style={
+                  Object {
+                    "padding": "15px 15px 15px 15px",
+                  }
+                }
+              >
+                <GridRow>
+                  <div
+                    className="row"
+                  >
+                    <GridColumn>
+                      <div
+                        className="column"
+                      >
+                        <Button
+                          as="button"
+                        >
+                          <Ref
+                            innerRef={
+                              Object {
+                                "current": <button
+                                  class="ui button"
+                                >
+                                  Show sidebar
+                                </button>,
+                              }
+                            }
+                          >
+                            <RefFindNode
+                              innerRef={
+                                Object {
+                                  "current": <button
+                                    class="ui button"
+                                  >
+                                    Show sidebar
+                                  </button>,
+                                }
+                              }
+                            >
+                              <button
+                                className="ui button"
+                                onClick={[Function]}
+                              >
+                                Show sidebar
+                              </button>
+                            </RefFindNode>
+                          </Ref>
+                        </Button>
+                      </div>
+                    </GridColumn>
+                    <GridColumn>
+                      <div
+                        className="column"
+                      >
+                        <Header>
+                          <div
+                            className="ui header"
+                          >
+                            Edit List
+                          </div>
+                        </Header>
+                      </div>
+                    </GridColumn>
+                    <GridColumn>
+                      <div
+                        className="column"
+                      />
+                    </GridColumn>
+                  </div>
+                </GridRow>
+              </div>
+            </Grid>
+          </PageHeader>
+        </withRouter(PageHeader)>
+        <Container>
+          <div
+            className="ui container"
+          >
+            <br />
+            <div
+              id="container"
+              style={
+                Object {
+                  "minHeight": "100vh",
+                }
+              }
+            >
+              <Loader>
+                <div
+                  className="ui text loader"
+                >
+                  Loading Data
+                </div>
+              </Loader>
+            </div>
+          </div>
+        </Container>
+      </div>
+    </EditList>
+  </Router>
+</MemoryRouter>
+`;
+
+exports[`Edit List Tests should render loaded data correctly 1`] = `
+<EditList>
+  <div
+    className="page"
+  >
+    <withRouter(PageHeader)
+      header="Edit List"
+    >
+      <PageHeader
+        header="Edit List"
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "canGo": [Function],
+            "createHref": [Function],
+            "entries": Array [
+              Object {
+                "hash": "",
+                "key": "testKey",
+                "pathname": "/",
+                "search": "",
+              },
+            ],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "index": 0,
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "key": "testKey",
+              "pathname": "/",
+              "search": "",
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        location={
+          Object {
+            "hash": "",
+            "key": "testKey",
+            "pathname": "/",
+            "search": "",
+          }
+        }
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {},
+            "path": "/",
+            "url": "/",
+          }
+        }
+      >
+        <Grid
+          columns={3}
+          container={true}
+          style={
+            Object {
+              "padding": "15px 15px 15px 15px",
+            }
+          }
+        >
+          <div
+            className="ui container three column grid"
+            style={
+              Object {
+                "padding": "15px 15px 15px 15px",
+              }
+            }
+          >
+            <GridRow>
+              <div
+                className="row"
+              >
+                <GridColumn>
+                  <div
+                    className="column"
+                  >
+                    <Button
+                      as="button"
+                    >
+                      <Ref
+                        innerRef={
+                          Object {
+                            "current": <button
+                              class="ui button"
+                            >
+                              Show sidebar
+                            </button>,
+                          }
+                        }
+                      >
+                        <RefFindNode
+                          innerRef={
+                            Object {
+                              "current": <button
+                                class="ui button"
+                              >
+                                Show sidebar
+                              </button>,
+                            }
+                          }
+                        >
+                          <button
+                            className="ui button"
+                            onClick={[Function]}
+                          >
+                            Show sidebar
+                          </button>
+                        </RefFindNode>
+                      </Ref>
+                    </Button>
+                  </div>
+                </GridColumn>
+                <GridColumn>
+                  <div
+                    className="column"
+                  >
+                    <Header>
+                      <div
+                        className="ui header"
+                      >
+                        Edit List
+                      </div>
+                    </Header>
+                  </div>
+                </GridColumn>
+                <GridColumn>
+                  <div
+                    className="column"
+                  />
+                </GridColumn>
+              </div>
+            </GridRow>
+          </div>
+        </Grid>
+      </PageHeader>
+    </withRouter(PageHeader)>
+    <Container>
+      <div
+        className="ui container"
+      >
+        <br />
+        <div
+          id="container"
+          style={
+            Object {
+              "minHeight": "100vh",
+            }
+          }
+        >
+          <div>
+            <p>
+               A list of all edits. Click on an edit to view it in detail 
+            </p>
+            <div
+              id="container"
+              style={
+                Object {
+                  "height": "100vh",
+                }
+              }
+            >
+              <EditListTable
+                items={
+                  Object {
+                    "edits": Array [
+                      Edit {
+                        "editID": 1,
+                        "isCorpus": false,
+                        "replace": "apple",
+                        "replaceWith": "banna",
+                        "settings": Object {},
+                        "structuredDataID": 1,
+                        "type": "replace",
+                        "unstructuredDataID": null,
+                      },
+                      Edit {
+                        "editID": 2,
+                        "isCorpus": false,
+                        "replace": "football",
+                        "replaceWith": "soccer",
+                        "settings": Object {},
+                        "structuredDataID": null,
+                        "type": "replace",
+                        "unstructuredDataID": 1,
+                      },
+                      Edit {
+                        "editID": 3,
+                        "isCorpus": false,
+                        "replace": "gary jones",
+                        "replaceWith": "player 1",
+                        "settings": Object {
+                          "field": "player",
+                        },
+                        "structuredDataID": 1,
+                        "type": "replacewithfield",
+                        "unstructuredDataID": null,
+                      },
+                      Edit {
+                        "editID": 4,
+                        "isCorpus": true,
+                        "replace": "reece",
+                        "replaceWith": "ryan",
+                        "settings": Object {},
+                        "structuredDataID": null,
+                        "type": "replace",
+                        "unstructuredDataID": null,
+                      },
+                    ],
+                    "targets": Array [
+                      StructuredData {
+                        "away": "some other team",
+                        "competitionID": 1,
+                        "competitionName": "some comp",
+                        "data": Object {},
+                        "date": 1991-04-20T00:00:00.000Z,
+                        "home": "some team",
+                        "id": 1,
+                      },
+                      UnstructuredData {
+                        "author": "some author",
+                        "data": "some data",
+                        "extracted": 1991-04-20T00:00:00.000Z,
+                        "id": 1,
+                        "matchid": 1,
+                        "published": 1991-04-20T00:00:00.000Z,
+                        "title": "some title",
+                        "url": "some url",
+                      },
+                      StructuredData {
+                        "away": "some other team",
+                        "competitionID": 1,
+                        "competitionName": "some comp",
+                        "data": Object {},
+                        "date": 1991-04-20T00:00:00.000Z,
+                        "home": "some team",
+                        "id": 1,
+                      },
+                      undefined,
+                    ],
+                  }
+                }
+                onSelect={[Function]}
+              >
+                <Table
+                  as="table"
+                  selectable={true}
+                  striped={true}
+                >
+                  <table
+                    className="ui selectable striped table"
+                  >
+                    <TableHeader
+                      as="thead"
+                    >
+                      <thead
+                        className=""
+                      >
+                        <TableRow
+                          as="tr"
+                          cellAs="td"
+                        >
+                          <tr
+                            className=""
+                          >
+                            <TableHeaderCell
+                              as="th"
+                            >
+                              <TableCell
+                                as="th"
+                                className=""
+                              >
+                                <th
+                                  className=""
+                                >
+                                  Target
+                                </th>
+                              </TableCell>
+                            </TableHeaderCell>
+                            <TableHeaderCell
+                              as="th"
+                            >
+                              <TableCell
+                                as="th"
+                                className=""
+                              >
+                                <th
+                                  className=""
+                                >
+                                  Type
+                                </th>
+                              </TableCell>
+                            </TableHeaderCell>
+                            <TableHeaderCell
+                              as="th"
+                            >
+                              <TableCell
+                                as="th"
+                                className=""
+                              >
+                                <th
+                                  className=""
+                                >
+                                  Summary
+                                </th>
+                              </TableCell>
+                            </TableHeaderCell>
+                          </tr>
+                        </TableRow>
+                      </thead>
+                    </TableHeader>
+                    <TableBody
+                      as="tbody"
+                    >
+                      <tbody
+                        className=""
+                      >
+                        <EditRow
+                          data={
+                            Object {
+                              "edit": Edit {
+                                "editID": 1,
+                                "isCorpus": false,
+                                "replace": "apple",
+                                "replaceWith": "banna",
+                                "settings": Object {},
+                                "structuredDataID": 1,
+                                "type": "replace",
+                                "unstructuredDataID": null,
+                              },
+                              "target": StructuredData {
+                                "away": "some other team",
+                                "competitionID": 1,
+                                "competitionName": "some comp",
+                                "data": Object {},
+                                "date": 1991-04-20T00:00:00.000Z,
+                                "home": "some team",
+                                "id": 1,
+                              },
+                            }
+                          }
+                          isActive={false}
+                          key="1"
+                          onSelect={[Function]}
+                        >
+                          <TableRow
+                            active={false}
+                            as="tr"
+                            cellAs="td"
+                            onClick={[Function]}
+                          >
+                            <tr
+                              className=""
+                              onClick={[Function]}
+                            >
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  20/4/1991 - some comp : some team vs some other team
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  Replace
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  <div>
+                                    <i>
+                                      Replace: 
+                                    </i>
+                                     
+                                    apple
+                                      
+                                    <i>
+                                       - with - 
+                                    </i>
+                                      
+                                    banna
+                                  </div>
+                                </td>
+                              </TableCell>
+                            </tr>
+                          </TableRow>
+                        </EditRow>
+                        <EditRow
+                          data={
+                            Object {
+                              "edit": Edit {
+                                "editID": 2,
+                                "isCorpus": false,
+                                "replace": "football",
+                                "replaceWith": "soccer",
+                                "settings": Object {},
+                                "structuredDataID": null,
+                                "type": "replace",
+                                "unstructuredDataID": 1,
+                              },
+                              "target": UnstructuredData {
+                                "author": "some author",
+                                "data": "some data",
+                                "extracted": 1991-04-20T00:00:00.000Z,
+                                "id": 1,
+                                "matchid": 1,
+                                "published": 1991-04-20T00:00:00.000Z,
+                                "title": "some title",
+                                "url": "some url",
+                              },
+                            }
+                          }
+                          isActive={false}
+                          key="2"
+                          onSelect={[Function]}
+                        >
+                          <TableRow
+                            active={false}
+                            as="tr"
+                            cellAs="td"
+                            onClick={[Function]}
+                          >
+                            <tr
+                              className=""
+                              onClick={[Function]}
+                            >
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  20/4/1991 - some author : some title
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  Replace
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  <div>
+                                    <i>
+                                      Replace: 
+                                    </i>
+                                     
+                                    football
+                                      
+                                    <i>
+                                       - with - 
+                                    </i>
+                                      
+                                    soccer
+                                  </div>
+                                </td>
+                              </TableCell>
+                            </tr>
+                          </TableRow>
+                        </EditRow>
+                        <EditRow
+                          data={
+                            Object {
+                              "edit": Edit {
+                                "editID": 3,
+                                "isCorpus": false,
+                                "replace": "gary jones",
+                                "replaceWith": "player 1",
+                                "settings": Object {
+                                  "field": "player",
+                                },
+                                "structuredDataID": 1,
+                                "type": "replacewithfield",
+                                "unstructuredDataID": null,
+                              },
+                              "target": StructuredData {
+                                "away": "some other team",
+                                "competitionID": 1,
+                                "competitionName": "some comp",
+                                "data": Object {},
+                                "date": 1991-04-20T00:00:00.000Z,
+                                "home": "some team",
+                                "id": 1,
+                              },
+                            }
+                          }
+                          isActive={false}
+                          key="3"
+                          onSelect={[Function]}
+                        >
+                          <TableRow
+                            active={false}
+                            as="tr"
+                            cellAs="td"
+                            onClick={[Function]}
+                          >
+                            <tr
+                              className=""
+                              onClick={[Function]}
+                            >
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  20/4/1991 - some comp : some team vs some other team
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  Replace with Field
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  <div>
+                                    <i>
+                                      Replace: 
+                                    </i>
+                                     
+                                    gary jones
+                                      
+                                    <i>
+                                       - with - 
+                                    </i>
+                                      
+                                    player 1
+                                    <i>
+                                       - on field - 
+                                    </i>
+                                      
+                                    player
+                                     
+                                  </div>
+                                </td>
+                              </TableCell>
+                            </tr>
+                          </TableRow>
+                        </EditRow>
+                        <EditRow
+                          data={
+                            Object {
+                              "edit": Edit {
+                                "editID": 4,
+                                "isCorpus": true,
+                                "replace": "reece",
+                                "replaceWith": "ryan",
+                                "settings": Object {},
+                                "structuredDataID": null,
+                                "type": "replace",
+                                "unstructuredDataID": null,
+                              },
+                              "target": undefined,
+                            }
+                          }
+                          isActive={false}
+                          key="4"
+                          onSelect={[Function]}
+                        >
+                          <TableRow
+                            active={false}
+                            as="tr"
+                            cellAs="td"
+                            onClick={[Function]}
+                          >
+                            <tr
+                              className=""
+                              onClick={[Function]}
+                            >
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  Entire Corpus
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  Replace
+                                </td>
+                              </TableCell>
+                              <TableCell
+                                as="td"
+                              >
+                                <td
+                                  className=""
+                                >
+                                  <div>
+                                    <i>
+                                      Replace: 
+                                    </i>
+                                     
+                                    reece
+                                      
+                                    <i>
+                                       - with - 
+                                    </i>
+                                      
+                                    ryan
+                                  </div>
+                                </td>
+                              </TableCell>
+                            </tr>
+                          </TableRow>
+                        </EditRow>
+                      </tbody>
+                    </TableBody>
+                  </table>
+                </Table>
+              </EditListTable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+</EditList>
+`;

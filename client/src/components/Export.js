@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PageHeader from './PageHeader.js';
+import PageHeader from './page-header.js';
 import { Button, Loader, Message, Segment, Container, TextArea,Form} from 'semantic-ui-react';
 import {ImportRequest} from "../domain";
 class Export extends Component {

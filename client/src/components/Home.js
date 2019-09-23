@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PageHeader from './PageHeader.js';
+import PageHeader from './page-header.js';
 
 class Home extends Component {
 

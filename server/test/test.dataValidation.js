@@ -8,7 +8,7 @@ if (envResult.error)
 const assert = require('assert');
 const should = require('chai').should()
 const domain = require("../domain");
-const dataValidation = require("../dataValidation");
+const dataValidation = require("../data-validation");
 
 describe("Data Validation Tests",function()
 {

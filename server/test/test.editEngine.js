@@ -1,6 +1,6 @@
 const assert = require('assert');
 const should = require('chai').should();
-const editEngine = require("../editEngine");
+const editEngine = require("../edit-engine");
 const domain = require("../domain");
 const testUtils = require("./testUtils");
 const dbAccess = require("../database-access/access");
