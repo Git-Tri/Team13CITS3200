@@ -1,3 +1,11 @@
+const envResult = require("dotenv").config();
+
+if (envResult.error) 
+{
+    
+    throw envResult.error
+}
+
 const assert = require('assert');
 const should = require('chai').should()
 const editEngine = require("../edit-engine") 
