@@ -66,3 +66,4 @@
 /server/yarn-error.log*
 
 .env
+client/src/components/.DS_Store
