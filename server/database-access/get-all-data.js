@@ -1,5 +1,5 @@
 const dataBinding = require("../data-binding");
-const { query } = require("./access");
+const access = require("./database-query");
 /**
  * Get all structured data from the database
  * @param {*} callback the callback for the result
@@ -7,7 +7,7 @@ const { query } = require("./access");
  * @param {*} noConnectionCallback  callback if there is no connection
  */
 function getAllStructuredData(callback, errorCallback, noConnectionCallback) {
-        query("select * from structured_data;", [], (result) => {
+        access.query("select * from structured_data;", [], (result) => {
                 callback(dataBinding.bindStructredData(result));
         }, errorCallback, noConnectionCallback);
 }
@@ -18,7 +18,7 @@ function getAllStructuredData(callback, errorCallback, noConnectionCallback) {
  * @param {*} noConnectionCallback the call if there is no connection
  */
 function getAllUnstrucredData(callback, errorCallback, noConnectionCallback) {
-        query("select * from football.unstructured_data;", [], (result) => {
+        access.query("select * from football.unstructured_data;", [], (result) => {
                 callback(dataBinding.bindUnstructuredData(result));
         }, errorCallback, noConnectionCallback);
 }
@@ -33,7 +33,7 @@ function getAllUnstrucredData(callback, errorCallback, noConnectionCallback) {
 function getAllEdits(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select * from football.edit;",[],(result) => 
+        access.query("select * from football.edit;",[],(result) => 
         {
 
                 callback(dataBinding.bindEdits(result));
@@ -51,7 +51,7 @@ function getAllEdits(callback,errorCallback,noConnectionCallback)
 function getAllMatches(callback,errorCallback,noConnectionCallback)
 {
 
-        query("select id,date,home,away,competitionID,name from football.structured_data;",[],(result) => 
+        access.query("select id,date,home,away,competitionID,name from football.structured_data;",[],(result) => 
         {
 
                 callback(dataBinding.bindMatch(result));
@@ -63,7 +63,7 @@ function getAllMatches(callback,errorCallback,noConnectionCallback)
 function getAllComps(callback,errorCallback,noConnectionCallback)
 {
 
-        return query("select * from football.competition;",[],
+        return access.query("select * from football.competition;",[],
                 (r) => callback(dataBinding.bindCompetition(r)),
                 errorCallback,noConnectionCallback);
 

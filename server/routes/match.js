@@ -2,14 +2,14 @@ const middleware = require("../middleware.js");
 const getAll = require("../database-access/get-all-data");
 const matchAccess = require("../database-access/match");
 const errorHandler = require("./errorHandler");
-
+const cache = require("../cache");
 
 exports.createRoutes = function(app) 
 {
     //Route to get all matches (GET)
     middleware.get(app, "/matchlist", (req, res) => {
 
-        getAll.getAllMatches((result => {
+        cache.getAllMatches((result => {
             console.log("Sending all matches");
 
             res.setHeader("Content-Type", "application/json");

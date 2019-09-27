@@ -1,11 +1,11 @@
 
 const middleware = require("../middleware.js");
-const getAll = require("../database-access/get-all-data");
 const editAccess = require("../database-access/edit");
 const unstructuredDataAccess = require("../database-access/unstructured-data");
 const structuredDataAccess = require("../database-access/structured-data");
 const errorHandler = require("./errorHandler");
 const dataValidation = require("../data-validation");
+const cache = require("../cache");
 
 exports.createRoutes = function(app)
 {
@@ -17,11 +17,11 @@ exports.createRoutes = function(app)
         let unstructuredDataList;
         let structuredDataList;
 
-        getAll.getAllStructuredData((result => {
+        cache.getAllStructuredData((result => {
 
             structuredDataList = result;
 
-            getAll.getAllUnstrucredData(result => {
+            cache.getAllUnstrucredData(result => {
 
                 unstructuredDataList = result;
 
@@ -232,7 +232,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type", "application/json");
 
-        getAll.getAllEdits((result => {
+        cache.getAllEdits((result => {
 
             let editList = result;
 

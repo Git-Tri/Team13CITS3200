@@ -2,6 +2,8 @@ const middleware = require("../middleware.js");
 const getAll = require("../database-access/get-all-data");
 const errorHandler = require("./errorHandler");
 
+const cache = require("../cache")
+
 exports.createRoutes = function(app)
 {
 
@@ -9,7 +11,7 @@ exports.createRoutes = function(app)
     //Route to get all competitions (GET)
     middleware.get(app, "/competitions", (req, res) => {
 
-        getAll.getAllComps((result => {
+        cache.getAllComps((result => {
 
             res.setHeader("Content-Type", "application/json");
             res.send(JSON.stringify(result));

@@ -1,12 +1,6 @@
+const dbQuery = require("./database-query");
 
-const mysqlx = require("@mysql/xdevapi");  
-
-const connectionString = "mysqlx://" + process.env.USER +  ":" + process.env.PASSWORD + "@" + process.env.HOST + ":33060/" + process.env.DATABASE
-
-const client = mysqlx.getClient(connectionString, { pooling: { maxSize: 50, maxIdleTime: 1000, queueTimeout: 2000 } });
-
-
-
+const cache = require("../cache");
 
 /**
  * Querys the database with the given query and then callback on error or success
@@ -23,44 +17,18 @@ function query(query,params,callback,errorCallback,noConnectionCallback,testConn
 
         }
 
-        let results = [];
-
-        let localConnectionString = testConnectionString != undefined && testConnectionString != null ? testConnectionString : connectionString;
-
-        let localNoConnectionCallback = noConnectionCallback != undefined ? noConnectionCallback : console.log
-
-        let session = client.getSession(localConnectionString)
-
-        let isError = false;
-
-        let onError = (err) => 
+        cache.invalidBySQL(query)
+        
+        dbQuery.query(query,params,(result) => 
         {
+        
+                cache.revalidBySQL(query); 
 
-            isError = true;
-            
-            errorCallback(err)
-            
-        }
+                callback(result)
 
-        session.then(session => session.sql(query).bind(params) //execute query
-        .execute(result => results.push(result)) //get results for each row
-        .catch(err => onError(err))) //the error for any given row 
-        .then(() =>  
-                {
-                if(! isError)
-                {
-                
-                        
-                        callback(results);
-
-
-                }
-                session.then((session) => session.close());
-                }) //collect results
-        .catch(err => localNoConnectionCallback(err))
+        },errorCallback,noConnectionCallback,testConnectionString);
 
 }
-exports.query = query;
 /**
  * Querys the database with the given list of queries and then callback on error or success
  * Do not use for select queries, it's meant for easier batch inserts only. 
@@ -80,28 +48,25 @@ function multiInsertQuery(querys,params,callback,errorCallback,noConnectionCallb
 
         }
 
-        let localConnectionString = testConnectionString != undefined && testConnectionString != null ? testConnectionString : connectionString;
+        
 
-        let localNoConnectionCallback = noConnectionCallback != undefined ? noConnectionCallback : console.log
+        let sql = querys.reduce((a,b) => a.concat(b));
 
-        let promises = [];
+        cache.invalidBySQL(sql)
 
-        let session = client.getSession(localConnectionString)
-        session.then(session => {
-        querys.forEach((item,index) => promises.push(session.sql(item).bind(params[index] != undefined ? params[index] : []).execute()))
-        return Promise
-                .all(promises)
-                .then((result => 
-                {
-                        callback(result)
-                        session.close();      
-                }))
-                .catch(err => errorCallback(err))
-        }).catch(err => localNoConnectionCallback(err))
+        dbQuery.multiInsertQuery(querys,params,(result) => 
+        {
+        
+                cache.revalidBySQL(sql);
+                
+                callback(result)
+
+        },errorCallback,noConnectionCallback,testConnectionString);
 
 }
+
+
 
 module.exports = { query, 
         multiInsertQuery
          };
-

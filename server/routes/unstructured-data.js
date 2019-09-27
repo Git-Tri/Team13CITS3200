@@ -4,7 +4,7 @@ const getAll = require("../database-access/get-all-data");
 const unstructuredDataAccess = require("../database-access/unstructured-data");
 const matchAccess = require("../database-access/match");
 const errorHandler = require("./errorHandler");
-
+const cache = require("../cache");
 
 exports.createRoutes = function(app) 
 {
@@ -13,7 +13,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type", "application/json");
 
-        getAll.getAllUnstrucredData((result => {
+        cache.getAllUnstrucredData((result => {
 
             let responseObject = { UnstructuredData: result };
 

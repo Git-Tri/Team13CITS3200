@@ -3,6 +3,7 @@ const getAll = require("../database-access/get-all-data");
 const editEngine = require("../edit-engine");
 var o2x = require('object-to-xml')
 const errorHandler = require("./errorHandler");
+const cache = require("../cache");
 
 exports.createRoutes = function(app)
 {
@@ -16,15 +17,14 @@ exports.createRoutes = function(app)
         var unstructuredDataResult;
         var structuredDataResult;
 
-        getAll.getAllStructuredData((result => {
+        cache.getAllStructuredData((result => {
 
             structuredDataArray = result;
 
             editEngine.applyRulesMutiInputs(structuredDataArray, result => {
                 structuredDataResult = result;
 
-
-                getAll.getAllUnstrucredData(result => {
+                cache.getAllUnstrucredData(result => {
                     unstructuredDataArray = result;
 
                     editEngine.applyRulesMutiInputs(unstructuredDataArray, result => {

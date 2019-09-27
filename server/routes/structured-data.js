@@ -5,6 +5,7 @@ const matchAccess = require("../database-access/match");
 const api = require("../football-api");
 const domain = require("../domain");
 const errorHandler = require("./errorHandler");
+const cache = require("../cache");
 
 
 exports.createRoutes = function(app) 
@@ -47,7 +48,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type", "application/json");
 
-        getAll.getAllStructuredData((result => {
+        cache.getAllStructuredData((result => {
 
             let responseObject = { structuredData: result };
 
