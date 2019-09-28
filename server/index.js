@@ -42,7 +42,7 @@ function getPort()
 }
 
 
-app.listen(3001, () =>
+app.listen(getPort(), () =>
   console.log('Express server is running on localhost:3001')
 );
 

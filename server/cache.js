@@ -7,6 +7,13 @@ class Cache
     constructor(id,getDataFunc)
     {
 
+        if(! isCacheOn())
+        {
+
+            throw new Error("Tried to create cache with id " + id + " when cache is off");
+
+        }
+
         this.id = id;
         this.__data = undefined;
         this.__getDataFunc = getDataFunc;
@@ -97,56 +104,77 @@ class Cache
 
 }
 
-var caches = {match: new Cache("match",getAll.getAllMatches),
+var caches = isCacheOn() ? {match: new Cache("match",getAll.getAllMatches),
                 structuredData: new Cache("structured Data",getAll.getAllStructuredData),
                 unstructuredData: new Cache("uid",getAll.getAllUnstrucredData),
                 edit:new Cache("edit",getAll.getAllEdits),
-                comps:new Cache("comps",getAll.getAllComps)}
+                comps:new Cache("comps",getAll.getAllComps)} : undefined;
 
 
+function isCacheOn()
+{
+
+    let isCache = process.env.CACHING
+
+    return isCache === null || 
+           isCache === undefined || 
+           isCache === "true" || 
+           isCache === true;
+
+}
 
 
 function getAllMatches(callback)
 {
 
-    return caches.match.getData(callback);
+    return isCacheOn() ? caches.match.getData(callback) : getAll.getAllMatches(callback);
 
 }
 
 function getAllStructuredData(callback)
 {
 
-    return caches.structuredData.getData(callback);
+    return isCacheOn() ? caches.structuredData.getData(callback) : getAll.getAllStructuredData(callback) ;
 
 }
 
 function getAllUnstrucredData(callback)
 {
 
-    return caches.unstructuredData.getData(callback);
+return isCacheOn() ? caches.unstructuredData.getData(callback) : getAll.getAllUnstrucredData(callback);
 
 }
 
 function getAllEdits(callback)
 {
 
-    return caches.edit.getData(callback);
+    return isCacheOn() ? caches.edit.getData(callback) : getAll.getAllEdits(callback);
 
 }
 
 function getAllComps(callback)
 {
 
-    return caches.comps.getData(callback);
+    return isCacheOn() ? caches.comps.getData(callback) : getAll.getAllComps(callback);
 
 }
 
 function invalidBySQL(sql)
 {
+    
+    if(! isCacheOn())
+    {
+
+        return;
+
+    }
 
     sql = sql.toLowerCase();
 
-    if(sql.includes("insert") == false && sql.includes("update") == false && sql.includes("delete") == false)
+
+    if(sql.includes("insert") == false &&
+         sql.includes("update") == false &&
+         sql.includes("delete") == false)
     {
 
         return;
@@ -187,6 +215,14 @@ function invalidBySQL(sql)
 
 function revalidBySQL(sql,callback)
 {
+
+    if(! isCacheOn())
+    {
+
+        return;
+
+    }
+
 
     sql = sql.toLowerCase();
 
