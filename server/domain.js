@@ -142,10 +142,24 @@ class ImportRequest
 
 }
 
+class Search
+{
+
+    constructor(type,value,field)
+    {
+
+        this.type = type;
+        this.value = value;
+        this.field = field; 
+
+    }
+
+}
+
 //export all classes 
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch, Search
 
 }

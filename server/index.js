@@ -17,6 +17,7 @@ const domain = require("./domain");
 
 //start app
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.json());

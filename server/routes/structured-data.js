@@ -6,7 +6,7 @@ const api = require("../football-api");
 const domain = require("../domain");
 const errorHandler = require("./errorHandler");
 const cache = require("../cache");
-
+const dataPrep = require("../data-prep")
 
 exports.createRoutes = function(app) 
 {
@@ -48,9 +48,13 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type", "application/json");
 
+        let searches = req.body.searches; 
+
+        let page = Number.parseInt(req.query.page);
+
         cache.getAllStructuredData((result => {
 
-            let responseObject = { structuredData: result };
+            let responseObject = { structuredData: dataPrep.searchAndPaginate(result,page,searches)};
 
             res.send(JSON.stringify(responseObject));
 

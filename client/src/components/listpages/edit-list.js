@@ -72,7 +72,7 @@ export class EditList extends ListPage {
 		return (
 				<div>
 					<p> A list of all edits. Click on an edit to view it in detail </p>				
-					<div id="container" style={{height:"100vh"}}>
+					<div id="container">
 						<EditListTable onSelect={this.routeToEdit.bind(this)} items={{edits:this.state.data,targets:this.state.target}}/>
 					</div>
 				</div>

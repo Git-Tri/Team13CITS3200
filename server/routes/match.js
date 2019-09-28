@@ -3,6 +3,7 @@ const getAll = require("../database-access/get-all-data");
 const matchAccess = require("../database-access/match");
 const errorHandler = require("./errorHandler");
 const cache = require("../cache");
+const dataPrep = require("../data-prep")
 
 exports.createRoutes = function(app) 
 {
@@ -12,8 +13,12 @@ exports.createRoutes = function(app)
         cache.getAllMatches((result => {
             console.log("Sending all matches");
 
+            let searches = req.body.searches; 
+
+            let page = Number.parseInt(req.query.page);
+
             res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify(result));
+            res.send(JSON.stringify(dataPrep.searchAndPaginate(result,page,searches)));
 
 
         }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, req));

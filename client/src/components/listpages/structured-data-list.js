@@ -58,10 +58,9 @@ export class StructuredDataList extends ListPage {
 
 		return (
 				<div>
-					<p> A list of all structured data. Click on an item to view it in detail </p>				
-					<div id="container" style={{height:"100vh"}}>
-						<StructuredDataTable onSelect={this.routeToData.bind(this)} items={this.state.data}/>
-					</div>
+					<p> A list of all structured data. Click on an item to view it in detail </p>
+					<StructuredDataTable onSelect={this.routeToData.bind(this)} items={this.state.data}/>
+					
 				</div>
 		);
 

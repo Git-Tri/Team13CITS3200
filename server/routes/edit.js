@@ -6,6 +6,7 @@ const structuredDataAccess = require("../database-access/structured-data");
 const errorHandler = require("./errorHandler");
 const dataValidation = require("../data-validation");
 const cache = require("../cache");
+const dataPrep = require("../data-prep")
 
 exports.createRoutes = function(app)
 {
@@ -230,12 +231,16 @@ exports.createRoutes = function(app)
     //used for the edit list page 
     middleware.get(app, "/editList", (req, res) => {
 
+        let page = Number.parseInt(req.query.page);
+
+        let searches = req.body.searches; 
+
         res.setHeader("Content-Type", "application/json");
 
         cache.getAllEdits((result => {
 
-            let editList = result;
-
+            let editList = dataPrep.searchAndPaginate(result,page,searches);
+            
             let sids = result.filter(edit => edit.structuredDataID !== null && edit.structuredDataID !== undefined)
                 .map(edit => edit.structuredDataID)
 

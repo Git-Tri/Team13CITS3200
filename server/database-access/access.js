@@ -46,9 +46,7 @@ function multiInsertQuery(querys,params,callback,errorCallback,noConnectionCallb
 
                 throw new Error("bad input");
 
-        }
-
-        
+        }       
 
         let sql = querys.reduce((a,b) => a.concat(b));
 
