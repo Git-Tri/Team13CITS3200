@@ -15,6 +15,8 @@ class MatchList extends ListPage {
 
 		this.state.headerText = "Match List";
 
+		this.state.route = "/matchlist"
+
 	}
 
      /**
@@ -29,21 +31,16 @@ class MatchList extends ListPage {
 
     }
 
-	loadData() {
+	loadData(result) 
+	{
 
-		fetch("/matchList")
-			.then(res => res.json())
-			.then(result => {
+		console.log(result)
 
-				
-				result = result.map((d) => bindMatch(d));
+		result = result.matches.map((d) => bindMatch(d));
 
-				this.setState({ data: result, isLoaded: true, isError: false });
 
-			})
-			.catch(err => {
-				this.setState({ isError: true })
-			});
+
+		this.setState({ data: result, isLoaded: true, isError: false });
 
 	}
 
@@ -58,7 +55,13 @@ class MatchList extends ListPage {
 			<div>
 				<p> A list of all matches. Click on a match to view it in detail. </p>				
 				<div>
-					<MatchListTable onSelect={this.routeToMatch.bind(this)} items={this.state.data}/>
+					<MatchListTable 
+						totalPages={this.state.totalPages}
+						onPageChange={this.handlePageChange.bind(this)}
+						page={this.state.page}
+						paging={this.state.paging}             
+						onSelect={this.routeToMatch.bind(this)} 
+						items={this.state.data}/>
 				</div>
 			</div>
 		); 

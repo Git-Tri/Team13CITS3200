@@ -52,9 +52,15 @@ exports.createRoutes = function(app)
 
         let page = Number.parseInt(req.query.page);
 
+        
+
         cache.getAllStructuredData((result => {
 
-            let responseObject = { structuredData: dataPrep.searchAndPaginate(result,page,searches)};
+            let pages = dataPrep.totalPages(result)
+
+            let responseObject = {structuredData: dataPrep.searchAndPaginate(result,page,searches)
+                                ,pages:pages
+                                 };
 
             res.send(JSON.stringify(responseObject));
 

@@ -20,7 +20,10 @@ exports.createRoutes = function(app)
 
         cache.getAllUnstrucredData((result => {
 
-            let responseObject = { UnstructuredData:  dataPrep.searchAndPaginate(result,page,searches)};
+            let pages = dataPrep.totalPages(result)
+
+            let responseObject = { unstructuredData:  dataPrep.searchAndPaginate(result,page,searches),
+                                    pages:pages};
 
             res.send(JSON.stringify(responseObject));
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Button, Container, Dimmer,Loader } from 'semantic-ui-react';
 /**
  * a generic table for other tables to inherit from
  * inheritance was choosen over composition becuase
@@ -31,8 +31,37 @@ class DataTable extends Component
             selectFunc = () => {};
         }
 
-        this.state = {activeRow: -1,selectFunc: selectFunc};
+        this.state = {activeRow: -1,selectFunc: selectFunc,page:this.props.page,totalPages:this.props.totalPages};
     }
+
+    renderPageButtons()
+    {
+
+        
+
+        if(Number.isInteger(this.props.totalPages) && Number.isInteger(this.state.page) && this.state.totalPages > 1)
+        {
+            return(
+                <Container textAlign="right"  >
+                                
+                    <Button 
+                        onClick={() => this.props.onPageChange(--this.state.page)} 
+                        disabled={this.state.page < 2 || this.props.paging}>
+                        Prev
+                    </Button>
+                    <Button 
+                        onClick={() => this.props.onPageChange(++this.state.page)} 
+                        disabled={this.state.page === this.state.totalPages || this.props.paging}>
+                        Next
+                    </Button>
+                    
+                </Container>)
+            
+ 
+        }
+
+    }
+
     /**
      * renders the function
      * also checks if the data is valid 
@@ -72,14 +101,18 @@ class DataTable extends Component
         let isSelectable = this.props.onSelect !== undefined;
 
         return(
-        <Table striped selectable={isSelectable} >        
-            <Table.Header>
-                {this.genHeader()}
-            </Table.Header>  
-            <Table.Body>
-                {this.genRows()}
-            </Table.Body>        
-        </Table>
+        <div>
+            {this.renderPageButtons()}
+            <Table striped selectable={isSelectable} >        
+                <Table.Header>
+                    {this.genHeader()}
+                </Table.Header>  
+                <Table.Body>
+                    {this.genRows()}
+                </Table.Body>        
+            </Table>
+        </div>
+
         );
     }
 }

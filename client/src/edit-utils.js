@@ -45,7 +45,7 @@ function summariseUnstructuredData(data)
 export function genSummary(edit,data)
 {
 
-    console.log(data)
+
 
     if(Number.parseInt(edit.structuredDataID) > 0)
     {

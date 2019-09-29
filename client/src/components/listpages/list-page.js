@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PageHeader from '../page-header.js';
-import { Button, Loader, Message, Container} from 'semantic-ui-react';
+import { Button, Loader, Message, Container, Dimmer} from 'semantic-ui-react'
 
 
 export class ListPage extends Component {
@@ -10,9 +10,11 @@ export class ListPage extends Component {
 
 		super(props)
 
-		this.state = {data: [],target:[], isLoaded: false, isError: false}
+		this.state = {data: [],target:[], isLoaded: false, isError: false,page:1,totalPages:NaN,paging:false}
 
 	}
+
+
 
      /**
      * Handles any errors cuased by a sub-component 
@@ -26,13 +28,50 @@ export class ListPage extends Component {
 
     }
 
+    handlePageChange(page)
+    {
+
+
+
+        this.state.page = page;
+
+        this.setState({paging: true, page:page})
+    }
+
+    sendRequest()
+    {
+
+        if(this.state.route === undefined)
+        {
+
+            throw new Error("this.state.route should be defined");
+
+        }
+
+        fetch(this.state.route+"?page=" + this.state.page)
+            .then(res => res.json())
+            .then(result => 
+            {
+
+                console.log("loading " + this.state.page)
+
+                this.setState({totalPages:result.pages,isLoaded: true,paging:false});
+
+                this.loadData(result);
+
+            }).catch(err => this.setState({isError: true}));
+
+
+
+    }
+
     /**
      * loads the data if it is not already loaded
      */
 	loadIfNotAlready()
 	{
 
-		if(this.state.isLoaded === false)
+		if(this.state.isLoaded === false || this.state.paging === true)
 		{
 
             if(this.loadData === undefined)
@@ -42,7 +81,7 @@ export class ListPage extends Component {
 
             }
 
-			this.loadData();
+			this.sendRequest();
 
 		}
 
@@ -76,15 +115,14 @@ export class ListPage extends Component {
 		
 	}
 
-    /**
-     * renders the page if the data is still loading 
-     */
+
     renderLoading()
     {
 
-        return(<Loader>Loading Data</Loader>)
+        return(<Loader active >Loading your edits</Loader>)
 
     }
+
     
     /**
      * Chooses which render that should be rendered based on 
@@ -115,7 +153,7 @@ export class ListPage extends Component {
         else
         {
 
-            return this.renderLoading();
+            this.renderLoading()
 
         }
 
@@ -138,10 +176,11 @@ export class ListPage extends Component {
 			/>           
 			<Container>
             {this.renderSearch !== undefined ? this.renderSearch() : undefined}
+            
 			<br/>
-			<div id="container" style={{minHeight:"100vh"}}>
-				{this.executeRender()}
-			</div>
+            <div id="container" style={{minHeight:"100vh"}}>
+                {this.executeRender()}    
+            </div>
             </Container>	
 		</div>)
 		

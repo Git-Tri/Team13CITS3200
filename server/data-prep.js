@@ -24,8 +24,16 @@ function searchAndPaginate(array,page, searches)
     }
 
     return paginate(array,page)
+
 }
 
-module.exports = {paginate,searchAndPaginate};
+function totalPages(array)
+{
+
+    return Math.ceil(array.length/100);
+
+}
+
+module.exports = {paginate,searchAndPaginate,totalPages};
 
   

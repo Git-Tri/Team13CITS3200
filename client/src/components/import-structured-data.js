@@ -57,7 +57,7 @@ class ImportStructuredData extends Component {
 	loadIfNotAlready()
 	{
 
-		if(this.state.isLoaded === false)
+		if(this.state.isLoaded === false && this.state.isError === false)
 		{
 
 			this.loadData();
@@ -83,7 +83,6 @@ class ImportStructuredData extends Component {
 
 		request[name] = value;
 
-		console.log(request)
 
 		this.setState({ request: request});		
 
@@ -102,12 +101,8 @@ class ImportStructuredData extends Component {
 			}}).then((res) => 
 			{
 
-				console.log(res)
-
 				if(res.ok)
 				{
-
-					console.log("lol?")
 
 					this.setState({isSaving: false, isError: false,isImportSuccessful: true},() => console.log(this.state))
 					
@@ -144,12 +139,9 @@ class ImportStructuredData extends Component {
 	renderSuccessMessage()
 	{
 
-		console.log("message")
 
 		if(this.state.isImportSuccessful)
 		{
-
-			console.log("message")
 
 			return(<Message positive>
 				<Message.Header>Successfully imported data into the corpus!</Message.Header>

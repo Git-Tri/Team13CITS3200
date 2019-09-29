@@ -17,8 +17,13 @@ exports.createRoutes = function(app)
 
             let page = Number.parseInt(req.query.page);
 
+            let pages = dataPrep.totalPages(result)
+
+            let responseObject = {matches: dataPrep.searchAndPaginate(result,page,searches),
+                                 pages:pages}
+
             res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify(dataPrep.searchAndPaginate(result,page,searches)));
+            res.send(JSON.stringify(responseObject));
 
 
         }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, req));

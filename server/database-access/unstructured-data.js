@@ -1,7 +1,7 @@
 const dataBinding = require("../data-binding");
 const { query } = require("./access");
 /**
- * geet unstructured data from the databasee
+ * get unstructured data from the databasee
  * @param {*} usid the id of the unstrucredData which need to be selected
  * @param {*} callback the callback for the result
  * @param {*} errorCallback th callback used on error

@@ -13,7 +13,9 @@ export class StructuredDataList extends ListPage {
 
         super(props)
         
-        this.state.headerText = "Structured Data Page"
+        this.state.headerText = "Structured Data Page";
+
+        this.state.route = "/structuredDataList";
 
 	}
 
@@ -33,19 +35,12 @@ export class StructuredDataList extends ListPage {
 	/**
      * Loads all edits and bind the parsed json to edit objects
      */
-    loadData()
+    loadData(result)
     {
 
-        fetch("/StructuredDataList")
-            .then(res => res.json())
-            .then(result => 
-                {
+        let data = result.structuredData.map((d) => bindStructuredData(d));
 
-					let data = result.structuredData.map((d) => bindStructuredData(d));
-
-					this.setState({data:data,isLoaded: true, isError: false})
-                })
-            .catch(err => this.setState({isError: true}));
+        this.setState({data:data,isLoaded: true, isError: false})
 
     }
 
@@ -59,7 +54,13 @@ export class StructuredDataList extends ListPage {
 		return (
 				<div>
 					<p> A list of all structured data. Click on an item to view it in detail </p>
-					<StructuredDataTable onSelect={this.routeToData.bind(this)} items={this.state.data}/>
+                    <StructuredDataTable 
+                        totalPages={this.state.totalPages}
+                        onPageChange={this.handlePageChange.bind(this)}
+                        page={this.state.page}
+                        paging={this.state.paging}                
+                        onSelect={this.routeToData.bind(this)} 
+                        items={this.state.data}/>
 					
 				</div>
 		);

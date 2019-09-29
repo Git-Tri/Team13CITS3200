@@ -12,6 +12,7 @@ export class EditList extends ListPage {
 		super(props)
         
         this.state.headerText = "Edit List"
+        this.state.route = "editList"
 
 	}
 
@@ -31,33 +32,24 @@ export class EditList extends ListPage {
 	/**
      * Loads all edits and bind the parsed json to edit objects
      */
-    loadData()
+    loadData(result)
     {
 
-        console.log("error")
+        let editList = result.editList.map((d) => bindEdit(d));
 
-        fetch("/editList")
-            .then(res => res.json())
-            .then(result => 
-                {
+        let unstructuredData = result.unstructuredData.map((u) => bindUnstructureData(u))
 
-					let editList = result.editList.map((d) => bindEdit(d));
+        let structuredData = result.structuredData.map((u) => bindStructuredData(u)); 
 
-                    let unstructuredData = result.unstructuredData.map((u) => bindUnstructureData(u))
+        let allData = structuredData.concat(unstructuredData);
 
-                    let structuredData = result.structuredData.map((u) => bindStructuredData(u)); 
+        let target = [];
 
-                    let allData = structuredData.concat(unstructuredData);
+        editList.forEach((e,index) => target[index] = allData
+                .find((i) => i.id === e.structuredDataID || i.id === e.unstructuredDataID))
 
-                    let target = [];
-
-                    editList.forEach((e,index) => target[index] = allData
-                            .find((i) => i.id === e.structuredDataID || i.id === e.unstructuredDataID))
-
-					this.setState({data:editList,isLoaded: true, isError: false,target: target})
-                })
-            .catch(err => this.setState({isError: true}));
-
+        this.setState({data:editList,isLoaded: true, isError: false,target: target})               
+            
     }
 
 
@@ -67,13 +59,19 @@ export class EditList extends ListPage {
 	renderLoaded()
 	{
 
-        console.log(this.state)
+
 
 		return (
 				<div>
 					<p> A list of all edits. Click on an edit to view it in detail </p>				
 					<div id="container">
-						<EditListTable onSelect={this.routeToEdit.bind(this)} items={{edits:this.state.data,targets:this.state.target}}/>
+                        <EditListTable 
+                            totalPages={this.state.totalPages}
+                            onPageChange={this.handlePageChange.bind(this)}
+                            page={this.state.page}
+                            paging={this.state.paging}                        
+                            onSelect={this.routeToEdit.bind(this)} 
+                            items={{edits:this.state.data,targets:this.state.target}}/>
 					</div>
 				</div>
 		);

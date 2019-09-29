@@ -14,6 +14,7 @@ class UnstructuredDataList extends ListPage {
         this.state.match = "";
         this.state.league = "";
         this.state.headerText = "Unstructured Data List"
+        this.state.route = "/UnstructuredDataList"
     }
 
     /**
@@ -27,33 +28,15 @@ class UnstructuredDataList extends ListPage {
     /**
     * loads all the unstructured data into the list
     **/
-    loadData()
+    loadData(data)
     {
-        var request = new XMLHttpRequest()
-        request.open('GET', '/allChooseableData', true)
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-        request.send()
-        request.onload = () => 
-        {
-            if (request.status != 200) {
-                alert(`Error ${request.status}: ${request.statusText}`)
-            }
-            else 
-            {
-                
-                let data = JSON.parse(request.responseText)
-                
-                data.unstructuredData = data.unstructuredData.map((d) => bindUnstructureData(d));
-                
-                this.setState({ data: data.unstructuredData, isLoaded: true, isError: false });
 
-                console.log("loaded");
-                
-            }
-        }
-        request.onerror = function () {
-            alert("Load failed")
-        }
+        console.log(data)
+
+        data.unstructuredData = data.unstructuredData.map((d) => bindUnstructureData(d));
+        
+        this.setState({ data: data.unstructuredData, isLoaded: true, isError: false });                
+        
     }
 
     /**
@@ -70,7 +53,12 @@ class UnstructuredDataList extends ListPage {
         return(<div class="inline fields" >
         <div class="one wide field"/>
         <div class="fourteen wide field">
-            <UnstructuredDataTable items={this.state.data} onSelect={this.routeToUnstructuredData.bind(this)}>
+            <UnstructuredDataTable             
+                totalPages={this.state.totalPages}
+                onPageChange={this.handlePageChange.bind(this)}
+                page={this.state.page}
+                paging={this.state.paging}                
+                items={this.state.data} onSelect={this.routeToUnstructuredData.bind(this)}>
             </UnstructuredDataTable>
         </div>
     </div>)

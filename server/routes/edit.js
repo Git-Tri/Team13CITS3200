@@ -239,6 +239,8 @@ exports.createRoutes = function(app)
 
         cache.getAllEdits((result => {
 
+            let pages = dataPrep.totalPages(result);
+
             let editList = dataPrep.searchAndPaginate(result,page,searches);
             
             let sids = result.filter(edit => edit.structuredDataID !== null && edit.structuredDataID !== undefined)
@@ -258,7 +260,8 @@ exports.createRoutes = function(app)
                     let responseObject = {
                         editList: editList,
                         unstructuredData: unstructuredDataList,
-                        structuredData: structuredDataList
+                        structuredData: structuredDataList,
+                        pages:pages
                     }
 
                     res.send(JSON.stringify(responseObject));

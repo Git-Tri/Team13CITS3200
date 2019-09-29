@@ -24,7 +24,7 @@ class EditListTable extends DataTable
     genRows()
     {
 
-        console.log(this.props.items)
+
 
         return this.props.items.edits.map((item, index) => (
             <EditRow 
