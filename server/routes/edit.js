@@ -281,6 +281,8 @@ exports.createRoutes = function(app)
 
         cache.getAllEdits((result => {           
 
+            let editList = result
+
             let pages = dataPrep.totalPages(editList);
 
             editList = dataPrep.paginate(editList,page)

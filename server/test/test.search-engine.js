@@ -27,13 +27,13 @@ describe("Search Engine Tests",function()
                 "Some comp",{country:"england",testData:"some team"})
         ];
 
-        let beforeSearch = new domain.Search("before",new Date(1991,4,1,0,0,0),"date");
-        let afterSearch = new domain.Search("after",new Date(1991,5,1,0,0,0),"date");
-        let exactSearch = new domain.Search("exact","england","home");
-        let textSearch = new domain.Search("text","england","home");
-        let textMultiSearch = new domain.Search("text","england",["home","away"]);
-        let multiSearch = [new domain.Search("after",new Date(1991,4,1,0,0,0),"date"),
-        new domain.Search("before",new Date(1991,9,1,0,0,0),"date"),textMultiSearch]
+        let beforeSearch = new domain.SearchRequest("before",new Date(1991,4,1,0,0,0),"date");
+        let afterSearch = new domain.SearchRequest("after",new Date(1991,5,1,0,0,0),"date");
+        let exactSearch = new domain.SearchRequest("exact","england","home");
+        let textSearch = new domain.SearchRequest("text","england","home");
+        let textMultiSearch = new domain.SearchRequest("text","england",["home","away"]);
+        let multiSearch = [new domain.SearchRequest("after",new Date(1991,4,1,0,0,0),"date"),
+        new domain.SearchRequest("before",new Date(1991,9,1,0,0,0),"date"),textMultiSearch]
 
         
         it("should exist",() => should.exist(searchEngine.search))
