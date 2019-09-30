@@ -140,14 +140,14 @@ export class EditForm extends Component {
 	/**
 	 * Generates summary text of the target of the edit 
 	 */
-	genDataSummaryTest()
+	genDataSummaryText()
 	{
-
-		let edit = this.state.data;
 
 		let target = this.state.target;
 
-		return genSummary(edit,target)
+		let summary = genSummary(target)
+
+		return summary === "Entire Corpus" ? "No Data Selected" : summary
 
 	}
 
@@ -643,7 +643,7 @@ export class EditForm extends Component {
 					checked={this.state.data.isCorpus}
 					onChange={this.handleChecked.bind(this)}
 					/>
-					{isCorpus ? undefined : <DataPair label="Data" text={this.genDataSummaryTest()}/>}
+					{isCorpus ? undefined : <DataPair label="Data" text={this.genDataSummaryText()}/>}
 					{isCorpus ? undefined : <ChooseDataModal onSelect={this.handleChosenData.bind(this)}></ChooseDataModal>}
 				</Form.Group>
 				<Form.Group inline>

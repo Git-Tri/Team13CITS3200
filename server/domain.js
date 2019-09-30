@@ -142,7 +142,7 @@ class ImportRequest
 
 }
 
-class Search
+class SearchRequest
 {
 
     constructor(type,value,field)
@@ -160,6 +160,6 @@ class Search
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch, Search
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch, SearchRequest
 
 }

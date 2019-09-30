@@ -57,10 +57,10 @@ class ChooseMatchModal extends Component {
             .then(res => res.json())
             .then(result => {
 
-                console.log(result)
-                result = result.map((d) => bindMatch(d));
+                
+                let matches = result.matches.map((d) => bindMatch(d));
 
-                this.setState({ data: result, isLoaded: true, isError: false });
+                this.setState({ data: matches, isLoaded: true, isError: false });
 
             })
             .catch(err => {

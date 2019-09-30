@@ -1,4 +1,5 @@
 import {MAX_TITLE_SIZE} from "./constants"
+import {UnstructuredData,StructuredData} from "./domain"
 
 function summariseStructuredData(data)
 {
@@ -42,18 +43,23 @@ function summariseUnstructuredData(data)
 
 }
 
-export function genSummary(edit,data)
+export function genSummary(data)
 {
 
 
+    if(data === null || data === undefined)
+    {
 
-    if(Number.parseInt(edit.structuredDataID) > 0)
+        return "Entire Corpus"
+
+    }
+    if(data instanceof StructuredData)
     {
 
         return summariseStructuredData(data);
 
     }
-    else if(Number.parseInt(edit.unstructuredDataID) > 0)
+    else if(data instanceof UnstructuredData)
     {
 
         return summariseUnstructuredData(data)

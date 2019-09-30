@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PageHeader from '../page-header.js';
-import { Button, Loader, Message, Container, Dimmer} from 'semantic-ui-react'
-
+import { Button, Loader, Message, Container, Form} from 'semantic-ui-react'
+import {SearchRequest} from "../../domain";
+import DelayEngine from "../../delay-engine";
 
 export class ListPage extends Component {
 
@@ -10,11 +11,20 @@ export class ListPage extends Component {
 
 		super(props)
 
-		this.state = {data: [],target:[], isLoaded: false, isError: false,page:1,totalPages:NaN,paging:false}
+		this.state = {
+            data: [],
+            target:[],
+             isLoaded: false,
+              isError: false,
+              page:1,
+              totalPages:NaN,
+              paging:false,
+              searches:{},
+              delayEngine: new DelayEngine(750)}
 
 	}
 
-
+   
 
      /**
      * Handles any errors cuased by a sub-component 
@@ -28,19 +38,70 @@ export class ListPage extends Component {
 
     }
 
+    /**
+     * handles changing of pages
+     * @param {*} page the page to change to
+     */
     handlePageChange(page)
     {
-
-
 
         this.state.page = page;
 
         this.setState({paging: true, page:page})
     }
 
-    sendRequest()
+    /**
+     * handles standard searches by child components 
+     */
+    handleSearchChange(key,search)
+    {      
+        
+        
+
+        if(search !== undefined &&
+           search !== null &&
+           typeof(search) === "object" &&
+           search instanceof SearchRequest)
+        {
+
+
+
+            this.state.searches[key] = search;
+
+            this.setState({searches:this.state.searches},() => 
+            {
+
+
+
+                this.state.delayEngine.start(() => this.search());
+
+            })
+
+            
+
+        }
+        
+    }
+
+    /**
+     * starts a search 
+     */
+    search()
     {
 
+        this.state.delayEngine.stop();        
+
+        this.sendRequest(Object.values(this.state.searches));       
+
+    }
+
+    /**
+     * Sends a request to the server and then passes the result to child component's load data function
+     * @param {*} searches the searches to perform if there are any
+     */
+    sendRequest(searches)
+    {
+        
         if(this.state.route === undefined)
         {
 
@@ -48,19 +109,86 @@ export class ListPage extends Component {
 
         }
 
-        fetch(this.state.route+"?page=" + this.state.page)
-            .then(res => res.json())
+        
+        let body;
+
+        //genBody allows for more complex searching, not neccessary for most list pages 
+        if(this.genBody === undefined)
+        {
+
+                
+            if(searches !== undefined)
+            {
+
+                body = JSON.stringify({searches:searches})
+
+            }
+            else
+            {
+
+                body = ""
+
+            }
+
+        }
+        else
+        {
+
+            body = JSON.stringify(this.genBody());
+
+        }
+
+
+        fetch(this.state.route+"?page=" + this.state.page,{method: "POST",
+            body: body,
+            headers: {
+                'Content-Type': 'application/json'
+            }})
+            .then(res => 
+                {
+
+                    if(res.ok)
+					{
+						
+						return res.json()
+
+					}				
+					else if(res.status == 404)
+					{
+
+						throw new Error(404);
+
+					}
+					else 
+					{
+
+						throw new Error(500);
+
+					}				
+
+                })
             .then(result => 
             {
 
-                console.log("loading " + this.state.page)
+                
 
                 this.setState({totalPages:result.pages,isLoaded: true,paging:false});
 
-                this.loadData(result);
+                if(result !== undefined)
+                {
 
-            }).catch(err => this.setState({isError: true}));
+                    this.loadData(result);
 
+                }
+
+                
+
+            }).catch(err => 
+            {
+                console.log(err)
+                this.setState({isError: true})
+            });
+            
 
 
     }
@@ -71,7 +199,7 @@ export class ListPage extends Component {
 	loadIfNotAlready()
 	{
 
-		if(this.state.isLoaded === false || this.state.paging === true)
+		if((this.state.isLoaded === false || this.state.paging === true) && this.state.isError === false)
 		{
 
             if(this.loadData === undefined)
@@ -98,7 +226,7 @@ export class ListPage extends Component {
         <Message negative>
             <Message.Header>An error has occured</Message.Header>
             <p>Failed to get data from the server.</p>
-            <Button color="red" onClick={this.loadData.bind(this)}>Try Again?</Button>
+            <Button color="red" onClick={() => this.sendRequest()}>Try Again?</Button>
           </Message>
           )
 
@@ -116,6 +244,9 @@ export class ListPage extends Component {
 	}
 
 
+    /**
+     * renders the page in loading state 
+     */
     renderLoading()
     {
 
@@ -175,8 +306,11 @@ export class ListPage extends Component {
 				handleSidebarClick={this.props.handleSidebarClick}
 			/>           
 			<Container>
-            {this.renderSearch !== undefined ? this.renderSearch() : undefined}
-            
+            <Container textAlign="center">
+                <Form>
+                {this.renderSearch !== undefined ? this.renderSearch() : undefined}
+                </Form>
+            </Container>
 			<br/>
             <div id="container" style={{minHeight:"100vh"}}>
                 {this.executeRender()}    

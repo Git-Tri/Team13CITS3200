@@ -139,7 +139,7 @@ class AddUnstructuredData extends Component {
                 {
 
                     //TODO replace with clear
-                    this.setState({id:undefined,matchid:0,tite:"",author:"",url:"",published:"",extracted:"",data:""})
+                    this.setState({id:undefined,match:"",matchid:0,title:"New unstructured data",author:"",url:"",published:"",extracted:"",data:""})
 
                 }
 

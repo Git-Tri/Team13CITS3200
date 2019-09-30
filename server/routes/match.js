@@ -7,19 +7,41 @@ const dataPrep = require("../data-prep")
 
 exports.createRoutes = function(app) 
 {
-    //Route to get all matches (GET)
-    middleware.get(app, "/matchlist", (req, res) => {
 
-        cache.getAllMatches((result => {
-            console.log("Sending all matches");
+     //Route to get all matches with search
+     middleware.post(app, "/matchlist", (req, res) => {
+
+        cache.getAllMatches((result => {        
 
             let searches = req.body.searches; 
 
             let page = Number.parseInt(req.query.page);
 
+            result = dataPrep.search(result,searches)
+
             let pages = dataPrep.totalPages(result)
 
-            let responseObject = {matches: dataPrep.searchAndPaginate(result,page,searches),
+            let responseObject = {matches: dataPrep.paginate(result,page),
+                                 pages:pages}
+
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify(responseObject));
+
+
+        }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, req));
+
+    });
+
+    //Route to get all matches (GET)
+    middleware.get(app, "/matchlist", (req, res) => {
+
+        cache.getAllMatches((result => {
+            
+            let page = Number.parseInt(req.query.page);
+
+            let pages = dataPrep.totalPages(result)
+
+            let responseObject = {matches: dataPrep.paginate(result,page),
                                  pages:pages}
 
             res.setHeader("Content-Type", "application/json");

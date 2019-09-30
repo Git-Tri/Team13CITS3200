@@ -42,23 +42,43 @@ exports.createRoutes = function(app)
 
     });
 
+    //used for the structured data list page 
+    middleware.post(app, "/structuredDataList", (req, res) => {
+
+        res.setHeader("Content-Type", "application/json");
+
+        let searches = req.body.searches; 
+
+        let page = Number.parseInt(req.query.page);       
+
+        cache.getAllStructuredData((result => {
+
+            let pages = dataPrep.totalPages(result)
+
+            result = dataPrep.search(result,searches)
+
+            let responseObject = {structuredData: dataPrep.paginate(result,page)
+                                ,pages:pages
+                                 };
+
+            res.send(JSON.stringify(responseObject));
+
+        }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, req));
+
+    });
 
     //used for the structured data list page 
     middleware.get(app, "/structuredDataList", (req, res) => {
 
         res.setHeader("Content-Type", "application/json");
 
-        let searches = req.body.searches; 
-
-        let page = Number.parseInt(req.query.page);
-
-        
+        let page = Number.parseInt(req.query.page);       
 
         cache.getAllStructuredData((result => {
 
-            let pages = dataPrep.totalPages(result)
+            let pages = dataPrep.totalPages(result);
 
-            let responseObject = {structuredData: dataPrep.searchAndPaginate(result,page,searches)
+            let responseObject = {structuredData: dataPrep.paginate(result,page)
                                 ,pages:pages
                                  };
 

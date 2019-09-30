@@ -146,7 +146,7 @@ function EditRow(props)
 
     return(
         <Table.Row onClick={() => selectFunc(props.data.edit)} active={props.isActive}>
-            <Table.Cell>{genSummary(edit,target)}</Table.Cell>
+            <Table.Cell>{genSummary(target)}</Table.Cell>
             <Table.Cell>{FormatType(edit)}</Table.Cell>
             <Table.Cell>{SummaryBuilder(edit)}</Table.Cell>
         </Table.Row>

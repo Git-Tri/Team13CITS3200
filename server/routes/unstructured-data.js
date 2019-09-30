@@ -10,7 +10,7 @@ const dataPrep = require("../data-prep")
 exports.createRoutes = function(app) 
 {
 
-    middleware.get(app, "/UnstructuredDataList", (req, res) => {
+    middleware.post(app, "/UnstructuredDataList", (req, res) => {
 
         res.setHeader("Content-Type", "application/json");
 
@@ -20,9 +20,30 @@ exports.createRoutes = function(app)
 
         cache.getAllUnstrucredData((result => {
 
+            result = dataPrep.search(result,searches)
+
             let pages = dataPrep.totalPages(result)
 
-            let responseObject = { unstructuredData:  dataPrep.searchAndPaginate(result,page,searches),
+            let responseObject = { unstructuredData:  dataPrep.paginate(result,page),
+                                    pages:pages};
+
+            res.send(JSON.stringify(responseObject));
+
+        }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, req));
+
+    });
+
+    middleware.get(app, "/UnstructuredDataList", (req, res) => {
+
+        res.setHeader("Content-Type", "application/json");
+
+        let page = Number.parseInt(req.query.page);
+
+        cache.getAllUnstrucredData((result => {
+
+            let pages = dataPrep.totalPages(result)
+
+            let responseObject = { unstructuredData:  dataPrep.paginate(result,page),
                                     pages:pages};
 
             res.send(JSON.stringify(responseObject));

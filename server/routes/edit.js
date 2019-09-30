@@ -228,20 +228,62 @@ exports.createRoutes = function(app)
 
     });
 
+    //used for the edit list page with searches 
+    middleware.post(app, "/editList", (req, res) => {
+
+        let page = Number.parseInt(req.query.page);
+
+        let editSearches = req.body.editSearches;
+        let unstructuredDataSearches = req.body.unstructuredDataSearches;
+        let structuredDataSearches = req.body.structuredDataSearches; 
+
+        res.setHeader("Content-Type", "application/json");
+
+        cache.getAllEdits((result => {           
+
+            let editList = dataPrep.search(result,editSearches);
+            
+            let sids = result.filter(edit => edit.structuredDataID !== null && edit.structuredDataID !== undefined)
+                .map(edit => edit.structuredDataID)
+
+            let usids = result.filter(edit => edit.unstructuredDataID !== null && edit.unstructuredDataID !== undefined)
+                .map(edit => edit.unstructuredDataID)
+
+            unstructuredDataAccess.getUnstructuredDataByIds(usids, (unstructuredResult) => {
+
+                let unstructuredDataList = unstructuredResult;
+
+                structuredDataAccess.getStructuredDataByIds(sids, (structuredResult) => {
+
+                    let structuredDataList = structuredResult;
+
+                    let responseObject = dataPrep.paginateEditSearchResults(editList,editSearches,
+                        unstructuredDataList,unstructuredDataSearches,
+                        structuredDataList,structuredDataSearches,page);
+
+                    res.send(JSON.stringify(responseObject));
+
+                }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res));
+
+            }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res));
+
+        }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res));
+
+    });
+
+
     //used for the edit list page 
     middleware.get(app, "/editList", (req, res) => {
 
         let page = Number.parseInt(req.query.page);
 
-        let searches = req.body.searches; 
-
         res.setHeader("Content-Type", "application/json");
 
-        cache.getAllEdits((result => {
+        cache.getAllEdits((result => {           
 
-            let pages = dataPrep.totalPages(result);
+            let pages = dataPrep.totalPages(editList);
 
-            let editList = dataPrep.searchAndPaginate(result,page,searches);
+            editList = dataPrep.paginate(editList,page)
             
             let sids = result.filter(edit => edit.structuredDataID !== null && edit.structuredDataID !== undefined)
                 .map(edit => edit.structuredDataID)
