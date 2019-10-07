@@ -4,6 +4,7 @@ import MatchListTable from '../tables/match-list-table.js';
 import { bindMatch } from "../../data-binding";
 import { withRouter } from 'react-router-dom';
 import ListPage from './list-page.js';
+import { SearchRequest } from "../../domain"
 
 
 class MatchList extends ListPage {
@@ -11,34 +12,42 @@ class MatchList extends ListPage {
 	constructor(props)
 	{
 
-		super(props)
+		super(props);
 
 		this.state.headerText = "Match List";
 
 		this.state.route = "/matchlist"
 
+		this.state.matchDataSearches = {};
+
 	}
 
-     /**
-     * Handles any errors cuased by a sub-component 
-     * @param {*} error the error recieved
-     * @param {*} errorInfo information about the error
-     */
-    componentDidCatch(error, errorInfo)
-    {
+	handleTextSearchChange(e,{name,value})
+	{
 
-        this.setState({isError: true});
+		console.log(value);
+		this.state.matchDataSearches[name] = new SearchRequest("text",value,["competitionName","home","away"]);
 
-    }
+	}
 
-	loadData(result) 
+	 /**
+	 * Handles any errors cuased by a sub-component 
+	 * @param {*} error the error recieved
+	 * @param {*} errorInfo information about the error
+	 */
+	componentDidCatch(error, errorInfo)
+	{
+
+		this.setState({isError: true});
+
+	}
+
+	loadData(result) //Should this be removed?
 	{
 
 		console.log(result)
 
 		result = result.matches.map((d) => bindMatch(d));
-
-
 
 		this.setState({ data: result, isLoaded: true, isError: false });
 
@@ -59,7 +68,7 @@ class MatchList extends ListPage {
 						totalPages={this.state.totalPages}
 						onPageChange={this.handlePageChange.bind(this)}
 						page={this.state.page}
-						paging={this.state.paging}             
+						paging={this.state.paging}			 
 						onSelect={this.routeToMatch.bind(this)} 
 						items={this.state.data}/>
 				</div>
@@ -73,17 +82,17 @@ class MatchList extends ListPage {
 
 		return(<Form>
 			<Form.Field>
-				<Input label="Search" type="text" name="searchtext"/> 
+				<Input label="Search" type="text" name="searchtext" onChange={this.handleTextSearchChange.bind(this)}/> 
 			</Form.Field>
 			<Form.Group widths="equal">
 				<Form.Field>
-					<Input label="Between" type="date" name="startdate" placeholder="Start date"/>
+					<Input label="Between" type="date" name="startdate" placeholder="Start date" onChange={this.handleTextSearchChange.bind(this)}/>
 				</Form.Field>
 				<Form.Field>
-					<Input type="date"  name="enddate" placeholder="End date"/>
+					<Input type="date"  name="enddate" placeholder="End date" onChange={this.handleTextSearchChange.bind(this)}/>
 				</Form.Field>
 				<Form.Field>
-					<Input label="Competition" type="text"  name="competition"/>
+					<Input label="Competition" type="text"  name="competition" onChange={this.handleTextSearchChange.bind(this)}/>
 				</Form.Field>
 			</Form.Group>
 			<Form.Button 

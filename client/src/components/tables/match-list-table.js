@@ -26,7 +26,7 @@ class MatchListTable extends DataTable
                 key={item.id} 
                 data={item} 
                 onSelect={this.state.selectFunc} 
-                isActive={item.id == this.state.activeRow}
+                isActive={item.id === this.state.activeRow}
             />
         ))
 
@@ -75,7 +75,7 @@ function MatchRow(props)
     let date = props.data.date;
     let dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
     let versus = props.data.home + " vs " + props.data.away;
-    let selectFunc = props.onSelect != undefined ? props.onSelect : () => {};
+    let selectFunc = props.onSelect !== undefined ? props.onSelect : () => {};
     return(
         <Table.Row onClick={() => selectFunc(props.data)} active={props.isActive}>
             <Table.Cell>{dateString}</Table.Cell>
