@@ -73,6 +73,21 @@ LOCK TABLES `competition` WRITE;
 /*!40000 ALTER TABLE `competition` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) not null,
+  `hash` varchar(50) default null,
+  `admin` boolean default FALSE,
+  `regkey` varchar(50),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+LOCK TABLES `user` WRITE;
+UNLOCK TABLES;
+
+
+
 DROP TABLE IF EXISTS `match`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
