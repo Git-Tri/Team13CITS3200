@@ -93,7 +93,12 @@ function editTokenByUsername(username, token, callback, errorCallback, noConnect
 
 //set password hash
 function editPasswordByUsername(username, password, callback, errorCallback, noConnectionCallback) {
+ 
         
+    query("update football.user set hash = ? where username = ?",[password,username],callback,errorCallback,noConnectionCallback)
+
+    
+
 }
 
 
