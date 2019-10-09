@@ -118,6 +118,22 @@ class Competition
 
 }
 
+class User
+{
+
+    constructor(id, username, hash, admin, regkey)
+    {
+
+        this.id = id; 
+        this.username = username; 
+        this.hash = hash;
+        this.admin = admin;
+        this.regkey = regkey;
+
+    }
+
+}
+
 
 class ImportRequest
 {
@@ -160,6 +176,6 @@ class SearchRequest
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch, SearchRequest
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch, SearchRequest, User
 
 }

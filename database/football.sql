@@ -77,7 +77,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) not null,
+  `username` varchar(50) not null,
   `hash` varchar(50) default null,
   `admin` boolean default FALSE,
   `regkey` varchar(50),
