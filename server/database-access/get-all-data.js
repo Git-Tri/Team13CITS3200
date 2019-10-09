@@ -69,6 +69,13 @@ function getAllComps(callback,errorCallback,noConnectionCallback)
 
 }
 
+function getAllUsers(callback,errorCallback,noConnectionCallback)
+{
+
+        return access.query("select * from football.user",[],
+                (r) => callback(dataBinding.bindUsers(r)),errorCallback,noConnectionCallback)
+
+}
 
 
 module.exports =
@@ -77,6 +84,7 @@ module.exports =
         getAllUnstrucredData,
         getAllEdits,
         getAllMatches,
-        getAllComps
+        getAllComps,
+        getAllUsers
 
 };
