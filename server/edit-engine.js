@@ -198,9 +198,78 @@ function replaceRuleWithField(input,edit)
     
 }
 
+function sequentialReplace(input,edit)
+{
+
+    if((input == undefined || input == null) && (edit == undefined || edit == null))
+    {
+
+        throw Error("Input and edit does not exist");
+
+    }
+
+    if(input == undefined || input == null)
+    {
+
+        throw Error("Input does not exist");
+
+    }
+
+
+    if(edit == undefined || edit == null)
+    {
+
+        return input;
+
+    }
+
+
+    let replaces = edit.replace.split(",");
+
+    let replaceWiths = edit.replaceWith.split(",");
+
+    if(typeof(edit.settings) === "object" && 
+            Array.isArray(edit.settings.fields))
+    {
+
+        replaces.forEach((r,index) => 
+        {
+
+            input.data = replaceRuleWithField(input.data,new domain.Edit(edit.editID,
+                edit.structuredDataID,
+                edit.unstructuredDataID,
+                edit.isCorpus,
+                {"field":edit.settings.fields[index]},
+                r,replaceWiths[index],edit.type));
+
+        })
+
+    }
+    else
+    {
+
+        replaces.forEach((r,index) => 
+        {
+
+            input = replaceRule(input,new domain.Edit(edit.editID,
+                edit.structuredDataID,
+                edit.unstructuredDataID,
+                edit.isCorpus,
+                {},
+                r,replaceWiths[index],edit.type));
+
+        })
+
+    }
+
+    return input;
+
+}
+
 //A map of edit functions and edit types 
 const editsFunctions = {"replace": replaceRule,
-                        "replacewithfield": replaceRuleWithField};
+                        "replacewithfield": replaceRuleWithField,
+                        "sequentialreplace":sequentialReplace};
 
 /**
  * applies all edits on a given object
@@ -224,7 +293,7 @@ function applyRulesWithEdits(input,edits)
 
     }
     if(edits === null || edits === undefined || ! Array.isArray(edits))
-    {
+    { 
 
         throw Error("edits must be an array");
 
@@ -354,6 +423,6 @@ function applyRulesMutiInputs(inputs,callback)
 module.exports = 
 {
 
-    replaceRule,replaceRuleWithField,editsFunctions,applyRulesWithEdits,applyRules,applyRulesMutiInputs
+    replaceRule,replaceRuleWithField,sequentialReplace,editsFunctions,applyRulesWithEdits,applyRules,applyRulesMutiInputs
 
 }

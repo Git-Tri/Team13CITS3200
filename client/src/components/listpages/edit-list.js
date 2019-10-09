@@ -179,6 +179,7 @@ export class EditList extends ListPage {
                     />
                     <Form.Group inline>
                         <Form.Select 
+                        clearable
                         placeholder='Search by Type'
                         name='type'
                         options={this.state.replaceTypes}
@@ -187,6 +188,7 @@ export class EditList extends ListPage {
                             this.handleSearchChange(name,new SearchRequest("exact",value,"type"))}
                         />
                         <Form.Select 
+                        clearable
                         placeholder='yes/no'
                         name='isCorpus'
                         options={this.state.corpusChoices}
