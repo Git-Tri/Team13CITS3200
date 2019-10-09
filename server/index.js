@@ -59,7 +59,8 @@ if(process.env.APIKEY !== undefined && process.env.APIKEY !== "undefined")
       
       let parsedResult = JSON.parse(result);
 
-      if(! Array.isArray(result) || result.length < 1)
+      console.log(parsedResult);
+      if(! Array.isArray(parsedResult) || parsedResult.length < 1)
       {
 
         throw Error("no comps")
