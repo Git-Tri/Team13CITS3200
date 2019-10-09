@@ -13,12 +13,6 @@ const routes = require("./routes/routeSetup.js");
 const compsAccess = require("./database-access/comps");
 const api = require("./football-api");
 const domain = require("./domain");
-const userDb = require("./database-access/users");
-
-let u = new domain.User(1,"bob","kk",false,"1");
-
-require("./database-access/get-all-data").getAllUsers(console.log)
-
 
 //start app
 const app = express();
@@ -54,21 +48,53 @@ app.listen(getPort(), () =>
 
 if(process.env.APIKEY !== undefined && process.env.APIKEY !== "undefined")
 {
-  
-  api.getAllCompetitions((result) => {
+  try
+  {
+
+    api.getAllCompetitions((result) => {
+      
+      try{
+
+      let mappedComps = []
+      
+      let parsedResult = JSON.parse(result);
+
+      if(! Array.isArray(result) || result.length < 1)
+      {
+
+        throw Error("no comps")
+
+      }
     
-    let mappedComps = []
     
-    let parsedResult = JSON.parse(result);
-    
-    parsedResult.forEach((e) => {
-      mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
-    
+      parsedResult.forEach((e) => {
+        mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
+      
+      });
+      compsAccess.insertComps(mappedComps, (result) => {
+        console.log("Updated all competitions from API and updated database");
+      }, (err) => {console.log(err);},(err) => {console.log(err);});
+    }
+    catch(error)
+    {
+
+      console.error("Issue connecting to the football api, please check your api key in the .env file and connection")
+
+      process.exit();
+
+    }
     });
-    compsAccess.insertComps(mappedComps, (result) => {
-      console.log("Updated all competitions from API and updated database");
-    }, (err) => {console.log(err);},(err) => {console.log(err);});
-  });
+
+  }
+  catch(error)
+  {
+
+    console.error("Issue connecting to the football api, please check your api key in the .env file and connection")
+
+    process.exit();
+
+  }
+  
 
 }
 
