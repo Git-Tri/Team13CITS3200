@@ -17,9 +17,9 @@ function getUserByUsername(username, callback, errorCallback, noConnectionCallba
 function insertUser(user, callback, errorCallback, noConnectionCallback) 
 {
 
-    let params = [user.username,user.hash,user.admin,user.regkey]
+    let params = [user.username,user.hash,user.admin,user.regkey,user.token]
 
-    let sqlQuery = "insert into football.user(username,hash,admin,regkey) values(?,?,?,?)"
+    let sqlQuery = "insert into football.user(username,hash,admin,regkey,token) values(?,?,?,?,?)"
 
     query(sqlQuery,params,callback,errorCallback,noConnectionCallback);  
     
@@ -75,11 +75,16 @@ function checkUsernameInUse(username, callback, errorCallback, noConnectionCallb
 function getUserByToken(token, callback, errorCallback, noConnectionCallback) {
     
     
+    query("select * from football.user where token = ?",
+    [token],(r) => callback(dataBinding.bindUsers(r)),errorCallback,noConnectionCallback)
+
     
 }
 //replace users token with new token (this can also be null for logging out)
 function editTokenByUsername(username, token, callback, errorCallback, noConnectionCallback) {
     
+    query("update football.user set token = ? where username = ?",[token,username],callback,errorCallback,noConnectionCallback)
+
     
     
 }
