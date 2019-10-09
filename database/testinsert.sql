@@ -6,10 +6,19 @@ INSERT INTO `football`.`match`
 `away`,
 `data`)
 VALUES
-(909,
+(9029,
 null,
 "1999-02-12",
 "Home Team",
 "Away Team",
 null);
+
+SELECT `user`.`id`,
+    `user`.`username`,
+    `user`.`hash`,
+    `user`.`admin`,
+    `user`.`regkey`,
+    `user`.`token`
+FROM `football`.`user`;
+
 

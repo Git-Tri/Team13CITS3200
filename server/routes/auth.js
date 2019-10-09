@@ -22,6 +22,19 @@ const jwt = require('jsonwebtoken')
 
 // }
 
+async function firstUser() {
+    let hash = await bcrypt.hash("testpass", 8)
+    let user = new domain.User(1,"testadmin",hash,true,"testkey",null)
+    console.log(hash);
+    db.insertUser(user, () => {
+
+        console.log("user created", user);
+    
+    },(err) => {console.log(err);}, (err) => {console.log(err);})
+}
+firstUser()
+
+
 
 exports.createRoutes = function(app) {
 
@@ -46,11 +59,15 @@ exports.createRoutes = function(app) {
                     let hash = users[0].hash;
                     let match = await bcrypt.compare(password, hash);
                     if (match) {
-                        let token = jwt.sign({_id:users[0].id}, 'secretfootball')
-                        res.send(token);
+                        let token = jwt.sign({_id:users[0].id}, process.env.secret)
+                        let send = { "token": token}
+                        res.send(JSON.stringify(send));
                         db.editTokenByUsername(username, token, () => {
                             console.log(username + " changed token to " + token);
                         }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+                    } else {
+                        res.sendStatus(400)
+                        console.log("Wrong password but found user");
                     }
                     console.log("is match: ", match);
 
@@ -70,7 +87,7 @@ exports.createRoutes = function(app) {
         console.log("Register attempt with: ");
         console.log(username, password, regkey);
         
-        //let hash = await bcrypt.hash(password, 8)
+        
         if (username == null || password == null || regkey == null) {
             console.log("Invalid login request");
             res.sendStatus(400);
@@ -81,25 +98,17 @@ exports.createRoutes = function(app) {
                     res.sendStatus(400);
                 } else {
                     if (users[0].regkey == regkey) {
-
-                        db.editPasswordByUsername()
+                        let hash = await bcrypt.hash(password, 8)
+                        db.editPasswordByUsername(username, hash, () => {
+                            console.log("user has registered " + username);
+                            res.sendStatus(200);
+                        }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                         
                     } else {
                         console.log("regkey does not match:" + users[0].regkey + " vs " + regkey);
                         res.sendStatus(400);
                     }
-                    
-
-                    if (match) {
-                        let token = jwt.sign({_id:users[0].id}, 'secretfootball')
-                        res.send(token);
-                        db.editTokenByUsername(username, token, () => {
-                            console.log(username + " changed token to " + token);
-                        }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
-                    }
-                    console.log("is match: ", match);
-
-
+  
                 }
             }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
 
@@ -116,26 +125,30 @@ exports.createRoutes = function(app) {
         let regkey = req.body.regkey;
         let admin = req.body.admin;
 
-        
-        
+        if (req.user.admin == false) {
+            res.sendStatus(403)
+            console.log("non admin user tried to create user");
+            return
+        }
+                
         if (username == null || regkey == null || admin == null) {
             console.log("Invalid create user");
             res.sendStatus(400);
         } else {
-            db.getUserByUsername(username, async (users) => {
-                if (users[0] == null) {
-                    res.sendStatus(400);
+            db.checkUsernameInUse(username, (inUse) => {
+                if (inUse) {
+                    console.log("Tried to create username already in use: " + username);
+                    res.sendStatus(418)
                 } else {
-                    
-                    let hash = users[0].hash;
-                    let match = await bcrypt.compare(password, hash);
-                    console.log("is match: ", match);
+                    let user = new domain.User(null,username,null,admin,regkey,null)
+                    db.insertUser(user, () => {
+                        console.log("user created", user);
+                        res.sendStatus(200)
 
-
+                    },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                 }
-            }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
 
-
+            },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         }
 
         

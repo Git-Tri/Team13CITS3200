@@ -16,9 +16,12 @@ function routingFunctionWrapper(routingFunction)
     return (req,res) => 
     {
         try {
+            
             const token = req.header('Authorization').replace('Bearer ', '')
+            
             const decoded = jwt.verify(token, secret)
-            db.getUserByToken(decoded, (user) => {
+            console.log(decoded);
+            db.getUserByToken(token, (user) => {
                 if (user[0] == null) {
                     throw new Error()
                 }
@@ -33,6 +36,7 @@ function routingFunctionWrapper(routingFunction)
             }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
 
         } catch (e) {
+            console.log(e);
             res.sendStatus(401);
         }
         //authentication check goes here
