@@ -13,6 +13,11 @@ const routes = require("./routes/routeSetup.js");
 const compsAccess = require("./database-access/comps");
 const api = require("./football-api");
 const domain = require("./domain");
+const userDb = require("./database-access/users");
+
+let u = new domain.User(1,"bob","kk",false,"1");
+
+require("./database-access/get-all-data").getAllUsers(console.log)
 
 
 //start app

@@ -185,5 +185,38 @@ function bindCompetition(rawComps)
 
 }
 
+function bindUsers(rawUsers)
+{
 
-module.exports = {bindEdits,bindUnstructuredData,bindStructredData,bindMatch,bindCompetition }
+    if(! Array.isArray(rawUsers))
+    {
+
+        throw Error("rawUsers must be an array");
+
+    }
+
+    let results = [];
+
+    rawUsers.forEach((item) => 
+    {
+
+        if(item.length != 5)
+        {
+
+           throw Error("improper item length");
+
+        }
+
+        let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
+
+
+        results.push(new domain.User(processedItem[0],processedItem[1],processedItem[2],
+            processedItem[3],processedItem[4]));
+    })
+
+    return results;
+
+}
+
+
+module.exports = {bindEdits,bindUnstructuredData,bindStructredData,bindMatch,bindCompetition,bindUsers }
