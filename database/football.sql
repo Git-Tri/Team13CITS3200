@@ -76,11 +76,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) not null,
+  `id` int(11) AUTO_INCREMENT NOT NULL,
+  `username` varchar(50) not null UNIQUE,
   `hash` varchar(50) default null,
   `admin` boolean default FALSE,
   `regkey` varchar(50),
+  `token` varchar(100),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 LOCK TABLES `user` WRITE;

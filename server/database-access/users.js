@@ -71,6 +71,18 @@ function checkUsernameInUse(username, callback, errorCallback, noConnectionCallb
 
 }
 
+//return user with this token
+function getUserByToken(token, callback, errorCallback, noConnectionCallback) {
+    
+    
+    
+}
+//replace users token with new token (this can also be null for logging out)
+function editTokenByUsername(username, token, callback, errorCallback, noConnectionCallback) {
+    
+    
+    
+}
 
 
 
@@ -80,5 +92,7 @@ module.exports = {
     deleteUserByUsername,
     promoteUserByUsername,
     demoteUserByUsername,
-    checkUsernameInUse
+    checkUsernameInUse,
+    getUserByToken,
+    editTokenByUsername
 }

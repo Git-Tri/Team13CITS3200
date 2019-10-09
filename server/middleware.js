@@ -1,9 +1,18 @@
+
+const jwt = require('jsonwebtoken')
+const secret = process.env.secret;
+
 function routingFunctionWrapper(routingFunction)
 {
 
     return (req,res) => 
     {
-        
+        try {
+            const token = req.header('Authorization').replace('Bearer ', '')
+            const decoded = jwt.verify(token, secret)
+        } catch (e) {
+            res.sendStatus(401);
+        }
         //authentication check goes here
         
         try
