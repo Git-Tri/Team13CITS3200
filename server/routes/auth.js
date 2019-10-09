@@ -2,7 +2,8 @@ const middleware = require("../middleware.js");
 const errorHandler = require("./errorHandler");
 const bcrypt = require('bcryptjs');
 const domain = require("../domain");
-const db = require("../database-access/users")
+const db = require("../database-access/users");
+const errorHandler = require("./errorHandler");
 
 // class User
 // {
@@ -33,7 +34,18 @@ exports.createRoutes = function(app) {
             console.log("Invalid login request");
             res.sendStatus(400);
         } else {
-            db.getUserByID()
+            db.getUserByUsername(username, (users) => {
+                if (users[0] == null) {
+                    res.sendStatus(400);
+                } else {
+                    
+                    let hash = users[0].hash;
+                    let match = await bcrypt.compare(password, hash);
+                    console.log("is match: ", match);
+
+
+                }
+            }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
 
 
         }
