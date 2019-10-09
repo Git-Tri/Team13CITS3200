@@ -81,6 +81,7 @@ CREATE TABLE `user` (
   `hash` varchar(50) default null,
   `admin` boolean default FALSE,
   `regkey` varchar(50),
+  `token` varchar(100),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 LOCK TABLES `user` WRITE;

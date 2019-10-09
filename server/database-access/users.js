@@ -72,6 +72,12 @@ function checkUsernameInUse(username, callback, errorCallback, noConnectionCallb
 }
 
 
+function getUserByToken(token, callback, errorCallback, noConnectionCallback) {
+    
+    
+    
+}
+
 
 
 module.exports = {
@@ -80,5 +86,6 @@ module.exports = {
     deleteUserByUsername,
     promoteUserByUsername,
     demoteUserByUsername,
-    checkUsernameInUse
+    checkUsernameInUse,
+    getUserByToken
 }
