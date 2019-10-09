@@ -19,7 +19,7 @@ const domain = require("../domain");
 
 
 //Returns a domain user object with all its info
-function getUserByID(uid, callback, errorCallback, noConnectionCallback) {
+function getUserByUsername(username, callback, errorCallback, noConnectionCallback) {
     
     
 }
@@ -30,19 +30,19 @@ function insertUser(user, callback, errorCallback, noConnectionCallback) {
 }
 
 //Completely remove user
-function deleteUserByID(uid, callback, errorCallback, noConnectionCallback) {
+function deleteUserByUsername(username, callback, errorCallback, noConnectionCallback) {
     
     
 }
 
 //all this needs to do is change the isAdmin field to true 
-function promoteUserByID(uid, callback, errorCallback, noConnectionCallback) {
+function promoteUserByUsername(username, callback, errorCallback, noConnectionCallback) {
     
     
 }
 
 //all this needs to do is change the isAdmin field to false
-function demoteUserByID(uid, callback, errorCallback, noConnectionCallback) {
+function demoteUserByUsername(username, callback, errorCallback, noConnectionCallback) {
         
 }
 
@@ -51,11 +51,20 @@ function checkUsernameInUse(username, callback, errorCallback, noConnectionCallb
         
 }
 
+//Might go in a different file?
+//get all users by returning an array of user domain objects
+function getAllUsers(callback, errorCallback, noConnectionCallback) {
+    
+}
+
+
+
 module.exports = {
-    getUserByID,
+    getUserByUsername,
     insertUser,
-    deleteUserByID,
-    promoteUserByID,
-    demoteUserByID,
-    checkUsernameInUse
+    deleteUserByUsername,
+    promoteUserByUsername,
+    demoteUserByUsername,
+    checkUsernameInUse,
+    getAllUsers
 }

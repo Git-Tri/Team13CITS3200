@@ -2,6 +2,23 @@ const middleware = require("../middleware.js");
 const errorHandler = require("./errorHandler");
 const bcrypt = require('bcryptjs');
 const domain = require("../domain");
+const db = require("../database-access/users")
+
+// class User
+// {
+
+//     constructor(id, username, hash, admin, regkey)
+//     {
+
+//         this.id = id; 
+//         this.username = username; 
+//         this.hash = hash;
+//         this.admin = admin;
+//         this.regkey = regkey;
+
+//     }
+
+// }
 
 
 exports.createRoutes = function(app) {
@@ -16,6 +33,8 @@ exports.createRoutes = function(app) {
             console.log("Invalid login request");
             res.sendStatus(400);
         } else {
+            db.getUserByID()
+
 
         }
 
