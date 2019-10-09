@@ -31,8 +31,8 @@ exports.createRoutes = function(app) {
         let username = req.body.username;
         let password = req.body.password;
         console.log("Login attempt with: ");
-        console.log(username);
-        console.log(password);
+        console.log(username, password);
+        
         
         if (username == null || password == null) {
             console.log("Invalid login request");
@@ -66,21 +66,30 @@ exports.createRoutes = function(app) {
 
         let username = req.body.username;
         let password = req.body.password;
-        console.log("Login attempt with: ");
-        console.log(username);
-        console.log(password);
+        let regkey = req.body.regkey;
+        console.log("Register attempt with: ");
+        console.log(username, password, regkey);
+        
         //let hash = await bcrypt.hash(password, 8)
-        if (username == null || password == null) {
+        if (username == null || password == null || regkey == null) {
             console.log("Invalid login request");
             res.sendStatus(400);
         } else {
             db.getUserByUsername(username, async (users) => {
                 if (users[0] == null) {
+                    console.log("could not find user: " + username);
                     res.sendStatus(400);
                 } else {
+                    if (users[0].regkey == regkey) {
+
+                        db.editPasswordByUsername()
+                        
+                    } else {
+                        console.log("regkey does not match:" + users[0].regkey + " vs " + regkey);
+                        res.sendStatus(400);
+                    }
                     
-                    let hash = users[0].hash;
-                    let match = await bcrypt.compare(password, hash);
+
                     if (match) {
                         let token = jwt.sign({_id:users[0].id}, 'secretfootball')
                         res.send(token);

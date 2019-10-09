@@ -91,6 +91,12 @@ function editTokenByUsername(username, token, callback, errorCallback, noConnect
 
 
 
+//set password hash
+function editPasswordByUsername(username, password, callback, errorCallback, noConnectionCallback) {
+        
+}
+
+
 module.exports = {
     getUserByUsername,
     insertUser,
@@ -99,5 +105,6 @@ module.exports = {
     demoteUserByUsername,
     checkUsernameInUse,
     getUserByToken,
-    editTokenByUsername
+    editTokenByUsername,
+    editPasswordByUsername
 }

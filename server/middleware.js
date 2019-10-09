@@ -6,6 +6,10 @@ const db = require("./database-access/users");
 
 const secret = process.env.secret;
 
+if (secret == null) {
+    throw new Error(".env file missing secret key! e.g SECRET='randomstring'")
+}
+
 function routingFunctionWrapper(routingFunction)
 {
 
