@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const errorHandler = require("./errorHandler");
 const domain = require("../domain");
 const db = require("../database-access/users");
+const dba = require("../database-access/get-all-data");
 const jwt = require('jsonwebtoken')
 
 
@@ -116,10 +117,9 @@ exports.createRoutes = function(app) {
 
     });
 
-    middleware.post(app, "/logout", (req, res) => {
+    middleware.put(app, "/logout", (req, res) => {
 
         let user = req.user;
-
                         
         if (user == null) {
             console.log("Invalid logout");
@@ -127,6 +127,7 @@ exports.createRoutes = function(app) {
         } else {
             db.editTokenByUsername(user.username, null, () => {
                 console.log(user.username + " has logged out");
+                res.sendStatus(200);
             },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         }
     });
@@ -165,6 +166,84 @@ exports.createRoutes = function(app) {
 
             },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         }
+    });
+
+    middleware.delete(app, "/removeuser", (req, res) => {
+
+        let username = req.query.username;
+        
+        if (req.user.admin == false) {
+            res.sendStatus(403)
+            console.log("non admin user tried to remove user");
+            return
+        }
+                
+        if (username == null) {
+            console.log("Invalid remove user");
+            res.sendStatus(400);
+        } else {
+            db.deleteUserByUsername(username, () => {
+                res.sendStatus(200)
+                console.log(req.user.username + " deleted " + username);
+            },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+        }
+    });
+
+    middleware.put(app, "/promoteuser", (req, res) => {
+
+        let username = req.query.username;
+        
+        if (req.user.admin == false) {
+            res.sendStatus(403)
+            console.log("non admin user tried to promote user");
+            return
+        }
+                
+        if (username == null) {
+            console.log("Invalid promote user");
+            res.sendStatus(400);
+        } else {
+            db.promoteUserByUsername(username, () => {
+                res.sendStatus(200)
+                console.log(req.user.username + " promoted " + username);
+            },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+        }
+    });
+
+    middleware.put(app, "/demoteuser", (req, res) => {
+
+        let username = req.query.username;
+        
+        if (req.user.admin == false) {
+            res.sendStatus(403)
+            console.log("non admin user tried to demote user");
+            return
+        }
+                
+        if (username == null) {
+            console.log("Invalid demote user");
+            res.sendStatus(400);
+        } else {
+            db.demoteUserByUsername(username, () => {
+                res.sendStatus(200)
+                console.log(req.user.username + " demoted " + username);
+            },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+        }
+    });
+
+    middleware.get(app, "/getusers", (req, res) => {
+       
+        if (req.user.admin == false) {
+            res.sendStatus(403)
+            console.log("non admin user tried to demote user");
+            return
+        }
+         
+        dba.getAllUsers((users) => {
+            res.send(users)
+            console.log("sent all users");
+        },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+        
     });
 
 
