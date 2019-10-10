@@ -23,8 +23,8 @@ const jwt = require('jsonwebtoken')
 // }
 
 async function firstUser() {
-    let hash = await bcrypt.hash("testpass", 8)
-    let user = new domain.User(1,"testadmin",hash,true,"testkey",null)
+    let hash = await bcrypt.hash("admin", 8)
+    let user = new domain.User(1,"admin",hash,true,"adminkey",null)
     console.log(hash);
     db.insertUser(user, () => {
 
@@ -115,6 +115,21 @@ exports.createRoutes = function(app) {
         }
 
     });
+
+    middleware.post(app, "/logout", (req, res) => {
+
+        let user = req.user;
+
+                        
+        if (user == null) {
+            console.log("Invalid logout");
+            res.sendStatus(400);
+        } else {
+            db.editTokenByUsername(user.username, null, () => {
+                console.log(user.username + " has logged out");
+            },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+        }
+    });
     
 
 
@@ -150,11 +165,6 @@ exports.createRoutes = function(app) {
 
             },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         }
-
-        
-
-        
-
     });
 
 
