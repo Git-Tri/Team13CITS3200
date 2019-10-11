@@ -3,11 +3,13 @@ const jwt = require('jsonwebtoken')
 const errorHandler = require("./routes/errorHandler");
 const domain = require("./domain");
 const db = require("./database-access/users");
+const nodeCookie = require('node-cookie')
+
 
 const secret = process.env.secret;
 
 if (secret == null) {
-    throw new Error(".env file missing secret key! e.g SECRET='randomstring'")
+    throw new Error(".env file missing secret key! e.g SECRET=\"randomstring\"")
 }
 
 function routingFunctionWrapper(routingFunction)
@@ -17,13 +19,18 @@ function routingFunctionWrapper(routingFunction)
     {
         try {
             
-            const token = req.header('Authorization').replace('Bearer ', '')
+            console.log("cookies = ", nodeCookie.parse(req, process.env.secret));
+            let cookie = nodeCookie.get(req, 'authToken', process.env.secret);
             
-            const decoded = jwt.verify(token, secret)
+            if (cookie == null) {
+                throw new Error("No authToken cookie in request")
+            }
+            console.log("authToken in cookie is: ", cookie);
+            const decoded = jwt.verify(cookie, secret)
             console.log(decoded);
-            db.getUserByToken(token, (user) => {
+            db.getUserByToken(cookie, (user) => {
                 if (user[0] == null) {
-                    throw new Error()
+                    throw new Error("No user found for token")
                 }
 
                 try {

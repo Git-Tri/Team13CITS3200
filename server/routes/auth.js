@@ -4,7 +4,8 @@ const errorHandler = require("./errorHandler");
 const domain = require("../domain");
 const db = require("../database-access/users");
 const dba = require("../database-access/get-all-data");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const nodeCookie = require('node-cookie');
 
 
 // class User
@@ -29,11 +30,15 @@ async function firstUser() {
     console.log(hash);
     db.insertUser(user, () => {
 
-        console.log("user created", user);
+        
     
-    },(err) => {console.log(err);}, (err) => {console.log(err);})
+    },(err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");}, 
+    (err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");})
 }
 firstUser()
+console.log("user created: username: admin / password: admin ");
+
+
 
 
 
@@ -61,8 +66,9 @@ exports.createRoutes = function(app) {
                     let match = await bcrypt.compare(password, hash);
                     if (match) {
                         let token = jwt.sign({_id:users[0].id}, process.env.secret)
-                        let send = { "token": token}
-                        res.send(JSON.stringify(send));
+                        nodeCookie.create(res, 'authToken', token, process.env.secret)
+                        
+                        res.sendStatus(200)
                         db.editTokenByUsername(username, token, () => {
                             console.log(username + " changed token to " + token);
                         }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
