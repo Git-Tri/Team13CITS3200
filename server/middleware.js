@@ -23,8 +23,33 @@ function routingFunctionWrapper(routingFunction)
             let cookie = nodeCookie.get(req, 'authToken', process.env.secret);
             
             if (cookie == null) {
-                throw new Error("No authToken cookie in request")
-            }
+                let apikey = req.header('apikey')
+                if (apikey == null) {
+                    throw new Error("No authToken cookie or api key in request")
+                } else {
+                    console.log("no cookie but found apikey in header");
+                    console.log("api key: " + apikey);
+                    //const decodedheader = jwt.verify(apikey, secret)
+                    db.getUserByAPIKey(apikey, (user) => {
+                        if (user[0] == null) {
+                            throw new Error("No user found for api key")
+                            
+                        }
+        
+                        try {
+                            req.user = user[0]
+                            routingFunction(req,res);
+                        } catch(e) {
+                            res.sendStatus(500);
+                            console.error(e)
+                        }
+                    }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+
+                                        
+
+                }
+                
+            } else {
             console.log("authToken in cookie is: ", cookie);
             const decoded = jwt.verify(cookie, secret)
             console.log(decoded);
@@ -41,7 +66,7 @@ function routingFunctionWrapper(routingFunction)
                     console.error(e)
                 }
             }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
-
+        }
         } catch (e) {
             console.log(e);
             res.sendStatus(401);

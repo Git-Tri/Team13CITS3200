@@ -200,7 +200,7 @@ function bindUsers(rawUsers)
     rawUsers.forEach((item) => 
     {
 
-        if(item.length != 6)
+        if(item.length != 7)
         {
 
            throw Error("improper item length");
@@ -211,7 +211,7 @@ function bindUsers(rawUsers)
 
 
         results.push(new domain.User(processedItem[0],processedItem[1],processedItem[2],
-            processedItem[3],processedItem[4],processedItem[5]));
+            processedItem[3],processedItem[4],processedItem[5], processedItem[6]));
     })
 
     return results;

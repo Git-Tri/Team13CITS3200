@@ -121,7 +121,7 @@ class Competition
 class User
 {
 
-    constructor(id, username, hash, admin, regkey, token)
+    constructor(id, username, hash, admin, regkey, token, apikey)
     {
 
         this.id = id; 
@@ -130,6 +130,7 @@ class User
         this.admin = admin;
         this.regkey = regkey;
         this.token = token;
+        this.apikey = apikey;
 
     }
 
