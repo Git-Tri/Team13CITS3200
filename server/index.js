@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.json());
 
+
 routes.createRoutes(app)
 
 function getPort()
