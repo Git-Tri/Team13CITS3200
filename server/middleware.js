@@ -5,8 +5,14 @@ const domain = require("./domain");
 const db = require("./database-access/users");
 const nodeCookie = require('node-cookie')
 
+//Load .env file
+const envResult = require("dotenv").config();
 
-const secret = process.env.secret;
+if (envResult.error) {
+  throw envResult.error
+}
+
+const secret = process.env.secret !== undefined && process.env.secret !== null ? process.env.secret : process.env.SECRET; 
 
 if (secret == null) {
     throw new Error(".env file missing secret key! e.g SECRET=\"randomstring\"")
@@ -19,8 +25,8 @@ function routingFunctionWrapper(routingFunction)
     {
         try {
             
-            console.log("cookies = ", nodeCookie.parse(req, process.env.secret));
-            let cookie = nodeCookie.get(req, 'authToken', process.env.secret);
+            console.log("cookies = ", nodeCookie.parse(req, secret));
+            let cookie = nodeCookie.get(req, 'authToken', secret);
             
             if (cookie == null) {
                 throw new Error("No authToken cookie in request")
