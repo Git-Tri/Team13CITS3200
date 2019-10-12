@@ -65,8 +65,8 @@ exports.createRoutes = function(app) {
                     let hash = users[0].hash;
                     let match = await bcrypt.compare(password, hash);
                     if (match) {
-                        let token = jwt.sign({_id:users[0].id}, process.env.secret)
-                        nodeCookie.create(res, 'authToken', token, process.env.secret)
+                        let token = jwt.sign({_id:users[0].id}, process.env.SECRET)
+                        nodeCookie.create(res, 'authToken', token, process.env.SECRET)
                         
                         res.sendStatus(200)
                         db.editTokenByUsername(username, token, () => {
@@ -183,7 +183,7 @@ exports.createRoutes = function(app) {
                     res.sendStatus(418)
                 } else {
                     
-                    let apikey = jwt.sign({_id:username}, process.env.secret);
+                    let apikey = jwt.sign({_id:username}, process.env.SECRET);
                     
                     let user = new domain.User(null,username,null,admin,regkey,null, apikey)
                     db.insertUser(user, () => {

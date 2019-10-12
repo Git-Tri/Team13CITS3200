@@ -12,7 +12,7 @@ if (envResult.error) {
   throw envResult.error
 }
 
-const secret = process.env.secret !== undefined && process.env.secret !== null ? process.env.secret : process.env.SECRET; 
+const secret = process.env.SECRET; 
 
 if (secret == null) {
     throw new Error(".env file missing secret key! e.g SECRET=\"randomstring\"")
