@@ -35,7 +35,7 @@ function routingFunctionWrapper(routingFunction)
                 } else {
                     console.log("no cookie but found apikey in header");
                     console.log("api key: " + apikey);
-                    //const decodedheader = jwt.verify(apikey, secret)
+                    const decodedheader = jwt.verify(apikey, secret)
                     db.getUserByAPIKey(apikey, (user) => {
                         if (user[0] == null) {
                             throw new Error("No user found for api key")
