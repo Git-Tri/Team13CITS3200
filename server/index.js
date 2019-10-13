@@ -1,104 +1,51 @@
-//Load .env file
-const envResult = require("dotenv").config();
+const website = require("./website")
+const fs = require('fs');
+const inquirer = require('inquirer');
+const auth = require("../server/routes/auth")
 
-if (envResult.error) {
-  throw envResult.error
-}
+fs.open(".env", "w+", (err, fd) => {
+    console.log(fd);
+});
 
-//import libaries 
-const express = require('express');
-const bodyParser = require('body-parser');
+fs.writeFile(".env", "#MYSQL DATA", err => {
+    if (err) return console.log(err);
+});
 
-const routes = require("./routes/routeSetup.js");
-const compsAccess = require("./database-access/comps");
-const api = require("./football-api");
-const domain = require("./domain");
-
-//start app
-const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(express.json());
-
-
-routes.createRoutes(app)
-
-function getPort()
-{
-
-  if(process.env.PORT != null && process.env.PORT != undefined)
-  {
-
-    return process.env.PORT;
-
-  } 
-  else 
-  {
-
-    return 3001;
-
-  }
-
-}
-
-
-app.listen(getPort(), () =>
-  console.log('Express server is running on localhost:3001')
-);
-
-if(process.env.APIKEY !== undefined && process.env.APIKEY !== "undefined")
-{
-  try
-  {
-
-    api.getAllCompetitions((result) => {
+const promptList = [{
+    type: 'input',
+    message: 'Please input your Host:',
+    name: 'HOST',
+},{
+    type: 'input',
+    message: 'Please input your Username:',
+    name: 'USER',
+},{
+    type: 'input',
+    message: 'Please input your Password',
+    name: 'PASSWORD',
+},{
+    type: 'input',
+    message: 'Please input your Secret',
+    name: 'SECRET',
+}];
+inquirer.prompt(promptList).then(answers => {
+    //var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+    //let OTP = ''; 
       
-      try{
-
-      let mappedComps = []
-      
-      let parsedResult = JSON.parse(result);
-
-      console.log(parsedResult);
-      if(! Array.isArray(parsedResult) || parsedResult.length < 1)
-      {
-
-        throw Error("no comps")
-
-      }
-    
-    
-      parsedResult.forEach((e) => {
-        mappedComps.push(new domain.Competition(e.league_id, e.league_name, e.country_name, e.country_id));
-      
-      });
-      compsAccess.insertComps(mappedComps, (result) => {
-        console.log("Updated all competitions from API and updated database");
-      }, (err) => {console.log(err);},(err) => {console.log(err);});
-    }
-    catch(error)
-    {
-
-      console.error("Issue connecting to the football api, please check your api key in the .env file and connection")
-
-      process.exit();
-
-    }
-    });
-
-  }
-  catch(error)
-  {
-
-    console.error("Issue connecting to the football api, please check your api key in the .env file and connection")
-
-    process.exit();
-
-  }
-  
-
-}
-
-
-module.exports = {getPort};
+    // Find the length of string 
+    /*var len = string.length; 
+    for (let i = 0; i < 6; i++ ) { 
+        OTP += string[Math.floor(Math.random() * len)]; 
+    } */
+    //console.log("Your one time password is :"+ OTP);
+    auth.firstUser(answers.USER,answers.PASSWORD)
+    var append ="\n" + "HOST=" + '"'+ answers.HOST + '"' + "\n" +
+                "USER=" + '"'+ answers.USER + '"' + "\n" +
+                "PASSWORD=" + '"'+ answers.PASSWORD + '"' + "\n" +
+                'DATABASE="football"'+ "\n" +
+                'APIKEY="8596208b168f5a11bde87614902d2b1d76ffc03f1e3122506f713820f74e528d"'+ "\n" +
+                "SECRET="+ '"'+ answers.SECRET + '"';
+    fs.appendFile(".env", append, function (err) {
+        if (err) return console.log(err);
+     });
+})
