@@ -24,9 +24,9 @@ const nodeCookie = require('node-cookie');
 
 // }
 
-async function firstUser() {
-    let hash = await bcrypt.hash("admin", 8)
-    let user = new domain.User(1,"admin",hash,true,"adminkey",null)
+async function firstUser(username,password) {
+    let hash = await bcrypt.hash(password, 8)
+    let user = new domain.User(1,username,hash,true,"adminkey",null)
     console.log(hash);
     db.insertUser(user, () => {
 
