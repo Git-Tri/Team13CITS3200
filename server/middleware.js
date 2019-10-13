@@ -21,7 +21,8 @@ if (secret == null) {
 function routingFunctionWrapper(routingFunction)
 {
 
-    return (req,res) => 
+    return routingFunction
+    /*return (req,res) => 
     {
         try {
             
@@ -83,7 +84,7 @@ function routingFunctionWrapper(routingFunction)
 
 
 
-    }
+    }*/
 
 
 }
