@@ -17,9 +17,9 @@ function getUserByUsername(username, callback, errorCallback, noConnectionCallba
 function insertUser(user, callback, errorCallback, noConnectionCallback) 
 {
 
-    let params = [user.username,user.hash,user.admin,user.regkey,user.token]
+    let params = [user.username,user.hash,user.admin,user.regkey,user.token,user.apikey]
 
-    let sqlQuery = "insert into football.user(username,hash,admin,regkey,token) values(?,?,?,?,?)"
+    let sqlQuery = "insert into football.user(username,hash,admin,regkey,token,apikey) values(?,?,?,?,?,?)"
 
     query(sqlQuery,params,callback,errorCallback,noConnectionCallback);  
     
@@ -80,8 +80,27 @@ function getUserByToken(token, callback, errorCallback, noConnectionCallback) {
 
     
 }
+
+//return user with this apikey
+function getUserByAPIKey(apikey, callback, errorCallback, noConnectionCallback) {
+    
+    
+    query("select * from football.user where apikey = ?",
+    [apikey],(r) => callback(dataBinding.bindUsers(r)),errorCallback,noConnectionCallback)
+
+    
+}
 //replace users token with new token (this can also be null for logging out)
-function editTokenByUsername(username, token, callback, errorCallback, noConnectionCallback) {
+function editTokenByUsername(username, regkey, callback, errorCallback, noConnectionCallback) {
+    
+    query("update football.user set regkey = ? where username = ?",[regkey,username],callback,errorCallback,noConnectionCallback)
+
+    
+    
+}
+
+//replace users token with new token (this can also be null for logging out)
+function editRegkeyByUsername(username, token, callback, errorCallback, noConnectionCallback) {
     
     query("update football.user set token = ? where username = ?",[token,username],callback,errorCallback,noConnectionCallback)
 
@@ -111,5 +130,7 @@ module.exports = {
     checkUsernameInUse,
     getUserByToken,
     editTokenByUsername,
-    editPasswordByUsername
+    editPasswordByUsername,
+    getUserByAPIKey,
+    editRegkeyByUsername
 }

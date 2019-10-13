@@ -26,7 +26,7 @@ const nodeCookie = require('node-cookie');
 
 async function firstUser() {
     let hash = await bcrypt.hash("admin", 8)
-    let user = new domain.User(1,"admin",hash,true,"adminkey",null)
+    let user = new domain.User(1,"admin",hash,true,"adminkey",null,7777)
     console.log(hash);
     db.insertUser(user, () => {
 
@@ -36,7 +36,7 @@ async function firstUser() {
     (err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");})
 }
 firstUser()
-console.log("user created: username: admin / password: admin ");
+console.log("user created: username: admin / password: admin / apikey: 7777");
 
 
 
@@ -65,8 +65,8 @@ exports.createRoutes = function(app) {
                     let hash = users[0].hash;
                     let match = await bcrypt.compare(password, hash);
                     if (match) {
-                        let token = jwt.sign({_id:users[0].id}, process.env.secret)
-                        nodeCookie.create(res, 'authToken', token, process.env.secret)
+                        let token = jwt.sign({_id:users[0].id}, process.env.SECRET)
+                        nodeCookie.create(res, 'authToken', token, process.env.SECRET)
                         
                         res.sendStatus(200)
                         db.editTokenByUsername(username, token, () => {
@@ -111,6 +111,10 @@ exports.createRoutes = function(app) {
                             res.sendStatus(200);
                         }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                         
+                        db.editRegkeyByUsername(username, null, () => {
+                            
+                        }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+                        
                     } else {
                         console.log("regkey does not match:" + users[0].regkey + " vs " + regkey);
                         res.sendStatus(400);
@@ -135,6 +139,22 @@ exports.createRoutes = function(app) {
                 console.log(user.username + " has logged out");
                 res.sendStatus(200);
             },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+        }
+    });
+
+    middleware.get(app, "/currentuser", (req, res) => {
+
+        let user = req.user;
+                        
+        if (user == null) {
+            console.log("Invalid request");
+            res.sendStatus(400);
+        } else {
+            delete user.hash
+            delete user.regkey
+            delete user.token
+            res.send(JSON.stringify(user))
+            console.log("sent user" + console.log(user));
         }
     });
     
@@ -162,7 +182,10 @@ exports.createRoutes = function(app) {
                     console.log("Tried to create username already in use: " + username);
                     res.sendStatus(418)
                 } else {
-                    let user = new domain.User(null,username,null,admin,regkey,null)
+                    
+                    let apikey = jwt.sign({_id:username}, process.env.SECRET);
+                    
+                    let user = new domain.User(null,username,null,admin,regkey,null, apikey)
                     db.insertUser(user, () => {
                         console.log("user created", user);
                         res.sendStatus(200)
@@ -246,7 +269,11 @@ exports.createRoutes = function(app) {
         }
          
         dba.getAllUsers((users) => {
-            res.send(users)
+            users.forEach(user => {
+                delete user.hash
+                delete user.token
+            });
+            res.send(JSON.stringify(users))
             console.log("sent all users");
         },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         
