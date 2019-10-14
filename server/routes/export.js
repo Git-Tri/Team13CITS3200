@@ -32,16 +32,17 @@ exports.createRoutes = function(app)
 
 
                         let responseObject = { structuredData: structuredDataResult, UnstructuredData: unstructuredDataResult }
-                        let xml = o2x(responseObject);
+                        
 
                         if (export_type == "xml") {
+                            let xml = o2x(responseObject);
                             res.setHeader("Content_Type", "application/xml");
                             //var fileContents = Buffer.from(xml, "base64");
                             //var readStream = new stream.PassThrough();
                             //readStream.end(fileContents);
                             //res.set('Content-disposition', 'attachment; filename=' + filename);
                             //res.set('Content-Type', 'text/plain');
-                            //readStream.pipe(res);
+                            //readStream.pipe(res); 
                             /*var savedFilePath = '/temp/' + filename;
                             fs.writeFile(savedFilePath, fileContents, function() {
                               res.status(200).download(savedFilePath, filename);
