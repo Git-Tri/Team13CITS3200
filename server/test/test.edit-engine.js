@@ -316,4 +316,44 @@ describe("Edit Engine Tests",function()
         
     });
 
+    describe("sequentialReplace tests",function()
+    {
+
+        let input = "some text billy boy"
+        let mutilpleInput = new domain.UnstructuredData(1,1,undefined,undefined,undefined,undefined,undefined,
+            "some text billy boy");
+
+        let structuredData = structuredDataGen(); 
+                
+        let replaceRule1 = new domain.Edit(1,1,1,false,undefined,"some,text","zig,zag","sequentialreplace");
+        let replaceRule2 = new domain.Edit(1,1,1,false,undefined,"billy,boy","zack,solider","sequentialreplace");
+
+        let fieldRule = new domain.Edit(1,1,1,true,{fields:["field","otherField"]},"some data,other data","cat,dog");
+
+        it("should give successfully replace sequential text",() => 
+        {
+
+            editEngine.sequentialReplace(input,replaceRule1).should.equal("zig zag billy boy");
+
+        })
+
+        it("should successfully replace sequentially on field",() => 
+        {
+
+            let result = editEngine.sequentialReplace(structuredData,fieldRule).data
+
+            JSON.stringify(result).should.equal(JSON.stringify({field:"cat",otherField:"dog"}))
+
+        })
+
+        it("should give successfully replace text after mutiiple edits",() => 
+        {
+
+            editEngine.applyRulesWithEdits(mutilpleInput,[replaceRule1,replaceRule2]).data
+                .should.equal("zig zag zack solider");
+
+        })
+
+    })
+
 });

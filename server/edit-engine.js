@@ -198,9 +198,94 @@ function replaceRuleWithField(input,edit)
     
 }
 
+/**
+ * performs a sequential replace with or without fields defined. 
+ * It splits the replace and replacewith field by comma and then 
+ * performs an edit on each pair 
+ * if fields is defined in settings of the edit then it is restricted to just the  
+ * fields listed
+ * @param {*} input the input 
+ * @param {*} edit the edit 
+ */
+function sequentialReplace(input,edit)
+{
+
+    if((input == undefined || input == null) && (edit == undefined || edit == null))
+    {
+
+        throw Error("Input and edit does not exist");
+
+    }
+
+    if(input == undefined || input == null)
+    {
+
+        throw Error("Input does not exist");
+
+    }
+
+
+    if(edit == undefined || edit == null)
+    {
+
+        return input;
+
+    }
+
+
+    let replaces = edit.replace.split(",");
+
+    let replaceWiths = edit.replaceWith.split(",");
+
+    if(typeof(edit.settings) === "object" && 
+            Array.isArray(edit.settings.fields))
+    {
+
+        replaces.forEach((r,index) => 
+        {
+
+            edit.settings.fields.forEach(f => 
+            {
+
+                        
+                input = replaceRuleWithField(input,new domain.Edit(edit.editID,
+                    edit.structuredDataID,
+                    edit.unstructuredDataID,
+                    edit.isCorpus,
+                    {"field":f},
+                    r,replaceWiths[index],edit.type));
+
+
+            })
+
+        })
+
+    }
+    else
+    {
+
+        replaces.forEach((r,index) => 
+        {
+
+            input = replaceRule(input,new domain.Edit(edit.editID,
+                edit.structuredDataID,
+                edit.unstructuredDataID,
+                edit.isCorpus,
+                {},
+                r,replaceWiths[index],edit.type));
+
+        })
+
+    }
+
+    return input;
+
+}
+
 //A map of edit functions and edit types 
 const editsFunctions = {"replace": replaceRule,
-                        "replacewithfield": replaceRuleWithField};
+                        "replacewithfield": replaceRuleWithField,
+                        "sequentialreplace":sequentialReplace};
 
 /**
  * applies all edits on a given object
@@ -209,6 +294,8 @@ const editsFunctions = {"replace": replaceRule,
  */
 function applyRulesWithEdits(input,edits)
 {
+
+    console.log(input);
 
     if(input == null || input == undefined)
     {
@@ -224,7 +311,7 @@ function applyRulesWithEdits(input,edits)
 
     }
     if(edits === null || edits === undefined || ! Array.isArray(edits))
-    {
+    { 
 
         throw Error("edits must be an array");
 
@@ -326,7 +413,6 @@ function applyRules(input,callback)
 function applyRulesMutiInputs(inputs,callback)
 {
 
-    
     if(! Array.isArray(inputs))
     {
         
@@ -338,7 +424,7 @@ function applyRulesMutiInputs(inputs,callback)
 
         throw Error("Call back must be a function, otherwise what's the point of all this?");
         
-    }
+    }   
 
     getAll.getAllEdits((result) => 
     {
@@ -354,6 +440,6 @@ function applyRulesMutiInputs(inputs,callback)
 module.exports = 
 {
 
-    replaceRule,replaceRuleWithField,editsFunctions,applyRulesWithEdits,applyRules,applyRulesMutiInputs
+    replaceRule,replaceRuleWithField,sequentialReplace,editsFunctions,applyRulesWithEdits,applyRules,applyRulesMutiInputs
 
 }
