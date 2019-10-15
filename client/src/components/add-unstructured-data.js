@@ -266,12 +266,7 @@ class AddUnstructuredData extends Component {
                             </div>
                         </div>
                         <div className="inline fields">
-                            <div className="one wide field" />
-                            <div className="two wide field">
-                                <button className="fluid ui primary button" type="button">
-                                    Toggle: edited
-                                </button>
-                            </div>
+                            <div className="three wide field"/>
                             <div className="eight wide field">
                                 {hasMessage ? <Message negative> {message} </Message> : undefined}
                             </div>
