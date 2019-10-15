@@ -26,7 +26,6 @@ class LoginForm extends Component {
 	}
 
 	handleButton(){
-		console.log("Button");
 		fetch("/login",
 			{method: "POST",
 			body: {username: this.state.username, password: this.state.password},
@@ -45,16 +44,36 @@ class LoginForm extends Component {
 		.catch(err => {
 			switch(err.message) {
 					case "400":
-						this.setState({incorrectLogin: true })
+						if(! this.state.incorrectLogin)
+							this.setState({incorrectLogin: true })
 						return;
 
 					default: 
-						if(! this.state.isError) {
+						if(! this.state.isError)
 							this.setState({isError: true})
-						}
 						return;
 				}	
 		})
+	}
+
+	renderError(){
+		if(this.state.isError){
+			return (
+				<Message negative>
+					<Message.Header>An error has occured</Message.Header>
+					<p>Failed to get data from the server.</p>
+				</Message>
+			)
+		} else if(this.state.incorrectLogin){
+			return (
+				<Message negative>
+					<Message.Header>An error has occured</Message.Header>
+					<p>Failed to get data from the server.</p>
+				</Message>
+			)
+		} else {
+			return <div></div>
+		}
 	}
 
 
@@ -69,10 +88,7 @@ class LoginForm extends Component {
 						<Segment>
 							<Form.Input fluid icon='user' iconPosition='left' placeholder='Username' onChange={this.handleChange.bind(this)}/>
 							<Form.Input fluid icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={this.handleChange.bind(this)}/>
-
-							<Button primary onClick={this.handleButton.bind(this)}>
-							Login
-							</Button>
+							<Button primary onClick={this.handleButton.bind(this)}>Login</Button>
 						</Segment>
 					</Form>
 					<Message>
@@ -80,6 +96,7 @@ class LoginForm extends Component {
 					</Message>
 				</Grid.Column>
 			</Grid>
+			{this.renderError()}
 		</div>)
 	}
 }
