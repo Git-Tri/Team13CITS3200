@@ -39,8 +39,8 @@ class UserTable extends DataTable
     {
 
         return this.state.header = (<Table.Row>
-            <Table.HeaderCell>Email</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Username</Table.HeaderCell>
+            <Table.HeaderCell>Is admin</Table.HeaderCell>
         </Table.Row>)
 
     }
@@ -52,10 +52,13 @@ class UserTable extends DataTable
         //broken into each predicate for easier debugging
         if(this.props.items.every((i) => {
             let isIdValid = typeof(i.id) === "number" 
-            let isPublishedValid = i.published instanceof Date 
-            let isAuthorValid = typeof(i.author) === "string"
-            let isTitleValid = typeof(i.title) === "string"
-            return isIdValid && isPublishedValid && isAuthorValid && isTitleValid;
+            let isUsernameValid = typeof(i.username) === "string"
+            let isHashValid = typeof (i.hash) === "string"
+            let isAdminValid = typeof (i.admin) === "number" 
+            let isRegkeyValid = typeof (i.regkey) === "string"
+            let isTokenValid = typeof (i.token) === "string"
+            let isAPIKeyValid = typeof (i.apikey) === "string"
+            return isIdValid && isUsernameValid && isAdminValid && isRegkeyValid && isAPIKeyValid;
             }) == false)
         {
             
@@ -84,26 +87,19 @@ function UserRow(props)
         throw Error("props.data must be an instance of user");
 
     }
-    
-    let date = props.data.published;
 
-    let dateString = (date.getDate()) + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+    let username = props.data.username
 
-    let title = props.data.title;
+    let isAdmin = "No"
 
-    if(title.length > MAX_TITLE_SIZE)
-    {
-
-        title = title.substring(0,MAX_TITLE_SIZE-3) + "...";
-
-    }
+    if (props.data.admin == 1) { isAdmin = "Yes" }
 
     let selectFunc = props.onSelect != undefined ? props.onSelect : (a, b) => { };
 
     return(
         <Table.Row active={props.isActive}>
-            <Table.Cell>{dateString}</Table.Cell>
-            <Table.Cell>{props.data.author}</Table.Cell>
+            <Table.Cell>{username}</Table.Cell>
+            <Table.Cell>{isAdmin}</Table.Cell>
             <Table.Cell>
                 <button className="fluid ui positive button" type="button" onClick={() => selectFunc("p" + props.data.title)}>
                     Promote
