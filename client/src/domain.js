@@ -63,6 +63,24 @@ class Match
 
 }
 
+class InsertMatch
+{
+
+    constructor(id,competitionID,date,home,away,data)
+    {
+
+        this.id = id;
+        this.competitionID = competitionID;
+        this.date = date;
+        this.home = home;
+        this.away = away;
+        this.data = data;
+          
+
+    }
+
+}
+
 /**
  * A class representing an edit 
  */
@@ -100,6 +118,25 @@ class Competition
 
 }
 
+class User
+{
+
+    constructor(id, username, hash, admin, regkey, token, apikey)
+    {
+
+        this.id = id; 
+        this.username = username; 
+        this.hash = hash;
+        this.admin = admin;
+        this.regkey = regkey;
+        this.token = token;
+        this.apikey = apikey;
+
+    }
+
+}
+
+
 class ImportRequest
 {
 
@@ -109,13 +146,19 @@ class ImportRequest
         this.begin = begin; //optional
 
         this.end = end; //optional
-        
+
+        if(typeof(compId !== "string"))
+        {
+
+            throw new Error("Competition must exist and of type string");
+
+        }
+
         this.compId = compId; //mandatory 
 
     }
 
 }
-
 
 class SearchRequest
 {
@@ -131,11 +174,10 @@ class SearchRequest
 
 }
 
-
 //export all classes 
 module.exports = 
 {
 
-    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest,SearchRequest
+    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest, InsertMatch, SearchRequest, User
 
 }
