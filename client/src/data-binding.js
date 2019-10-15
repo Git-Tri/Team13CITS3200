@@ -1,4 +1,4 @@
-import {StructuredData, UnstructuredData, Edit, Match, Competition} from "./domain";
+import {StructuredData, UnstructuredData, Edit, Match, Competition, User} from "./domain";
 /**
  * converts a parsed json object of structured data
  * to an instance of structured data 
@@ -82,5 +82,18 @@ export function bindCompetition(rawComp)
         rawComp.name,
         rawComp.countryName,
         Number.parseInt(rawComp.countryId));
+
+}
+
+export function bindUser(rawUser)
+{
+
+    return new User(Number.parseInt(rawUser.id),
+        rawUser.username,
+        rawUser.hash,
+        Number.parseInt(rawUser.admin),
+        rawUser.regkey,
+        rawUser.token,
+        rawUser.apikey);
 
 }
