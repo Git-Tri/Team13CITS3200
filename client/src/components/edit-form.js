@@ -300,6 +300,9 @@ export class EditForm extends Component {
 
 			case "field":
 				return STRUCTURED_DATA_FIELDS.includes(value);
+			
+			case "fields":
+				return value.every((f) => STRUCTURED_DATA_FIELDS.includes(f));
 
 			default:
 				return false;
@@ -607,7 +610,7 @@ export class EditForm extends Component {
 						name='field'
 						options={this.state.fieldTypes}
 						value={this.state.data.settings.field}
-						label="Type:"
+						label="Field:"
 						onChange={this.handleSettingChange.bind(this)}
 						/>
 				   </Form.Group>)
@@ -615,6 +618,65 @@ export class EditForm extends Component {
 		}
 
 	}
+
+	
+	/**
+	 * Renders the extra fields for the sequential replace if the target is not unstructured data 
+	 */
+	renderSeqReplaceFieldOptions()
+	{
+
+		if(this.state.data.type == "sequentialreplace" && (this.state.target == undefined || this.state.target instanceof StructuredData))
+		{
+
+			if(this.state.data.settings.fields == undefined)
+			{
+
+				this.state.data.settings.fields = []
+
+			}
+
+			return(<div>
+					<Form.Group inline>
+						<Form.Select 
+						multiple selection 
+						error={this.genIsErrorSettings("field","Please select a field")}
+						placeholder='Choose Field'
+						name='fields'
+						options={this.state.fieldTypes}
+						value={this.state.data.settings.fields}
+						label="Fields:"
+						onChange={this.handleSettingChange.bind(this)}
+						/>
+						
+				   </Form.Group>
+				   {this.renderSeqReplaceFieldWarningMessage()}
+				   </div>)
+
+		}
+
+	}
+
+	/**
+	 * Renders a warning if you select fields on a entire corpus edit informing the user 
+	 * that this means the edit will only be applied to structured data 
+	 */
+	renderSeqReplaceFieldWarningMessage()
+	{
+
+
+
+		if(Array.isArray(this.state.data.settings.fields) && this.state.data.settings.fields.length > 0 && this.state.data.isCorpus)
+		{
+			return(<Message warning visible>
+					When you select a field on this type of edit, it means that the edit will only apply to structured data (matches)
+				   </Message>)
+
+		}
+
+
+	}
+
 
 	/**
      * renders the page in loading state 
@@ -665,6 +727,7 @@ export class EditForm extends Component {
 					/>
 				</Form.Group>
 				{this.renderReplaceFieldOptions()}
+				{this.renderSeqReplaceFieldOptions()}
 				<Form.Group widths="equal">
 					<Button primary onClick={this.saveData.bind(this)}> Save </Button>
 					{this.state.isNew ? "" : <Button negative onClick={this.deleteData.bind(this)}> Delete </Button>}

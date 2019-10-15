@@ -21,6 +21,7 @@ if (secret == null) {
 function routingFunctionWrapper(routingFunction)
 {
 
+    //return routingFunction
     return (req,res) => 
     {
         try {
@@ -77,8 +78,7 @@ function routingFunctionWrapper(routingFunction)
             console.log(e);
             res.sendStatus(401);
         }
-        //authentication check goes here
-        
+             
         
 
 
