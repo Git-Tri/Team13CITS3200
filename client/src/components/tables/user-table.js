@@ -101,17 +101,17 @@ function UserRow(props)
             <Table.Cell>{username}</Table.Cell>
             <Table.Cell>{isAdmin}</Table.Cell>
             <Table.Cell>
-                <button className="fluid ui positive button" type="button" onClick={() => selectFunc("p" + props.data.title)}>
+                <button className="fluid ui positive button" type="button" onClick={() => selectFunc("p" + props.data.username)}>
                     Promote
                 </button>
             </Table.Cell>
             <Table.Cell>
-                <button className="fluid ui negative button" type="button" onClick={() => selectFunc("d" + props.data.title)}>
+                <button className="fluid ui negative button" type="button" onClick={() => selectFunc("d" + props.data.username)}>
                     Demote
                 </button>
             </Table.Cell>
             <Table.Cell>
-                <button className="fluid ui negative button" type="button" onClick={() => selectFunc("r" + props.data.title)}>
+                <button className="fluid ui negative button" type="button" onClick={() => selectFunc("r" + props.data.username)}>
                     Remove
                 </button>
             </Table.Cell>
