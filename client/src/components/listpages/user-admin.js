@@ -10,7 +10,7 @@ class UserAdmin extends ListPage {
         super(props)
         this.state.isLoaded = false;
         this.state.search = "";
-        this.state.username = "";
+        this.state.uname = "";
         this.state.code = "";
         this.state.isAdmin = false;
         this.state.headerText = "User Admin"
@@ -42,11 +42,11 @@ class UserAdmin extends ListPage {
      * adds a new user
      */
     addUser() {
-        var admin = "false"
+        var admin = 0
         if (this.state.isAdmin) {
-            admin = "true"
+            admin = 1
         }
-        var toSend = `{"username" : "${this.state.username}", "regkey" : "${this.state.code}", "admin" : "${admin}"}`
+        var toSend = `{"username" : "${this.state.uname}", "regkey" : "${this.state.code}", "admin" : ${admin}}`
         console.log(toSend)
         var request = new XMLHttpRequest()
         request.open("POST", "/createuser", true)
@@ -126,7 +126,7 @@ class UserAdmin extends ListPage {
 
     renderSearch() {
 
-        const { search, username, code, isAdmin } = this.state
+        const { search, uname, code, isAdmin } = this.state
 
         return (<div id="container">
             <form class="ui form">
@@ -136,7 +136,7 @@ class UserAdmin extends ListPage {
                         <label>
                             Username
                         </label>
-                        <input type="text" name="username" value={username} onchange={this.changeHandler} />
+                        <input type="text" name="uname" value={uname} onChange={this.changeHandler} />
                     </div>
                     <div class="four wide field">
                         <label>
@@ -146,12 +146,12 @@ class UserAdmin extends ListPage {
                     </div>
                     <div class="two wide field">
                         <div class="ui checkbox">
-                            <input type="checkbox" name="example"/>
+                            <input type="checkbox" name="example" onChange={this.adminCheck.bind(this)} />
                                 <label>Is Admin</label>
                         </div>
                     </div>
                     <div class="three wide field">
-                        <button className="fluid ui positive button" type="button">
+                        <button className="fluid ui positive button" type="button" onClick={this.addUser.bind(this)}>
                             Add User
                         </button>
                     </div>
