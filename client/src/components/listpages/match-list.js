@@ -9,25 +9,21 @@ import { SearchRequest } from "../../domain"
 
 class MatchList extends ListPage {
 
-	constructor(props)
-	{
-
+	constructor(props) {
 		super(props);
-
-		this.state.headerText = "Match List";
-
-		this.state.route = "/matchlist"
-
-		this.state.matchDataSearches = {};
-
+		this.state = {
+			headerText: "Match List",
+			route: "/matchlist",
+			matchDataSearches: {},
+			data: {},
+			isLoaded: false,
+			isError: false; 
+		}
 	}
 
-	handleTextSearchChange(e,{name,value})
-	{
-
+	handleSearchChange(e,{name,value}) {
 		console.log(value);
 		this.state.matchDataSearches[name] = new SearchRequest("text",value,["competitionName","home","away"]);
-
 	}
 
 	 /**
@@ -35,30 +31,21 @@ class MatchList extends ListPage {
 	 * @param {*} error the error recieved
 	 * @param {*} errorInfo information about the error
 	 */
-	componentDidCatch(error, errorInfo)
-	{
-
+	componentDidCatch(error, errorInfo) {
 		this.setState({isError: true});
-
 	}
 
-	loadData(result) //Should this be removed?
-	{
-
+	loadData(result) {//Should this be removed?
 		console.log(result)
-
 		result = result.matches.map((d) => bindMatch(d));
-
 		this.setState({ data: result, isLoaded: true, isError: false });
-
 	}
 
 	routeToMatch(match) {
 		this.props.history.push("/view_match?id=" + match.id + "&isbackable=true");
 	}
 
-	renderLoaded()
-	{
+	renderLoaded() {
 
 		return (
 			<div>
@@ -77,34 +64,27 @@ class MatchList extends ListPage {
 
 	}
 
-	renderSearch()
-	{
+	renderSearch() {
 
-		return(<Form>
-			<Form.Field>
-				<Input label="Search" type="text" name="searchtext" onChange={this.handleTextSearchChange.bind(this)}/> 
-			</Form.Field>
-			<Form.Group widths="equal">
+		return(
+			<Form>
 				<Form.Field>
-					<Input label="Between" type="date" name="startdate" placeholder="Start date" onChange={this.handleTextSearchChange.bind(this)}/>
+					<Input label="Search" type="text" name="searchtext" onChange={this.handleSearchChange.bind(this)}/> 
 				</Form.Field>
-				<Form.Field>
-					<Input type="date"  name="enddate" placeholder="End date" onChange={this.handleTextSearchChange.bind(this)}/>
-				</Form.Field>
-				<Form.Field>
-					<Input label="Competition" type="text"  name="competition" onChange={this.handleTextSearchChange.bind(this)}/>
-				</Form.Field>
-			</Form.Group>
-			<Form.Button 
-				onClick={this.submitHandler}
-			>
-			Submit
-			</Form.Button>
-		</Form>)
-
-
+				<Form.Group widths="equal">
+					<Form.Field>
+						<Input label="Between" type="date" name="startdate" placeholder="Start date" onChange={this.handleSearchChange.bind(this)}/>
+					</Form.Field>
+					<Form.Field>
+						<Input type="date"  name="enddate" placeholder="End date" onChange={this.handleSearchChange.bind(this)}/>
+					</Form.Field>
+					<Form.Field>
+						<Input label="Competition" type="text"  name="competition" onChange={this.handleSearchChange.bind(this)}/>
+					</Form.Field>
+				</Form.Group>
+			</Form>
+		)
 	}
-
 }
 
 export default withRouter(MatchList);
