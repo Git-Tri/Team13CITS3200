@@ -263,7 +263,7 @@ exports.createRoutes = function(app) {
         }
     });
 
-    middleware.get(app, "/getusers", (req, res) => {
+    middleware.post(app, "/getusers", (req, res) => {
        
         if (req.user.admin == false) {
             res.sendStatus(403)
