@@ -13,6 +13,7 @@ class RegisterForm extends Component {
 			repeat_password: "",
 			regkey: "",
 			passwordMismatch: false,
+			failedRegistration: false,
 			isError: false
 		}
 	}
@@ -29,7 +30,7 @@ class RegisterForm extends Component {
 	handleButton(){
 		fetch("/register",
 			{method: "POST",
-			body: {username: this.state.username, password: this.state.password},
+			body: {username: this.state.username, password: this.state.password, regkey: this.state.regkey},
 			})
 		.then(res => {
 				if(res.ok) {
