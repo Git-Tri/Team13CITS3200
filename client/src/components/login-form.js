@@ -43,7 +43,7 @@ class LoginForm extends Component {
 			})
 		.then(res => {
 				if(res.ok) {
-					this.setState({loginToken: res});
+					this.props.history.push("/");
 				}
 				else if(res.status == 400){
 					throw new Error(400);
