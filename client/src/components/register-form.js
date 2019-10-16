@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { Header, Button, Grid, Form, Message, Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
 
 	constructor(props) {
-		super(props)
+		super(props);
 
 		this.state = {
 			username: "",
 			password: "",
-			loggedIn: false,
-			incorrectLogin: false,
-			isError: false,
-			loginToken: {}
+			repeat_password: "",
+			regkey: "",
+			passwordMismatch: false,
+			isError: false
 		}
 	}
 
@@ -27,13 +27,13 @@ class LoginForm extends Component {
 	}
 
 	handleButton(){
-		fetch("/login",
+		fetch("/register",
 			{method: "POST",
 			body: {username: this.state.username, password: this.state.password},
 			})
 		.then(res => {
 				if(res.ok) {
-					this.setState({loginToken: res});
+					this.props.history.push('/login-form');
 				}
 				else if(res.status == 400){
 					throw new Error(400);
@@ -45,8 +45,8 @@ class LoginForm extends Component {
 		.catch(err => {
 			switch(err.message) {
 					case "400":
-						if(! this.state.incorrectLogin)
-							this.setState({incorrectLogin: true })
+						if(! this.state.failedRegistration)
+							this.setState({failedRegistration: true })
 						return;
 
 					default: 
@@ -65,11 +65,11 @@ class LoginForm extends Component {
 					<p>Failed to get data from the server.</p>
 				</Message>
 			)
-		} else if(this.state.incorrectLogin){
+		} else if(this.state.failedRegistration){
 			return (
 				<Message negative>
-					<Message.Header>An error has occured</Message.Header>
-					<p>Failed to get data from the server.</p>
+					<Message.Header>Registration unsuccessful</Message.Header>
+					<p>Please check your registration key and try again.</p>
 				</Message>
 			)
 		} else {
@@ -83,7 +83,7 @@ class LoginForm extends Component {
 			<Grid textAlign='center' style={{minHeight:"100vh"}} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450 }}>
 					<Header as='h2' textAlign='center'>
-						Login
+						Register New User
 					</Header>
 					<Form size='large'>
 						<Segment>
@@ -102,11 +102,26 @@ class LoginForm extends Component {
 							value={this.state.password}
 							onChange={this.handleChange.bind(this)}
 							/>
-							<Button primary onClick={this.handleButton.bind(this)}>Login</Button>
+							<Form.Input
+							fluid icon='th'
+							iconPosition='left'
+							placeholder='Repeat password'
+							type='password'
+							value={this.state.repeat_password}
+							onChange={this.handleChange.bind(this)}
+							/>
+							<Form.Input
+							fluid icon='key'
+							iconPosition='left'
+							placeholder='Registration key'
+							value={this.state.regkey}
+							onChange={this.handleChange.bind(this)}
+							/>
+							<Button primary onClick={this.handleButton.bind(this)}>Register Now</Button>
 						</Segment>
 					</Form>
 					<Message>
-						<a href='../register-form'>Sign Up</a>
+						If you alreay have an account, <a href='../login-form'>sign in</a>
 					</Message>
 				</Grid.Column>
 			</Grid>
@@ -115,4 +130,4 @@ class LoginForm extends Component {
 	}
 }
 
-export default withRouter(LoginForm);
+export default withRouter(RegisterForm);

@@ -19,6 +19,7 @@ import AddUnstructuredData from './components/add-unstructured-data.js';
 import Export from './components/export.js';
 import StructuredDataPage from "./components/structured-data-page";
 import LoginForm from "./components/login-form";
+import RegisterForm from "./components/register-form";
 
 class App extends Component {
 	constructor() {
@@ -114,6 +115,9 @@ class App extends Component {
 								/>
 								<Route	path='/login-form'
 										component={() => <LoginForm sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
+								<Route	path='/register-form'
+										component={() => <RegisterForm sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 							</Switch>
 						</div>
