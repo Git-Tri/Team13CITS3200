@@ -24,12 +24,16 @@ const nodeCookie = require('node-cookie');
 
 // }
 
-async function firstUser(username,password) {
-    let hash = await bcrypt.hash(password, 8)
-    let user = new domain.User(1,username,hash,true,"adminkey",null)
-async function firstUser() {
-    let hash = await bcrypt.hash("admin", 8)
-    let user = new domain.User(1,"admin",hash,true,"adminkey",null,7777)
+ async function createFirstUser(username,password,key) {
+    let hash = await bcrypt.hash(username, 8)
+    if(key === undefined)
+    {
+
+        key = jwt.sign({_id:username}, process.env.SECRET);
+
+    }
+
+    let user = new domain.User(1,password,hash,true,key,null,7777)
     console.log(hash);
     db.insertUser(user, () => {
 
@@ -38,9 +42,23 @@ async function firstUser() {
     },(err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");}, 
     (err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");})
 }
-firstUser()
-console.log("user created: username: admin / password: admin / apikey: 7777");
 
+
+
+exports.createFirstUser = createFirstUser;
+
+//used for testing
+dba.getAllUsers((r) => 
+{
+
+    if(r.length == 0)
+    {
+
+        createFirstUser("admin","admin","adminkey");
+
+    }
+
+})
 
 
 

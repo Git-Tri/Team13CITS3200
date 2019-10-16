@@ -1,51 +1,79 @@
-const website = require("./website")
+
 const fs = require('fs');
 const inquirer = require('inquirer');
-const auth = require("../server/routes/auth")
 
-fs.open(".env", "w+", (err, fd) => {
+if(fs.existsSync)
+{
+
+  require("./website")
+
+}
+else
+{
+
+    
+  fs.open(".env", "w+", (err, fd) => {
     console.log(fd);
-});
+  });
 
-fs.writeFile(".env", "#MYSQL DATA", err => {
+  fs.writeFile(".env", "#MYSQL DATA", err => {
     if (err) return console.log(err);
-});
+  });
 
-const promptList = [{
+  const promptList = [{
     type: 'input',
     message: 'Please input your Host:',
     name: 'HOST',
-},{
+  },{
     type: 'input',
-    message: 'Please input your Username:',
+    message: 'Please input your Database user Username:',
     name: 'USER',
-},{
+  },{
     type: 'input',
-    message: 'Please input your Password',
+    message: 'Please input your Database user Password',
     name: 'PASSWORD',
-},{
+  },{
     type: 'input',
     message: 'Please input your Secret',
     name: 'SECRET',
-}];
-inquirer.prompt(promptList).then(answers => {
-    //var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
-    //let OTP = ''; 
-      
-    // Find the length of string 
-    /*var len = string.length; 
-    for (let i = 0; i < 6; i++ ) { 
-        OTP += string[Math.floor(Math.random() * len)]; 
-    } */
-    //console.log("Your one time password is :"+ OTP);
-    auth.firstUser(answers.USER,answers.PASSWORD)
+  },{
+  type: 'input',
+  message: 'Please input(paste) your API key',
+  name: 'KEY',
+  },{
+  type: 'input',
+  message: 'Please input your username for the website',
+  name: 'WEBSITE_USER',
+  },{
+  type: 'input',
+  message: 'Please input your password for the website',
+  name: 'WEBSITE_PASSWORD',
+  }];
+  inquirer.prompt(promptList).then(answers => {
+
     var append ="\n" + "HOST=" + '"'+ answers.HOST + '"' + "\n" +
                 "USER=" + '"'+ answers.USER + '"' + "\n" +
                 "PASSWORD=" + '"'+ answers.PASSWORD + '"' + "\n" +
                 'DATABASE="football"'+ "\n" +
-                'APIKEY="8596208b168f5a11bde87614902d2b1d76ffc03f1e3122506f713820f74e528d"'+ "\n" +
+                'APIKEY=' + '"'  +  answers.KEY + '"' + "\n" +
                 "SECRET="+ '"'+ answers.SECRET + '"';
     fs.appendFile(".env", append, function (err) {
-        if (err) return console.log(err);
-     });
-})
+
+        const envResult = require("dotenv").config();
+
+        if (envResult.error) {
+          throw envResult.error
+        }
+
+        const auth = require("../server/routes/auth")
+        auth.createFirstUser(answers.WEBSITE_USER,answers.WEBSITE_PASSWORD)
+        require("./website")
+    });
+    
+
+  })
+
+
+}
+
+

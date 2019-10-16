@@ -16,6 +16,7 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "inquirer": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
     "node-cookie": "^2.1.1",
     "node-env-run": "^3.0.2",

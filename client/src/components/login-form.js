@@ -27,9 +27,19 @@ class LoginForm extends Component {
 	}
 
 	handleButton(){
+
+		console.log(this.state.username)
+
+		console.log(JSON.stringify({username: this.state.username, password: this.state.password}))
+
+
+
 		fetch("/login",
 			{method: "POST",
-			body: {username: this.state.username, password: this.state.password},
+			body: JSON.stringify({username: this.state.username, password: this.state.password}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
 			})
 		.then(res => {
 				if(res.ok) {
@@ -91,6 +101,7 @@ class LoginForm extends Component {
 							fluid icon='user'
 							iconPosition='left'
 							placeholder='Username'
+							name="username"
 							value={this.state.username}
 							onChange={this.handleChange.bind(this)}
 							/>
@@ -98,6 +109,7 @@ class LoginForm extends Component {
 							fluid icon='lock'
 							iconPosition='left'
 							placeholder='Password'
+							name="password"
 							type='password'
 							value={this.state.password}
 							onChange={this.handleChange.bind(this)}
