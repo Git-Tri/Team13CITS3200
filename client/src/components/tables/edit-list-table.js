@@ -89,7 +89,28 @@ function SummaryBuilder(edit)
         case "replacewithfield":
             return <div><i>Replace: </i> {edit.replace}  <i> - with - </i>  {edit.replaceWith} 
                 <i> - on field - </i>  {edit.settings.field} </div>
+        case "sequentialreplace":
+                let replaces = edit.replace.split(",");
 
+                let withs = edit.replaceWith.split(",");
+
+                let items = replaces.map((r,index) => (<div>{r} <i> - with - </i> {withs[index]}</div>));
+
+                if(items.length <= 5)
+                {
+
+                    return <div><i>Replace All: </i> {items}</div>
+
+                }
+                else
+                {
+
+                    items = items.slice(0,5);
+
+                    return <div><i>Replace All: </i> {items}<div>...</div></div>
+
+                }
+                
         default:
             return "Error";
 
@@ -113,7 +134,8 @@ function FormatType(edit)
 
         case "replacewithfield":
             return "Replace with Field"
-
+        case "sequentialreplace":
+            return "Sequential Replace"
         default:
             return "Error";
 

@@ -14,6 +14,6 @@ export const STRUCTURED_DATA_FIELDS = ["cards",
     "match_hometeam_name",
     "match_awayteam_name"];
 
-export const EDIT_TYPES = ["replace","replacewithfield"];
+export const EDIT_TYPES = ["replace","replacewithfield","sequentialreplace"];
  
-export const EDIT_NAMES = ["Replace","Replace Field"]
+export const EDIT_NAMES = ["Replace","Replace Field","Sequential Replace"]

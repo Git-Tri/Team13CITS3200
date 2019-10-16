@@ -6,6 +6,7 @@ exports.createRoutes = function (app) {
   require("./match").createRoutes(app)
   require("./comps").createRoutes(app)
   require("./export").createRoutes(app)
+  require("./auth").createRoutes(app)
 
 
 }
