@@ -30,7 +30,10 @@ class RegisterForm extends Component {
 	handleButton(){
 		fetch("/register",
 			{method: "POST",
-			body: {username: this.state.username, password: this.state.password, regkey: this.state.regkey},
+			body: JSON.stringify({username: this.state.username, password: this.state.password, regkey: this.state.regkey}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
 			})
 		.then(res => {
 				if(res.ok) {
