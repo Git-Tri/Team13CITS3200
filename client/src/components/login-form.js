@@ -42,14 +42,16 @@ class LoginForm extends Component {
 			}
 			})
 		.then(res => {
+				console.log(res.status)
 				if(res.ok) {
 					this.props.history.push("/");
 				}
 				else if(res.status == 400){
-					throw new Error(400);
+					
+					this.setState({incorrectLogin: true })
 				}
 				else {
-					throw new Error(500);
+					this.setState({isError: true})
 				}
 			})
 		.catch(err => {
@@ -68,18 +70,19 @@ class LoginForm extends Component {
 	}
 
 	renderError(){
+		console.log(this.state)
 		if(this.state.isError){
 			return (
-				<Message negative>
+				<Message visible negative>
 					<Message.Header>An error has occured</Message.Header>
 					<p>Failed to get data from the server.</p>
 				</Message>
 			)
 		} else if(this.state.incorrectLogin){
 			return (
-				<Message negative>
-					<Message.Header>An error has occured</Message.Header>
-					<p>Failed to get data from the server.</p>
+				<Message visible negative>
+					<Message.Header>Incorrect Login</Message.Header>
+					<p>Please recheck your login info.</p>
 				</Message>
 			)
 		} else {
@@ -92,6 +95,7 @@ class LoginForm extends Component {
 		return (<div className="page">
 			<Grid textAlign='center' style={{minHeight:"100vh"}} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450 }}>
+					
 					<Header as='h2' textAlign='center'>
 						Login
 					</Header>
@@ -120,9 +124,10 @@ class LoginForm extends Component {
 					<Message>
 						<a href='../register-form'>Sign Up</a>
 					</Message>
+					{this.renderError()}	
 				</Grid.Column>
 			</Grid>
-			{this.renderError()}
+			
 		</div>)
 	}
 }

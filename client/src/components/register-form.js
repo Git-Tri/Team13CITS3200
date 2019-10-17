@@ -37,13 +37,13 @@ class RegisterForm extends Component {
 			})
 		.then(res => {
 				if(res.ok) {
-					this.props.history.push('/login-form');
+					this.props.history.push('/');
 				}
 				else if(res.status == 400){
-					throw new Error(400);
+					this.setState({failedRegistration: true})
 				}
 				else {
-					throw new Error(500);
+					this.setState({isError: true})
 				}
 			})
 		.catch(err => {
@@ -64,14 +64,14 @@ class RegisterForm extends Component {
 	renderError(){
 		if(this.state.isError){
 			return (
-				<Message negative>
+				<Message visible negative>
 					<Message.Header>An error has occured</Message.Header>
 					<p>Failed to get data from the server.</p>
 				</Message>
 			)
 		} else if(this.state.failedRegistration){
 			return (
-				<Message negative>
+				<Message visible negative>
 					<Message.Header>Registration unsuccessful</Message.Header>
 					<p>Please check your registration key and try again.</p>
 				</Message>
@@ -95,6 +95,7 @@ class RegisterForm extends Component {
 							fluid icon='user'
 							iconPosition='left'
 							placeholder='Username'
+							name="username"
 							value={this.state.username}
 							onChange={this.handleChange.bind(this)}
 							/>
@@ -103,13 +104,15 @@ class RegisterForm extends Component {
 							iconPosition='left'
 							placeholder='Password'
 							type='password'
+							name="password"
 							value={this.state.password}
 							onChange={this.handleChange.bind(this)}
 							/>
 							<Form.Input
 							fluid icon='th'
 							iconPosition='left'
-							placeholder='Repeat password'
+							placeholder='Confirm password'
+							name="repeat_password"
 							type='password'
 							value={this.state.repeat_password}
 							onChange={this.handleChange.bind(this)}
@@ -118,6 +121,7 @@ class RegisterForm extends Component {
 							fluid icon='key'
 							iconPosition='left'
 							placeholder='Registration key'
+							name="regkey"
 							value={this.state.regkey}
 							onChange={this.handleChange.bind(this)}
 							/>

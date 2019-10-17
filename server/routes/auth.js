@@ -60,7 +60,18 @@ dba.getAllUsers((r) =>
 
 })
 
+function loginUser(req,res,user)
+{
+    user.username; 
+    let token = jwt.sign({_id:user.id}, process.env.SECRET)
+    nodeCookie.create(res, 'authToken', token, process.env.SECRET)
+                        
 
+    db.editTokenByUsername(user.username, token, () => {
+        
+    }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+
+} 
 
 
 exports.createRoutes = function(app) {
@@ -86,13 +97,8 @@ exports.createRoutes = function(app) {
                     let hash = users[0].hash;
                     let match = await bcrypt.compare(password, hash);
                     if (match) {
-                        let token = jwt.sign({_id:users[0].id}, process.env.SECRET)
-                        nodeCookie.create(res, 'authToken', token, process.env.SECRET)
-                        
+                        loginUser(req,res,users[0])
                         res.sendStatus(200)
-                        db.editTokenByUsername(username, token, () => {
-                            console.log(username + " changed token to " + token);
-                        }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                     } else {
                         res.sendStatus(400)
                         console.log("Wrong password but found user");
@@ -129,7 +135,8 @@ exports.createRoutes = function(app) {
                         let hash = await bcrypt.hash(password, 8)
                         db.editPasswordByUsername(username, hash, () => {
                             console.log("user has registered " + username);
-                            res.sendStatus(200);
+                            loginUser(req,res,users[0])
+                            res.sendStatus(200)
                         }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                         
                         db.editRegkeyByUsername(username, null, () => {

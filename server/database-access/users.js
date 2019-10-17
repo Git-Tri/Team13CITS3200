@@ -100,9 +100,9 @@ function editTokenByUsername(username, token, callback, errorCallback, noConnect
 }
 
 //replace users token with new token (this can also be null for logging out)
-function editRegkeyByUsername(username, token, callback, errorCallback, noConnectionCallback) {
+function editRegkeyByUsername(username, regkey, callback, errorCallback, noConnectionCallback) {
     
-    query("update football.user set token = ? where username = ?",[token,username],callback,errorCallback,noConnectionCallback)
+    query("update football.user set regkey = ? where username = ?",[regkey,username],callback,errorCallback,noConnectionCallback)
 
     
     
