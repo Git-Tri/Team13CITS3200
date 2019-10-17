@@ -17,7 +17,7 @@ class MatchList extends ListPage {
 			matchDataSearches: {},
 			data: {},
 			isLoaded: false,
-			isError: false; 
+			isError: false
 		}
 	}
 
