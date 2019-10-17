@@ -35,8 +35,7 @@ class MatchList extends ListPage {
 		this.setState({isError: true});
 	}
 
-	loadData(result) {//Should this be removed?
-		console.log(result)
+	loadData(result) {
 		result = result.matches.map((d) => bindMatch(d));
 		this.setState({ data: result, isLoaded: true, isError: false });
 	}
