@@ -12,27 +12,36 @@ class LoginForm extends Component {
 			password: "",
 			loggedIn: false,
 			incorrectLogin: false,
+			missingDetails: false,
 			isError: false,
 			loginToken: {}
 		}
 	}
 
-	//Placeholder
-	validData(){
-		return true;
+	validInputs(){
+		return this.state.username !== "" && this.state.password !== "";
 	}
 
 	handleChange(e, { name, value }){
-		this.setState({ [name]: value });		
+		this.setState({ [name]: value });
+		// this.clearError();	
 	}
+
+	// clearError(){
+	// 	if(this.validInputs() && this.state.missingDetails){
+	// 		this.setState({missingDetails: false});
+	// 	}
+	// }
 
 	handleButton(){
 
+		if(!this.validInputs()){
+			this.setState({missingDetails: true});
+			return;
+		}
+
 		console.log(this.state.username)
-
 		console.log(JSON.stringify({username: this.state.username, password: this.state.password}))
-
-
 
 		fetch("/login",
 			{method: "POST",
@@ -46,7 +55,7 @@ class LoginForm extends Component {
 				if(res.ok) {
 					this.props.history.push("/");
 				}
-				else if(res.status == 400){
+				else if(res.status === 400){
 					
 					this.setState({incorrectLogin: true })
 				}
@@ -70,7 +79,6 @@ class LoginForm extends Component {
 	}
 
 	renderError(){
-		console.log(this.state)
 		if(this.state.isError){
 			return (
 				<Message visible negative>
@@ -85,11 +93,17 @@ class LoginForm extends Component {
 					<p>Please recheck your login info.</p>
 				</Message>
 			)
+		} else if(this.state.missingDetails){
+			return (
+				<Message visible negative>
+					<Message.Header>Username or password missing</Message.Header>
+					<p>Please recheck your login info.</p>
+				</Message>
+			)
 		} else {
 			return <div></div>
 		}
 	}
-
 
 	render() {
 		return (<div className="page">

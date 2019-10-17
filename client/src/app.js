@@ -48,7 +48,7 @@ class App extends Component {
 						visible={this.state.sidebarVisible}
 						width='thin'
 					>						
-						<Menu.Item as='a' href='/'>
+						<Menu.Item as='a' href='/site/'>
 							Home
 						</Menu.Item>
 						<Menu.Item as='a' href='/site/unstructured_data_list'>
@@ -80,7 +80,7 @@ class App extends Component {
 					<Sidebar.Pusher>
 						<div className="App" style={{minHeight:"100vh"}}>
 							<Switch>
-								<Route 	path='/site/home' 
+								<Route 	exact path='/site/' 
 										component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 					    		<Route 	path='/site/unstructured_data_list' 

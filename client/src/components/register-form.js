@@ -12,22 +12,57 @@ class RegisterForm extends Component {
 			password: "",
 			repeat_password: "",
 			regkey: "",
+			missingDetails: false,
 			passwordMismatch: false,
+			inputDetailRulebreak: false,
 			failedRegistration: false,
-			isError: false
+			isError: false,
 		}
 	}
 
-	//Placeholder
-	validData(){
-		return true;
+	validInputs(){
+		return this.state.username !== "" && this.state.password !== "" && this.state.repeat_password !== "" && this.state.regkey !== "";
+	}
+
+	inputCheck(text){
+		var lengthCheck = (text.length < 8);
+
+		var differentCharacter = false;
+		for (var i = 1; i < text.length; i++) {
+			differentCharacter = (text[i] != text[i-1] || differentCharacter);
+		}
+		
+		return lengthCheck && differentCharacter;
 	}
 
 	handleChange(e, { name, value }){
-		this.setState({ [name]: value });		
+		this.setState({ [name]: value });
+	}
+
+	clearError(){
+		this.setState({
+			missingDetails: false,
+			passwordMismatch: false,
+			inputDetailRulebreak: false
+		})
 	}
 
 	handleButton(){
+
+		this.clearError();
+
+		if(!this.validInputs()){
+			this.setState({missingDetails: true});
+			return;
+		} else if(this.state.password !== this.state.repeat_password){
+			this.setState({passwordMismatch: true});
+			return;
+		} else if(!this.inputCheck(this.state.password) || !this.inputCheck(this.state.username)){
+			this.setState({inputDetailRulebreak: true});
+			return;
+		}
+
+
 		fetch("/register",
 			{method: "POST",
 			body: JSON.stringify({username: this.state.username, password: this.state.password, regkey: this.state.regkey}),
@@ -74,6 +109,27 @@ class RegisterForm extends Component {
 				<Message visible negative>
 					<Message.Header>Registration unsuccessful</Message.Header>
 					<p>Please check your registration key and try again.</p>
+				</Message>
+			)
+		} else if(this.state.missingDetails){
+			return (
+				<Message visible negative>
+					<Message.Header>Username, password or registration missing</Message.Header>
+					<p>Please recheck your info.</p>
+				</Message>
+			)
+		} else if(this.state.passwordMismatch){
+			return (
+				<Message visible negative>
+					<Message.Header>Passwords do not match</Message.Header>
+					<p>Please recheck your info.</p>
+				</Message>
+			)
+		} else if(this.state.inputDetailRulebreak){
+			return (
+				<Message visible negative>
+					<Message.Header>Usernames and passwords must be at least eight (8) characters</Message.Header>
+					<p>Please try again.</p>
 				</Message>
 			)
 		} else {
@@ -131,9 +187,9 @@ class RegisterForm extends Component {
 					<Message>
 						If you alreay have an account, <a href='../login-form'>sign in</a>
 					</Message>
+					{this.renderError()}
 				</Grid.Column>
 			</Grid>
-			{this.renderError()}
 		</div>)
 	}
 }
