@@ -80,7 +80,7 @@ class App extends Component {
 					<Sidebar.Pusher>
 						<div className="App" style={{minHeight:"100vh"}}>
 							<Switch>
-								<Route 	exact path='/' 
+								<Route 	path='/site/home' 
 										component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 								/>
 					    		<Route 	path='/site/unstructured_data_list' 

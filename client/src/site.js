@@ -11,10 +11,10 @@ class Site extends Component {
 						<Route 	exact path='/'
 								component={() => <App/>}
 						/>
-						<Route 	exact path='/login-form' 
+						<Route 	path='/login-form' 
 								component={() => <LoginForm/>}
 						/>
-						<Route 	exact path='/register-form' 
+						<Route 	path='/register-form' 
 								component={() => <RegisterForm/>}
 						/>
 					</Switch>
