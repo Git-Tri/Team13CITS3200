@@ -24,16 +24,17 @@ class LoginForm extends Component {
 
 	handleChange(e, { name, value }){
 		this.setState({ [name]: value });
-		// this.clearError();	
 	}
 
-	// clearError(){
-	// 	if(this.validInputs() && this.state.missingDetails){
-	// 		this.setState({missingDetails: false});
-	// 	}
-	// }
+	clearError(){
+		if(this.state.missingDetails){
+			this.setState({missingDetails: false});
+		}
+	}
 
 	handleButton(){
+
+		this.clearError();
 
 		if(!this.validInputs()){
 			this.setState({missingDetails: true});
