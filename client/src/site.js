@@ -8,10 +8,13 @@ class Site extends Component {
 	render(){
 		return (<div className="Auth" style={{minHeight:"100vh"}}>
 					<Switch>
-						<Route 	exact path='/login-form' 
+						<Route 	exact path='/' 
 								component={() => <LoginForm/>}
 						/>
-						<Route 	exact path='/register-form' 
+						<Route 	path='/login-form' 
+								component={() => <LoginForm/>}
+						/>
+						<Route 	path='/register-form' 
 								component={() => <RegisterForm/>}
 						/>
 						<Route 	path='/site/*'

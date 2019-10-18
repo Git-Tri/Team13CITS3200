@@ -18,8 +18,6 @@ import ImportStructuredData from './components/import-structured-data.js';
 import AddUnstructuredData from './components/add-unstructured-data.js';
 import Export from './components/export.js';
 import StructuredDataPage from "./components/structured-data-page";
-import LoginForm from "./components/login-form.js";
-import RegisterForm from "./components/register-form.js";
 
 class App extends Component {
 	constructor() {
@@ -79,47 +77,39 @@ class App extends Component {
 
 					<Sidebar.Pusher>
 						<div className="App" style={{minHeight:"100vh"}}>
-							<Switch>
-								<Route 	exact path='/site/' 
-										component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-					    		<Route 	path='/site/unstructured_data_list' 
-					    				component={() => <UnstructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-					    		/>
-					    		<Route 	path='/site/structured_data_list' 
-					    				component={() => <StructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-					    		/>
-								<Route 	path='/site/match_list'
-										component={() => <MatchList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/view_match'
-										component={() => <ViewMatch sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/edit_list'
-										component={() => <EditList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/add_edit'
-										component={() => <AddEdit sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/import_structured_data'
-										component={() => <ImportStructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/add_unstructured_data'
-										component={() => <AddUnstructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/export'
-										component={() => <Export sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route 	path='/site/structured_data_page'
-										component={() => <StructuredDataPage sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route	path='/site/login-form'
-										component={() => <LoginForm sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-								<Route	path='/site/register-form'
-										component={() => <RegisterForm sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
-								/>
-							</Switch>
+							<Route 	exact path='/site/' 
+									component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/unstructured_data_list' 
+									component={() => <UnstructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/structured_data_list' 
+									component={() => <StructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/match_list'
+									component={() => <MatchList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/view_match'
+									component={() => <ViewMatch sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/edit_list'
+									component={() => <EditList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/add_edit'
+									component={() => <AddEdit sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/import_structured_data'
+									component={() => <ImportStructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/add_unstructured_data'
+									component={() => <AddUnstructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/export'
+									component={() => <Export sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
+							<Route 	path='/site/structured_data_page'
+									component={() => <StructuredDataPage sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+							/>
 						</div>
 					</Sidebar.Pusher>
 
