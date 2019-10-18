@@ -25,7 +25,7 @@ class RegisterForm extends Component {
 	}
 
 	inputCheck(text){
-		var lengthCheck = (text.length < 8);
+		var lengthCheck = (text.length > 7);
 
 		var differentCharacter = false;
 		for (var i = 1; i < text.length; i++) {
@@ -72,7 +72,7 @@ class RegisterForm extends Component {
 			})
 		.then(res => {
 				if(res.ok) {
-					this.props.history.push('/');
+					this.props.history.push('/login-form');
 				}
 				else if(res.status == 400){
 					this.setState({failedRegistration: true})
@@ -128,8 +128,10 @@ class RegisterForm extends Component {
 		} else if(this.state.inputDetailRulebreak){
 			return (
 				<Message visible negative>
-					<Message.Header>Usernames and passwords must be at least eight (8) characters</Message.Header>
-					<p>Please try again.</p>
+					<Message.Header>Username or password is insecure</Message.Header>
+					<p>	Must be at least eight (8) characters.<br/>
+						Must not all be the same character.<br/>
+						Please try again.</p>
 				</Message>
 			)
 		} else {
