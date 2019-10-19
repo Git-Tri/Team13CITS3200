@@ -35,6 +35,26 @@ function search(array,searches)
     if(searches !== undefined && Array.isArray(searches) && searches.length > 0)
     {
 
+            
+
+        searches.forEach((s) => 
+        {
+
+            if(s.type === "after" || s.type === "before")
+            {
+
+                if(typeof(s.value) === "string")
+                {
+
+                    s.value = new Date(s.value);
+
+                }
+
+            }
+
+        })
+
+
         return searchEngine.search(array,searches);
 
     }

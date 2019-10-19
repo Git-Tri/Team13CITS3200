@@ -6,7 +6,7 @@ const db = require("../database-access/users");
 const dba = require("../database-access/get-all-data");
 const jwt = require('jsonwebtoken');
 const nodeCookie = require('node-cookie');
-
+const dataPrep = require("../data-prep")
 
 // class User
 // {
@@ -295,13 +295,27 @@ exports.createRoutes = function(app) {
             console.log("non admin user tried to demote user");
             return
         }
-         
+
+
         dba.getAllUsers((users) => {
             users.forEach(user => {
                 delete user.hash
                 delete user.token
             });
-            res.send(JSON.stringify(users))
+
+            let searches = req.body.searches; 
+
+            let page = Number.parseInt(req.query.page);
+
+            users = dataPrep.search(users,searches);            
+
+            let pages = dataPrep.totalPages(users);
+
+            let responseObject = {users: dataPrep.paginate(users,page),
+                pages:pages}
+
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify(responseObject))
             console.log("sent all users");
         },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         

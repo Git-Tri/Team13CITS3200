@@ -50,7 +50,9 @@ function updateEdit(edit, callback, errorCallback, noConnectionCallback) {
                                 edit.replace,
                                 edit.replaceWith,
                                 edit.type,
+                                edit.order,
                                 edit.editID
+                                
                         ];
                         let sqlquery = "update football.edit set " +
                                 " sid = ?" +
@@ -60,6 +62,7 @@ function updateEdit(edit, callback, errorCallback, noConnectionCallback) {
                                 ",replace_text = ?" +
                                 ",replace_with = ?" +
                                 ",type = ?" +
+                                ",`order` = ? " +
                                 "where editid = ?";
                         query(sqlquery, params, callback, errorCallback, noConnectionCallback);
                 }, errorCallback, noConnectionCallback);
@@ -93,7 +96,13 @@ function insertEdit(edit, callback, errorCallback, noConnectionCallback) {
                 ];
                 let sqlquery = "insert into football.edit(sid,usid,iscorpus,settings,replace_text,replace_with,type) " +
                         "values(?,?,?,?,?,?,?)";
-                query(sqlquery, params, callback, errorCallback, noConnectionCallback);
+                query(sqlquery, params,() => 
+                {
+
+                        query("update football.edit set `order` = editid where `order` IS NULL;"
+                                ,[],callback,errorCallback,noConnectionCallback)
+
+                }, errorCallback, noConnectionCallback);
         }
         else {
                 errorCallback(new Error("bad input"));

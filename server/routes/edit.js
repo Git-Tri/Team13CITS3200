@@ -281,7 +281,7 @@ exports.createRoutes = function(app)
 
         cache.getAllEdits((result => {           
 
-            let editList = result
+            let editList = result   
 
             let pages = dataPrep.totalPages(editList);
 
@@ -317,4 +317,64 @@ exports.createRoutes = function(app)
         }), (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, req));
 
     });
+
+
+
+    middleware.post(app,"/reorder_edit",(req,res) => 
+    {
+
+        let edit = req.body.edit;
+
+        let isUp = req.body.isUp;
+
+        
+
+        cache.getAllEdits((edits) => 
+        {
+
+                
+            let curEdit = edits.filter((e) => e.editID == edit.editID)[0];
+
+            let curIndex = edits.indexOf(curEdit); 
+            
+            let swapIndex = isUp ? curIndex - 1 : curIndex + 1;
+
+            if(edits[swapIndex] == undefined || edits[swapIndex] == null)
+            {
+
+                res.sendStatus(200);
+                return;
+
+            }
+            else
+            {
+
+                //time to juggle
+
+                let swapEdit = edits[swapIndex];
+
+                let tempOrder = curEdit.order; 
+
+                curEdit.order = swapEdit.order;
+
+                swapEdit.order = tempOrder; 
+
+                editAccess.updateEdit(curEdit,() => 
+                {
+  
+                    editAccess.updateEdit(swapEdit,() => 
+                    {
+
+                        res.sendStatus(200);
+                        return;
+
+                    },errorHandler.standard,errorHandler.standard)
+
+                },errorHandler.standard,errorHandler.standard)
+
+            }
+
+            });
+
+    })
 }

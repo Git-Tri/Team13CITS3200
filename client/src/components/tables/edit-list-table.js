@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Container, Button, Form } from 'semantic-ui-react';
 import { Edit} from "../../domain";
 import { genSummary} from "../../edit-utils";
 import DataTable from "./data-table"
@@ -19,6 +19,23 @@ class EditListTable extends DataTable
     constructor(props)
     {
         super(props);
+
+        let onOrderChangeFunc = undefined
+
+        if(this.props.onOrderChange != undefined)
+        {
+            onOrderChangeFunc = (isUp,data) => 
+            {
+                this.props.onOrderChange(isUp,data);
+            }
+            
+        }
+        else
+        {
+            onOrderChangeFunc = () => {};
+        }
+
+        this.state.onOrderChangeFunc = onOrderChangeFunc;
     }
 
     genRows()
@@ -31,6 +48,7 @@ class EditListTable extends DataTable
                 key={item.editID} 
                 data={{edit:item,target:this.props.items.targets[index]}} 
                 onSelect={this.state.selectFunc} 
+                onOrderChange={this.state.onOrderChangeFunc}
                 isActive={item.id == this.state.activeRow}
             />
         ))
@@ -44,6 +62,7 @@ class EditListTable extends DataTable
             <Table.HeaderCell>Target</Table.HeaderCell>
             <Table.HeaderCell>Type</Table.HeaderCell>
             <Table.HeaderCell>Summary</Table.HeaderCell>
+            <Table.HeaderCell>Order</Table.HeaderCell>
         </Table.Row>)
 
     }
@@ -166,11 +185,19 @@ function EditRow(props)
 
     let selectFunc = props.onSelect != undefined ? props.onSelect : () => {};
 
+    let orderFunc = props.onOrderChange !== undefined ? props.onOrderChange : () => {};
+
     return(
-        <Table.Row onClick={() => selectFunc(props.data.edit)} active={props.isActive}>
-            <Table.Cell>{genSummary(target)}</Table.Cell>
-            <Table.Cell>{FormatType(edit)}</Table.Cell>
-            <Table.Cell>{SummaryBuilder(edit)}</Table.Cell>
+        <Table.Row >
+            <Table.Cell onClick={() => selectFunc(props.data.edit)} active={props.isActive}>{genSummary(target)}</Table.Cell>
+            <Table.Cell onClick={() => selectFunc(props.data.edit)} active={props.isActive}>{FormatType(edit)}</Table.Cell>
+            <Table.Cell onClick={() => selectFunc(props.data.edit)} active={props.isActive}>{SummaryBuilder(edit)}</Table.Cell>
+            <Table.Cell>
+                <div>
+                    <Button onClick={() => orderFunc(true,props.data.edit)}>Up</Button>
+                    <Button onClick={() => orderFunc(false,props.data.edit)}>Down</Button>
+                </div>
+            </Table.Cell>
         </Table.Row>
     );
     

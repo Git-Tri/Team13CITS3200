@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PageHeader from '../page-header.js';
-import { Button, Loader, Message, Container, Form} from 'semantic-ui-react'
+import { Button, Loader, Message, Container, Form, Dimmer} from 'semantic-ui-react'
 import {SearchRequest} from "../../domain";
 import DelayEngine from "../../delay-engine";
 
@@ -300,6 +300,9 @@ export class ListPage extends Component {
 		this.loadIfNotAlready();
 
 		return (<div className="page">
+           <Dimmer active={! this.state.isLoaded}>
+                <Loader active={! this.state.isLoaded}> Loading</Loader>
+           </Dimmer>
 			<PageHeader 
 				header={this.state.headerText != undefined ? this.state.headerText : "List Page"}
 				sidebarVisible={this.props.sidebarVisible}
@@ -311,11 +314,13 @@ export class ListPage extends Component {
                 {this.renderSearch !== undefined ? this.renderSearch() : undefined}
                 </Form>
             </Container>
+    
 			<br/>
             <div id="container" style={{minHeight:"100vh"}}>
                 {this.executeRender()}    
             </div>
             </Container>	
+            
 		</div>)
 		
 	}

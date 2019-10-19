@@ -33,7 +33,7 @@ function getAllUnstrucredData(callback, errorCallback, noConnectionCallback) {
 function getAllEdits(callback,errorCallback,noConnectionCallback)
 {
 
-        access.query("select * from football.edit;",[],(result) => 
+        access.query("select * from football.edit order by `order` desc;",[],(result) => 
         {
 
                 callback(dataBinding.bindEdits(result));

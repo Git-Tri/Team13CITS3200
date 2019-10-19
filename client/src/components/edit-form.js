@@ -278,6 +278,9 @@ export class EditForm extends Component {
 					return (Number.isInteger(value) && edit.structuredDataID === null && edit.isCorpus === false) ||
 					value === null && (edit.isCorpus || Number.isInteger(edit.structuredDataID));
 
+			case "order":
+					return true;
+
 			default:
 					return false; 
 
@@ -497,11 +500,13 @@ export class EditForm extends Component {
 	saveData()
 	{
 
+		console.log("saving")
+
 		let method = this.state.isNew ? "POST" : "PUT";
 
 		if(this.isEditValid(this.state.data))
 		{
-			
+			console.log("savingss")
 			this.setState({isSaving: true})
 
 			fetch("/edit",
@@ -511,6 +516,8 @@ export class EditForm extends Component {
 				'Content-Type': 'application/json'
 			}}).then((res) => 
 			{
+
+				console.log("response")
 
 				if(res.ok)
 				{
