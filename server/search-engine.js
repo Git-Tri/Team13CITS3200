@@ -255,7 +255,7 @@ function searchSingle(dataList,searches)
 
     })
 
-    if(searchResult.some((d => d.weight > 0)))
+    if(searchResult.some((d => d.weight > 0)) || searches.some((s) => s.type === "text"))
     {
 
         searchResult = searchResult.filter(d => d.weight > 0);

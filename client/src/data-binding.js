@@ -54,7 +54,8 @@ export function bindEdit(rawEdit)
         rawEdit.settings,
         rawEdit.replace,
         rawEdit.replaceWith,
-        rawEdit.type);    
+        rawEdit.type,
+        rawEdit.order);    
 
 }
 

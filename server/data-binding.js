@@ -19,7 +19,7 @@ function bindEdits(rawEdit)
     rawEdit.forEach((item) => 
     {
 
-        if(item.length != 8)
+        if(item.length != 9)
         {
 
            throw Error("improper item length");
@@ -33,7 +33,7 @@ function bindEdits(rawEdit)
         let processedItem = item.map((input) => typeof(input) == "string" ? input.trim() : input);
 
         results.push(new domain.Edit(processedItem[0],processedItem[1],processedItem[2],
-                isCorpus,processedItem[4],processedItem[5],processedItem[6],processedItem[7]))
+                isCorpus,processedItem[4],processedItem[5],processedItem[6],processedItem[7],processedItem[8]))
     })
 
     return results;

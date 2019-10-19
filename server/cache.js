@@ -78,29 +78,10 @@ class Cache
 
             }
 
-        },this.retryGetData,this.retryGetData)
+        },err => {throw err},err => {throw err})
 
     }
 
-    retryGetData()
-    {
-
-        this.timeDelay++;
-
-        if(this.timeDelay > 10)
-        {
-
-            throw new Error("cache failed to get data with id " + this.id);
-
-        }
-        else
-        {
-
-            setTimeout(this.reValidate,this.timeDelay*1000);
-
-        }
-
-    }
 
 }
 

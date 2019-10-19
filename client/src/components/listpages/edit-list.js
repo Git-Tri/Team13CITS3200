@@ -3,7 +3,7 @@ import EditListTable from "../tables/edit-list-table";
 import {bindEdit, bindUnstructureData, bindStructuredData} from "../../data-binding";
 import { withRouter } from 'react-router-dom';
 import ListPage from "./list-page"
-import {Form, Container} from 'semantic-ui-react';
+import {Form, Container, Loader, Dimmer} from 'semantic-ui-react';
 import {EDIT_TYPES,EDIT_NAMES} from "../../constants";
 import DataPair from "../data-pair";
 import ChooseDataModal from "../choose-data-modal";
@@ -58,7 +58,49 @@ export class EditList extends ListPage {
 
     }
 
+    handleOrderChange(isUp,edit)
+    {
+
+        let body = JSON.stringify({isUp:isUp,edit:edit})
+
+        this.setState({isLoaded:false})
+
     
+        fetch("reorder_edit",{method:"POST",body:body,headers: {
+            'Content-Type': 'application/json'
+        }}).then(res => 
+            {
+
+                if(res.ok)
+                {
+                    
+                    console.log("sending request")
+
+                    this.sendRequest(this.state.searches);
+
+                }				
+                else if(res.status == 404)
+                {
+
+                    throw new Error(404);
+
+                }
+                else 
+                {
+
+                    throw new Error(500);
+
+                }				
+
+
+            }).catch(err => 
+                {
+                    console.log(err)
+                    this.setState({isError: true})
+                });
+
+    }
+
 	/**
 	 * Generates summary text of the target of the edit 
 	 */
@@ -221,19 +263,22 @@ export class EditList extends ListPage {
 	renderLoaded()
 	{
 
-
+        console.log(this.state.data)
 
 		return (
 				<div>
 					<p> A list of all edits. Click on an edit to view it in detail </p>				
 					<div id="container">
-                        <EditListTable 
+                            <EditListTable 
                             totalPages={this.state.totalPages}
+                            onOrderChange={this.handleOrderChange.bind(this)}
                             onPageChange={this.handlePageChange.bind(this)}
                             page={this.state.page}
                             paging={this.state.paging}                        
                             onSelect={this.routeToEdit.bind(this)} 
                             items={{edits:this.state.data,targets:this.state.target}}/>
+                        
+                       
 					</div>
 				</div>
 		);

@@ -91,18 +91,18 @@ function getUserByAPIKey(apikey, callback, errorCallback, noConnectionCallback) 
     
 }
 //replace users token with new token (this can also be null for logging out)
-function editTokenByUsername(username, regkey, callback, errorCallback, noConnectionCallback) {
+function editTokenByUsername(username, token, callback, errorCallback, noConnectionCallback) {
     
-    query("update football.user set regkey = ? where username = ?",[regkey,username],callback,errorCallback,noConnectionCallback)
+    query("update football.user set token = ? where username = ?",[token,username],callback,errorCallback,noConnectionCallback)
 
     
     
 }
 
 //replace users token with new token (this can also be null for logging out)
-function editRegkeyByUsername(username, token, callback, errorCallback, noConnectionCallback) {
+function editRegkeyByUsername(username, regkey, callback, errorCallback, noConnectionCallback) {
     
-    query("update football.user set token = ? where username = ?",[token,username],callback,errorCallback,noConnectionCallback)
+    query("update football.user set regkey = ? where username = ?",[regkey,username],callback,errorCallback,noConnectionCallback)
 
     
     
@@ -133,4 +133,5 @@ module.exports = {
     editPasswordByUsername,
     getUserByAPIKey,
     editRegkeyByUsername
+    
 }

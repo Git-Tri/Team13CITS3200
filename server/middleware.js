@@ -18,11 +18,18 @@ if (secret == null) {
     throw new Error(".env file missing secret key! e.g SECRET=\"randomstring\"")
 }
 
+function handleUnauthorised(res)
+{
+
+    res.sendStatus(401)
+
+}
+
 function routingFunctionWrapper(routingFunction)
 {
 
     //return routingFunction
-    return (req,res) => 
+    return (req,res) =>     
     {
         try {
             
@@ -32,15 +39,15 @@ function routingFunctionWrapper(routingFunction)
             if (cookie == null) {
                 let apikey = req.header('apikey')
                 if (apikey == null) {
-                    throw new Error("No authToken cookie or api key in request")
+                    handleUnauthorised(res)
+                    return
                 } else {
                     console.log("no cookie but found apikey in header");
                     console.log("api key: " + apikey);
-                    const decodedheader = jwt.verify(apikey, secret)
                     db.getUserByAPIKey(apikey, (user) => {
                         if (user[0] == null) {
-                            throw new Error("No user found for api key")
-                            
+                            handleUnauthorised(res)
+                            return
                         }
         
                         try {
@@ -62,7 +69,8 @@ function routingFunctionWrapper(routingFunction)
             console.log(decoded);
             db.getUserByToken(cookie, (user) => {
                 if (user[0] == null) {
-                    throw new Error("No user found for token")
+                    handleUnauthorised(res)
+                    return;
                 }
 
                 try {
@@ -76,7 +84,7 @@ function routingFunctionWrapper(routingFunction)
         }
         } catch (e) {
             console.log(e);
-            res.sendStatus(401);
+            handleUnauthorised(res)
         }
              
         

@@ -17,8 +17,10 @@ import AddEdit from './components/add-edit.js';
 import ImportStructuredData from './components/import-structured-data.js';
 import AddUnstructuredData from './components/add-unstructured-data.js';
 import Export from './components/export.js';
-import StructuredDataPage from "./components/structured-data-page"
 import UserAdmin from "./components/listpages/user-admin"
+import StructuredDataPage from "./components/structured-data-page";
+import LoginForm from "./components/login-form";
+import RegisterForm from "./components/register-form";
 
 class App extends Component {
 	constructor() {
@@ -118,6 +120,13 @@ class App extends Component {
                                 <Route path='/user_admin'
                                         component={() => <UserAdmin sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)} />}
                                 />
+								/>
+								<Route	path='/login-form'
+										component={() => <LoginForm sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
+								<Route	path='/register-form'
+										component={() => <RegisterForm sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
+								/>
 							</Switch>
 						</div>
 					</Sidebar.Pusher>

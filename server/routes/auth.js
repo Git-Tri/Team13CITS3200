@@ -6,7 +6,7 @@ const db = require("../database-access/users");
 const dba = require("../database-access/get-all-data");
 const jwt = require('jsonwebtoken');
 const nodeCookie = require('node-cookie');
-
+const dataPrep = require("../data-prep")
 
 // class User
 // {
@@ -24,9 +24,16 @@ const nodeCookie = require('node-cookie');
 
 // }
 
-async function firstUser() {
-    let hash = await bcrypt.hash("admin", 8)
-    let user = new domain.User(1,"admin",hash,true,"adminkey",null,7777)
+ async function createFirstUser(username,password,key) {
+    let hash = await bcrypt.hash(username, 8)
+    if(key === undefined)
+    {
+
+        key = jwt.sign({_id:username}, process.env.SECRET);
+
+    }
+
+    let user = new domain.User(1,password,hash,true,key,null,7777)
     console.log(hash);
     db.insertUser(user, () => {
 
@@ -35,11 +42,36 @@ async function firstUser() {
     },(err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");}, 
     (err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");})
 }
-firstUser()
-console.log("user created: username: admin / password: admin / apikey: 7777");
 
 
 
+exports.createFirstUser = createFirstUser;
+
+//used for testing
+dba.getAllUsers((r) => 
+{
+
+    if(r.length == 0)
+    {
+
+        createFirstUser("admin","admin","adminkey");
+
+    }
+
+})
+
+function loginUser(req,res,user)
+{
+    user.username; 
+    let token = jwt.sign({_id:user.id}, process.env.SECRET)
+    nodeCookie.create(res, 'authToken', token, process.env.SECRET)
+                        
+
+    db.editTokenByUsername(user.username, token, () => {
+        
+    }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
+
+} 
 
 
 exports.createRoutes = function(app) {
@@ -65,13 +97,8 @@ exports.createRoutes = function(app) {
                     let hash = users[0].hash;
                     let match = await bcrypt.compare(password, hash);
                     if (match) {
-                        let token = jwt.sign({_id:users[0].id}, process.env.SECRET)
-                        nodeCookie.create(res, 'authToken', token, process.env.SECRET)
-                        
+                        loginUser(req,res,users[0])
                         res.sendStatus(200)
-                        db.editTokenByUsername(username, token, () => {
-                            console.log(username + " changed token to " + token);
-                        }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                     } else {
                         res.sendStatus(400)
                         console.log("Wrong password but found user");
@@ -108,7 +135,8 @@ exports.createRoutes = function(app) {
                         let hash = await bcrypt.hash(password, 8)
                         db.editPasswordByUsername(username, hash, () => {
                             console.log("user has registered " + username);
-                            res.sendStatus(200);
+                            loginUser(req,res,users[0])
+                            res.sendStatus(200)
                         }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
                         
                         db.editRegkeyByUsername(username, null, () => {
@@ -267,13 +295,27 @@ exports.createRoutes = function(app) {
             console.log("non admin user tried to demote user");
             return
         }
-         
+
+
         dba.getAllUsers((users) => {
             users.forEach(user => {
                 delete user.hash
                 delete user.token
             });
-            res.send(JSON.stringify(users))
+
+            let searches = req.body.searches; 
+
+            let page = Number.parseInt(req.query.page);
+
+            users = dataPrep.search(users,searches);            
+
+            let pages = dataPrep.totalPages(users);
+
+            let responseObject = {users: dataPrep.paginate(users,page),
+                pages:pages}
+
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify(responseObject))
             console.log("sent all users");
         },(err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         

@@ -87,7 +87,7 @@ class InsertMatch
 class Edit 
 {
 
-    constructor(editID,structuredDataID,unstructuredDataID,isCorpus,settings,replace,replaceWith,type)
+    constructor(editID,structuredDataID,unstructuredDataID,isCorpus,settings,replace,replaceWith,type,order)
     {
 
         this.editID = editID;
@@ -98,10 +98,12 @@ class Edit
         this.replace = replace;
         this.replaceWith = replaceWith;
         this.type = type;
+        this.order = order;
         
     }
 
 }
+
 
 class Competition
 {

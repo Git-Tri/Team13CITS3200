@@ -4,9 +4,28 @@ import { withRouter } from 'react-router-dom';
 
 class PageHeader extends Component {
 
-	render() { //isbackable prop only used for testing purposes, should be passed through URL under all other circumstances
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			isLoggedIn: false //Should get status from index.js
+		}
+	}
+
+	handleLoginClick(isLogged) {
+		if (isLogged) {
+			this.setState({isLoggedIn: false});
+		} else {
+			this.props.history.push('/login-form');
+		}
+	}
+
+	render() { //isbackable and isloggedin props only used for testing purposes, should be passed through URL under all other circumstances
 		let isBackable = this.props.isbackable === undefined ?
 			new URLSearchParams(this.props.location.search).get("isbackable") : this.props.isbackable;
+
+		if (this.props.isbackable !== undefined)
+			this.setState({isLoggedIn: this.props.isloggedin})
 
 		return (
 			<Grid style={{padding:"15px 15px 15px 15px"}} container columns={3}>
@@ -28,7 +47,9 @@ class PageHeader extends Component {
 					>
 						Back
 					</Button> : undefined }
-					
+					<Button onClick={() => this.handleLoginClick(this.state.isLoggedIn)} >
+						{(this.state.isLoggedIn?"Logout":"Login")}
+					</Button>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
