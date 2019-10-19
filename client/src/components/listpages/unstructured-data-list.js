@@ -3,6 +3,7 @@ import UnstructuredDataTable from "../tables/unstructured-data-table";
 import { bindUnstructureData } from "../../data-binding";
 import { withRouter } from 'react-router-dom';
 import ListPage from './list-page.js';
+import { SearchRequest } from "../../domain"
 
 class UnstructuredDataList extends ListPage {
     constructor(props) {
@@ -11,8 +12,6 @@ class UnstructuredDataList extends ListPage {
         this.state.search = "";
         this.state.start = "";
         this.state.end = "";
-        this.state.match = "";
-        this.state.league = "";
         this.state.headerText = "Unstructured Data List"
         this.state.route = "/UnstructuredDataList"
     }
@@ -23,6 +22,23 @@ class UnstructuredDataList extends ListPage {
     **/
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value })
+        switch (e.target.name) {
+            case "search":
+                this.handleSearchChange(e.target.name, new SearchRequest("text", e.target.value, ["author", "title", "url", "data"]))
+                break;
+            case "start":
+                var split = e.target.value.split('-')
+                var start = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
+                this.handleSearchChange(e.target.name, new SearchRequest("after", start, "published"))
+                console.log(start)
+                break;
+            case "end":
+                var split = e.target.value.split('-')
+                var end = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
+                this.handleSearchChange(e.target.name, new SearchRequest("before", end, "published"))
+                console.log(end)
+                break;
+        }
     }
 
     /**
@@ -79,7 +95,7 @@ class UnstructuredDataList extends ListPage {
                         Search
                     </label>
                     <div class="ui icon input">
-                        <input type="text" name="search" value={search} onChange={this.changeHandler} />
+                        <input type="text" name="search" value={search} onChange={this.changeHandler.bind(this)} />
                             <i class="search icon"></i>
                     </div>
                 </div>
@@ -90,26 +106,12 @@ class UnstructuredDataList extends ListPage {
                     <label>
                         Between
                     </label>
-                    <input type="date" name="start" value={start} onchange={this.changeHandler}/>
-                    <input type="date" name="end" value={end} onchange={this.changeHandler}/>
+                    <input type="date" name="start" value={start} onChange={this.changeHandler.bind(this)}/>
+                    <input type="date" name="end" value={end} onChange={this.changeHandler.bind(this)}/>
                 </div>
                 <div class="six wide field">
-                    <label>
-                        Match
-                    </label>
-                    <input type="text" name="match" value={match} onChange={this.changeHandler} />
                 </div>
-            </div>
-            <div class="inline fields">
-                <div class="nine wide field" />
-                <div class="six wide field">
-                    <label>
-                        League
-                    </label>
-                    <input type="text" name="league" value={league} onChange={this.changeHandler} />
-                </div>
-            </div>
-            
+            </div>  
         </form>
     </div>)
 

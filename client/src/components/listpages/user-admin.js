@@ -4,6 +4,7 @@ import { bindUser } from "../../data-binding";
 import { withRouter } from 'react-router-dom';
 import ListPage from './list-page.js';
 import { Message, Container } from 'semantic-ui-react'
+import { SearchRequest } from "../../domain"
 
 class UserAdmin extends ListPage {
     constructor(props) {
@@ -13,8 +14,10 @@ class UserAdmin extends ListPage {
         this.state.uname = "";
         this.state.code = "";
         this.state.isAdmin = false;
-        this.state.headerText = "User Admin"
-        this.state.route = "/getusers"
+        this.state.headerText = "User Admin";
+        this.state.route = "/getusers";
+        this.state.message = '';
+        this.state.hasMessage = false;
     }
 
     /**
@@ -23,6 +26,9 @@ class UserAdmin extends ListPage {
     **/
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value })
+        if (e.target.name === "search") {
+            this.handleSearchChange(e.target.name, new SearchRequest("text", e.target.value, "username"))
+        }
     }
 
     /**
@@ -42,6 +48,13 @@ class UserAdmin extends ListPage {
      * adds a new user
      */
     addUser() {
+        if (this.state.uname.length < 8 || this.state.code.length < 8 || this.state.uname.length > 50 || this.state.code.length > 50) {
+            this.setState({
+                message: 'Username and code must be between 8 and 50 characters.',
+                hasMessage: true
+            })
+            return
+        }
         var admin = 0
         if (this.state.isAdmin) {
             admin = 1
@@ -126,7 +139,7 @@ class UserAdmin extends ListPage {
 
     renderSearch() {
 
-        const { search, uname, code, isAdmin } = this.state
+        const { search, uname, code, isAdmin, message, hasMessage } = this.state
 
         return (<div id="container">
             <form class="ui form">
@@ -155,6 +168,13 @@ class UserAdmin extends ListPage {
                             Add User
                         </button>
                     </div>
+                </div>
+                <div class="inline fields">
+                    <div class="one wide field" />
+                    <div class="fourteen wide field">
+                        {hasMessage ? <Message negative> {message} </Message> : undefined}
+                    </div>
+                    <div class="one wide field" />
                 </div>
                 <div class="inline fields">
                     <div class="one wide field" />

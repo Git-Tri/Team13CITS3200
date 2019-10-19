@@ -43,14 +43,19 @@ class AddUnstructuredData extends Component {
     /**
      * loosely validates inputs
      * @param {any} data the data collected by the form which will be sent if it passes validation
+     * @return false if validation failed, else true
      */
     valid(data) {
-        if (data.title === '') {
-            alert('title is required')
+        if (data.title.length < 8 || data.title.length > 50) {
+            this.setState({ hasMessage: true, message: "Title must be between 8 and 50 characters." })
             return false
         }
-        if (data.author === '') {
-            alert('author is required')
+        if (data.author.length < 3 || data.title.length > 50) {
+            this.setState({ hasMessage: true, message: "Author must be between 3 and 50 characters." })
+            return false
+        }
+        if (!data.matchid) {
+            alert("gay")
             return false
         }
         return true
@@ -60,7 +65,7 @@ class AddUnstructuredData extends Component {
      * loads the data with id passed into the page if one exists
      */
     load() {
-        fetch("unstructuredData?id=" + this.state.id)
+        fetch("/UnstructuredData?id=" + this.state.id)
             .then(res => res.json())
             .then(result => {
                 console.log(result)
