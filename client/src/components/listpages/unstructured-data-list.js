@@ -12,8 +12,6 @@ class UnstructuredDataList extends ListPage {
         this.state.search = "";
         this.state.start = "";
         this.state.end = "";
-        this.state.match = "";
-        this.state.league = "";
         this.state.headerText = "Unstructured Data List"
         this.state.route = "/UnstructuredDataList"
     }
@@ -29,20 +27,22 @@ class UnstructuredDataList extends ListPage {
                 this.handleSearchChange(e.target.name, new SearchRequest("text", e.target.value, ["author", "title", "url", "data"]))
                 break;
             case "start":
+                if (e.target.value === '') {
+                    this.handleSearchChange(e.target.name, undefined)
+                    return
+                }
                 var split = e.target.value.split('-')
                 var start = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
                 this.handleSearchChange(e.target.name, new SearchRequest("after", start, "published"))
-                console.log(start)
                 break;
             case "end":
+                if (e.target.value === '') {
+                    this.handleSearchChange(e.target.name, undefined)
+                    return
+                }
                 var split = e.target.value.split('-')
                 var end = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
                 this.handleSearchChange(e.target.name, new SearchRequest("before", end, "published"))
-                console.log(end)
-                break;
-            case "match":
-                break;
-            case "league":
                 break;
         }
     }
@@ -52,8 +52,6 @@ class UnstructuredDataList extends ListPage {
     **/
     loadData(data)
     {
-
-        console.log(data)
 
         data.unstructuredData = data.unstructuredData.map((d) => bindUnstructureData(d));
         
@@ -116,54 +114,13 @@ class UnstructuredDataList extends ListPage {
                     <input type="date" name="end" value={end} onChange={this.changeHandler.bind(this)}/>
                 </div>
                 <div class="six wide field">
-                    <label>
-                        Match
-                    </label>
-                    <input type="text" name="match" value={match} onChange={this.changeHandler.bind(this)} />
                 </div>
-            </div>
-            <div class="inline fields">
-                <div class="nine wide field" />
-                <div class="six wide field">
-                    <label>
-                        League
-                    </label>
-                    <input type="text" name="league" value={league} onChange={this.changeHandler.bind(this)} />
-                </div>
-            </div>
-            
+            </div>  
         </form>
     </div>)
 
     }
 
-    /**
-     * renders the page
-     
-    render() {
-        if (!this.state.isLoaded) {
-            this.load()
-            this.state.isLoaded = true;
-        }
-        
-        var test = [
-            new UnstructuredData(1, 1, "some title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
-            new UnstructuredData(2, 1, "some title really really really really really long title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
-        ];
-		return (
-			<div className="page">
-				<PageHeader 
-					header={"Unstructured Data List"}
-					sidebarVisible={this.props.sidebarVisible}
-					handleSidebarClick={this.props.handleSidebarClick}
-				/>
-                <Container>
-				
-                </Container>
-			</div>
-		);
-    }
-    */
 }
 
 export default withRouter(UnstructuredDataList);

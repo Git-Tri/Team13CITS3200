@@ -3,7 +3,7 @@ import PageHeader from './page-header.js';
 import DataPair from "./data-pair"
 import ReactJson from 'react-json-view'
 import {bindStructuredData} from "../data-binding";
-import { Button, Loader, Message, Segment, Container, TextArea,Form} from 'semantic-ui-react';
+import { Button, Loader, Message, Segment, Container, TextArea, Form, Modal, Icon, Header } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 /**
  * The page for adding an edit 
@@ -116,32 +116,39 @@ export class StructuredDataPage extends Component
     /**
      * renders the page in loading state 
      */
-	renderLoaded()
-	{
+    renderLoaded() {
 
         let date = this.state.data.date;
 
         let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
 
-		return (
-							
-                <div>
-                    
-                    <Container textAlign="left">
-                        <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
-                        <br/>
-                        <Button negative onClick={this.deleteData.bind(this)}>Delete</Button> 
-                        <br/>
-                        <ReactJson src={this.state.data.data}/>   
-                        
-                    </Container>
-                    
-                    
-                </div>                  
-				
-		);
+        return (
 
-	}
+            <div>
+
+                <Container textAlign="left">
+                    <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
+                    <Modal closeIcon closeOnDimmerClick trigger={<Button color='red'> Delete</Button>}>
+                        <Modal.Header>
+                            <div>
+                                <Header>Confirm delete</Header>
+                            </div>
+                        </Modal.Header>
+                        <Modal.Content>
+                            This delete is a cascading delete, meaning all data related to this match will be deleted. Are you sure?
+                            <Button color='red' floated='right' onClick={this.deleteData.bind(this)}> Delete</Button>
+                        </Modal.Content>
+                    </Modal>
+                    <ReactJson src={this.state.data.data} />
+
+                </Container>
+
+
+            </div>
+
+        );
+
+    }
 
 	 /**
      * Renders the page if an error has occured

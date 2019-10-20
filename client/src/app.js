@@ -17,6 +17,7 @@ import AddEdit from './components/add-edit.js';
 import ImportStructuredData from './components/import-structured-data.js';
 import AddUnstructuredData from './components/add-unstructured-data.js';
 import Export from './components/export.js';
+import UserAdmin from "./components/listpages/user-admin"
 import StructuredDataPage from "./components/structured-data-page";
 
 class App extends Component {
@@ -73,6 +74,9 @@ class App extends Component {
 						<Menu.Item as='a' href='/export'>
 							Export
 						</Menu.Item>
+                        <Menu.Item as='a' href='/user_admin'>
+                            User Admin
+                        </Menu.Item>
 					</Sidebar>
 
 					<Sidebar.Pusher>
@@ -110,6 +114,9 @@ class App extends Component {
 							<Route 	path='/structured_data_page'
 									component={() => <StructuredDataPage sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
+							<Route path='/user_admin'
+                                        component={() => <UserAdmin sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)} />}
+                            />
 						</div>
 					</Sidebar.Pusher>
 

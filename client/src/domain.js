@@ -63,6 +63,24 @@ export class Match
 
 }
 
+class InsertMatch
+{
+
+    constructor(id,competitionID,date,home,away,data)
+    {
+
+        this.id = id;
+        this.competitionID = competitionID;
+        this.date = date;
+        this.home = home;
+        this.away = away;
+        this.data = data;
+          
+
+    }
+
+}
+
 /**
  * A class representing an edit 
  */
@@ -111,7 +129,14 @@ export class ImportRequest
         this.begin = begin; //optional
 
         this.end = end; //optional
-        
+
+        if(typeof(compId !== "string"))
+        {
+
+            throw new Error("Competition must exist and of type string");
+
+        }
+
         this.compId = compId; //mandatory 
 
     }
