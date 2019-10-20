@@ -27,12 +27,20 @@ class UnstructuredDataList extends ListPage {
                 this.handleSearchChange(e.target.name, new SearchRequest("text", e.target.value, ["author", "title", "url", "data"]))
                 break;
             case "start":
+                if (e.target.value === '') {
+                    this.handleSearchChange(e.target.name, undefined)
+                    return
+                }
                 var split = e.target.value.split('-')
                 var start = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
                 this.handleSearchChange(e.target.name, new SearchRequest("after", start, "published"))
                 console.log(start)
                 break;
             case "end":
+                if (e.target.value === '') {
+                    this.handleSearchChange(e.target.name, undefined)
+                    return
+                }
                 var split = e.target.value.split('-')
                 var end = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
                 this.handleSearchChange(e.target.name, new SearchRequest("before", end, "published"))
