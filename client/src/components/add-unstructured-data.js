@@ -22,7 +22,8 @@ class AddUnstructuredData extends Component {
             data: '',
             exists: false,
             message: '',
-            hasMessage: false
+            hasMessage: false,
+            goodMessage: false
         }
 
         if (this.state.id !== null) {
@@ -54,8 +55,16 @@ class AddUnstructuredData extends Component {
             this.setState({ hasMessage: true, message: "Author must be between 3 and 50 characters." })
             return false
         }
-        if (!data.matchid) {
-            alert("gay")
+        if (data.published.getTime() !== data.published.getTime()) { //  An invalid date object returns NaN for getTime() and NaN is the only object not strictly equal to itself. Taken from https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
+            this.setState({ hasMessage: true, message: "Invalid publication date." })
+            return false
+        }
+        if (data.extracted.getTime() !== data.extracted.getTime()) { //  An invalid date object returns NaN for getTime() and NaN is the only object not strictly equal to itself. Taken from https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
+            this.setState({ hasMessage: true, message: "Invalid extraction date." })
+            return false
+        }
+        if (data.matchid === "") {
+            this.setState({ hasMessage: true, message: "No match selected." })
             return false
         }
         return true
@@ -114,10 +123,10 @@ class AddUnstructuredData extends Component {
         split = this.state.extracted.split('-')
         var ext = new Date(split[0], split[1]-1, split[2], 0, 0, 0)
         var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, pub, ext, this.state.data)
+        console.log(toSend)
         if (!this.valid(toSend)) {
             return
         }
-        console.log(toSend)
         var request = new XMLHttpRequest()
         var method = 'PUT'
         var idtext = `?id=${this.state.id}`
@@ -143,8 +152,7 @@ class AddUnstructuredData extends Component {
                 else
                 {
 
-                    //TODO replace with clear
-                    this.setState({id:undefined,match:"",matchid:0,title:"New unstructured data",author:"",url:"",published:"",extracted:"",data:""})
+                    this.setState({ id: undefined, match: "", matchid: '', title: "New unstructured data", author: "", url: "", published: "", extracted: "", data: "", hasMessage: false, goodMessage: true, message: "Saved." })
 
                 }
 
@@ -198,7 +206,7 @@ class AddUnstructuredData extends Component {
      * renders the page
      */
     render() {
-        const { id, matchid, title, author, published, extracted, url, match, data, exists, message, hasMessage } = this.state
+        const { id, matchid, title, author, published, extracted, url, match, data, exists, message, hasMessage, goodMessage } = this.state
 		return (
 			<div className="page">
 				<PageHeader 
@@ -226,13 +234,13 @@ class AddUnstructuredData extends Component {
                         </div>
                         <div className="inline fields">
                             <div className="one wide field"/>
-                            <div className="five wide field">
+                            <div className="required five wide field">
                                 <label>
                                     Published
                                 </label>
                                 <input type="date" name="published" value={published} onChange={this.changeHandler}/>
                             </div>
-                            <div className="five wide field">
+                            <div className="required five wide field">
                                 <label>
                                     Extracted
                                 </label>
@@ -252,12 +260,9 @@ class AddUnstructuredData extends Component {
                                     Content
                                 </div>
                             </div>
-                            <div className="seven wide field">
+                            <div className="required seven wide field">
                                 <label>
-                                    Match:
-                                </label>
-                                <label>
-                                    {match} 
+                                    Match: {match} 
                                 </label>
                             </div>
                             <div className="two wide field">
@@ -274,6 +279,7 @@ class AddUnstructuredData extends Component {
                             <div className="three wide field"/>
                             <div className="eight wide field">
                                 {hasMessage ? <Message negative> {message} </Message> : undefined}
+                                {goodMessage ? <Message positive> {message} </Message> : undefined}
                             </div>
                             <div className="two wide field">
                                 {!this.state.exists ? "" : <button className="fluid ui red button" type="button" onClick={this.delete.bind(this)} >
