@@ -25,7 +25,7 @@ const dataPrep = require("../data-prep")
 // }
 
  async function createFirstUser(username,password,key) {
-    let hash = await bcrypt.hash(username, 8)
+    let hash = await bcrypt.hash(password, 8)
     if(key === undefined)
     {
 
