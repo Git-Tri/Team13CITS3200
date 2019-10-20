@@ -36,8 +36,6 @@ class UserAdmin extends ListPage {
     **/
     loadData(data) {
 
-        console.log(data)
-
         data.users = data.users.map((d) => bindUser(d));
 
         this.setState({ data: data.users, isLoaded: true, isError: false });
@@ -60,7 +58,6 @@ class UserAdmin extends ListPage {
             admin = 1
         }
         var toSend = `{"username" : "${this.state.uname}", "regkey" : "${this.state.code}", "admin" : ${admin}}`
-        console.log(toSend)
         var request = new XMLHttpRequest()
         request.open("POST", "/createuser", true)
         request.setRequestHeader('Content-Type', 'application/json')

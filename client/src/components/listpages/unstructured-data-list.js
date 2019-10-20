@@ -34,7 +34,6 @@ class UnstructuredDataList extends ListPage {
                 var split = e.target.value.split('-')
                 var start = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
                 this.handleSearchChange(e.target.name, new SearchRequest("after", start, "published"))
-                console.log(start)
                 break;
             case "end":
                 if (e.target.value === '') {
@@ -44,7 +43,6 @@ class UnstructuredDataList extends ListPage {
                 var split = e.target.value.split('-')
                 var end = new Date(split[0], split[1] - 1, split[2], 0, 0, 0)
                 this.handleSearchChange(e.target.name, new SearchRequest("before", end, "published"))
-                console.log(end)
                 break;
         }
     }
@@ -54,8 +52,6 @@ class UnstructuredDataList extends ListPage {
     **/
     loadData(data)
     {
-
-        console.log(data)
 
         data.unstructuredData = data.unstructuredData.map((d) => bindUnstructureData(d));
         
@@ -125,33 +121,6 @@ class UnstructuredDataList extends ListPage {
 
     }
 
-    /**
-     * renders the page
-     
-    render() {
-        if (!this.state.isLoaded) {
-            this.load()
-            this.state.isLoaded = true;
-        }
-        
-        var test = [
-            new UnstructuredData(1, 1, "some title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
-            new UnstructuredData(2, 1, "some title really really really really really long title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
-        ];
-		return (
-			<div className="page">
-				<PageHeader 
-					header={"Unstructured Data List"}
-					sidebarVisible={this.props.sidebarVisible}
-					handleSidebarClick={this.props.handleSidebarClick}
-				/>
-                <Container>
-				
-                </Container>
-			</div>
-		);
-    }
-    */
 }
 
 export default withRouter(UnstructuredDataList);

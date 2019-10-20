@@ -172,7 +172,6 @@ class AddUnstructuredData extends Component {
         e.preventDefault()
         if (this.state.exists) {
             var request = new XMLHttpRequest()
-            console.log(this.state.id)
             request.open('DELETE', `/unstructuredData?id=${this.state.id}`, true)
             request.setRequestHeader('Content-Type', 'application/json')
             request.send()
@@ -195,7 +194,6 @@ class AddUnstructuredData extends Component {
      * @param {any} chosenMatch - the chosen match
      */
     handleChosenMatch(chosenMatch) {
-        console.log(chosenMatch)
         this.setState({
             matchid: chosenMatch.id,
             match: `${chosenMatch.home} vs ${chosenMatch.away}`,
