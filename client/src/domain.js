@@ -3,7 +3,7 @@
  * for list you may want to leave the data field undefined
  * NOTE: this code is duplicated on client and server so is only tested on the server
  */
-class UnstructuredData
+export class UnstructuredData
 {
 
     constructor(id,matchid,title,author,url,published,extracted,data)
@@ -25,7 +25,7 @@ class UnstructuredData
 /**
  * A class representing structured data, for lists you may want to leave data undefined
  */
-class StructuredData
+export class StructuredData
 {
 
     constructor(id,date,home,away,competitionID,competitionName,data)
@@ -46,7 +46,7 @@ class StructuredData
 /**
  * a class representing a match 
  */
-class Match
+export class Match
 {
 
     constructor(id,date,home,away,competitionID,competitionName)
@@ -66,7 +66,7 @@ class Match
 /**
  * A class representing an edit 
  */
-class Edit 
+export class Edit 
 {
 
     constructor(editID,structuredDataID,unstructuredDataID,isCorpus,settings,replace,replaceWith,type,order)
@@ -87,7 +87,7 @@ class Edit
 }
 
 
-class Competition
+export class Competition
 {
 
     constructor(id,name,countryName,countryId)
@@ -102,7 +102,7 @@ class Competition
 
 }
 
-class ImportRequest
+export class ImportRequest
 {
 
     constructor(begin,end,compId)
@@ -119,7 +119,7 @@ class ImportRequest
 }
 
 
-class SearchRequest
+export class SearchRequest
 {
 
     constructor(type,value,field)
@@ -133,11 +133,3 @@ class SearchRequest
 
 }
 
-
-//export all classes 
-module.exports = 
-{
-
-    UnstructuredData,StructuredData,Match,Edit,Competition,ImportRequest,SearchRequest
-
-}

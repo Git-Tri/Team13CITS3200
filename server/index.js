@@ -2,7 +2,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-if(fs.existsSync)
+if(fs.existsSync("./.env"))
 {
 
   require("./website")
@@ -48,7 +48,11 @@ else
   type: 'input',
   message: 'Please input your password for the website',
   name: 'WEBSITE_PASSWORD',
-  }];
+  },{
+    type: 'input',
+    message: 'Please input your ssl passphrase (if not using ssl simply press enter)',
+    name: 'SSL',
+    }];
   inquirer.prompt(promptList).then(answers => {
 
     var append ="\n" + "HOST=" + '"'+ answers.HOST + '"' + "\n" +
@@ -56,7 +60,8 @@ else
                 "PASSWORD=" + '"'+ answers.PASSWORD + '"' + "\n" +
                 'DATABASE="football"'+ "\n" +
                 'APIKEY=' + '"'  +  answers.KEY + '"' + "\n" +
-                "SECRET="+ '"'+ answers.SECRET + '"';
+                "SECRET="+ '"'+ answers.SECRET + '"' + "\n" +
+                "SSLPASSPHRASE=" + SSL;
     fs.appendFile(".env", append, function (err) {
 
         const envResult = require("dotenv").config();

@@ -1,5 +1,6 @@
 //Load .env file
 const envResult = require("dotenv").config();
+const fs = require("fs");
 
 if (envResult.error) {
   throw envResult.error
@@ -16,6 +17,8 @@ const domain = require("./domain");
 
 //start app
 const app = express();
+
+app.use(express.static("./build"))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -42,10 +45,27 @@ function getPort()
 
 }
 
+if(fs.existsSync("./key.pem") && fs.existsSync("./key.pem"))
+{
 
-app.listen(getPort(), () =>
+  https.createServer({
+      key: fs.readFileSync('./key.pem'),
+      cert: fs.readFileSync('./cert.pem'),
+      passphrase: process.env.SSLPASSPHRASE
+  }, app).listen(getPort())
+
+
+}
+else
+{
+
+  app.listen(getPort(), () =>
   console.log('Express server is running on localhost:3001')
 );
+
+}
+
+
 
 if(process.env.APIKEY !== undefined && process.env.APIKEY !== "undefined")
 {
