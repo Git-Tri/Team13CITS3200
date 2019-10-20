@@ -41,8 +41,6 @@ class LoginForm extends Component {
 			return;
 		}
 
-		console.log(this.state.username)
-		console.log(JSON.stringify({username: this.state.username, password: this.state.password}))
 
 		fetch("/login",
 			{method: "POST",
@@ -52,7 +50,6 @@ class LoginForm extends Component {
 			}
 			})
 		.then(res => {
-				console.log(res.status)
 				if(res.ok) {
 					this.props.history.push("/");
 				}

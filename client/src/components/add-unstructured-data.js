@@ -128,13 +128,12 @@ class AddUnstructuredData extends Component {
     **/
     submit = (e) => {
         e.preventDefault()
-        console.log(this.state.published)
         var split = this.state.published.split('-')
         var pub = new Date(split[0], split[1]-1, split[2], 0, 0, 0)
         split = this.state.extracted.split('-')
         var ext = new Date(split[0], split[1]-1, split[2], 0, 0, 0)
         var toSend = new UnstructuredData(this.state.id, this.state.matchid, this.state.title, this.state.author, this.state.url, pub, ext, this.state.data)
-        console.log(toSend)
+        
         if (!this.valid(toSend)) {
             return
         }

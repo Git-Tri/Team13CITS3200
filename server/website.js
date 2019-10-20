@@ -14,16 +14,20 @@ const routes = require("./routes/routeSetup.js");
 const compsAccess = require("./database-access/comps");
 const api = require("./football-api");
 const domain = require("./domain");
-
+const path = require('path');
 //start app
 const app = express();
 
-app.use(express.static("./build"))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 routes.createRoutes(app)
 

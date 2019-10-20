@@ -33,11 +33,13 @@ const dataPrep = require("../data-prep")
 
     }
 
-    let user = new domain.User(1,password,hash,true,key,null,7777)
+    console.log("stuff")
+
+    let user = new domain.User(1,username,hash,true,null,null,7777)
     console.log(hash);
     db.insertUser(user, () => {
 
-        
+        console.log("stuff")
     
     },(err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");}, 
     (err) => {console.log("First user tried to add duplicate entry ignore this just means it has already been created");})
@@ -47,18 +49,7 @@ const dataPrep = require("../data-prep")
 
 exports.createFirstUser = createFirstUser;
 
-//used for testing
-dba.getAllUsers((r) => 
-{
 
-    if(r.length == 0)
-    {
-
-        createFirstUser("admin","admin","adminkey");
-
-    }
-
-})
 
 function loginUser(req,res,user)
 {
@@ -68,7 +59,7 @@ function loginUser(req,res,user)
                         
 
     db.editTokenByUsername(user.username, token, () => {
-        
+      
     }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
 
 } 

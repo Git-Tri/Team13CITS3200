@@ -209,7 +209,6 @@ export class ListPage extends Component {
 
             }).catch(err => 
             {
-                console.log(err)
                 this.setState({isError: true})
             });
             

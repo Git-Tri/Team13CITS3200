@@ -51,7 +51,6 @@ class MatchList extends ListPage {
 	loadData(result) 
 	{
 
-		console.log(result)
 
 		result = result.matches.map((d) => bindMatch(d));
 

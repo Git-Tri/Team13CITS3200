@@ -110,8 +110,6 @@ class ImportStructuredData extends Component {
 				request["compId"] === undefined)
 			{
 
-				console.log(request)
-
 				this.setState({isValid:false});
 
 				return;

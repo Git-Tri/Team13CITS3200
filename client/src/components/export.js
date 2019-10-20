@@ -65,9 +65,6 @@ class Export extends Component {
 			})            
             .then(result => 
                 {
-
-					console.log(result)
-
 					// 2. Create blob link to download
 					const url = window.URL.createObjectURL(result);
 					const link = document.createElement('a');

@@ -98,12 +98,9 @@ class ViewMatch extends Component {
             .then(result => 
                 {
 
-					console.log(result)
-
 					let data = result.unstructuredData.map((d) => bindUnstructureData(d));
                 
 
-					console.log(data)
 
 					this.setState({unstructuredData:data,isUnstructuredLoaded: true, isError: false})
                 })

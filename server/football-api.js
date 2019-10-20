@@ -8,7 +8,6 @@ const apiKey = process.env.APIKEY;
 function getAllMatchesForComp(compID, callbackFunction) {
 
   let customURL = baseUrl + "?action=get_events&league_id=" + compID + "&APIkey=" + apiKey;
-  console.log("Trying to get all matches for compID: " + compID + " from: " + customURL);
 
   request({
     headers: { 'X-Auth-Token': apiKey },
@@ -30,7 +29,7 @@ function getAllMatchesForComp(compID, callbackFunction) {
 function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
   
   let customURL = baseUrl + '?action=get_events&from=' + startDate + "&to=" + endDate + "&league_id=" + compID + "&APIkey=" + apiKey;
-  console.log("Trying to get all matches between " + startDate + " and " + endDate + "from: " + customURL);
+
   request({
     url: customURL,
     dataType: 'json',
@@ -46,7 +45,6 @@ function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
 
 function getAllCompetitions(callbackFunction) {
   let customURL = baseUrl + '?action=get_leagues&APIkey=' + apiKey;
-  console.log("Trying to get all comps from: " + customURL);
   request({
     url: customURL,
     dataType: 'json',

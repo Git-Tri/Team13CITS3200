@@ -39,7 +39,6 @@ class PageHeader extends Component {
 
             }).catch(err => 
                 {
-                    console.log(err)
                     this.setState({isError: true})
                 });
 

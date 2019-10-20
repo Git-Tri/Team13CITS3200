@@ -507,13 +507,12 @@ export class EditForm extends Component {
 	saveData()
 	{
 
-		console.log("saving")
 
 		let method = this.state.isNew ? "POST" : "PUT";
 
 		if(this.isEditValid(this.state.data))
 		{
-			console.log("savingss")
+		
 			this.setState({isSaving: true})
 
 			fetch("/edit",

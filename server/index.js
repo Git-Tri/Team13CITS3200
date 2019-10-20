@@ -13,7 +13,6 @@ else
 
     
   fs.open(".env", "w+", (err, fd) => {
-    console.log(fd);
   });
 
   fs.writeFile(".env", "#MYSQL DATA", err => {

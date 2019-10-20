@@ -25,7 +25,7 @@ function getAllMatches(compID, callbackFunction) {
 function getAllMatchesBetween(compID, startDate, endDate, callbackFunction) {
   
   customURL = baseUrl + '?competitions=' + [2002] + '&dateFrom=' + startDate + "&dateTo=" + endDate
-  console.log("Trying to get all matches from: " + customURL);
+
   request({
     headers: { 'X-Auth-Token': apiKey },
     url: customURL,

@@ -34,7 +34,6 @@ function routingFunctionWrapper(routingFunction)
 
         try {
             
-            console.log("cookies = ", nodeCookie.parse(req, secret));
             let cookie = nodeCookie.get(req, 'authToken', secret);
 
 
@@ -45,8 +44,6 @@ function routingFunctionWrapper(routingFunction)
                     handleUnauthorised(res)
                     return
                 } else {
-                    console.log("no cookie but found apikey in header");
-                    console.log("api key: " + apikey);
                     db.getUserByAPIKey(apikey, (user) => {
                         if (user[0] == null) {
                             handleUnauthorised(res)
@@ -67,9 +64,7 @@ function routingFunctionWrapper(routingFunction)
                 }
                 
             } else {
-            console.log("authToken in cookie is: ", cookie);
             const decoded = jwt.verify(cookie, secret)
-            console.log(decoded);
             db.getUserByToken(cookie, (user) => {
                 if (user[0] == null) {
                     handleUnauthorised(res)
@@ -86,7 +81,6 @@ function routingFunctionWrapper(routingFunction)
             }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
         }
         } catch (e) {
-            console.log(e);
             handleUnauthorised(res)
         }
              

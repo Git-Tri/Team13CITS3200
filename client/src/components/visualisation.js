@@ -15,7 +15,6 @@ function Visualisation(props)
 
     let homeTeam = props.data.match_hometeam_name;
     
-    console.log(props)
 
     let cards = props.data.cards.map(c => 
         {
@@ -63,8 +62,6 @@ function Visualisation(props)
             return {time:Number.parseInt(c.time),event:homeTeam + " : " + c.substitution,type:"Substitution"}
 
         });
-
-    console.log(subAway)
 
     let events = [].concat(cards,
                       goalscorer,subAway,

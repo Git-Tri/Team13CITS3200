@@ -81,7 +81,6 @@ export class EditList extends ListPage {
                 if(res.ok)
                 {
                     
-                    console.log("sending request")
 
                     this.sendRequest(this.state.searches);
 
@@ -257,9 +256,6 @@ export class EditList extends ListPage {
      */
 	renderLoaded()
 	{
-
-        console.log(this.state.data)
-
 		return (
 				<div>
 					<p> A list of all edits. Click on an edit to view it in detail </p>				

@@ -295,8 +295,6 @@ const editsFunctions = {"replace": replaceRule,
 function applyRulesWithEdits(input,edits)
 {
 
-    console.log(input);
-
     if(input == null || input == undefined)
     {
 
