@@ -11,7 +11,7 @@ class ImportStructuredData extends Component {
         
         super(props)
 
-        this.state = {items: [],isSaving: false, isLoaded: false,isImportSuccessful: false, isError: false, request: new ImportRequest() }
+        this.state = {items: [],isSaving: false, isValid:true, isLoaded: false,isImportSuccessful: false, isError: false, request: new ImportRequest() }
 
 
     }
@@ -83,7 +83,6 @@ class ImportStructuredData extends Component {
 
 		request[name] = value;
 
-
 		this.setState({ request: request});		
 
 	}
@@ -91,11 +90,26 @@ class ImportStructuredData extends Component {
 	saveData()
 	{
 
+	
+
+			let request = this.state.request
+
+			if(request["before"] === undefined || 
+				request["after"] === undefined || 
+				request["compId"] === undefined)
+			{
+
+				this.setState({isValid:false});
+
+				return;
+				
+			}
+
 			this.setState({isSaving: true})
 
 			fetch("/importdata",
 			{method: "POST",
-			body: JSON.stringify(this.state.request),
+			body: JSON.stringify(request),
 			headers: {
 				'Content-Type': 'application/json'
 			}}).then((res) => 
@@ -132,6 +146,19 @@ class ImportStructuredData extends Component {
 				  </Message>
 				  )
 
+		}
+
+	}
+
+	renderDatesNeededMessage()
+	{
+
+		if(this.state.isValid === false)
+		{
+
+			return(<Message negative>
+				<Message.Header>Please enter valid date and competition </Message.Header>
+		   </Message>)
 		}
 
 	}
@@ -191,6 +218,7 @@ class ImportStructuredData extends Component {
 						</Form>
 						{this.renderSuccessMessage()}
 						{this.renderErrorMessage()}
+						{this.renderDatesNeededMessage()}
 					</Container>
 				</div>
 			</div>

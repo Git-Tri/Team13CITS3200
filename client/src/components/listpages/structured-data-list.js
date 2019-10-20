@@ -25,6 +25,7 @@ export class StructuredDataList extends ListPage {
 
 
      /**
+      * 
      * Handles any errors cuased by a sub-component 
      * @param {*} error the error recieved
      * @param {*} errorInfo information about the error
