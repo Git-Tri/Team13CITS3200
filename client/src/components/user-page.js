@@ -2,31 +2,21 @@ import React, { Component } from 'react';
 import PageHeader from './page-header.js';
 import DataPair from "./data-pair"
 import ReactJson from 'react-json-view'
-import {bindStructuredData, bindUnstructureData} from "../data-binding";
+import {bindStructuredData, bindUser} from "../data-binding";
 import { Button, Loader, Message, Segment, Container, TextArea,Form,Header} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import UnstructuredDataTable from "./tables/unstructured-data-table";
-import Visualisation from "./visualisation"
 
-class ViewMatch extends Component {
+class UserPage extends Component {
 	
 	constructor(props)
     {
         
         super(props)
 
-        //allow passing in of id for testing 
-        let id = props.id === undefined ? 
-        new URLSearchParams(props.location.search).get("id") : props.id;
 
-        if(id === undefined || id === null)
-        {
 
-            throw new Error("id must be defined")
-
-        }
-
-        this.state = {unstructuredData: [],data: [],isUnstructuredLoaded: false, isLoaded: false, isError: false, id:id,headerText:"Loading"}
+        this.state = {user: undefined, isLoaded: false, isError: false,headerText:"Loading"}
 
 
     }
@@ -49,48 +39,18 @@ class ViewMatch extends Component {
     loadData()
     {
 
-        fetch("/StructuredData?id=" + this.state.id)
+        fetch("/currentuser")
             .then(res => res.json())
             .then(result => 
                 {
 
-                    let data = bindStructuredData(result);
+                    let data = bindUser(result);
 
-                    let date = data.date;
-
-                    let dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
-                    
-                    let headerText = data.home + " vs " + data.away + " on " + dateString; 
-
-					this.setState({data:data,isLoaded: true, isError: false,headerText: headerText})
+					this.setState({user:data,isLoaded: true, isError: false,headerText:data.username})
                 })
             .catch(err => this.setState({isError: true,isLoaded:true}));
 
 	}
-	
-	/**
-     * Loads all edits and bind the parsed json to edit objects
-     */
-    loadUnstructuredData()
-    {
-
-        fetch("/getUnstructuredDataByMatchId?id=" + this.state.id)
-            .then(res => res.json())
-            .then(result => 
-                {
-
-					console.log(result)
-
-					let data = result.unstructuredData.map((d) => bindUnstructureData(d));
-                
-
-					console.log(data)
-
-					this.setState({unstructuredData:data,isUnstructuredLoaded: true, isError: false})
-                })
-            .catch(err => this.setState({isError: true,isUnstructuredLoaded: true}));
-
-    }
 
     /**
      * loads the data if it is not already loaded
@@ -108,44 +68,23 @@ class ViewMatch extends Component {
 
 	}
 
-	loadUnstructuredIfNotAlready()
-	{
-
-		if(this.state.isUnstructuredLoaded === false)
-		{
-
-			this.loadUnstructuredData();
-
-		}
-
-	}
-
-	renderLoadedUnstructuredData()
-	{
-
-	}
-
     /**
      * renders the page in loading state 
      */
 	renderLoaded()
 	{
 
-        let date = this.state.data.date;
+        let isAdmin = this.state.user.admin === 1 ? "Yes" : "No"
 
-        let dateString = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
 
 		return (
 							
                 <div>
                     
                     <Container textAlign="left">
-                        <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
-                    	<Visualisation data={this.state.data.data}></Visualisation>
-                        <Header>Unstructured Data</Header>
-						<UnstructuredDataTable items={this.state.unstructuredData}/>
-						<Header>Structured Data</Header>
-                        <ReactJson src={this.state.data.data}/>   
+                        <DataPair label="Username" text={this.state.user.username}/>
+                        <DataPair label="Admin" text={isAdmin}/>
+                        <DataPair label="API KEY" text={this.state.user.apikey}/>
                         
                     </Container>
                     
@@ -172,16 +111,7 @@ class ViewMatch extends Component {
 
     }
 
-    /**
-     * navigates to an edit page with parameters given by inputted edit
-     * @param {*} edit the edit inputted 
-     */
-	routeToData(data)
-	{
-
-		this.props.history.push("/structured_data_page?id=" + data.id + "&isbackable=true");
-		
-	}
+ 
 
     /**
      * renders the page if the data is still loading 
@@ -230,8 +160,6 @@ class ViewMatch extends Component {
 
 		this.loadIfNotAlready();
 
-		this.loadUnstructuredIfNotAlready();
-
 		return (<div className="page">
 			<PageHeader 
 				header={this.state.headerText}
@@ -247,4 +175,4 @@ class ViewMatch extends Component {
 	}
 }
 
-export default withRouter(ViewMatch);
+export default withRouter(UserPage);

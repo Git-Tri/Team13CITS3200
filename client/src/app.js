@@ -19,6 +19,7 @@ import AddUnstructuredData from './components/add-unstructured-data.js';
 import Export from './components/export.js';
 import UserAdmin from "./components/listpages/user-admin"
 import StructuredDataPage from "./components/structured-data-page";
+import UserPage from "./components/user-page"
 
 class App extends Component {
 	constructor() {
@@ -77,6 +78,9 @@ class App extends Component {
                         <Menu.Item as='a' href='/user_admin'>
                             User Admin
                         </Menu.Item>
+						<Menu.Item as='a' href='/user_page'>
+                            User Page
+                        </Menu.Item>
 					</Sidebar>
 
 					<Sidebar.Pusher>
@@ -116,6 +120,9 @@ class App extends Component {
 							/>
 							<Route path='/user_admin'
                                         component={() => <UserAdmin sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)} />}
+                            />
+							<Route path='/user_page'
+                                        component={() => <UserPage sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)} />}
                             />
 						</div>
 					</Sidebar.Pusher>

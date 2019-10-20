@@ -130,13 +130,6 @@ export class ImportRequest
 
         this.end = end; //optional
 
-        if(typeof(compId !== "string"))
-        {
-
-            throw new Error("Competition must exist and of type string");
-
-        }
-
         this.compId = compId; //mandatory 
 
     }
@@ -158,3 +151,21 @@ export class SearchRequest
 
 }
 
+
+export class User
+{
+
+    constructor(id, username, hash, admin, regkey, token, apikey)
+    {
+
+        this.id = id; 
+        this.username = username; 
+        this.hash = hash;
+        this.admin = admin;
+        this.regkey = regkey;
+        this.token = token;
+        this.apikey = apikey;
+
+    }
+
+}

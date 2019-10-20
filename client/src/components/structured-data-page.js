@@ -5,6 +5,7 @@ import ReactJson from 'react-json-view'
 import {bindStructuredData} from "../data-binding";
 import { Button, Loader, Message, Segment, Container, TextArea, Form, Modal, Icon, Header } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+import Visualisation from "./visualisation"
 /**
  * The page for adding an edit 
  * @param {*} props should only be passed in for testing purposes 
@@ -128,6 +129,8 @@ export class StructuredDataPage extends Component
 
                 <Container textAlign="left">
                     <Segment basic size="large"><b>Date:</b>{dateString} <b>Competition:</b>{this.state.data.competitionName}</Segment>
+                    <Visualisation data={this.state.data.data}></Visualisation>
+                    
                     <Modal closeIcon closeOnDimmerClick trigger={<Button color='red'> Delete</Button>}>
                         <Modal.Header>
                             <div>
@@ -139,6 +142,7 @@ export class StructuredDataPage extends Component
                             <Button color='red' floated='right' onClick={this.deleteData.bind(this)}> Delete</Button>
                         </Modal.Content>
                     </Modal>
+                    <br/>
                     <ReactJson src={this.state.data.data} />
 
                 </Container>

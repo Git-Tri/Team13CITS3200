@@ -42,6 +42,9 @@ class UserTable extends DataTable
             <Table.HeaderCell>Username</Table.HeaderCell>
             <Table.HeaderCell>Is admin</Table.HeaderCell>
             <Table.HeaderCell>Code</Table.HeaderCell>
+            <Table.HeaderCell>Promote</Table.HeaderCell>
+            <Table.HeaderCell>Demote</Table.HeaderCell>
+            <Table.HeaderCell>Remove</Table.HeaderCell>
         </Table.Row>)
 
     }
@@ -56,7 +59,7 @@ class UserTable extends DataTable
             let isUsernameValid = typeof(i.username) === "string"
             let isHashValid = typeof (i.hash) === "string"
             let isAdminValid = typeof (i.admin) === "number" 
-            let isRegkeyValid = typeof (i.regkey) === "string"
+            let isRegkeyValid = typeof (i.regkey) === "string" || i.regkey === null
             let isTokenValid = typeof (i.token) === "string"
             let isAPIKeyValid = typeof (i.apikey) === "string"
             return isIdValid && isUsernameValid && isAdminValid && isRegkeyValid && isAPIKeyValid;
@@ -91,7 +94,7 @@ function UserRow(props)
 
     let username = props.data.username
 
-    let code = props.data.regkey
+    let code = props.data.regkey !== null ? props.data.regkey : "Already Registered"
 
     let isAdmin = "No"
 
