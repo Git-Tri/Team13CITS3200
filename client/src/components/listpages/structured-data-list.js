@@ -89,8 +89,6 @@ export class StructuredDataList extends ListPage {
     handleDateSearchChange(name,value,isAfter)
     {
 
-        console.log(value)
-
         if(value == "")
         {
 
@@ -101,22 +99,12 @@ export class StructuredDataList extends ListPage {
         {
 
             let type = isAfter ? "after" : "before";
-
-            console.log(value)
             let parsedValue = value.split("-")
 
-            console.log(parsedValue)
 
             let date = new Date(parsedValue[0],parsedValue[1],parsedValue[2]);
-
-            console.log(date)
         
             this.handleSearchChange(name,new SearchRequest(type,date,"date"));
-
-            
-            console.log(this.state.searches)
-
-
         }
 
 
