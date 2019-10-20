@@ -204,7 +204,7 @@ export class EditList extends ListPage {
     }
 
     /**
-     * renders the search component on the list page 
+     * renders the search component on thep list page 
      */
     renderSearch()
     {
