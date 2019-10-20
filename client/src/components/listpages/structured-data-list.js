@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PageHeader from '../page-header.js';
 import StructuredDataTable from "../tables/structured-data-table";
-import {bindStructuredData} from "../../data-binding";
-import { Button, Loader, Message, Container} from 'semantic-ui-react';
+import {bindStructuredData,bindCompetition} from "../../data-binding";
+import { Button, Loader, Message, Container, Form, SearchResult} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import ListPage from './list-page.js';
+import {SearchRequest} from "../../domain";
 
 export class StructuredDataList extends ListPage {
 
@@ -17,7 +18,11 @@ export class StructuredDataList extends ListPage {
 
         this.state.route = "/structuredDataList";
 
+        this.state.isCompLoaded = false;
+
 	}
+
+
 
      /**
      * Handles any errors cuased by a sub-component 
@@ -44,6 +49,128 @@ export class StructuredDataList extends ListPage {
 
     }
 
+    genDropDownItems(items,names)
+	{
+
+		return items.map((item,index) => 
+		{
+
+			//taken from https://stackoverflow.com/questions/7225407/convert-camelcasetext-to-sentence-case-text
+			let text = names !== undefined ? names[index] : item.replace(/([a-z])([A-Z][a-z])/g, "$1 $2").charAt(0).toUpperCase()+item.slice(1).replace(/([a-z])([A-Z][a-z])/g, "$1 $2");
+
+			return {key:item,text:text,value:item};
+
+		})
+
+	}
+
+	/**
+     * Loads all edits and bind the parsed json to edit objects
+     */
+    loadComps()
+    {
+
+        fetch("/competitions")
+            .then(res => res.json())
+            .then(result => 
+                {
+
+                    let data = result.map(r => bindCompetition(r));
+					
+					let values = data.map(c => c.id);
+
+					let names = data.map(c => c.name);					
+
+					this.setState({items:this.genDropDownItems(values,names),isCompLoaded: true})
+                })
+
+    }
+
+    handleDateSearchChange(name,value,isAfter)
+    {
+
+        console.log(value)
+
+        if(value == "")
+        {
+
+            this.handleSearchChange(name,undefined);
+
+        }
+        else
+        {
+
+            let type = isAfter ? "after" : "before";
+
+            console.log(value)
+            let parsedValue = value.split("-")
+
+            console.log(parsedValue)
+
+            let date = new Date(parsedValue[0],parsedValue[1],parsedValue[2]);
+
+            console.log(date)
+        
+            this.handleSearchChange(name,new SearchRequest(type,date,"date"));
+
+            
+            console.log(this.state.searches)
+
+
+        }
+
+
+    }
+
+    renderSearch()
+    {
+
+        if(this.state.isCompLoaded === false)
+        {
+        
+            this.loadComps();
+
+        }
+
+
+        return(
+            <div>
+                <Form.Input
+                    placeholder="Search"
+                    name="search"
+                    icon="search"
+                    onChange={(e,{name,value}) => 
+                            this.handleSearchChange(name,new SearchRequest("text",value,["home","away","competitionName"]))}
+                    />
+                <Form.Group inline>
+                    <Form.Input
+                        placeholder="before"
+                        label="Between"
+                        name="after"
+                        type="date"
+                        onChange={(e,{name,value}) => 
+                        this.handleDateSearchChange(name,value,true)}
+                        />
+                    <Form.Input
+                        placeholder="after"
+                        name="before"
+                        type="date"
+                        onChange={(e,{name,value}) => 
+                        this.handleDateSearchChange(name,value,false)}
+                        />
+                    <Form.Select
+                        label="Competition"
+                        name="compId"
+                        options={this.state.items}
+                        onChange={(e,{name,value}) => this.handleSearchChange(new SearchRequest("exact",value,"competitionID"))}
+                        />
+
+
+                </Form.Group>
+
+            </div>)
+
+    }
 
     /**
      * renders the page in loading state 
@@ -60,8 +187,7 @@ export class StructuredDataList extends ListPage {
                         page={this.state.page}
                         paging={this.state.paging}                
                         onSelect={this.routeToData.bind(this)} 
-                        items={this.state.data}/>
-					
+                        items={this.state.data}/>					
 				</div>
 		);
 

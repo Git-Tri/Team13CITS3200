@@ -56,6 +56,22 @@ export class ListPage extends Component {
     handleSearchChange(key,search)
     {      
         
+        if(search === undefined && key !== undefined)
+        {
+            
+            delete this.state.searches[key]
+            
+            this.setState({searches:this.state.searches},() => 
+            {
+
+
+
+                this.state.delayEngine.start(() => this.search());
+
+            })
+
+
+        }
         
 
         if(search !== undefined &&
