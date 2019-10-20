@@ -77,7 +77,7 @@ class UserAdmin extends ListPage {
                 })
             }
             else {
-                this.handleSearchChange('refresh', undefined)
+                this.search()
             }
         }.bind(this)
         request.onerror = function () {
@@ -120,7 +120,7 @@ class UserAdmin extends ListPage {
                 })
             }
             else {
-                this.handleSearchChange('refresh', undefined)
+                this.search()
             }
         }.bind(this)
         request.onerror = function () {
