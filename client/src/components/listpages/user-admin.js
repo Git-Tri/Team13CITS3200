@@ -67,16 +67,24 @@ class UserAdmin extends ListPage {
         request.send(toSend)
         request.onload = function () {
             if (request.status != 200) {
-                alert("boutta head out")
+                let theMessage = 'Error performing action.'
+                if (request.status === 418) {
+                    theMessage = 'That username already exists.'
+                }
+                this.setState({
+                    message: theMessage,
+                    hasMessage: true
+                })
             }
             else {
-                if (this.state.exists) {
-                    console.log(request.statusText)
-                }
+                this.handleSearchChange('refresh', undefined)
             }
         }.bind(this)
         request.onerror = function () {
-            alert("boutta head in")
+            this.setState({
+                message: 'Error performing action.',
+                hasMessage: true
+            })
         }.bind(this)
     }
 
@@ -106,16 +114,20 @@ class UserAdmin extends ListPage {
         request.send()
         request.onload = function () {
             if (request.status != 200) {
-                alert("boutta head out")
+                this.setState({
+                    message: 'Error performing action.',
+                    hasMessage: true
+                })
             }
             else {
-                if (this.state.exists) {
-                    console.log(request.statusText)
-                }
+                this.handleSearchChange('refresh', undefined)
             }
         }.bind(this)
         request.onerror = function () {
-            alert("boutta head in")
+            this.setState({
+                message: 'Error performing action.',
+                hasMessage: true
+            })
         }.bind(this)
     }
 
