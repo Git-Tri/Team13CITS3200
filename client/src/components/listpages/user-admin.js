@@ -78,6 +78,11 @@ class UserAdmin extends ListPage {
             }
             else {
                 this.search()
+                this.setState({
+                    hasMessage: false,
+                    uname: '',
+                    code: ''
+                })
             }
         }.bind(this)
         request.onerror = function () {
@@ -95,6 +100,10 @@ class UserAdmin extends ListPage {
         this.setState({ isAdmin: !this.state.isAdmin })
     }
 
+    /**
+     * deletes, promotes or demotes a user
+     * @param {any} str - first character defines the action, rest is the username to be applied to
+     */
     action(str) {
         var username = str.substring(1)
         var method = "DELETE"
@@ -205,33 +214,6 @@ class UserAdmin extends ListPage {
 
     }
 
-    /**
-     * renders the page
-     
-    render() {
-        if (!this.state.isLoaded) {
-            this.load()
-            this.state.isLoaded = true;
-        }
-        
-        var test = [
-            new UnstructuredData(1, 1, "some title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
-            new UnstructuredData(2, 1, "some title really really really really really long title", "some author", "some url", new Date("1991-04-20T00:00:00.000Z"), new Date("1991-04-20T00:00:00.000Z"), "some data"),
-        ];
-		return (
-			<div className="page">
-				<PageHeader 
-					header={"Unstructured Data List"}
-					sidebarVisible={this.props.sidebarVisible}
-					handleSidebarClick={this.props.handleSidebarClick}
-				/>
-                <Container>
-				
-                </Container>
-			</div>
-		);
-    }
-    */
 }
 
 export default withRouter(UserAdmin);
