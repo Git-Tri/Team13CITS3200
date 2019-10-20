@@ -61,7 +61,7 @@ else
                 'DATABASE="football"'+ "\n" +
                 'APIKEY=' + '"'  +  answers.KEY + '"' + "\n" +
                 "SECRET="+ '"'+ answers.SECRET + '"' + "\n" +
-                "SSLPASSPHRASE=" + SSL;
+                "SSLPASSPHRASE=" + answers.SSL;
     fs.appendFile(".env", append, function (err) {
 
         const envResult = require("dotenv").config();
