@@ -4,6 +4,7 @@ const editEngine = require("../edit-engine");
 var o2x = require('object-to-xml')
 const errorHandler = require("./errorHandler");
 const cache = require("../cache");
+const stream = require("stream");
 
 exports.createRoutes = function(app)
 {

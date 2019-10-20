@@ -32,6 +32,8 @@ class RegisterForm extends Component {
 			differentCharacter = (text[i] != text[i-1] || differentCharacter);
 		}
 		
+		console.log(lengthCheck)
+
 		return lengthCheck && differentCharacter;
 	}
 
@@ -56,9 +58,11 @@ class RegisterForm extends Component {
 			return;
 		} else if(this.state.password !== this.state.repeat_password){
 			this.setState({passwordMismatch: true});
+			console.log("mismatch")
 			return;
-		} else if(!this.inputCheck(this.state.password) || !this.inputCheck(this.state.username)){
+		} else if(!this.inputCheck(this.state.password)){
 			this.setState({inputDetailRulebreak: true});
+			console.log("broken")
 			return;
 		}
 
@@ -72,7 +76,7 @@ class RegisterForm extends Component {
 			})
 		.then(res => {
 				if(res.ok) {
-					this.props.history.push('/login-form');
+					this.props.history.push('/');
 				}
 				else if(res.status == 400){
 					this.setState({failedRegistration: true})

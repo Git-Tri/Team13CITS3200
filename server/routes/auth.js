@@ -147,7 +147,7 @@ exports.createRoutes = function(app) {
                         console.log("regkey does not match:" + users[0].regkey + " vs " + regkey);
                         res.sendStatus(400);
                     }
-  
+   
                 }
             }, (err) => errorHandler.standard(err, res), (err) => errorHandler.standard(err, res))
 
@@ -158,7 +158,7 @@ exports.createRoutes = function(app) {
     middleware.put(app, "/logout", (req, res) => {
 
         let user = req.user;
-                        
+        nodeCookie.clear(res,"authToken")
         if (user == null) {
             console.log("Invalid logout");
             res.sendStatus(400);

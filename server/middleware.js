@@ -35,6 +35,8 @@ function routingFunctionWrapper(routingFunction)
             
             console.log("cookies = ", nodeCookie.parse(req, secret));
             let cookie = nodeCookie.get(req, 'authToken', secret);
+
+
             
             if (cookie == null) {
                 let apikey = req.header('apikey')

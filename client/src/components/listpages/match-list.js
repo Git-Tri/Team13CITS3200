@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Form, Input, Loader, Message, Button } from 'semantic-ui-react';
 import MatchListTable from '../tables/match-list-table.js';
-import { bindMatch } from "../../data-binding";
+import { bindMatch,bindCompetition } from "../../data-binding";
 import { withRouter } from 'react-router-dom';
 import ListPage from './list-page.js';
-
+import {SearchRequest} from "../../domain";
 
 class MatchList extends ListPage {
 
@@ -16,6 +16,23 @@ class MatchList extends ListPage {
 		this.state.headerText = "Match List";
 
 		this.state.route = "/matchlist"
+
+		this.state.isCompLoaded = false;
+
+	}
+
+	genDropDownItems(items,names)
+	{
+
+		return items.map((item,index) => 
+		{
+
+			//taken from https://stackoverflow.com/questions/7225407/convert-camelcasetext-to-sentence-case-text
+			let text = names !== undefined ? names[index] : item.replace(/([a-z])([A-Z][a-z])/g, "$1 $2").charAt(0).toUpperCase()+item.slice(1).replace(/([a-z])([A-Z][a-z])/g, "$1 $2");
+
+			return {key:item,text:text,value:item};
+
+		})
 
 	}
 
@@ -68,33 +85,102 @@ class MatchList extends ListPage {
 
 	}
 
-	renderSearch()
-	{
+	/**
+     * Loads all edits and bind the parsed json to edit objects
+     */
+    loadComps()
+    {
 
-		return(<Form>
-			<Form.Field>
-				<Input label="Search" type="text" name="searchtext"/> 
-			</Form.Field>
-			<Form.Group widths="equal">
-				<Form.Field>
-					<Input label="Between" type="date" name="startdate" placeholder="Start date"/>
-				</Form.Field>
-				<Form.Field>
-					<Input type="date"  name="enddate" placeholder="End date"/>
-				</Form.Field>
-				<Form.Field>
-					<Input label="Competition" type="text"  name="competition"/>
-				</Form.Field>
-			</Form.Group>
-			<Form.Button 
-				onClick={this.submitHandler}
-			>
-			Submit
-			</Form.Button>
-		</Form>)
+        fetch("/competitions")
+            .then(res => res.json())
+            .then(result => 
+                {
+
+                    let data = result.map(r => bindCompetition(r));
+					
+					let values = data.map(c => c.id);
+
+					let names = data.map(c => c.name);					
+
+					this.setState({items:this.genDropDownItems(values,names),isCompLoaded: true})
+                })
+
+    }
+
+    handleDateSearchChange(name,value,isAfter)
+    {
+
+        if(value == "")
+        {
+
+            this.handleSearchChange(name,undefined);
+
+        }
+        else
+        {
+
+            let type = isAfter ? "after" : "before";
+            let parsedValue = value.split("-")
 
 
-	}
+            let date = new Date(parsedValue[0],parsedValue[1],parsedValue[2]);
+        
+            this.handleSearchChange(name,new SearchRequest(type,date,"date"));
+        }
+
+
+    }
+
+    renderSearch()
+    {
+
+        if(this.state.isCompLoaded === false)
+        {
+        
+            this.loadComps();
+
+        }
+
+
+        return(
+            <div>
+                <Form.Input
+                    placeholder="Search"
+                    name="search"
+                    icon="search"
+                    onChange={(e,{name,value}) => 
+                            this.handleSearchChange(name,new SearchRequest("text",value,["home","away","competitionName"]))}
+                    />
+                <Form.Group inline>
+                    <Form.Input
+                        placeholder="before"
+                        label="Between"
+                        name="after"
+                        type="date"
+                        onChange={(e,{name,value}) => 
+                        this.handleDateSearchChange(name,value,true)}
+                        />
+                    <Form.Input
+                        placeholder="after"
+                        name="before"
+                        type="date"
+                        onChange={(e,{name,value}) => 
+                        this.handleDateSearchChange(name,value,false)}
+                        />
+                    <Form.Select
+                        label="Competition"
+                        name="compId"
+                        options={this.state.items}
+                        onChange={(e,{name,value}) => this.handleSearchChange(new SearchRequest("exact",value,"competitionID"))}
+                        />
+
+
+                </Form.Group>
+
+            </div>)
+
+    }
+
 
 }
 

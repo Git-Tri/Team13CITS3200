@@ -48,11 +48,25 @@ class Export extends Component {
 
 		this.setState({isLoaded: false, isExported: false,exportedType: this.state.type});
 
+	
 		fetch("/export?type=" + this.state.type)
-			.then((b) => b.text())            
+			.then((b) => b.blob())            
             .then(result => 
                 {
 
+					console.log(result)
+
+					// 2. Create blob link to download
+					const url = window.URL.createObjectURL(result);
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', "corpus." + this.state.type);
+					// 3. Append to html page
+					document.body.appendChild(link);
+					// 4. Force download
+					link.click();
+					// 5. Clean up and remove the link
+					link.parentNode.removeChild(link);
 
 					let data = result
 
@@ -89,29 +103,6 @@ class Export extends Component {
 	}
 
 
-	renderData()
-	{
-
-		if(this.state.isExported)
-		{
-
-			if(this.state.exportedType === "json")
-			{
-
-				return(<Container textAlign="left" >{this.state.export}</Container>)
-
-			}
-			else
-			{
-
-				return(<Container textAlign="left"> {this.state.export}</Container>)
-
-			}
-
-		}
-
-	}
-
 	render() {
 
 		return (
@@ -137,7 +128,6 @@ class Export extends Component {
 							<Button primary onClick={this.loadData.bind(this)}>Export</Button>
 						</Form>						
 						{this.renderErrorMessage()}
-						{this.renderData()}
 					</Container>
 				</div>
 			</div>

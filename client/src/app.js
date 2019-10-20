@@ -46,68 +46,68 @@ class App extends Component {
 						visible={this.state.sidebarVisible}
 						width='thin'
 					>						
-						<Menu.Item as='a' href='/site/'>
+						<Menu.Item as='a' href='/'>
 							Home
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/unstructured_data_list'>
+						<Menu.Item as='a' href='/unstructured_data_list'>
 							Unstructured Data List
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/structured_data_list'>
+						<Menu.Item as='a' href='/structured_data_list'>
 							Structured Data List
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/match_list'>
+						<Menu.Item as='a' href='/match_list'>
 							Match List
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/edit_list'>
+						<Menu.Item as='a' href='/edit_list'>
 							Edit List
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/add_edit'>
+						<Menu.Item as='a' href='/add_edit'>
 							Add Edit
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/import_structured_data'>
+						<Menu.Item as='a' href='/import_structured_data'>
 							Import Structured Data
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/add_unstructured_data'>
+						<Menu.Item as='a' href='/add_unstructured_data'>
 							Add Unstructured Data
 						</Menu.Item>
-						<Menu.Item as='a' href='/site/export'>
+						<Menu.Item as='a' href='/export'>
 							Export
 						</Menu.Item>
 					</Sidebar>
 
 					<Sidebar.Pusher>
 						<div className="App" style={{minHeight:"100vh"}}>
-							<Route 	exact path='/site/' 
+							<Route 	exact path='/' 
 									component={() => <Home sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/unstructured_data_list' 
+							<Route 	path='/unstructured_data_list' 
 									component={() => <UnstructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/structured_data_list' 
+							<Route 	path='/structured_data_list' 
 									component={() => <StructuredDataList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/match_list'
+							<Route 	path='/match_list'
 									component={() => <MatchList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/view_match'
+							<Route 	path='/view_match'
 									component={() => <ViewMatch sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/edit_list'
+							<Route 	path='/edit_list'
 									component={() => <EditList sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/add_edit'
+							<Route 	path='/add_edit'
 									component={() => <AddEdit sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/import_structured_data'
+							<Route 	path='/import_structured_data'
 									component={() => <ImportStructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/add_unstructured_data'
+							<Route 	path='/add_unstructured_data'
 									component={() => <AddUnstructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/export'
+							<Route 	path='/export'
 									component={() => <Export sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/site/structured_data_page'
+							<Route 	path='/structured_data_page'
 									component={() => <StructuredDataPage sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
 						</div>

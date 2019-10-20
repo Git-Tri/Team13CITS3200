@@ -147,10 +147,11 @@ export class StructuredDataList extends ListPage {
                         this.handleDateSearchChange(name,value,false)}
                         />
                     <Form.Select
+                    clearable
                         label="Competition"
                         name="compId"
                         options={this.state.items}
-                        onChange={(e,{name,value}) => this.handleSearchChange(new SearchRequest("exact",value,"competitionID"))}
+                        onChange={(e,{name,value}) => this.handleSearchChange(name,new SearchRequest("exact",value,"competitionID"))}
                         />
 
 

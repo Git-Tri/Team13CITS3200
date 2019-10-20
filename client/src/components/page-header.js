@@ -7,17 +7,42 @@ class PageHeader extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			isLoggedIn: false //Should get status from index.js
-		}
 	}
 
-	handleLoginClick(isLogged) {
-		if (isLogged) {
-			this.setState({isLoggedIn: false});
-		} else {
-			this.props.history.push('/login-form');
-		}
+	handleLogoutClick() 
+	{
+	
+		fetch("logout",{method:"put",headers: {
+            'Content-Type': 'application/json'
+        }}).then(res => 
+            {
+
+                if(res.ok)
+                {
+					
+					this.props.history.push("/login-form");
+
+                }				
+                else if(res.status == 404)
+                {
+
+                    throw new Error(404);
+
+                }
+                else 
+                {
+
+                    throw new Error(500);
+
+                }				
+
+
+            }).catch(err => 
+                {
+                    console.log(err)
+                    this.setState({isError: true})
+                });
+
 	}
 
 	render() { //isbackable and isloggedin props only used for testing purposes, should be passed through URL under all other circumstances
@@ -47,9 +72,7 @@ class PageHeader extends Component {
 					>
 						Back
 					</Button> : undefined }
-					<Button onClick={() => this.handleLoginClick(this.state.isLoggedIn)} >
-						{(this.state.isLoggedIn?"Logout":"Login")}
-					</Button>
+					<Button onClick={this.handleLogoutClick.bind(this)}>Logout </Button>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
