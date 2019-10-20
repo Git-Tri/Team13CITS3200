@@ -48,7 +48,6 @@
 /server/coverage
 
 # production
-/server/build
 
 # misc
 /server/.DS_Store
