@@ -105,10 +105,12 @@ class ImportStructuredData extends Component {
 
 			let request = this.state.request
 
-			if(request["before"] === undefined || 
-				request["after"] === undefined || 
+			if(request["begin"] === undefined || 
+				request["end"] === undefined || 
 				request["compId"] === undefined)
 			{
+
+				console.log(request)
 
 				this.setState({isValid:false});
 
