@@ -72,7 +72,16 @@ export class StructuredDataList extends ListPage {
     {
 
         fetch("/competitions")
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+                
+                res.json()})
             .then(result => 
                 {
 

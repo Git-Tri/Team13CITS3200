@@ -50,7 +50,19 @@ class Export extends Component {
 
 	
 		fetch("/export?type=" + this.state.type)
-			.then((b) => b.blob())            
+			.then((b) => 
+			{
+				if(b.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+				
+				return b.blob()
+			
+			})            
             .then(result => 
                 {
 

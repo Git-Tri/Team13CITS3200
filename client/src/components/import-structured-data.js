@@ -38,7 +38,18 @@ class ImportStructuredData extends Component {
     {
 
         fetch("/competitions")
-            .then(res => res.json())
+            .then(res => {
+				
+				if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+				
+				return res.json()
+			})
             .then(result => 
                 {
 
@@ -114,6 +125,15 @@ class ImportStructuredData extends Component {
 				'Content-Type': 'application/json'
 			}}).then((res) => 
 			{
+
+
+				if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
 
 				if(res.ok)
 				{

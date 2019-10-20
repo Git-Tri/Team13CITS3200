@@ -56,6 +56,14 @@ export class StructuredDataPage extends Component
 			}}).then((res) => 
 			{
 
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+
 				if(res.ok)
 				{
 
@@ -80,10 +88,20 @@ export class StructuredDataPage extends Component
     {
 
         fetch("/StructuredData?id=" + this.state.id)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+                
+                return res.json()})
             .then(result => 
                 {
 
+                    
                     let data = bindStructuredData(result);
 
                     let date = data.date;

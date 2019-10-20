@@ -432,6 +432,13 @@ export class EditForm extends Component {
 			.then(res => 
 				{				
 
+					if(res.status === 401)
+					{
+	
+						window.location.href = "/login-form"                    
+	
+					}
+	
 					
 					if(res.ok)
 					{
@@ -517,7 +524,13 @@ export class EditForm extends Component {
 			}}).then((res) => 
 			{
 
-				console.log("response")
+				if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
 
 				if(res.ok)
 				{
@@ -569,6 +582,14 @@ export class EditForm extends Component {
 				'Content-Type': 'application/json'
 			}}).then((res) => 
 			{
+				
+				if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
 
 				if(res.ok)
 				{

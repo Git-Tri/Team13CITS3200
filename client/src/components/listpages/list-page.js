@@ -163,6 +163,14 @@ export class ListPage extends Component {
             .then(res => 
                 {
 
+                    if(res.status === 401)
+                    {
+    
+                        window.location.href = "/login-form"                    
+    
+                    }
+    
+
                     if(res.ok)
 					{
 						

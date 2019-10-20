@@ -56,7 +56,17 @@ class ChooseDataModal extends Component
     {
 
         fetch("/allchooseableData")
-            .then(res => res.json())
+            .then(res => {
+            
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }                
+
+                return res.json()
+            })
             .then(result => 
                 {
 

@@ -75,7 +75,20 @@ class AddUnstructuredData extends Component {
      */
     load() {
         fetch("/UnstructuredData?id=" + this.state.id)
-            .then(res => res.json())
+            .then(res => 
+                {
+                    if(res.status === 401)
+                    {
+    
+                        window.location.href = "/login-form"                    
+    
+                    }
+    
+                    
+                    return res.json()
+                
+                
+                })
             .then(result => {
                 if (result.unstructuredData.extracted !== null) {
                     var split = result.unstructuredData.extracted.split('-')

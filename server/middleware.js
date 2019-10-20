@@ -27,10 +27,11 @@ function handleUnauthorised(res)
 
 function routingFunctionWrapper(routingFunction)
 {
-
+    
     //return routingFunction
     return (req,res) =>     
     {
+
         try {
             
             console.log("cookies = ", nodeCookie.parse(req, secret));

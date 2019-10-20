@@ -50,7 +50,17 @@ class ViewMatch extends Component {
     {
 
         fetch("/StructuredData?id=" + this.state.id)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+                
+                
+                return res.json()})
             .then(result => 
                 {
 
@@ -75,7 +85,16 @@ class ViewMatch extends Component {
     {
 
         fetch("/getUnstructuredDataByMatchId?id=" + this.state.id)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
+                
+                return res.json()})
             .then(result => 
                 {
 

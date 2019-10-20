@@ -71,6 +71,13 @@ export class EditList extends ListPage {
         }}).then(res => 
             {
 
+                if(res.status === 401)
+                {
+
+                    window.location.href = "/login-form"                    
+
+                }
+
                 if(res.ok)
                 {
                     
@@ -79,23 +86,11 @@ export class EditList extends ListPage {
                     this.sendRequest(this.state.searches);
 
                 }				
-                else if(res.status == 404)
-                {
-
-                    throw new Error(404);
-
-                }
-                else 
-                {
-
-                    throw new Error(500);
-
-                }				
-
 
             }).catch(err => 
                 {
-                    console.log(err)
+                   
+
                     this.setState({isError: true})
                 });
 
