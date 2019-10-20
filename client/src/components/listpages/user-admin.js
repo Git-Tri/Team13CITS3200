@@ -38,9 +38,9 @@ class UserAdmin extends ListPage {
 
         console.log(data)
 
-        data.user = data.user.map((d) => bindUser(d));
+        data.users = data.users.map((d) => bindUser(d));
 
-        this.setState({ data: data.user, isLoaded: true, isError: false });
+        this.setState({ data: data.users, isLoaded: true, isError: false });
 
     }
 
