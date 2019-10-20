@@ -58,7 +58,7 @@ exports.createRoutes = function(app)
 
         res.setHeader("Content-Type", "application/json");
 
-        unstructuredDataAccess.deleteEditById(usid, (result => {
+        unstructuredDataAccess.getUnstrucredData(usid, (result => {
             unstructuredDatabyId = result[0];
 
             matchAccess.getMatchById(unstructuredDatabyId.matchid, (result) => {
