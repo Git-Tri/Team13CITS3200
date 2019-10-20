@@ -81,7 +81,7 @@ export class StructuredDataList extends ListPage {
                 }
 
                 
-                res.json()})
+                return res.json()})
             .then(result => 
                 {
 
