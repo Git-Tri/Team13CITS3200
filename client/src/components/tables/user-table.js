@@ -41,6 +41,7 @@ class UserTable extends DataTable
         return this.state.header = (<Table.Row>
             <Table.HeaderCell>Username</Table.HeaderCell>
             <Table.HeaderCell>Is admin</Table.HeaderCell>
+            <Table.HeaderCell>Code</Table.HeaderCell>
         </Table.Row>)
 
     }
@@ -90,6 +91,8 @@ function UserRow(props)
 
     let username = props.data.username
 
+    let code = props.data.regkey
+
     let isAdmin = "No"
 
     if (props.data.admin == 1) { isAdmin = "Yes" }
@@ -100,6 +103,7 @@ function UserRow(props)
         <Table.Row active={props.isActive}>
             <Table.Cell>{username}</Table.Cell>
             <Table.Cell>{isAdmin}</Table.Cell>
+            <Table.Cell>{code}</Table.Cell>
             <Table.Cell>
                 <button className="fluid ui positive button" type="button" onClick={() => selectFunc("p" + props.data.username)}>
                     Promote
