@@ -77,7 +77,6 @@ class AddUnstructuredData extends Component {
         fetch("/UnstructuredData?id=" + this.state.id)
             .then(res => res.json())
             .then(result => {
-                console.log(result)
                 if (result.unstructuredData.extracted !== null) {
                     var split = result.unstructuredData.extracted.split('-')
                     var ext = `${split[0]}-${split[1]}-${parseInt(split[2])}`
@@ -92,7 +91,6 @@ class AddUnstructuredData extends Component {
                         pub = pub.slice(0, -1) + '0' + parseInt(split[2])
                     }
                 }
-                console.log(ext + ' ' + pub)
                 this.setState({
                     exists: true,
                     matchid: result.match.id,
