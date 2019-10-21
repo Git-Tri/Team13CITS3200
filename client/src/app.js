@@ -86,7 +86,7 @@ class App extends Component {
 						<Menu.Item as='a' href='/add_unstructured_data'>
 							Add Unstructured Data
 						</Menu.Item>
-						<Menu.Item as='a' href='/export'>
+						<Menu.Item as='a' href='/export-page'>
 							Export
 						</Menu.Item>
                         <Menu.Item as='a' href='/user_admin'>
@@ -126,7 +126,7 @@ class App extends Component {
 							<Route 	path='/add_unstructured_data'
 									component={() => <AddUnstructuredData sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
-							<Route 	path='/export'
+							<Route 	path='/export-page'
 									component={() => <Export sidebarVisible={this.state.sidebarVisible} handleSidebarClick={this.handleSidebarClick.bind(this)}/>}
 							/>
 							<Route 	path='/structured_data_page'
