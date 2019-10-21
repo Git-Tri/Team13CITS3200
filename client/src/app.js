@@ -21,6 +21,11 @@ import UserAdmin from "./components/listpages/user-admin"
 import StructuredDataPage from "./components/structured-data-page";
 import UserPage from "./components/user-page"
 
+function getCookie(name) {
+	var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+	if (match) return match[2];
+  }
+
 class App extends Component {
 	constructor() {
 		super()
@@ -34,6 +39,15 @@ class App extends Component {
 	}
 	
 	render() {
+
+		let location = window.location.href;
+
+		if(location.includes("login") || location.includes("register"))
+		{
+
+			return(<div></div>);
+
+		}
 
 		return (
 			<div>

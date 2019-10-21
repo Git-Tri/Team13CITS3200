@@ -21,7 +21,7 @@ else
 
   const promptList = [{
     type: 'input',
-    message: 'Please input your Host:',
+    message: '  ',
     name: 'HOST',
   },{
     type: 'input',

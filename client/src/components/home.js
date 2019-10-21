@@ -12,7 +12,7 @@ class Home extends Component {
 					handleSidebarClick={this.props.handleSidebarClick}
 				/>
 				<div id="container" style={{height:"100vh"}}>
-					Content goes here
+					Welcome to Semantic League , a place to build a temporal corpus based on soccer data 
 				</div>
 			</div>
 		);
